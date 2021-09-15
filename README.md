@@ -16,3 +16,4 @@ Admins will be able to see orders, and statistics over ratings of the beverages.
 1. Go to folder `Client` 
 2. Run `npm install`
 3. Run `npm run dev` 
+4. Go to http://localhost:8080/ in your browser
