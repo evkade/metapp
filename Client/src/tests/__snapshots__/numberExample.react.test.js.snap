@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The component should render an div that says 1 as myNumber is 1 1`] = `
+<numberExample
+  myNumber={1}
+  renderNumber={true}
+/>
+`;
