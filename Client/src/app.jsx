@@ -1,9 +1,15 @@
-import React from 'react'; 
-import ReactDOM from 'react-dom'; 
+import React from "react";
+import ReactDOM from "react-dom";
+import { AddBeverageToMenuPresenter } from "./components/addBeverageToMenuPresenter";
 
 const App = () => {
-    console.log('Running app');
-    return <div>Hello Meta</div>
+  console.log("Running app");
+  return (
+    <div>
+      <div>Hello Meta</div>
+      <AddBeverageToMenuPresenter />
+    </div>
+  );
 };
 
-ReactDOM.render(<App/>, document.querySelector("#app"));
+ReactDOM.render(<App />, document.querySelector("#app"));
