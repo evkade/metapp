@@ -14,13 +14,7 @@ export const AddBeverageToMenuPresenter = () => {
   return (
     <AddBeverageToMenu
       searchBeverage={searchBeverage}
-<<<<<<< HEAD
-      cocktailPromise={cocktailPromise}
       searchResult={data}
-      searchError={error}
-=======
-      searchResult={data}
->>>>>>> 6350ac7 (add working cocktailDB API call, and basic search page)
     />
   );
 };

@@ -1,17 +1,27 @@
 import React from "react";
 
-<<<<<<< HEAD
 export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult, searchError}) => {
   const [query, setQuery] = React.useState("");
   console.log(searchResult);
 
-=======
-export const AddBeverageToMenu = ({searchBeverage, searchResult}) => {
-  const [query, setQuery] = React.useState("");
-  console.log(searchResult);
+  const resultsView = () => {
+    if(!cocktailPromise) return null;
+    else if(searchError) return 'Error';
+    else if(!searchResult) return 'Loading';
+    else return <div>{searchResult.drinks.map(cocktail => <div key={cocktail.idDrink}>{cocktail.strDrink}</div>)}</div>;
+  };
 
-  // todo byta loading
->>>>>>> 6350ac7 (add working cocktailDB API call, and basic search page)
+  React.useEffect(() => {
+    const resultsView = () => {
+      if(!cocktailPromise) return null;
+      else if(searchError) return 'Error';
+      else if(!searchResult) return 'Loading';
+      else return <div>{searchResult.drinks.map(cocktail => <div key={cocktail.idDrink}>{cocktail.strDrink}</div>)}</div>;
+    }
+    [cocktailPromise, searchError, searchResult]
+  );
+
+
   return (
     <div>
       <input
@@ -21,11 +31,7 @@ export const AddBeverageToMenu = ({searchBeverage, searchResult}) => {
         {" "}
         Search{" "}
       </button>
-<<<<<<< HEAD
-      {searchResult ? searchResult.drinks.map(cocktail => <div key={cocktail.idDrink}>{cocktail.strDrink}</div>) : <div> Loading </div>}
-=======
-      {searchResult ? searchResult.drinks.map(cocktail => <div>{cocktail.strDrink}</div>) : <div> Loading </div>}
->>>>>>> 6350ac7 (add working cocktailDB API call, and basic search page)
+      {resultsView}
     </div>
   );
 };
