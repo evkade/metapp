@@ -21,3 +21,12 @@ Admins will be able to see orders, and statistics over ratings of the beverages.
 ## Client Tests
 1. Go to folder `src/Client` 
 2. Run `npm test`
+
+
+## Run server
+1. Go to folder `src/server` 
+2. Run `npm install`
+3. You can either run in dev or prod mode
+- To run in development mode: Run `npm run dev`
+- To run in production mode: Run `npm start`
+4. Go to http://localhost:5000
