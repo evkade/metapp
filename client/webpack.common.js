@@ -12,6 +12,12 @@ export default {
     entry: {
         app: './src/app.jsx'
     },
+    resolve: {
+        alias: {
+          components: path.resolve(path.resolve(), '/components'),
+        },
+        extensions: ['.js', '.jsx'],
+      },
     module: {
         rules: loaders
     },
