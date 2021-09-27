@@ -8,6 +8,12 @@ loaders.push({
     use: 'babel-loader'
 })
 
+loaders.push({
+        test: /\.css$/,
+        // the order of `use` is important!
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+})
+
 export default {
     entry: {
         app: './src/app.jsx'
