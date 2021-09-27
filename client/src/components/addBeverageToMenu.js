@@ -2,7 +2,6 @@ import React from "react";
 
 export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult, searchError}) => {
   const [query, setQuery] = React.useState("");
-  console.log(searchResult);
 
   return (
     <div>
