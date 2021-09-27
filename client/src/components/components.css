@@ -1,0 +1,31 @@
+.signInForm {
+
+}
+
+.signInForm__form {
+
+}
+
+.signInForm__form__input {
+
+}
+
+.signInForm__form__submit {
+
+}
+
+.signInForm__errElement {
+
+}
+
+.signInForm__errElement {
+    display:none;
+}
+
+.signInForm__errElement--display {
+    display:block;
+}
+
+.signInForm__successElement {
+    display:block;
+}
