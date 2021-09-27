@@ -13,7 +13,7 @@ export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult
         {" "}
         Search{" "}
       </button>
-      <div>{searchResult ? searchResult.drinks.map(cocktail => <div key={cocktail.idDrink}>{cocktail.strDrink}</div>) : null}</div>
+      {searchResult ? searchResult.drinks.map(cocktail => <div>{cocktail.strDrink}</div>) : <div> Loading </div>}
     </div>
   );
 };
