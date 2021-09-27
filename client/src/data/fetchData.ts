@@ -1,4 +1,3 @@
-
 export const getCocktailBasedOnName = (name) => {
   const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+name;
   const cocktails = apiCall(url).then(data => data);
