@@ -6,6 +6,14 @@ export const getCocktailBasedOnName = (name) => {
   return cocktails;
 };
 
+export const getCannedBeverageBasedOnName = (name) => {
+  const url = 'https://systembevakningsagenten.se/api/json/2.1/searchStore.json?' + new URLSearchParams({
+    query: name
+  });
+  const cannedBeverages = apiCall(url).then(data => data);
+  return cannedBeverages;
+};
+
 async function apiCall(url) {
   return await fetch(url, {
       "method": "GET",

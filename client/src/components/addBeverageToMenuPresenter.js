@@ -1,5 +1,5 @@
 import React from "react";
-import { getCocktailBasedOnName } from "../data/fetchData.ts";
+import { getCocktailBasedOnName, getCannedBeverageBasedOnName } from "../data/fetchData.ts";
 import { AddBeverageToMenu } from "./addBeverageToMenu.js"; // ehm kanske borde passa detta ist för importera ? oklart
 import usePromise from '../utils/usePromise.js';
 
@@ -8,7 +8,7 @@ export const AddBeverageToMenuPresenter = () => {
   const [data, error] = usePromise(cocktailPromise);
 
   const searchBeverage = (query) => {
-    setCocktailPromise(getCocktailBasedOnName(query)); 
+    setCocktailPromise(getCannedBeverageBasedOnName(query)); 
   }
 
   return (

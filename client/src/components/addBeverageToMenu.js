@@ -4,24 +4,6 @@ export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult
   const [query, setQuery] = React.useState("");
   console.log(searchResult);
 
-  const resultsView = () => {
-    if(!cocktailPromise) return null;
-    else if(searchError) return 'Error';
-    else if(!searchResult) return 'Loading';
-    else return <div>{searchResult.drinks.map(cocktail => <div key={cocktail.idDrink}>{cocktail.strDrink}</div>)}</div>;
-  };
-
-  React.useEffect(() => {
-    const resultsView = () => {
-      if(!cocktailPromise) return null;
-      else if(searchError) return 'Error';
-      else if(!searchResult) return 'Loading';
-      else return <div>{searchResult.drinks.map(cocktail => <div key={cocktail.idDrink}>{cocktail.strDrink}</div>)}</div>;
-    }
-    [cocktailPromise, searchError, searchResult]
-  );
-
-
   return (
     <div>
       <input
@@ -31,7 +13,7 @@ export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult
         {" "}
         Search{" "}
       </button>
-      {resultsView}
+      <div>{searchResult ? searchResult.drinks.map(cocktail => <div key={cocktail.idDrink}>{cocktail.strDrink}</div>) : null}</div>
     </div>
   );
 };
