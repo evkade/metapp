@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  server:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - test=2000
+    env_file:
+      - ./server/src/config.env
+
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+      - ./dist:/dist
+    ports:
+      - "8080:8080"
+    environment:
+      - test=2500
+    env_file:
+      - ./server/src/config.env
+
+  
+# # nginx:
+#    restart: always
+ #   build:
+  #    dockerfile: Dockerfile.dev
+   #   context: ./nginx
+   # ports:
+    #  - "80:80"
+   # depends_on:
+    #  - client
+    #  - server
