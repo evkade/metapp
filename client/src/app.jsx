@@ -15,6 +15,7 @@ const App = () => {
             </div>  
         </Provider>
     )
+
 };
 
-ReactDOM.render(<App/>, document.querySelector("#app"));
+ReactDOM.render(<App />, document.querySelector("#app"));
