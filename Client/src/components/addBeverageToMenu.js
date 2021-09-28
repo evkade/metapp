@@ -1,8 +1,10 @@
 import React from "react";
 
-export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult, searchError}) => {
+export const AddBeverageToMenu = ({searchBeverage, searchResult}) => {
   const [query, setQuery] = React.useState("");
+  console.log(searchResult);
 
+  // todo byta loading
   return (
     <div>
       <input

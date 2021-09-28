@@ -10,6 +10,7 @@ const App = () => {
     <AddBeverageToMenuPresenter />
     <UserSignIn/>
     </div>
+  );
 };
 
-ReactDOM.render(<App/>, document.querySelector("#app"));
+ReactDOM.render(<App />, document.querySelector("#app"));
