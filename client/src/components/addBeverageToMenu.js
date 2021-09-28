@@ -2,7 +2,6 @@ import React from "react";
 
 export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult, searchError}) => {
   const [query, setQuery] = React.useState("");
-  console.log(searchResult);
 
   return (
     <div>
@@ -13,7 +12,7 @@ export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult
         {" "}
         Search{" "}
       </button>
-      {searchResult ? searchResult.drinks.map(cocktail => <div key={cocktail.idDrink}>{cocktail.strDrink}</div>) : <div> Loading </div>}
+      {searchResult ? searchResult.drinks.map(cocktail => <div>{cocktail.strDrink}</div>) : <div> Loading </div>}
     </div>
   );
 };

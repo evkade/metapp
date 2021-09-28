@@ -14,9 +14,7 @@ export const AddBeverageToMenuPresenter = () => {
   return (
     <AddBeverageToMenu
       searchBeverage={searchBeverage}
-      cocktailPromise={cocktailPromise}
       searchResult={data}
-      searchError={error}
     />
   );
 };

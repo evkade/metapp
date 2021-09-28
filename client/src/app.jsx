@@ -1,15 +1,22 @@
 import React from 'react'; 
 import ReactDOM from 'react-dom'; 
-import { AddBeverageToMenuPresenter } from './components/AddBeverageToMenuPresenter';
+import { Provider } from 'react-redux';
+import store from './redux/store'
+
+import { AddBeverageToMenuPresenter } from './components/addBeverageToMenuPresenter';
 import UserSignIn from './components/userSignIn';
 
 const App = () => {
-    console.log('Running app');
-    return <div>
-    <div>Hello Meta</div>
-    <AddBeverageToMenuPresenter />
-    <UserSignIn/>
-    </div>
+    return (
+        <Provider store={store}>
+            <div>
+                <div>Hello Meta</div>
+                <AddBeverageToMenuPresenter />
+                <UserSignIn/>
+            </div>  
+        </Provider>
+    )
+
 };
 
-ReactDOM.render(<App/>, document.querySelector("#app"));
+ReactDOM.render(<App />, document.querySelector("#app"));
