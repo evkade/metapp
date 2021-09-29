@@ -3,10 +3,7 @@ import DrinkModel from "../../model/drinkModel";
 import { AddBeverageToMenu } from "../views/addBeverageToMenu";
 import usePromise from '../../hooks/usePromise';
 
-export const AddBeverageToMenuPresenter = () => {
-
-  const model = new DrinkModel();
-
+export const AddBeverageToMenuPresenter = ({drinkModel}) => {
   const [cocktailPromise, setCocktailPromise] = useState(undefined);
   const [cocktailData, cocktailError] = usePromise(cocktailPromise);
 
@@ -32,12 +29,8 @@ export const AddBeverageToMenuPresenter = () => {
   }, [cocktailData, beerData, cocktailError, beerError]);
  
   const searchBeverage = (query) => {
-<<<<<<< HEAD:client/src/components/presenters/addBeverageToMenuPresenter.tsx
-    setCocktailPromise(model.getCocktailBasedOnName(query)); 
-=======
     setCocktailPromise(drinkModel.getCocktailBasedOnName(query)); 
     setBeerPromise(drinkModel.getBeerBasedOnName(query)); 
->>>>>>> 6791d71 (Start to add second api):client/src/components/presenters/addBeverageToMenuPresenter.js
   }
 
   return (
