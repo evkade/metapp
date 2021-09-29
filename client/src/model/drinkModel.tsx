@@ -5,6 +5,14 @@ export default class DrinkModel {
     const cocktails = this.apiCall(url).then(data => data);
     return cocktails;
   };
+
+  getBeerBasedOnName(name) {
+    const url = 'https://systembevakningsagenten.se/api/json/2.1/searchStore.json?' + new URLSearchParams({
+      query: name
+    });
+    const cannedBeverages = this.apiCall(url).then(data => data);
+    return cannedBeverages;
+  };
   
   async apiCall(url) {
     return await fetch(url, {
