@@ -5,6 +5,8 @@ import '../components.css';
 const UserSignIn = () => {
 
     const [userAuth, setUserAuth] = useState(false);
+    const [username, setUsername] = useState('');
+    const [pwd, setPwd] = useState('');
 
     const checkAuth = (username, password) => {
         if(username=="username" && password=="password") {
@@ -18,11 +20,11 @@ const UserSignIn = () => {
 
     const handleErrDisplay = (display, element) => {
         if(display) {
-            document.getElementById(`${element}`).classList.add("signInForm__errElement--display");
+            document.getElementById(`${element}`)!.classList.add("signInForm__errElement--display");
         }
         else {
             console.log(document.getElementById(`${element}`))
-            document.getElementById("usr-pwdError").classList.remove("signInForm__errElement--display")
+            document.getElementById("usr-pwdError")!.classList.remove("signInForm__errElement--display")
         }
     }
 
@@ -32,13 +34,11 @@ const UserSignIn = () => {
         <>
             <div id="form-login" className="signInForm__form">
                 <h1>Login</h1>
-                <input type="text" id="signInUsr" name="username" className="signInForm__form__input" placeholder="Username"></input>
-                <input type="password" id="signInPwd" name="password" className="signInForm__form__input" placeholder="Password"></input>
+                <input type="text" id="signInUsr" name="username" className="signInForm__form__input" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)} ></input>
+                <input type="password" id="signInPwd" name="password" className="signInForm__form__input" placeholder="Password" value={pwd} onChange={(event) => setPwd(event.target.value)} ></input>
                 <button className="signInForm__form__submit"
                     onClick={() => {
-                        var username = document.getElementById("signInUsr").value
-                        var password = document.getElementById("signInPwd").value
-                        checkAuth(username, password)}
+                        checkAuth(username, pwd)}
                     }>
                     Submit</button>
             </div>

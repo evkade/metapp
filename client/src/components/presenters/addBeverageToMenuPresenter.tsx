@@ -1,15 +1,17 @@
 import React, { useEffect,  useState} from "react";
-import { drinkModel } from "../../model/drinkModel.ts";
-import { AddBeverageToMenu } from "../views/addBeverageToMenu.js"; // ehm kanske borde passa detta ist för importera ? oklart
-import usePromise from '../../hooks/usePromise.js';
+import DrinkModel from "../../model/drinkModel";
+import { AddBeverageToMenu } from "../views/addBeverageToMenu";
+import usePromise from '../../hooks/usePromise';
 
 export const AddBeverageToMenuPresenter = () => {
+
+  const model = new DrinkModel();
 
   const [cocktailPromise, setCocktailPromise] = useState(undefined);
   const [data, error] = usePromise(cocktailPromise);
  
   const searchBeverage = (query) => {
-    setCocktailPromise(drinkModel.getCocktailBasedOnName(query)); 
+    setCocktailPromise(model.getCocktailBasedOnName(query)); 
   }
 
   return (

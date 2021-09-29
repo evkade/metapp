@@ -1,12 +1,12 @@
 import React from "react";
 
-export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult, searchError}) => {
+export const AddBeverageToMenu = ({searchBeverage, searchResult }) => {
   const [query, setQuery] = React.useState("");
 
   return (
     <div>
       <input
-        onChange={() => setQuery(event.target.value)}
+        onChange={(event) => setQuery(event.target.value)}
       ></input>
       <button type="submit" onClick={() => searchBeverage(query)}>
         {" "}
