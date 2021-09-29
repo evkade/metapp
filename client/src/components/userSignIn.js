@@ -11,14 +11,8 @@ const UserSignIn = () => {
             handleErrDisplay(false,"signInForm__successElement")
             setUserAuth(true);
         }
-        else if(username!="username" && password!="password") {
+        else if(username!="username" || password!="password") {
             handleErrDisplay(true, "usr-pwdError")
-        }
-        else if(password!="password") {
-            handleErrDisplay(true, "passwordError")
-        }
-        else if(username!="username") {
-            handleErrDisplay(true, "usernameError")
         }
     }
 
@@ -29,8 +23,6 @@ const UserSignIn = () => {
         else {
             console.log(document.getElementById(`${element}`))
             document.getElementById("usr-pwdError").classList.remove("signInForm__errElement--display")
-            document.getElementById("passwordError").classList.remove("signInForm__errElement--display")
-            document.getElementById("usernameError").classList.remove("signInForm__errElement--display")
         }
     }
 
@@ -51,12 +43,6 @@ const UserSignIn = () => {
                     Submit</button>
             </div>
             <div className="signInForm__errElements">
-                <div id="passwordError" className="signInForm__errElement">
-                    The password is incorrect.
-                </div>
-                <div id="usernameError" className="signInForm__errElement">
-                    The username is incorrect.
-                </div>
                 <div id="usr-pwdError" className="signInForm__errElement">
                     There is no user with these credentials.
                 </div>
