@@ -1,7 +1,8 @@
 import React from "react";
 
-export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult, searchError}) => {
+export const AddBeverageToMenu = ({searchBeverage, searchResult}) => {
   const [query, setQuery] = React.useState("");
+  console.log(searchResult);
 
   return (
     <div>
@@ -12,7 +13,7 @@ export const AddBeverageToMenu = ({searchBeverage, cocktailPromise, searchResult
         {" "}
         Search{" "}
       </button>
-      {searchResult ? searchResult.drinks.map(cocktail => <div>{cocktail.strDrink}</div>) : <div> Loading </div>}
+      {searchResult ? searchResult.map(beverage => <div>{beverage}</div>) : <div> Loading </div>}
     </div>
   );
 };
