@@ -1,17 +1,19 @@
 export default class DrinkModel {
 
   getCocktailBasedOnName(name): Promise<any> {
-    const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+name;
-    const cocktails = this.apiCall(url).then(data => data);
+    const cocktails = this.apiCall("https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+name)
+      .then(data => data);
     return cocktails;
   };
 
   getBeerBasedOnName(name) {
-    const url = 'https://systembevakningsagenten.se/api/json/2.1/searchStore.json?' + new URLSearchParams({
-      query: name
-    });
-    const cannedBeverages = this.apiCall(url).then(data => data);
-    return cannedBeverages;
+    const beers = this.apiCall(
+      'https://systembevakningsagenten.se/api/json/2.1/searchStore.json?' + 
+      new URLSearchParams({
+        query: name
+      }))
+        .then(data => data);
+    return beers;
   };
   
   async apiCall(url) {
@@ -19,8 +21,6 @@ export default class DrinkModel {
         "method": "GET",
       })
     .then(response => response.json())
-    .catch(error => console.error(error))
   };  
 
 };
-
