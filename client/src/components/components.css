@@ -1,3 +1,9 @@
+:root {
+    --neon-color: #EE2A7B;
+    --dark-background: rgb(26, 26, 26);
+    --barcode-font: 'Libre Barcode 39 Extended Text', cursive;
+}
+
 .signInForm {
 
 }
@@ -29,3 +35,35 @@
 .signInForm__successElement {
     display:block;
 }
+
+.entryView {
+    background: var(--dark-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.entryView__neonText {
+    color:white;
+    font-size: 6em;
+    font-family: var(--barcode-font);
+    animation: flicker 1.5s infinite alternate;
+}
+
+@keyframes flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+      text-shadow:
+    0 0 3px white,
+    0 0 10px white,
+    0 0 21px var(--neon-color),
+    0 0 42px var(--neon-color),
+    0 0 82px var(--neon-color),
+    0 0 92px var(--neon-color),
+    0 0 102px var(--neon-color),
+    0 0 111px var(--neon-color);
+    }
+    20%, 20.1% {       
+      text-shadow: none;
+    }
+  }

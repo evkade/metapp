@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store'
 
-import { AddBeverageToMenuPresenter } from './components/presenters/addBeverageToMenuPresenter';
-import UserSignIn from './components/views/userSignIn';
+import { AddBeverageToMenuPresenter } from './components/addBeverageToMenuPresenter';
+import UserSignIn from './components/userSignIn';
+import EntryView from './components/entryView';
 
 const App = () => {
     return (
@@ -13,6 +14,7 @@ const App = () => {
                 <div>Hello Meta</div>
                 <AddBeverageToMenuPresenter />
                 <UserSignIn/>
+                <EntryView/>
             </div>  
         </Provider>
     )

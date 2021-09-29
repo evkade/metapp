@@ -14,6 +14,20 @@ loaders.push({
         use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
 })
 
+loaders.push({
+    test: /\.(png|jpe?g|gif)$/i,
+    use: [
+        'file-loader',
+        {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer  
+        }
+      },
+    ],
+})
+
 export default {
     entry: {
         app: './src/app.jsx'
@@ -21,8 +35,9 @@ export default {
     resolve: {
         alias: {
           components: path.resolve(path.resolve(), '/components'),
+          images: path.resolve(path.resolve(), '/components/images')
         },
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx', '.css'],
       },
     module: {
         rules: loaders
