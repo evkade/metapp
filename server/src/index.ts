@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import { drinkRouter } from './routes/drinks';
 
 const app = express();
 
@@ -36,6 +37,7 @@ const options: cors.CorsOptions = {
 };
 
 app.use(cors(options));
+app.use(drinkRouter)
 
 app.get('/', (req, res) => {
   console.log('recieved request');
