@@ -1,17 +1,16 @@
 import express, { Request, Response } from "express";
-import { getDrinks } from '../controllers/drinks'
+import { getBeers } from '../controllers/drinks'
 
 const router = express.Router();
 
-router.get(
+router.post(
   "/api/drinks",
   async (req: Request, res: Response) => {
-    
-    const body = await getDrinks().then(data => data);
-
-    console.log(body)
-
-    if(body) res.status(200).send(body);
+    console.log('[REQ]', req)
+    console.log('[REQ BODY]', req.body)
+    const body = await getBeers(req.body).then(data => data);
+    console.log('[BODY]', body)
+    if (body) res.status(200).send(body);
     else res.status(404)
   }
 );
