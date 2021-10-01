@@ -1,6 +1,7 @@
 import React from "react";
 
-export const AddBeverageToMenu = ({searchBeverage, searchResult }) => {
+// todo: lägga till en bättre loading 
+export const AddBeverageToMenu = ({searchBeverage, searchResult, isLoading}) => {
   const [query, setQuery] = React.useState("");
   console.log(searchResult);
 
@@ -13,7 +14,7 @@ export const AddBeverageToMenu = ({searchBeverage, searchResult }) => {
         {" "}
         Search{" "}
       </button>
-      {searchResult ? searchResult.map(beverage => <div>{beverage}</div>) : <div> Loading </div>}
+      {!isLoading && searchResult ? searchResult.map(beverage => <div key={beverage} >{beverage}</div>) : <div> Loading </div>}
     </div>
   );
 };
