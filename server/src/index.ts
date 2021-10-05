@@ -1,8 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { drinkRouter } from './routes/drinks';
+import { beerRouter } from './routes/beers';
 
+const bp = require('body-parser');
 const app = express();
 
 dotenv.config({ path: './src/config.env' });
@@ -36,8 +37,10 @@ const options: cors.CorsOptions = {
   },
 };
 
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true }));
 app.use(cors(options));
-app.use(drinkRouter)
+app.use(beerRouter);
 
 app.get('/', (req, res) => {
   console.log('recieved request');
