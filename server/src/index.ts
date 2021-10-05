@@ -2,11 +2,19 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { drinkRouter } from './routes/drinks';
+import { userRouter } from './routes/user'
+import connectDB from './db'
+import bodyParser from 'body-parser'
 
 const app = express();
 
+//Handles post requests
+app.use(express.json());
+
 dotenv.config({ path: './src/config.env' });
 const Port = process.env.PORT || 6000;
+
+const db = connectDB();
 
 // Cors policy: Allows localhost:8080 which is client port
 var allowedOrigins = ['http://localhost:8080'];
@@ -37,7 +45,8 @@ const options: cors.CorsOptions = {
 };
 
 app.use(cors(options));
-app.use(drinkRouter)
+app.use(drinkRouter);
+app.use(userRouter);
 
 app.get('/', (req, res) => {
   console.log('recieved request');
