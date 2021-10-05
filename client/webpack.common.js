@@ -28,16 +28,27 @@ loaders.push({
     ],
 })
 
+loaders.push({
+    test: /\.(t|j)sx?$/,
+    use: { loader: 'awesome-typescript-loader' }
+})
+
+loaders.push({
+    enforce: 'pre',
+    test: /\.js$/,
+    loader: 'source-map-loader'
+})
+
 export default {
     entry: {
-        app: './src/app.jsx'
+        app: './src/app.tsx'
     },
     resolve: {
         alias: {
           components: path.resolve(path.resolve(), '/components'),
           images: path.resolve(path.resolve(), '/components/images')
         },
-        extensions: ['.js', '.jsx', '.css'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     module: {
         rules: loaders

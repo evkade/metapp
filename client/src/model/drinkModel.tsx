@@ -1,12 +1,12 @@
-function drinkModel(menu ) {
+export default class DrinkModel {
 
-  const getCocktailBasedOnName = (name) => {
+  getCocktailBasedOnName(name): Promise<any> {
     const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+name;
-    const cocktails = apiCall(url).then(data => data);
+    const cocktails = this.apiCall(url).then(data => data);
     return cocktails;
   };
   
-  async function apiCall(url) {
+  async apiCall(url) {
     return await fetch(url, {
         "method": "GET",
       })
@@ -15,3 +15,4 @@ function drinkModel(menu ) {
   };  
 
 };
+
