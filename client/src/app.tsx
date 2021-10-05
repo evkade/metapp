@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store'
 import { AddBeverageToMenuPresenter } from './components/presenters/addBeverageToMenuPresenter';
-import UserSignIn from './components/views/userSignIn';
+import { HandleUserSignIn } from './components/presenters/handleUserSignIn';
 
 const App = () => {
     return (
@@ -11,7 +11,7 @@ const App = () => {
             <div>
                 <div>Hello Meta</div>
                 <AddBeverageToMenuPresenter />
-                <UserSignIn/>
+                <HandleUserSignIn/>
             </div>  
         </Provider>
     )
