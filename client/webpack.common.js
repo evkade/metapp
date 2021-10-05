@@ -15,6 +15,20 @@ loaders.push({
 })
 
 loaders.push({
+    test: /\.(png|jpe?g|gif)$/i,
+    use: [
+        'file-loader',
+        {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer  
+        }
+      },
+    ],
+})
+
+loaders.push({
     test: /\.(t|j)sx?$/,
     use: { loader: 'awesome-typescript-loader' }
 })
@@ -32,6 +46,7 @@ export default {
     resolve: {
         alias: {
           components: path.resolve(path.resolve(), '/components'),
+          images: path.resolve(path.resolve(), '/components/images')
         },
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store'
 import { AddBeverageToMenuPresenter } from './components/presenters/addBeverageToMenuPresenter';
+import EntryView from './components/views/entryView';
 import { HandleUserSignIn } from './components/presenters/handleUserSignIn';
 import DrinkModel from './model/drinkModel';
 import { searchTypes } from './constants/searchTypes';
@@ -14,6 +15,7 @@ const App = () => {
         <Provider store={store}>
             <div>
                 <div>Hello Meta</div>
+                <EntryView/>
                 <AddBeverageToMenuPresenter drinkModel={drinkModel} searchType={searchTypes.BEER}/>
                 <HandleUserSignIn/>
             </div>  
