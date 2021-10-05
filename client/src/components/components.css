@@ -1,7 +1,10 @@
 :root {
-    --neon-color: #EE2A7B;
+    --neon-color-pink: #EE2A7B;
+    --neon-color-green: #2aee4b;
+    --neon-color-yellow: #deee2a; 
     --dark-background: rgb(26, 26, 26);
     --barcode-font: 'Libre Barcode 39 Extended Text', cursive;
+    --button-entryView-font: 'Pacifico', cursive;
 }
 
 .signInForm {
@@ -37,33 +40,82 @@
 }
 
 .entryView {
-    background: var(--dark-background);
-    display: flex;
+    background: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url('https://i.imgur.com/mnVAkgM.jpg');    display: flex;
+    background-repeat: no-repeat;
+    background-size: cover;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh;         
+    flex-direction: column;
 }
 
 .entryView__neonText {
     color:white;
-    font-size: 6em;
+    font-size: 25vw;
     font-family: var(--barcode-font);
+    --neon-color: var(--neon-color-pink);
+    --neon-color-close1: white;
+    --neon-color-close2: white;
     animation: flicker 1.5s infinite alternate;
+    box-shadow: none !important;
 }
 
 @keyframes flicker {
     0%, 18%, 22%, 25%, 53%, 57%, 100% {
       text-shadow:
-    0 0 3px white,
-    0 0 10px white,
+    0 0 3px var(--neon-color-close1),
+    0 0 10px var(--neon-color-close2),
     0 0 21px var(--neon-color),
     0 0 42px var(--neon-color),
     0 0 82px var(--neon-color),
     0 0 92px var(--neon-color),
     0 0 102px var(--neon-color),
     0 0 111px var(--neon-color);
+    box-shadow: 0px 0px 10px 1px var(--neon-color);
     }
     20%, 20.1% {       
       text-shadow: none;
+      box-shadow: none;
     }
   }
+
+.entryView__buttons {
+    background: rgba(0,0,0,0.6);
+    font-family: var(--button-entryView-font);
+    font-size: 10vw;
+    margin: 20px;
+    width: 4em;
+    padding-bottom: 2vh;
+    border-radius: 25px;
+}
+
+.entryView__buttons--green {
+    color: var(--neon-color-green);
+    border: 3px solid var(--neon-color-green);
+    --neon-color: var(--neon-color-green);
+    --neon-color-close1: black;
+    --neon-color-close2: var(--neon-color-green);
+    animation: flicker 8s infinite alternate;
+
+}
+
+.entryView__buttons--yellow {
+    color: var(--neon-color-yellow);
+    border: 3px solid var(--neon-color-yellow);
+    --neon-color: var(--neon-color-yellow);
+    --neon-color-close1: black;
+    --neon-color-close2: var(--neon-color-yellow);
+    animation: flicker 10s infinite alternate;
+}
+
+@media screen and (prefers-reduced-motion) { 
+    .entryView__neonText, .entryView__buttons--green, .entryView__buttons--yellow {
+      animation: none !important;
+    }
+  }
+
+.entryView__logos img {
+    height: 8vh;
+    margin: 20px;
+    margin: -10em 3em 10em 3em;
+}
