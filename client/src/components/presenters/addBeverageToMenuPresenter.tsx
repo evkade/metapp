@@ -4,7 +4,6 @@ import usePromise from '../../hooks/usePromise';
 import { searchTypes } from '../../constants/searchTypes';
 
 export const AddBeverageToMenuPresenter = ({drinkModel, searchType}) => {
-  console.log(searchType);
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
   const [isLoading, setLoading] = useState(false);
@@ -23,15 +22,12 @@ export const AddBeverageToMenuPresenter = ({drinkModel, searchType}) => {
   }
 
   useEffect(() => {
-    console.log('[DATA ERROR]', beverageData, beverageError);
     if(beverageData) {
-      console.log(beverageData);
       switch(searchType) {
         case searchTypes.BEER: 
           setSearchResults(beverageData.items.map(beer => drinkModel.setAPIBeerToObject(beer)));
           break; 
         case searchTypes.COCKTAIL: 
-          console.log('0 ', beverageData); 
           setSearchResults(beverageData.drinks.map(cocktail => drinkModel.setAPICocktailToObject(cocktail)));
           break;
       }
