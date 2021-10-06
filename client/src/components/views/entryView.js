@@ -1,10 +1,12 @@
 import React from 'react'; 
-import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../components.css';
 import mkmlogo from '../images/mkm_logo.png'
 import dkmlogo from '../images/dkm_logo.png'
 
 const EntryView = () => {
+    let history = useHistory();
+
     return (
         <div className="entryView">
             <div className="entryView__logos">
@@ -15,7 +17,7 @@ const EntryView = () => {
                 METAPP
             </p> 
             <div>
-                <button className="entryView__buttons entryView__buttons--yellow">
+                <button onClick={() => history.push('/signIn')} className="entryView__buttons entryView__buttons--yellow">
                     log in
                 </button>
                 <button className="entryView__buttons entryView__buttons--green">
