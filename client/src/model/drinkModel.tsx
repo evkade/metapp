@@ -1,15 +1,25 @@
 export default class DrinkModel {
 
-  // todo ev lägga till searchTypes här ist
+  // todo ev lägga till searchTypes / beverageobjects här ?
 
-  getCocktailBasedOnName(name): Promise<any> {
+  setCocktailAPIResultToObject(result) : string[] {
+    return result
+  }
+
+  getCocktailBasedOnName(name: string): Promise<any> {
     const cocktails = this.getFetch(
       "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + name
     ).then((data) => data);
     return cocktails;
   }
 
-  getBeerBasedOnName(name) {
+  async getFetch(url: string) {
+    return await fetch(url, {
+      method: "GET",
+    }).then((response) => response.json());
+  }
+
+  getBeerBasedOnName(name: string) {
     const beers = this.postFetch(
       "http://localhost:5000/api/beers", 
       {
@@ -19,13 +29,7 @@ export default class DrinkModel {
     return beers;
   }
 
-  async getFetch(url) {
-    return await fetch(url, {
-      method: "GET",
-    }).then((response) => response.json());
-  }
-
-  async postFetch(url, data) {
+  async postFetch(url: string, data) {
     return await fetch(url, {
       method: "POST",
       headers: {
