@@ -70,3 +70,6 @@ Example: Run npm tests
 ```
 docker exec -it <name of container> npm run test
 ``` 
+docker-compose down
+
+docker system prune

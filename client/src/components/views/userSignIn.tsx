@@ -2,33 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import '../components.css';
 
-const UserSignIn = () => {
-
-    const [userAuth, setUserAuth] = useState(false);
+const UserSignIn = ({userAuth, checkUserAuth}) => {
     const [username, setUsername] = useState('');
     const [pwd, setPwd] = useState('');
 
-    const checkAuth = (username, password) => {
-        if(username=="username" && password=="password") {
-            handleErrDisplay(false,"signInForm__successElement")
-            setUserAuth(true);
-        }
-        else if(username!="username" || password!="password") {
-            handleErrDisplay(true, "usr-pwdError")
-        }
-    }
-
-    const handleErrDisplay = (display, element) => {
-        if(display) {
-            document.getElementById(`${element}`)!.classList.add("signInForm__errElement--display");
-        }
-        else {
-            console.log(document.getElementById(`${element}`))
-            document.getElementById("usr-pwdError")!.classList.remove("signInForm__errElement--display")
-        }
-    }
-
-    return <>
+    return (
+    <>
     <div className="signInForm">
         {!userAuth ?
         <>
@@ -38,7 +17,7 @@ const UserSignIn = () => {
                 <input type="password" id="signInPwd" name="password" className="signInForm__form__input" placeholder="Password" value={pwd} onChange={(event) => setPwd(event.target.value)} ></input>
                 <button className="signInForm__form__submit"
                     onClick={() => {
-                        checkAuth(username, pwd)}
+                        checkUserAuth(username, pwd)}
                     }>
                     Submit</button>
             </div>
@@ -55,7 +34,7 @@ const UserSignIn = () => {
             </div>
         </div>}
     </div>
-    </>
+    </>)
 };
 
 export default UserSignIn;

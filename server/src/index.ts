@@ -1,11 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { drinkRouter } from './routes/drinks';
 import { userRouter } from './routes/user'
 import connectDB from './db'
-import bodyParser from 'body-parser'
+import { beerRouter } from './routes/beers';
 
+const bp = require('body-parser');
 const app = express();
 
 //Handles post requests
@@ -44,14 +44,17 @@ const options: cors.CorsOptions = {
   },
 };
 
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true }));
 app.use(cors(options));
-app.use(drinkRouter);
 app.use(userRouter);
+app.use(beerRouter);
 
 app.get('/', (req, res) => {
   console.log('recieved request');
   res.send('Express + TypeScript Server');
 });
+
 app.listen(Port, () => {
   console.log(
     `⚡️[server]: Server is running in ${process.env.NODE_ENV} at https://localhost:${Port}`

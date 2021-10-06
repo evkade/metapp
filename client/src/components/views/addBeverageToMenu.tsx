@@ -1,7 +1,12 @@
 import React from "react";
 
-export const AddBeverageToMenu = ({searchBeverage, searchResult }) => {
+// todo: lägga till en bättre loading 
+// todo: lägga till fins grej när searchResults är tom
+// todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
+
+export const AddBeverageToMenu = ({searchBeverage, searchResult, isLoading}) => {
   const [query, setQuery] = React.useState("");
+  console.log(searchResult);
 
   return (
     <div>
@@ -12,7 +17,7 @@ export const AddBeverageToMenu = ({searchBeverage, searchResult }) => {
         {" "}
         Search{" "}
       </button>
-      {searchResult ? searchResult.drinks.map(cocktail => <div>{cocktail.strDrink}</div>) : <div> Loading </div>}
+      {!isLoading && searchResult ? searchResult.map(beverage => <div key={beverage} >{beverage}</div>) : <div> Loading </div>} 
     </div>
   );
 };
