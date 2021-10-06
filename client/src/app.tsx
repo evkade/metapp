@@ -22,7 +22,7 @@ const App = () => {
           <Route exact path="/modifyMenu">
             <AddBeverageToMenuPresenter
               drinkModel={drinkModel}
-              searchType={searchTypes.BEER}
+              searchType={searchTypes.COCKTAIL}
             />
           </Route>
           <Route exact path="/signIn">

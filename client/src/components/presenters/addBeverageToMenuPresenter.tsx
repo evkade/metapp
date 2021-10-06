@@ -28,10 +28,11 @@ export const AddBeverageToMenuPresenter = ({drinkModel, searchType}) => {
       console.log(beverageData);
       switch(searchType) {
         case searchTypes.BEER: 
-          setSearchResults(beverageData.items.map(beer => beer.name));
+          setSearchResults(beverageData.items.map(beer => drinkModel.setAPIBeerToObject(beer)));
           break; 
         case searchTypes.COCKTAIL: 
-          setSearchResults(beverageData.drinks.map(drink => drink.strDrink));
+          console.log('0 ', beverageData); 
+          setSearchResults(beverageData.drinks.map(cocktail => drinkModel.setAPICocktailToObject(cocktail)));
           break;
       }
       setBeveragePromise(null);
@@ -47,6 +48,7 @@ export const AddBeverageToMenuPresenter = ({drinkModel, searchType}) => {
   return (
     // todo add button which changes which searchType we have
     <AddBeverageToMenu
+      searchType={searchType}
       searchBeverage={searchBeverage}
       searchResult={searchResults} // todo: just nu skickar bara lista på namn, sen skicka hela objekten
       isLoading={isLoading}

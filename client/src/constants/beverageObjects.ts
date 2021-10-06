@@ -1,12 +1,17 @@
-interface beverage {
+// todo ev lägga till searchTypes / beverageobjects här ?
+
+export interface Beverage {
     name: string, 
     price: number
 }
 
-interface beer extends beverage {
-    type: string
+export interface Beer extends Beverage {
+    type: string,
+    volume: number,
+    alcoholPercentage: number
 }
 
-interface coktail extends beverage {
+export interface Cocktail extends Beverage {
     ingredientList: string[]
+    ingredientMeasuresList: string[]
 }

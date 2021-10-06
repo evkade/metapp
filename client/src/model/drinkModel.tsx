@@ -1,9 +1,43 @@
+import { Beer, Cocktail } from "../constants/beverageObjects";
+
 export default class DrinkModel {
+  setAPIBeerToObject(apiBeer): Beer {
+    const beer: Beer = {
+      name: apiBeer.name,
+      type: apiBeer.type,
+      volume: apiBeer.volume_ml,
+      alcoholPercentage: apiBeer.alcohol_vol,
+      price: +apiBeer.price_sek * 1.25,
+    };
+    return beer;
+  }
 
-  // todo ev lägga till searchTypes / beverageobjects här ?
+  setAPICocktailToObject(apiCocktail): Cocktail {
+    var hashNumber: number = 1;
+    var ingredientHash: string = "strIngredient" + hashNumber.toString();
+    var measureHash: string = "strMeasure" + hashNumber.toString();
+    var ingredientList: string[] = [];
+    var ingredientMeasuresList: string[] = [];
 
-  setCocktailAPIResultToObject(result) : string[] {
-    return result
+    while (
+      apiCocktail[ingredientHash] !== null &&
+      apiCocktail[measureHash] !== null
+    ) {
+      ingredientList = [...ingredientList, apiCocktail[ingredientHash]];
+      ingredientMeasuresList = [...ingredientList, apiCocktail[measureHash]];
+      hashNumber++;
+      var ingredientHash: string = "strIngredient" + hashNumber.toString();
+      var measureHash: string = "strMeasure" + hashNumber.toString();
+    }
+
+    const cocktail: Cocktail = {
+      name: apiCocktail.strDrink,
+      price: 0, // default
+      ingredientList: ingredientList,
+      ingredientMeasuresList: ingredientMeasuresList,
+    };
+
+    return cocktail;
   }
 
   getCocktailBasedOnName(name: string): Promise<any> {
@@ -20,12 +54,9 @@ export default class DrinkModel {
   }
 
   getBeerBasedOnName(name: string) {
-    const beers = this.postFetch(
-      "http://localhost:5000/api/beers", 
-      {
-        name: name,
-      }
-    ).then(data => data);
+    const beers = this.postFetch("http://localhost:5000/api/beers", {
+      name: name,
+    }).then((data) => data);
     return beers;
   }
 
@@ -33,7 +64,7 @@ export default class DrinkModel {
     return await fetch(url, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     }).then((response) => response.json());
