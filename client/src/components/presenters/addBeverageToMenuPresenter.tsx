@@ -7,11 +7,8 @@ export const AddBeverageToMenuPresenter = ({drinkModel, searchType}) => {
   console.log(searchType);
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
-
-  const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setLoading] = useState(false);
-
-  // todo: göra ett eget object för cocktails och beers med vissa specifika fields 
+  const [searchResults, setSearchResults] = useState([]);
  
   const searchBeverage = (query) => {
     setLoading(true); 
@@ -28,6 +25,7 @@ export const AddBeverageToMenuPresenter = ({drinkModel, searchType}) => {
   useEffect(() => {
     console.log('[DATA ERROR]', beverageData, beverageError);
     if(beverageData) {
+      console.log(beverageData);
       switch(searchType) {
         case searchTypes.BEER: 
           setSearchResults(beverageData.items.map(beer => beer.name));
