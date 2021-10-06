@@ -46,6 +46,7 @@ app.get('/', (req, res) => {
   console.log('recieved request');
   res.send('Express + TypeScript Server');
 });
+
 app.listen(Port, () => {
   console.log(
     `⚡️[server]: Server is running in ${process.env.NODE_ENV} at https://localhost:${Port}`
