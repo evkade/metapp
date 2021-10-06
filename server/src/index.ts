@@ -1,13 +1,20 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import { userRouter } from './routes/user'
+import connectDB from './db'
 import { beerRouter } from './routes/beers';
 
 const bp = require('body-parser');
 const app = express();
 
+//Handles post requests
+app.use(express.json());
+
 dotenv.config({ path: './src/config.env' });
 const Port = process.env.PORT || 6000;
+
+const db = connectDB();
 
 // Cors policy: Allows localhost:8080 which is client port
 var allowedOrigins = ['http://localhost:8080'];
@@ -40,6 +47,7 @@ const options: cors.CorsOptions = {
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 app.use(cors(options));
+app.use(userRouter);
 app.use(beerRouter);
 
 app.get('/', (req, res) => {
