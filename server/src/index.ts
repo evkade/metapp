@@ -8,7 +8,7 @@ import { beerRouter } from './routes/beers';
 const bp = require('body-parser');
 const app = express();
 
-//Handles post requests
+// Handles post requests
 app.use(express.json());
 
 dotenv.config({ path: './src/config.env' });
@@ -51,7 +51,7 @@ app.use(userRouter);
 app.use(beerRouter);
 
 app.get('/', (req, res) => {
-  console.log('recieved request');
+  console.log('received request');
   res.send('Express + TypeScript Server');
 });
 

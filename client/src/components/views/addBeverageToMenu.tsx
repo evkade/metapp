@@ -8,20 +8,24 @@ export const AddBeverageToMenu = ({
   searchBeverage,
   searchResult,
   isLoading,
+  addToMenu,
+  removeFromMenu
 }) => {
   const [query, setQuery] = React.useState("");
-  console.log(searchResult);
+  console.log('searchResult', searchResult);
 
   return (
     <div>
       <input onChange={(event) => setQuery(event.target.value)}></input>
-      <button type="submit" onClick={() => searchBeverage(query)}>
-        {" "}
-        Search{" "}
-      </button>
+      <button type="submit" onClick={() => searchBeverage(query)}>Search</button>
       {!isLoading && searchResult ? (
         searchResult.map((beverage) => (
-          <div onClick={ ()=> console.log(beverage.name)}> <div> {hashListToDiv(beverage)} </div> <br/> </div>
+          <div onClick={() => console.log(beverage.name)}>
+            <div> {hashListToDiv(beverage)} </div> 
+            <button type="submit" onClick={() => addToMenu(beverage)}>Add to menu </button>
+            <button type="submit" onClick={() => removeFromMenu(beverage)}>Remove from menu </button>
+            <br/>
+          </div>
         ))
       ) : (
         <div> Loading </div>
@@ -39,7 +43,7 @@ const hashListToDiv = (hashList) => {
       // type of value is object
       divList = [...divList, <div>{hashListToDiv(value)}</div>];
     } else {
-      divList = [...divList, <div >{k + ": " + value}</div>];
+      divList = [...divList, <div>{k + ": " + value}</div>];
     }
   }
   return divList;
