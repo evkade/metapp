@@ -1,10 +1,10 @@
 const initialState = {}
 
-const drinksReducer = (state=initialState, action) => {
+const menuReducer = (state=initialState, action) => {
     switch(action.type){
         default:
             return state;
     }
 }
 
-export default drinksReducer;
+export default menuReducer;

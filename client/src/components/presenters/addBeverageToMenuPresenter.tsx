@@ -44,7 +44,6 @@ export const AddBeverageToMenuPresenter = ({drinkModel, searchType}) => {
   return (
     // todo add button which changes which searchType we have
     <AddBeverageToMenu
-      searchType={searchType}
       searchBeverage={searchBeverage}
       searchResult={searchResults} // todo: just nu skickar bara lista på namn, sen skicka hela objekten
       isLoading={isLoading}

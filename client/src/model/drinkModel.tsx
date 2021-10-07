@@ -1,6 +1,8 @@
 import { Beer, Cocktail } from "../constants/beverageObjects";
 
+// todo maybe change name of this
 export default class DrinkModel {
+
   setAPIBeerToObject(apiBeer): Beer {
     const beer: Beer = {
       name: apiBeer.name,
