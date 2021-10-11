@@ -1,14 +1,8 @@
 import { Beer, Cocktail } from "../constants/beverageObjects";
-import { searchTypes } from "../constants/searchTypes";
 
 // todo maybe change name of this
 // basically it is the class controlling the add to menu function
 export default class DrinkModel {
-
-  constructor(searchType = searchTypes.COCKTAIL) { // default searchType
-  }
-
-  searchType; // litterally wtf men behövde lägga till detta så att klassen har det som property
 
   setAPIBeerToObject(apiBeer): Beer {
     const beer: Beer = {
