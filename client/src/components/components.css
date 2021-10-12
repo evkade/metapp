@@ -1,7 +1,10 @@
 :root {
   --neon-color-pink: #ee2a7b;
+  --light-neon-color-pink: #fbd0e2;
   --neon-color-green: #2aee4b;
+  --light-neon-color-green: #d0fbd7;
   --neon-color-yellow: #deee2a;
+  --light-neon-color-yellow: #f8fbd0;
   --dark-background: rgb(26, 26, 26);
   --barcode-font: "Libre Barcode 39 Extended Text", cursive;
   --button-entryView-font: "Pacifico", cursive;
@@ -125,4 +128,21 @@ body {
   margin-bottom: 10vh;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.drinkCard {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 10%;
+  margin:10px;
+  padding: 10px;
+  background-color: var(--light-neon-color-pink);
+}
+
+.drinkCard--made {
+  background-color: var(--light-neon-color-yellow);
+}
+
+.drinkCard--finished {
+  background-color: var(--light-neon-color-green);
 }
