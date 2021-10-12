@@ -75,6 +75,7 @@ export const AddBeverageToMenuPresenter = (props) => {
       setSearchResults={setSearchResults}
       toggleSearchType={() => toggleSearchType()}
       isLoading={isLoading}
+      menu={props.menu.menu}
       addToMenu={(beverage) => props.addToMenu(beverage)}
       removeFromMenu={(beverage) => props.removeFromMenu(beverage)}
     />
