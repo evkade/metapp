@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -10,6 +11,7 @@ import DrinkModel from "./model/drinkModel";
 import AddBeverageToMenuPresenter from "./components/presenters/addBeverageToMenuPresenter";
 import { searchTypes } from "./constants/searchTypes";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
+import { MainNavbar } from "./components/views/mainNavbar";
 
 const drinkModel = new DrinkModel();
 
