@@ -8,7 +8,6 @@ export const CustomizeMenuPresenter = (props) => {
   console.log('Props.Menu', props.menu);
   return (
     <CustomizeMenu
-      drinkModel={props.drinkModel}
       menu={props.menu.menu}
       addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
       removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}

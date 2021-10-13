@@ -7,13 +7,11 @@ export const CustomizeMenu = ({
   menu,
   addToMenu,
   removeFromMenu,
-  drinkModel,
 }) => {
   return (
     <div>
       <MenuPresenter menu={menu} removeFromMenu={removeFromMenu}/>
       <AddBeverageToMenuPresenter
-        drinkModel={drinkModel}
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
       />

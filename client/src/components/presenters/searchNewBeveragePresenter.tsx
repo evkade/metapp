@@ -1,0 +1,67 @@
+import React, { useEffect, useState } from "react";
+import { SearchNewBeverage } from "../views/searchNewBeverage";
+import usePromise from "../../hooks/usePromise";
+import { searchTypes } from "../../constants/searchTypes";
+import DrinkModel from "../../model/drinkModel";
+
+const drinkModel = new DrinkModel();
+
+export const SearchNewBeveragePresenter = ({ menu, addToMenu, searchType }) => {
+  console.log(drinkModel);
+  console.log(menu);
+
+  const [beveragePromise, setBeveragePromise] = useState(undefined);
+  const [beverageData, beverageError] = usePromise(beveragePromise);
+  const [isLoading, setLoading] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+
+  const searchBeverage = (query) => {
+    setLoading(true);
+    switch (searchType) {
+      case searchTypes.BEER:
+        setBeveragePromise(drinkModel.getBeerBasedOnName(query));
+        break;
+      case searchTypes.COCKTAIL:
+        setBeveragePromise(drinkModel.getCocktailBasedOnName(query));
+        break;
+    }
+  };
+
+  useEffect(() => {
+    if (beverageData) {
+      switch (searchType) {
+        case searchTypes.BEER:
+          setSearchResults(
+            beverageData.items.map((beer) =>
+              drinkModel.setAPIBeerToObject(beer)
+            )
+          );
+          break;
+        case searchTypes.COCKTAIL:
+          setSearchResults(
+            beverageData.drinks.map((cocktail) =>
+              drinkModel.setAPICocktailToObject(cocktail)
+            )
+          );
+          break;
+      }
+      setBeveragePromise(null);
+      setLoading(false);
+    } else if (beverageError) {
+      // todo: visa felmeddelanden
+      setBeveragePromise(null);
+      setLoading(false);
+    }
+  }, [beverageData, beverageError]);
+
+  return (
+    <SearchNewBeverage
+      searchType={searchType}
+      searchBeverage={searchBeverage}
+      searchResult={searchResults}
+      setSearchResults={setSearchResults}
+      isLoading={isLoading}
+      addToMenu={(beverage) => addToMenu(beverage)}
+    />
+  );
+};

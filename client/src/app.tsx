@@ -4,15 +4,12 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-import DrinkModel from "./model/drinkModel";
 import { searchTypes } from "./constants/searchTypes";
 
 import EntryView from "./components/views/entryView";
 import { HandleUserSignIn } from "./components/presenters/handleUserSignIn";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
-
-const drinkModel = new DrinkModel();
 
 const App = () => {
   return (
@@ -24,7 +21,6 @@ const App = () => {
           </Route>
           <Route exact path="/customizeMenu">
             <CustomizeMenuPresenter
-              drinkModel={drinkModel}
               searchType={searchTypes.COCKTAIL}
             />
           </Route>
