@@ -1,12 +1,14 @@
 import React from "react";
 import { searchTypes } from "../../constants/searchTypes";
 import { SearchNewBeveragePresenter } from "../presenters/searchNewBeveragePresenter";
+import { SearchHistoryPresenter } from "../presenters/searchHistoryPresenter";
 import { Beverage } from "../../constants/beverageObjects";
 
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
-
+// todo: is if in menu grey button 
+// todo: 
 export const AddBeverageToMenu = ({
   searchType,
   toggleSearchType,
@@ -16,7 +18,7 @@ export const AddBeverageToMenu = ({
   const toggleSearchTypeButtonClick = () => {
     toggleSearchType();
     // setQuery("");
-    //setSearchResults("");
+    // setSearchResults("");
   };
 
   const toggleSearchTypeButtonLabel: string =
@@ -32,6 +34,11 @@ export const AddBeverageToMenu = ({
         {toggleSearchTypeButtonLabel}
       </button>
       <SearchNewBeveragePresenter
+        menu={menu}
+        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+        searchType={searchType}
+      />
+      <SearchHistoryPresenter
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
         searchType={searchType}

@@ -4,11 +4,9 @@ import { searchTypes } from "../../constants/searchTypes";
 // todo: lägga till finns grej när searchResults är tom
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
 
-export const SearchNewBeverage = ({
-  searchType,
+export const SearchBeverage = ({
   searchBeverage,
   searchResult,
-  setSearchResults,
   isLoading,
   addToMenu,
 }) => {

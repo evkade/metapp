@@ -3,11 +3,12 @@ import { SearchBeverage } from "../views/searchBeverage";
 import usePromise from "../../hooks/usePromise";
 import { searchTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
-import { Beverage } from "../../constants/beverageObjects";
 
 const drinkModel = new DrinkModel();
 
-export const SearchNewBeveragePresenter = ({ menu, addToMenu, searchType }) => {
+// OBS
+// This component is not implemented yet as I need the history from database to do that
+export const SearchHistoryPresenter = ({ menu, addToMenu, searchType }) => {
 
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
@@ -58,7 +59,7 @@ export const SearchNewBeveragePresenter = ({ menu, addToMenu, searchType }) => {
       searchBeverage={searchBeverage}
       searchResult={searchResults}
       isLoading={isLoading}
-      addToMenu={(beverage : Beverage) => addToMenu(beverage)}
+      addToMenu={(beverage) => addToMenu(beverage)}
     />
   );
 };
