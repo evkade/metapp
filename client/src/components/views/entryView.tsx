@@ -21,7 +21,10 @@ const EntryView = () => {
         >
           log in
         </button>
-        <button className="entryView__buttons entryView__buttons--green">
+        <button
+          onClick={() => history.push("/signUp")}
+          className="entryView__buttons entryView__buttons--green"
+        >
           sign up
         </button>
       </div>
