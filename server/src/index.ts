@@ -15,6 +15,7 @@ const app = express();
 app.use(express.json());
 
 dotenv.config({ path: './src/config.env' });
+dotenv.config({ path: './src/secret.config.env' });
 
 const Port = process.env.PORT || 6000;
 
