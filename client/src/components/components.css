@@ -4,7 +4,8 @@
   --neon-color-yellow: #deee2a;
   --dark-background: rgb(26, 26, 26);
   --barcode-font: "Libre Barcode 39 Extended Text", cursive;
-  --button-entryView-font: "Pacifico", cursive;
+  --button-neon-font: "Pacifico", cursive;
+  --general-font: "Montserrat", sans-serif;
 }
 
 body {
@@ -12,33 +13,78 @@ body {
 }
 
 .signInForm {
+  text-align: center;
+  font-family: var(--general-font);
 }
 
 .signInForm__form {
+  background: rgb(240, 240, 240);
+  background-image: linear-gradient(to left, rgb(240, 240, 240), #ffff);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+  box-shadow: 5px 5px 8px;
+  width: 90%;
+  max-width: 600px;
+  aspect-ratio: 5/3;
 }
 
-.signInForm__form__input {
+.signInForm__form--flexRow {
+  display: flex;
+  height: 30%;
+  margin-bottom: 20px;
 }
 
-.signInForm__form__submit {
+.signInForm__logo {
+  flex: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.signInForm__title {
+  display: flex;
+  flex: 0.5;
+  align-items: center;
+  font-size: 40px;
+}
+
+.signInForm__logo img {
+  height: 100%;
+}
+
+.signInForm__inputContainer {
+  flex: 1;
+  display: grid;
+}
+
+div.signInForm__inputContainer input,
+div.signInForm__inputContainer button {
+  font-size: 20px;
+  padding: 5px;
+  font-family: var(--general-font);
+}
+
+.signInForm__inputContainer--input {
 }
 
 .signInForm__errElement {
-}
-
-.signInForm__errElement {
-  display: none;
-}
-
-.signInForm__errElement--display {
-  display: block;
+  padding: 20px;
+  color: red;
 }
 
 .signInForm__successElement {
   display: block;
+  color: white;
 }
 
 .entryView {
+}
+
+.brickBackground {
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
     url("https://i.imgur.com/mnVAkgM.jpg");
   display: flex;
@@ -86,8 +132,8 @@ body {
 
 .entryView__buttons {
   background: rgba(0, 0, 0, 0.6);
-  font-family: var(--button-entryView-font);
-  font-size: 4vw;
+  font-family: var(--button-neon-font);
+  font-size: 5vw;
   margin: 20px;
   width: 4em;
   padding-bottom: 2vh;
