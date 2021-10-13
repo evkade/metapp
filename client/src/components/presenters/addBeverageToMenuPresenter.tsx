@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { addToMenu, removeFromMenu } from "../../redux/actions/menu";
 import { AddBeverageToMenu } from "../views/addBeverageToMenu";
 import usePromise from "../../hooks/usePromise";
 import { searchTypes } from "../../constants/searchTypes";
 
-export const AddBeverageToMenuPresenter = (props) => {
-  const drinkModel = props.drinkModel;
+export const AddBeverageToMenuPresenter = ({menu, addToMenu, drinkModel}) => {
   console.log(drinkModel);
-  console.log(props.menu);
+  console.log(menu);
 
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
   const [isLoading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [searchType, setSearchType] = useState(props.searchType);
+  const [searchType, setSearchType] = useState(searchTypes.COCKTAIL); // default
 
   const searchBeverage = (query) => {
     setLoading(true);
@@ -31,8 +29,7 @@ export const AddBeverageToMenuPresenter = (props) => {
   const toggleSearchType = () => {
     switch (searchType) {
       case searchTypes.BEER:
-        drinkModel.searchType = 
-        setSearchType(searchTypes.COCKTAIL);
+        drinkModel.searchType = setSearchType(searchTypes.COCKTAIL);
         break;
       case searchTypes.COCKTAIL:
         setSearchType(searchTypes.BEER);
@@ -75,27 +72,7 @@ export const AddBeverageToMenuPresenter = (props) => {
       setSearchResults={setSearchResults}
       toggleSearchType={() => toggleSearchType()}
       isLoading={isLoading}
-      addToMenu={(beverage) => props.addToMenu(beverage)}
-      removeFromMenu={(beverage) => props.removeFromMenu(beverage)}
+      addToMenu={(beverage) => addToMenu(beverage)}
     />
   );
 };
-
-const mapStateToProps = (store) => {
-  console.log("mapStateToProps", store, store.state);
-  return {
-    menu: store.menu, // hade state.reducer.menu innan men funkade ej
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addToMenu: (beverage) => dispatch(addToMenu(beverage)),
-    removeFromMenu: (beverage) => dispatch(removeFromMenu(beverage)),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AddBeverageToMenuPresenter);

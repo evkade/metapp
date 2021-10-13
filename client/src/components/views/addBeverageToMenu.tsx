@@ -1,5 +1,5 @@
 import React from "react";
-import {searchTypes} from "../../constants/searchTypes";
+import { searchTypes } from "../../constants/searchTypes";
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
@@ -12,7 +12,6 @@ export const AddBeverageToMenu = ({
   setSearchResults,
   isLoading,
   addToMenu,
-  removeFromMenu
 }) => {
   const [query, setQuery] = React.useState('');
   const toggleSearchTypeButtonClick = () => {
@@ -32,7 +31,6 @@ export const AddBeverageToMenu = ({
           <div onClick={() => console.log(beverage.name)}>
             <div> {hashListToDiv(beverage)} </div> 
             <button type="submit" onClick={() => addToMenu(beverage)}>Add to menu </button>
-            <button type="submit" onClick={() => removeFromMenu(beverage)}>Remove from menu </button>
             <br/>
           </div>
         ))
