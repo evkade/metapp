@@ -1,5 +1,5 @@
 import React from "react";
-import { searchTypes } from "../../constants/searchTypes";
+import { beverageTypes } from "../../constants/searchTypes";
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale

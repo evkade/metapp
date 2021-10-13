@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SearchBeverage } from "../views/searchBeverage";
 import usePromise from "../../hooks/usePromise";
-import { searchTypes } from "../../constants/searchTypes";
+import { beverageTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
 import { Beverage } from "../../constants/beverageObjects";
 
@@ -17,10 +17,10 @@ export const SearchNewBeveragePresenter = ({ menu, addToMenu, searchType }) => {
   const searchBeverage = (query) => {
     setLoading(true);
     switch (searchType) {
-      case searchTypes.BEER:
+      case beverageTypes.BEER:
         setBeveragePromise(drinkModel.getBeerBasedOnName(query));
         break;
-      case searchTypes.COCKTAIL:
+      case beverageTypes.COCKTAIL:
         setBeveragePromise(drinkModel.getCocktailBasedOnName(query));
         break;
     }
@@ -29,14 +29,14 @@ export const SearchNewBeveragePresenter = ({ menu, addToMenu, searchType }) => {
   useEffect(() => {
     if (beverageData) {
       switch (searchType) {
-        case searchTypes.BEER:
+        case beverageTypes.BEER:
           setSearchResults(
             beverageData.items.map((beer) =>
               drinkModel.setAPIBeerToObject(beer)
             )
           );
           break;
-        case searchTypes.COCKTAIL:
+        case beverageTypes.COCKTAIL:
           setSearchResults(
             beverageData.drinks.map((cocktail) =>
               drinkModel.setAPICocktailToObject(cocktail)

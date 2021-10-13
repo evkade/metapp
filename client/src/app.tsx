@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-import { searchTypes } from "./constants/searchTypes";
+import { beverageTypes } from "./constants/searchTypes";
 
 import EntryView from "./components/views/entryView";
 import { HandleUserSignIn } from "./components/presenters/handleUserSignIn";
@@ -21,7 +21,6 @@ const App = () => {
           </Route>
           <Route exact path="/customizeMenu">
             <CustomizeMenuPresenter
-              searchType={searchTypes.COCKTAIL}
             />
           </Route>
           <Route exact path="/signIn">

@@ -1,5 +1,5 @@
 import React from "react";
-import { searchTypes } from "../../constants/searchTypes";
+import { beverageTypes } from "../../constants/searchTypes";
 import { SearchNewBeveragePresenter } from "../presenters/searchNewBeveragePresenter";
 import { SearchHistoryPresenter } from "../presenters/searchHistoryPresenter";
 import { Beverage } from "../../constants/beverageObjects";
@@ -10,22 +10,22 @@ import { Beverage } from "../../constants/beverageObjects";
 // todo: is if in menu grey button 
 // todo: 
 export const AddBeverageToMenu = ({
-  searchType,
-  toggleSearchType,
+  searchedBeverageType,
+  toggleSearchedBeverageType,
   menu,
   addToMenu,
 }) => {
   const toggleSearchTypeButtonClick = () => {
-    toggleSearchType();
+    toggleSearchedBeverageType();
     // setQuery("");
     // setSearchResults("");
   };
 
   const toggleSearchTypeButtonLabel: string =
     "Add " +
-    (searchType === searchTypes.BEER
-      ? searchTypes.COCKTAIL
-      : searchTypes.BEER) +
+    (searchedBeverageType === beverageTypes.BEER
+      ? beverageTypes.COCKTAIL
+      : beverageTypes.BEER) +
     " to menu";
 
   return (
@@ -36,12 +36,12 @@ export const AddBeverageToMenu = ({
       <SearchNewBeveragePresenter
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-        searchType={searchType}
+        searchType={searchedBeverageType}
       />
       <SearchHistoryPresenter
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-        searchType={searchType}
+        searchType={searchedBeverageType}
       />
     </div>
   );

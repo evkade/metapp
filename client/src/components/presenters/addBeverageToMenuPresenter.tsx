@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { AddBeverageToMenu } from "../views/addBeverageToMenu";
-import { searchTypes } from "../../constants/searchTypes";
+import { beverageTypes } from "../../constants/searchTypes";
 import { Beverage } from "constants/beverageObjects";
 
 export const AddBeverageToMenuPresenter = ({ menu, addToMenu }) => {
 
-  const [searchType, setSearchType] = useState(searchTypes.COCKTAIL); // default
+  const [searchedBeverageType, setSearchedBeverageType] = useState(beverageTypes.COCKTAIL); // default
 
-  const toggleSearchType = () => {
-    switch (searchType) {
-      case searchTypes.BEER:
-        setSearchType(searchTypes.COCKTAIL);
+  const toggleSearchedBeverageType = () => {
+    switch (searchedBeverageType) {
+      case beverageTypes.BEER:
+        setSearchedBeverageType(beverageTypes.COCKTAIL);
         break;
-      case searchTypes.COCKTAIL:
-        setSearchType(searchTypes.BEER);
+      case beverageTypes.COCKTAIL:
+        setSearchedBeverageType(beverageTypes.BEER);
         break;
     }
   };
@@ -21,8 +21,8 @@ export const AddBeverageToMenuPresenter = ({ menu, addToMenu }) => {
   return (
     <div>
       <AddBeverageToMenu
-        searchType={searchType}
-        toggleSearchType={() => toggleSearchType()}
+        searchedBeverageType={searchedBeverageType}
+        toggleSearchedBeverageType={() => toggleSearchedBeverageType()}
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
       />
