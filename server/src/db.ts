@@ -9,6 +9,4 @@ const connectDB = async () => {
     console.log('db connected: ', conn.connection.host);
 }
 
-
-
 export default connectDB;
