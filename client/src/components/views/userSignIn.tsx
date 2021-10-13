@@ -2,13 +2,32 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import "../components.css";
 import Fingerprint from "../images/fingerprint.png";
+import { useTransition, animated } from "react-spring";
 
 const UserSignIn = ({ userAuth, checkUserAuth, signInError }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+
+  // useEffect(() => {
+  //   setTimeout(() => setIsVisible(true), 2000);
+  // }, []);
+
+  const transition = useTransition(isVisible, {});
 
   return (
     <>
+      <button onClick={(v) => setIsVisible(!v)}>Click me</button>
+      <div className="red-brick">Hi</div>
+      {transition((style, item) =>
+        item ? (
+          <animated.div className="red-brick" style={style}>
+            Youuuhouuuuu
+          </animated.div>
+        ) : (
+          ""
+        )
+      )}
       <div className="signInForm brickBackground">
         {!userAuth && (
           <>
