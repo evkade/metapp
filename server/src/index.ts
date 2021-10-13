@@ -11,7 +11,7 @@ import { authRouter } from './routes/auth';
 const bp = require('body-parser');
 const app = express();
 
-//Handles post requests
+// Handles post requests
 app.use(express.json());
 
 dotenv.config({ path: './src/config.env' });
@@ -69,7 +69,7 @@ app.use(beerRouter);
 app.use(authRouter);
 
 app.get('/', (req, res) => {
-  console.log('recieved request');
+  console.log('received request');
   res.send('Express + TypeScript Server');
 });
 
