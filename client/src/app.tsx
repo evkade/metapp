@@ -9,6 +9,7 @@ import { HandleUserSignIn } from "./components/presenters/handleUserSignIn";
 import DrinkModel from "./model/drinkModel";
 import AddBeverageToMenuPresenter from "./components/presenters/addBeverageToMenuPresenter";
 import { searchTypes } from "./constants/searchTypes";
+import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 
 const drinkModel = new DrinkModel();
 
@@ -28,6 +29,9 @@ const App = () => {
           </Route>
           <Route exact path="/signIn">
             <HandleUserSignIn />
+          </Route>
+          <Route exakt path="/viewOrders">
+            <AdminViewDrinkOrdersPresenter />
           </Route>
         </Switch>
       </Router>

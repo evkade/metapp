@@ -5,6 +5,9 @@ import { userRouter } from './routes/user'
 import connectDB from './db'
 import { beerRouter } from './routes/beers';
 
+import cookieSession from "cookie-session";
+import { authRouter } from './routes/auth';
+
 const bp = require('body-parser');
 const app = express();
 
@@ -12,6 +15,8 @@ const app = express();
 app.use(express.json());
 
 dotenv.config({ path: './src/config.env' });
+dotenv.config({ path: './src/secret.config.env' });
+
 const Port = process.env.PORT || 6000;
 
 const db = connectDB();
@@ -44,11 +49,25 @@ const options: cors.CorsOptions = {
   },
 };
 
+app.use(
+  cookieSession({
+    name: "auth_token",
+    signed: false,
+    httpOnly: true,
+    sameSite: "none",
+    secure: false
+
+  })
+);
+
+app.use(cors(options));
+
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
-app.use(cors(options));
+
 app.use(userRouter);
 app.use(beerRouter);
+app.use(authRouter);
 
 app.get('/', (req, res) => {
   console.log('received request');
