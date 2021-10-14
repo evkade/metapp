@@ -8,7 +8,7 @@ const EntryView = () => {
   let history = useHistory();
 
   return (
-    <div className="entryView">
+    <div className="entryView brickBackground">
       <div className="entryView__logos">
         <img src={mkmlogo} />
         <img src={dkmlogo} />
