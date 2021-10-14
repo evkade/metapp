@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-export const Menu = ({ menu, removeFromMenu }) => {
+export const Menu = ({ showModal, setShowModal, menu, removeFromMenu, customizedType }) => {
   console.log('Menu', menu);
+  // todo: när edit så show modal med info från den här relevanta drinken
   return (
     <div>
         <div>MENU : </div>
       {menu.map((beverage) => (
         <div onClick={() => console.log(beverage.name)}>
           <div> {hashListToDiv(beverage)} </div>
-          <button type="submit" onClick={() => console.log("Edit")}>
+          <button type="submit" onClick={() => setShowModal(true)}>
             Edit
           </button>
           <button type="submit" onClick={() => removeFromMenu(beverage)}>

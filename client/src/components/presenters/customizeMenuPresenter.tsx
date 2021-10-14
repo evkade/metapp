@@ -1,17 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { addToMenu, removeFromMenu } from "../../redux/actions/menu";
 import { CustomizeMenu } from "../views/customizeMenu";
 import { Beverage } from "constants/beverageObjects";
+import { beverageTypes } from "../../constants/searchTypes";
 
 export const CustomizeMenuPresenter = (props) => {
-  console.log('Props.Menu', props.menu);
+  // This says if the admin is customizing the beer or cocktail part of the menu
+  const [customizedType, setCustomizedType] = useState(beverageTypes.COCKTAIL); // default = Cocktail
+  const [showModal, setShowModal] = useState(false); 
+
+  // todo: grey button where the person is currently customizing
   return (
-    <CustomizeMenu
-      menu={props.menu.menu}
-      addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
-      removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}
-    />
+    <div>
+      <button
+        type="submit"
+        onClick={() => setCustomizedType(beverageTypes.BEER)}
+      >
+        Beer
+      </button>
+      <button
+        type="submit"
+        onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
+      >
+        Cocktail
+      </button>
+      <CustomizeMenu
+        showModal={showModal}
+        setShowModal={setShowModal}
+        menu={props.menu.menu}
+        addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
+        removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}
+        customizedType={customizedType}
+      />
+    </div>
   );
 };
 

@@ -5,6 +5,8 @@ import { beverageTypes } from "../../constants/searchTypes";
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
 
 export const SearchBeverage = ({
+  showModal, 
+  setShowModal,
   searchBeverage,
   searchResult,
   isLoading,

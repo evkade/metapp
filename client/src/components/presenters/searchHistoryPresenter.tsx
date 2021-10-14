@@ -8,8 +8,7 @@ const drinkModel = new DrinkModel();
 
 // OBS
 // This component is not implemented yet as I need the history from database to do that
-export const SearchHistoryPresenter = ({ menu, addToMenu, searchType }) => {
-
+export const SearchHistoryPresenter = ({ showModal, setShowModal, menu, addToMenu, searchType }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
   const [isLoading, setLoading] = useState(false);
@@ -56,6 +55,8 @@ export const SearchHistoryPresenter = ({ menu, addToMenu, searchType }) => {
 
   return (
     <SearchBeverage
+      showModal={showModal}
+      setShowModal={setShowModal}
       searchBeverage={searchBeverage}
       searchResult={searchResults}
       isLoading={isLoading}

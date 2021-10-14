@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { AddBeverageToMenu } from "../views/addBeverageToMenu";
-import { beverageTypes } from "../../constants/searchTypes";
 import { Beverage } from "constants/beverageObjects";
+import { searchTypes } from "../../constants/searchTypes";
 
-export const AddBeverageToMenuPresenter = ({ menu, addToMenu }) => {
+export const AddBeverageToMenuPresenter = ({
+  showModal,
+  setShowModal,
+  menu,
+  addToMenu,
+  customizedType,
+}) => {
 
-  const [searchedBeverageType, setSearchedBeverageType] = useState(beverageTypes.COCKTAIL); // default
-
-  const toggleSearchedBeverageType = () => {
-    switch (searchedBeverageType) {
-      case beverageTypes.BEER:
-        setSearchedBeverageType(beverageTypes.COCKTAIL);
-        break;
-      case beverageTypes.COCKTAIL:
-        setSearchedBeverageType(beverageTypes.BEER);
-        break;
-    }
-  };
+  const [currentSearchType, setCurrentSearchType] = useState<string>(searchTypes.API)
 
   return (
     <div>
       <AddBeverageToMenu
-        searchedBeverageType={searchedBeverageType}
-        toggleSearchedBeverageType={() => toggleSearchedBeverageType()}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        currentSearchType={currentSearchType}
+        setCurrentSearchType={setCurrentSearchType}
+        searchedBeverageType={customizedType}
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
       />

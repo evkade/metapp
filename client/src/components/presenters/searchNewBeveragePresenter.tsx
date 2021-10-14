@@ -7,8 +7,13 @@ import { Beverage } from "../../constants/beverageObjects";
 
 const drinkModel = new DrinkModel();
 
-export const SearchNewBeveragePresenter = ({ menu, addToMenu, searchType }) => {
-
+export const SearchNewBeveragePresenter = ({
+  showModal,
+  setShowModal,
+  menu,
+  addToMenu,
+  searchType,
+}) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
   const [isLoading, setLoading] = useState(false);
@@ -55,10 +60,12 @@ export const SearchNewBeveragePresenter = ({ menu, addToMenu, searchType }) => {
 
   return (
     <SearchBeverage
+      showModal={showModal}
+      setShowModal={setShowModal}
       searchBeverage={searchBeverage}
       searchResult={searchResults}
       isLoading={isLoading}
-      addToMenu={(beverage : Beverage) => addToMenu(beverage)}
+      addToMenu={(beverage: Beverage) => addToMenu(beverage)}
     />
   );
 };
