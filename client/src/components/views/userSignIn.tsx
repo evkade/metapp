@@ -4,7 +4,7 @@ import "../components.css";
 import Fingerprint from "../images/fingerprint.png";
 import { useTransition, animated } from "react-spring";
 
-const UserSignIn = ({ userAuth, checkUserAuth, signInError }) => {
+const UserSignIn = ({ userAuth, signin, signInError }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -43,7 +43,7 @@ const UserSignIn = ({ userAuth, checkUserAuth, signInError }) => {
                   id="signInForm__form__submit"
                   className="signInForm__form__submit"
                   onClick={() => {
-                    checkUserAuth(username, pwd);
+                    signin(username, pwd);
                   }}
                 >
                   Submit

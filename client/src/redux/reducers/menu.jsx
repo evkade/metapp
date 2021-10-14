@@ -1,5 +1,6 @@
 const initialState = {
-    menu: []
+    menu: [],
+    currentBar: 'dkm'
 };
 
 const menuReducer = (state = initialState, action) => {
@@ -16,6 +17,11 @@ const menuReducer = (state = initialState, action) => {
             beverage => beverage.name !== action.payload.name
           ),
         ],
+      };
+    case 'SWITCH_CURRENT_BAR':
+      return {
+        ...state,
+        currentBar: (state.currentBar === 'dkm') ? 'mkm' : 'dkm'
       };
     default:
       return state;

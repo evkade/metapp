@@ -10,11 +10,13 @@ const router = express.Router();
 
 router.get("/api/auth/currentuser", isSignedIn, (req, res) => {
 
+    console.log(req.currentUser)
+
     if (!req.currentUser) {
-        res.status(400).send("not authorized")
+        return res.status(400).send("not authorized")
     }
 
-    res.status(200).send({ currentUser: req.currentUser })
+    return res.status(200).send({ currentUser: req.currentUser })
 });
 
 
@@ -33,7 +35,7 @@ router.post(
         const { user, token } = await AuthService.signIn(username, password)
             .catch(error => {
                 req.session = null;
-                res.status(400).send({ error: error })
+                return res.status(400).send({ error: error })
             });
 
 

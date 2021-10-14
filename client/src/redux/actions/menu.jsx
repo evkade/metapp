@@ -7,3 +7,7 @@ export const removeFromMenu = beverage => ({
     type: "REMOVE_FROM_MENU",
     payload: beverage
 })
+
+export const switchCurrentBar = () => ({
+    type: 'SWITCH_CURRENT_BAR'
+})
