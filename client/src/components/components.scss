@@ -1,0 +1,157 @@
+$neon-color-pink: #ee2a7b;
+$light-neon-color-pink: #fbd0e2;
+$neon-color-green: #2aee4b;
+$light-neon-color-green: #d0fbd7;
+$neon-color-yellow: #deee2a;
+$light-neon-color-yellow: #f8fbd0;
+$dark-background: rgb(26, 26, 26);
+$barcode-font: "Libre Barcode 39 Extended Text", cursive;
+$button-entryView-font: "Pacifico", cursive;
+
+@mixin keyframe-flicker(
+  $name,
+  $neon-color-close1,
+  $neon-color-close2,
+  $neon-color
+) {
+  @keyframes #{$name} {
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+      text-shadow: 0 0 3px $neon-color-close1, 0 0 10px $neon-color-close2,
+        0 0 21px $neon-color, 0 0 42px $neon-color, 0 0 82px $neon-color,
+        0 0 92px $neon-color, 0 0 102px $neon-color, 0 0 111px $neon-color;
+      box-shadow: 0px 0px 10px 1px $neon-color;
+    }
+    20%,
+    20.1% {
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
+}
+
+@include keyframe-flicker(flicker-cerise, white, white, $neon-color-pink);
+@include keyframe-flicker(
+  flicker-green,
+  black,
+  $neon-color-green,
+  $neon-color-green
+);
+
+@include keyframe-flicker(
+  flicker-yellow,
+  black,
+  $neon-color-yellow,
+  $neon-color-yellow
+);
+
+body {
+  margin: 0px !important;
+}
+
+.signInForm {
+}
+
+.signInForm__form {
+}
+
+.signInForm__form__input {
+}
+
+.signInForm__form__submit {
+}
+
+.signInForm__errElement {
+}
+
+.signInForm__errElement {
+  display: none;
+}
+
+.signInForm__errElement--display {
+  display: block;
+}
+
+.signInForm__successElement {
+  display: block;
+}
+
+.entryView {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url("https://i.imgur.com/mnVAkgM.jpg");
+  display: flex;
+  background-repeat: no-repeat;
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.entryView__neonText {
+  color: white;
+  font-size: 20vw;
+  font-family: $barcode-font;
+  animation: flicker-cerise 1.5s infinite alternate;
+  box-shadow: none !important;
+  margin-bottom: 10vh;
+}
+
+.entryView__buttons {
+  background: rgba(0, 0, 0, 0.6);
+  font-family: $button-entryView-font;
+  font-size: 4vw;
+  margin: 20px;
+  width: 4em;
+  padding-bottom: 2vh;
+  border-radius: 25px;
+}
+
+.entryView__buttons--green {
+  color: $neon-color-green;
+  border: 3px solid $neon-color-green;
+  animation: flicker-green 8s infinite alternate;
+}
+
+.entryView__buttons--yellow {
+  color: $neon-color-yellow;
+  border: 3px solid $neon-color-yellow;
+  animation: flicker-yellow 10s infinite alternate;
+}
+
+@media screen and (prefers-reduced-motion) {
+  .entryView__neonText,
+  .entryView__buttons--green,
+  .entryView__buttons--yellow {
+    animation: none !important;
+  }
+}
+
+.entryView__logos img {
+  height: 8vh;
+  margin-bottom: 10vh;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.drinkCard {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 10%;
+  margin: 10px;
+  padding: 10px;
+  background-color: $light-neon-color-pink;
+}
+
+.drinkCard--made {
+  background-color: $light-neon-color-yellow;
+}
+
+.drinkCard--finished {
+  background-color: $light-neon-color-green;
+}
