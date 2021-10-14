@@ -7,6 +7,7 @@ $light-neon-color-yellow: #f8fbd0;
 $dark-background: rgb(26, 26, 26);
 $barcode-font: "Libre Barcode 39 Extended Text", cursive;
 $button-entryView-font: "Pacifico", cursive;
+$general-font: "Montserrat", sans-serif;
 
 @mixin keyframe-flicker(
   $name,
@@ -35,6 +36,32 @@ $button-entryView-font: "Pacifico", cursive;
   }
 }
 
+@mixin centerVerticalHorizontal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin alignedGeneralFont {
+  text-align: center;
+  font-family: $general-font;
+}
+
+@mixin pageTitleFont {
+  @include alignedGeneralFont();
+  font-size: 10vh;
+}
+
+@mixin brickBackground {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url("https://i.imgur.com/mnVAkgM.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  flex-direction: column;
+  @include centerVerticalHorizontal();
+}
+
 @include keyframe-flicker(flicker-cerise, white, white, $neon-color-pink);
 @include keyframe-flicker(
   flicker-green,
@@ -55,42 +82,73 @@ body {
 }
 
 .signInForm {
+  @include alignedGeneralFont();
 }
 
 .signInForm__form {
+  background: rgb(240, 240, 240);
+  background-image: linear-gradient(to left, rgb(240, 240, 240), #ffff);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+  box-shadow: 5px 5px 8px;
+  width: 90%;
+  max-width: 600px;
+  aspect-ratio: 5/3;
 }
 
-.signInForm__form__input {
+.signInForm__form--flexRow {
+  display: flex;
+  height: 30%;
+  margin-bottom: 20px;
 }
 
-.signInForm__form__submit {
+.signInForm__logo {
+  flex: 0.5;
+  height: 100%;
+  @include centerVerticalHorizontal();
+}
+
+.signInForm__title {
+  display: flex;
+  flex: 0.5;
+  align-items: center;
+  font-size: 40px;
+}
+
+.signInForm__logo img {
+  height: 100%;
+}
+
+.signInForm__inputContainer {
+  flex: 1;
+  display: grid;
+}
+
+div.signInForm__inputContainer input,
+div.signInForm__inputContainer button {
+  font-size: 20px;
+  padding: 5px;
+  font-family: $general-font;
+}
+
+.signInForm__inputContainer--input {
 }
 
 .signInForm__errElement {
-}
-
-.signInForm__errElement {
-  display: none;
-}
-
-.signInForm__errElement--display {
-  display: block;
+  padding: 20px;
+  color: red;
 }
 
 .signInForm__successElement {
   display: block;
+  color: white;
 }
 
 .entryView {
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-    url("https://i.imgur.com/mnVAkgM.jpg");
-  display: flex;
-  background-repeat: no-repeat;
-  background-size: cover;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  flex-direction: column;
+  @include brickBackground();
 }
 
 .entryView__neonText {
@@ -107,7 +165,7 @@ body {
   font-family: $button-entryView-font;
   font-size: 4vw;
   margin: 20px;
-  width: 4em;
+  width: 5em;
   padding-bottom: 2vh;
   border-radius: 25px;
 }
@@ -154,4 +212,66 @@ body {
 
 .drinkCard--finished {
   background-color: $light-neon-color-green;
+}
+
+.menuView {
+  width: 100%;
+  @include brickBackground();
+}
+
+.menuView__drinkCard {
+  height: 15%;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  @include alignedGeneralFont();
+}
+
+.menuView__drinkCard__image {
+  flex: 1;
+  height: 100%;
+  border-radius: 6px;
+  border: 1px solid white;
+}
+
+.menuView__drinkCard__name,
+.menuView__drinkCard__pricealc {
+  flex: 1;
+  color: white;
+}
+
+.menuView__drinkCard__addToCart {
+  flex-direction: row;
+  flex: 1;
+  @include centerVerticalHorizontal();
+}
+
+.menuView__drinkCard__addToCart {
+  font-family: $general-font;
+  color: white;
+  button {
+    background: none;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white;
+    border-radius: 6px;
+    border: 1px solid white;
+  }
+}
+
+.menuView__container {
+  height: 80%;
+  width: 90%;
+  max-width: 800px;
+  overflow: scroll;
+  background-color: black;
+  border-radius: 6px;
+}
+
+.pageTitleNeon {
+  z-index: 1;
+  color: white;
+  box-shadow: none !important;
+  @include pageTitleFont();
+  animation: flicker-cerise 1.5s infinite alternate;
 }

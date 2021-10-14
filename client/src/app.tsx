@@ -11,6 +11,7 @@ import AddBeverageToMenuPresenter from "./components/presenters/addBeverageToMen
 import { searchTypes } from "./constants/searchTypes";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
+import MenuPresenter from "./components/presenters/menuPresenter";
 
 const drinkModel = new DrinkModel();
 
@@ -34,8 +35,11 @@ const App = () => {
           <Route exact path="/signUp">
             <HandleUserSignUp />
           </Route>
-          <Route exakt path="/viewOrders">
+          <Route exact path="/viewOrders">
             <AdminViewDrinkOrdersPresenter />
+          </Route>
+          <Route exact path="/menu">
+            <MenuPresenter />
           </Route>
         </Switch>
       </Router>
