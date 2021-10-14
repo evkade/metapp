@@ -3,13 +3,12 @@ version: "3"
 services:
   server:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./server
     volumes:
-      - /app/node_modules
       - ./server:/app
     ports:
-      - "5000:5000"
+      - 5000:5000
     environment:
       - test=2000
     env_file:
@@ -17,15 +16,12 @@ services:
 
   client:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./client
     volumes:
-      - /app/node_modules
       - ./client:/app
       - ./dist:/dist
     ports:
-      - "8080:8080"
+      - 8080:8080
     environment:
       - test=2500
-    env_file:
-      - ./server/src/config.env
