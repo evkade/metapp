@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 export const Menu = ({ showModal, setShowModal, menu, removeFromMenu, customizedType }) => {
   console.log('Menu', menu);

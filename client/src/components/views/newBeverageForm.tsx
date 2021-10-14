@@ -1,7 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { beverageTypes } from "../../constants/searchTypes";
 
-export const NewBeverageForm = ({ menu, addToMenu, customizedType }) => {
+export const NewBeverageForm = ({
+  menu,
+  addToMenu,
+  customizedType,
+  newBeverage,
+  setNewBeverage,
+}) => {
+    // todo: pre-fill fields with beverage information 
+    // todo: build a new beverage
   return (
     <form>
       <label>
@@ -35,7 +43,6 @@ export const NewBeverageForm = ({ menu, addToMenu, customizedType }) => {
           </label>
         </div>
       )}
-      <input type="submit" value="Submit" />
     </form>
   );
 };

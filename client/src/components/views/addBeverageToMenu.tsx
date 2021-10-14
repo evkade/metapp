@@ -1,5 +1,4 @@
 import React from "react";
-import { beverageTypes } from "../../constants/searchTypes";
 import { SearchNewBeveragePresenter } from "../presenters/searchNewBeveragePresenter";
 import { SearchHistoryPresenter } from "../presenters/searchHistoryPresenter";
 import { CreateBeverageForMenuModalPresenter } from "../presenters/createBeverageForMenuModalPresenter";
@@ -20,9 +19,7 @@ export const AddBeverageToMenu = ({
   menu,
   addToMenu,
 }) => {
-  console.log('currentSearchType', currentSearchType);
 
-  // misstänker att man måste använda en useeffect? men inte 100 då man använder en usestate
   const shownSearchType = () => {
     switch (currentSearchType) {
       case searchTypes.API:
@@ -53,6 +50,7 @@ export const AddBeverageToMenu = ({
             menu={menu}
             addToMenu={(beverage: Beverage) => addToMenu(beverage)}
             customizedType={searchedBeverageType}
+            setCurrentSearchType={setCurrentSearchType}
           />
         );
       default: return null // todo: add types so you can remove this

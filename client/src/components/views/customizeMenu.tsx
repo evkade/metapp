@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AddBeverageToMenuPresenter } from "../presenters/addBeverageToMenuPresenter";
 import { MenuPresenter } from "../presenters/menuPresenter";
 import { Beverage } from "../../constants/beverageObjects";
