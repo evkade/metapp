@@ -6,6 +6,7 @@ import connectDB from './db'
 import { beerRouter } from './routes/beers';
 
 import cookieSession from "cookie-session";
+import cookieParser from 'cookie-parser';
 import { authRouter } from './routes/auth';
 
 const bp = require('body-parser');
@@ -54,11 +55,12 @@ app.use(
     name: "auth_token",
     signed: false,
     httpOnly: true,
-    sameSite: "none",
-    secure: false
-
+    secure: false,
+    sameSite: 'lax'
   })
 );
+
+app.use(cookieParser())
 
 app.use(cors(options));
 

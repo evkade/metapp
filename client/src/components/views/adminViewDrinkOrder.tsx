@@ -1,5 +1,4 @@
 import React from 'react';
-import { MainNavbar } from './mainNavbar';
 
 export const AdminViewDrinkOrder = ({orders, drinkMade, drinkPaid }) => {
 
@@ -32,7 +31,6 @@ export const AdminViewDrinkOrder = ({orders, drinkMade, drinkPaid }) => {
 
     return (
         <>
-        <MainNavbar />
         <div>
             <h1>View tonight's orders here</h1>
         </div>

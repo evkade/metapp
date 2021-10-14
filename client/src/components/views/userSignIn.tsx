@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import '../components.css';
 
-const UserSignIn = ({userAuth, checkUserAuth}) => {
+const UserSignIn = ({userAuth, signin}) => {
     const [username, setUsername] = useState('');
     const [pwd, setPwd] = useState('');
 
@@ -11,13 +11,13 @@ const UserSignIn = ({userAuth, checkUserAuth}) => {
     <div className="signInForm">
         {!userAuth ?
         <>
-            <div id="form-login" className="signInForm__form">
+            <div id="form-login" className="signInForm__form" onKeyDown={(e) => {if(e.key === 'Enter') signin(username, pwd)}} >
                 <h1>Login</h1>
                 <input type="text" id="signInUsr" name="username" className="signInForm__form__input" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)} ></input>
                 <input type="password" id="signInPwd" name="password" className="signInForm__form__input" placeholder="Password" value={pwd} onChange={(event) => setPwd(event.target.value)} ></input>
                 <button className="signInForm__form__submit"
                     onClick={() => {
-                        checkUserAuth(username, pwd)}
+                        signin(username, pwd)}
                     }>
                     Submit</button>
             </div>
