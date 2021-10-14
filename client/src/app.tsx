@@ -10,6 +10,7 @@ import DrinkModel from "./model/drinkModel";
 import AddBeverageToMenuPresenter from "./components/presenters/addBeverageToMenuPresenter";
 import { searchTypes } from "./constants/searchTypes";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
+import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
 
 const drinkModel = new DrinkModel();
 
@@ -29,6 +30,9 @@ const App = () => {
           </Route>
           <Route exact path="/signIn">
             <HandleUserSignIn />
+          </Route>
+          <Route exact path="/signUp">
+            <HandleUserSignUp />
           </Route>
           <Route exakt path="/viewOrders">
             <AdminViewDrinkOrdersPresenter />

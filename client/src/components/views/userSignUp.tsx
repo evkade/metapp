@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import "../components.css";
 import Fingerprint from "../images/fingerprint.png";
-// import { useTransition, animated } from "react-spring";
+import { useTransition, animated } from "react-spring";
 
-const UserSignIn = ({ userAuth, checkUserAuth, signInError }) => {
+const UserSignIn = ({ userAuth, checkUserAuth }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -18,7 +18,7 @@ const UserSignIn = ({ userAuth, checkUserAuth, signInError }) => {
                 <div className="signInForm__logo">
                   <img src={Fingerprint} />
                 </div>
-                <div className="signInForm__title">Log in</div>
+                <div className="signInForm__title">Sign up</div>
               </div>
               <div className="signInForm__inputContainer">
                 <input
@@ -50,13 +50,13 @@ const UserSignIn = ({ userAuth, checkUserAuth, signInError }) => {
                 </button>
               </div>
             </div>
-            {signInError && (
+            {/* {signInError && (
               <div className="signInForm__errElements">
                 <div id="usr-pwdError" className="signInForm__errElement">
                   🚫 There is no user with these credentials.
                 </div>
               </div>
-            )}
+            )} */}
           </>
         )}
         {userAuth && (
@@ -65,7 +65,7 @@ const UserSignIn = ({ userAuth, checkUserAuth, signInError }) => {
               id="signInForm__successElement"
               className="signInForm__successElement"
             >
-              You're successfully logged in!
+              You have successfully signed up!
             </div>
           </div>
         )}
