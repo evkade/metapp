@@ -9,7 +9,7 @@ export const NewBeverageForm = ({
   setNewBeverage,
 }) => {
   // todo: pre-fill fields with beverage information
-  // todo: build a new beverage
+  // todo: fix the ingredients situation 
 
   console.log('New Beverage', newBeverage);
 
