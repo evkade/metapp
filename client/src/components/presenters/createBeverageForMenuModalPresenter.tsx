@@ -9,20 +9,27 @@ export const CreateBeverageForMenuModalPresenter = ({
   menu,
   addToMenu,
   customizedType,
-  setCurrentSearchType
-}) => {
+  setCurrentSearchType,
+  newBeverage,
+  setNewBeverage
+}) => {   // new beverage should be a prop as it should contain fields from the api / history
 
-  // basically: cancel : hide modal and if it was create new put to api
   const onAddToMenu = (beverage: Beverage) => {
+    // beverage = {...newBeverage, 
+    // setNewBeverage()
+    // then 
     addToMenu(beverage);
     setCurrentSearchType(searchTypes.API);
     setShowModal(false);
   };
 
-  // This is the new beverage that is created
-  const [newBeverage, setNewBeverage] = useState(
-    customizedType === beverageTypes.BEER ? beer : cocktail
-  );
+  const onCancel = (beverage: Beverage) => {
+    // beverage = {...newBeverage, 
+    // setNewBeverage()
+    // then 
+    setCurrentSearchType(searchTypes.API);
+    setShowModal(false);
+  };
 
   return (
     <CreateBeverageForMenuModal
@@ -31,24 +38,10 @@ export const CreateBeverageForMenuModalPresenter = ({
       menu={menu}
       addToMenu={addToMenu}
       onAddToMenu={onAddToMenu}
+      onCancel={onCancel}
       beverageType={customizedType}
       newBeverage={newBeverage}
       setNewBeverage={setNewBeverage}
     />
   );
-};
-
-const beer: Beer = {
-  name: "",
-  price: 0,
-  type: "",
-  volume: 0,
-  alcoholPercentage: 0,
-};
-
-const cocktail: Cocktail = {
-  name: "",
-  price: 0,
-  ingredientList: [],
-  ingredientMeasuresList: [],
 };

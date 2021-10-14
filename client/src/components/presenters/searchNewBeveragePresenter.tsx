@@ -8,6 +8,8 @@ import { Beverage } from "../../constants/beverageObjects";
 const drinkModel = new DrinkModel();
 
 export const SearchNewBeveragePresenter = ({
+  newBeverage,
+  setNewBeverage,
   showModal,
   setShowModal,
   menu,

@@ -12,14 +12,13 @@ export const CreateBeverageForMenuModal = ({
   addToMenu,
   beverageType,
   onAddToMenu,
+  onCancel,
   newBeverage,
   setNewBeverage
 }) => {
   // todo: on click / submit of form : create a new beverage with these characteristics, add it to menu
   // todo: all beverages should be added to history when being added to menu
   // todo: change title based on what you are adding to menu
-  // todo: fill this new beverage with fields from the clicked beverage 
-  // so maybe this has to be made in file before in structure
   
   return (
     <div className="modal">
@@ -36,7 +35,7 @@ export const CreateBeverageForMenuModal = ({
             />
           </div>
           <div className="modal-footer">
-            <button className="button" onClick={() => setShowModal(false)}> Cancel </button>
+            <button className="button" onClick={() => onCancel()}> Cancel </button>
             <button className="button" onClick={() => onAddToMenu(newBeverage)}> OK </button>
           </div>
         </div>

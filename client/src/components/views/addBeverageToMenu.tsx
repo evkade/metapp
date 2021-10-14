@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { SearchNewBeveragePresenter } from "../presenters/searchNewBeveragePresenter";
 import { SearchHistoryPresenter } from "../presenters/searchHistoryPresenter";
 import { CreateBeverageForMenuModalPresenter } from "../presenters/createBeverageForMenuModalPresenter";
 
-import { Beverage } from "../../constants/beverageObjects";
-import { searchTypes } from "../../constants/searchTypes";
+import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
+import { searchTypes, beverageTypes } from "../../constants/searchTypes";
 
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
@@ -19,12 +19,18 @@ export const AddBeverageToMenu = ({
   menu,
   addToMenu,
 }) => {
+  // This is the new beverage that is created
+  const [newBeverage, setNewBeverage] = useState(
+    currentSearchType === beverageTypes.BEER ? beer : cocktail
+  );
 
   const shownSearchType = () => {
     switch (currentSearchType) {
       case searchTypes.API:
         return (
           <SearchNewBeveragePresenter
+            newBeverage={newBeverage}
+            setNewBeverage={setNewBeverage}
             showModal={showModal}
             setShowModal={setShowModal}
             menu={menu}
@@ -45,6 +51,8 @@ export const AddBeverageToMenu = ({
       case searchTypes.NEW:
         return (
           <CreateBeverageForMenuModalPresenter
+            newBeverage={newBeverage}
+            setNewBeverage={setNewBeverage}
             showModal={showModal}
             setShowModal={setShowModal}
             menu={menu}
@@ -53,15 +61,38 @@ export const AddBeverageToMenu = ({
             setCurrentSearchType={setCurrentSearchType}
           />
         );
-      default: return null // todo: add types so you can remove this
+      default:
+        return null; // todo: add types so you can remove this
     }
   };
+
   return (
     <div>
-      <button onClick={() => setCurrentSearchType(searchTypes.API)}> Search new </button>
-      <button onClick={() => setCurrentSearchType(searchTypes.HISTORY)}> Find old </button>
-      <button onClick={() => setCurrentSearchType(searchTypes.NEW)}> Create </button>
+      <button onClick={() => setCurrentSearchType(searchTypes.API)}>
+        Search new
+      </button>
+      <button onClick={() => setCurrentSearchType(searchTypes.HISTORY)}>
+        Find old
+      </button>
+      <button onClick={() => setCurrentSearchType(searchTypes.NEW)}>
+        Create
+      </button>
       {shownSearchType()}
     </div>
   );
+};
+
+const beer: Beer = {
+  name: "",
+  price: 0,
+  type: "",
+  volume: 0,
+  alcoholPercentage: 0,
+};
+
+const cocktail: Cocktail = {
+  name: "",
+  price: 0,
+  ingredientList: [],
+  ingredientMeasuresList: [],
 };
