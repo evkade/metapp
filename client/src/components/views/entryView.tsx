@@ -8,7 +8,7 @@ const EntryView = () => {
   let history = useHistory();
 
   return (
-    <div className="entryView">
+    <div className="entryView brickBackground">
       <div className="entryView__logos">
         <img src={mkmlogo} />
         <img src={dkmlogo} />
@@ -21,7 +21,10 @@ const EntryView = () => {
         >
           log in
         </button>
-        <button className="entryView__buttons entryView__buttons--green">
+        <button
+          onClick={() => history.push("/signUp")}
+          className="entryView__buttons entryView__buttons--green"
+        >
           sign up
         </button>
       </div>

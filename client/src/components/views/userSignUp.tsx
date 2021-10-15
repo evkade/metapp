@@ -4,7 +4,7 @@ import "../components.css";
 import Fingerprint from "../images/fingerprint.png";
 import { useTransition, animated } from "react-spring";
 
-const UserSignIn = ({ userAuth, signin, signInError }) => {
+const UserSignIn = ({ userAuth, checkUserAuth }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -18,7 +18,7 @@ const UserSignIn = ({ userAuth, signin, signInError }) => {
                 <div className="signInForm__logo">
                   <img src={Fingerprint} />
                 </div>
-                <div className="signInForm__title">Log in</div>
+                <div className="signInForm__title">Sign up</div>
               </div>
               <div className="signInForm__inputContainer">
                 <input
@@ -43,20 +43,20 @@ const UserSignIn = ({ userAuth, signin, signInError }) => {
                   id="signInForm__form__submit"
                   className="signInForm__form__submit"
                   onClick={() => {
-                    signin(username, pwd);
+                    checkUserAuth(username, pwd);
                   }}
                 >
                   Submit
                 </button>
               </div>
             </div>
-            {signInError && (
+            {/* {signInError && (
               <div className="signInForm__errElements">
                 <div id="usr-pwdError" className="signInForm__errElement">
                   🚫 There is no user with these credentials.
                 </div>
               </div>
-            )}
+            )} */}
           </>
         )}
         {userAuth && (
@@ -65,7 +65,7 @@ const UserSignIn = ({ userAuth, signin, signInError }) => {
               id="signInForm__successElement"
               className="signInForm__successElement"
             >
-              You're successfully logged in!
+              You have successfully signed up!
             </div>
           </div>
         )}

@@ -35,12 +35,12 @@ const mapStateToProps = (store) => {
     };
   };
   
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      drinkMade: (id, timeMade) => dispatch(drinkMade(id, timeMade)),
-      drinkPaid: (id, timePaid) => dispatch(drinkPaid(id, timePaid))
-    };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    drinkMade: (id, timeMade) => dispatch(drinkMade(id, timeMade)),
+    drinkPaid: (id, timePaid) => dispatch(drinkPaid(id, timePaid))
   };
+};
 
 export default connect(
     mapStateToProps,
