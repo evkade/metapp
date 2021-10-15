@@ -5,23 +5,27 @@ import { CustomizeMenu } from "../views/customizeMenu";
 import { Beverage } from "constants/beverageObjects";
 import { beverageTypes } from "../../constants/searchTypes";
 
-export const CustomizeMenuPresenter = (props) => {
-  // This decides if the admin is customizing the beer or cocktail part of the menu
-  const [customizedType, setCustomizedType] = useState(beverageTypes.COCKTAIL);
-  const [showModal, setShowModal] = useState(false); 
+// props contain menu, addToMenu, removeFromMenu
+// todo: add props types to all props 
 
-  // todo: grey button where the person is currently customizing
+export const CustomizeMenuPresenter = (props) => {
+    
+  const [beverageType, setBeverageType] = useState<string>(beverageTypes.BEER);
+  const [showModal, setShowModal] = useState<boolean>(false); 
+
   return (
     <div>
       <button
         type="submit"
-        onClick={() => setCustomizedType(beverageTypes.BEER)}
+        onClick={() => setBeverageType(beverageTypes.BEER)}
+        disabled={beverageType === beverageTypes.BEER}
       >
         Beer
       </button>
       <button
         type="submit"
-        onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
+        onClick={() => setBeverageType(beverageTypes.COCKTAIL)}
+        disabled={beverageType === beverageTypes.COCKTAIL}
       >
         Cocktail
       </button>
@@ -31,7 +35,7 @@ export const CustomizeMenuPresenter = (props) => {
         menu={props.menu.menu}
         addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
         removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}
-        customizedType={customizedType}
+        customizedType={beverageType}
       />
     </div>
   );

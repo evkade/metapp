@@ -4,8 +4,12 @@ import usePromise from "../../hooks/usePromise";
 import { beverageTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
 import { Beverage } from "../../constants/beverageObjects";
+import { CreateBeverageForMenuModalPresenter } from "../presenters/createBeverageForMenuModalPresenter";
 
 const drinkModel = new DrinkModel();
+
+// todo: is if in menu you should not be able to add it
+// todo: also special case if it is present in history
 
 export const SearchNewBeveragePresenter = ({
   newBeverage,
@@ -14,7 +18,9 @@ export const SearchNewBeveragePresenter = ({
   setShowModal,
   menu,
   addToMenu,
-  searchType,
+  customizedType,
+  currentSearchType,
+  setCurrentSearchType,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
@@ -23,7 +29,7 @@ export const SearchNewBeveragePresenter = ({
 
   const searchBeverage = (query) => {
     setLoading(true);
-    switch (searchType) {
+    switch (customizedType) {
       case beverageTypes.BEER:
         setBeveragePromise(drinkModel.getBeerBasedOnName(query));
         break;
@@ -35,7 +41,7 @@ export const SearchNewBeveragePresenter = ({
 
   useEffect(() => {
     if (beverageData) {
-      switch (searchType) {
+      switch (customizedType) {
         case beverageTypes.BEER:
           setSearchResults(
             beverageData.items.map((beer) =>
@@ -61,13 +67,26 @@ export const SearchNewBeveragePresenter = ({
   }, [beverageData, beverageError]);
 
   return (
-    <SearchBeverage
-      showModal={showModal}
-      setShowModal={setShowModal}
-      searchBeverage={searchBeverage}
-      searchResult={searchResults}
-      isLoading={isLoading}
-      addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-    />
+    <div>
+      <SearchBeverage
+        setNewBeverage={setNewBeverage}
+        setShowModal={setShowModal}
+        searchBeverage={searchBeverage}
+        searchResult={searchResults}
+        isLoading={isLoading}
+        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+        currentSearchType={currentSearchType}
+      />
+      <CreateBeverageForMenuModalPresenter
+        newBeverage={newBeverage}
+        setNewBeverage={setNewBeverage}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        menu={menu}
+        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+        customizedType={customizedType}
+        setCurrentSearchType={setCurrentSearchType}
+      />
+    </div>
   );
 };

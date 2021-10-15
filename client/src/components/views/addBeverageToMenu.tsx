@@ -9,7 +9,7 @@ import { searchTypes, beverageTypes } from "../../constants/searchTypes";
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
-// todo: is if in menu grey button
+
 export const AddBeverageToMenu = ({
   showModal,
   setShowModal,
@@ -20,8 +20,8 @@ export const AddBeverageToMenu = ({
   addToMenu,
 }) => {
   // This is the new beverage that is created
-  const [newBeverage, setNewBeverage] = useState(
-    currentSearchType === beverageTypes.BEER ? beer : cocktail
+  const [newBeverage, setNewBeverage] = useState<Beverage>(
+    searchedBeverageType === beverageTypes.BEER ? beer : cocktail
   );
 
   const shownSearchType = () => {
@@ -35,20 +35,24 @@ export const AddBeverageToMenu = ({
             setShowModal={setShowModal}
             menu={menu}
             addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-            searchType={searchedBeverageType}
+            customizedType={searchedBeverageType}
+            currentSearchType={currentSearchType}
+            setCurrentSearchType={setCurrentSearchType}
           />
         );
       case searchTypes.HISTORY:
         return (
           <SearchHistoryPresenter
-            showModal={showModal}
+            setNewBeverage={setNewBeverage}
             setShowModal={setShowModal}
             menu={menu}
             addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-            searchType={searchedBeverageType}
+            currentSearchType={currentSearchType}
+            customizedType={searchedBeverageType}
           />
         );
       case searchTypes.NEW:
+        setShowModal(true);
         return (
           <CreateBeverageForMenuModalPresenter
             newBeverage={newBeverage}
@@ -62,19 +66,19 @@ export const AddBeverageToMenu = ({
           />
         );
       default:
-        return null; // todo: add types so you can remove this
+        return null; // todo: add types then you can remove this
     }
   };
 
   return (
     <div>
-      <button onClick={() => setCurrentSearchType(searchTypes.API)}>
+      <button onClick={() => setCurrentSearchType(searchTypes.API)} disabled={currentSearchType === searchTypes.API}>
         Search new
       </button>
-      <button onClick={() => setCurrentSearchType(searchTypes.HISTORY)}>
+      <button onClick={() => setCurrentSearchType(searchTypes.HISTORY)} disabled={currentSearchType === searchTypes.HISTORY}>
         Find old
       </button>
-      <button onClick={() => setCurrentSearchType(searchTypes.NEW)}>
+      <button onClick={() => setCurrentSearchType(searchTypes.NEW)} disabled={currentSearchType === searchTypes.NEW}>
         Create
       </button>
       {shownSearchType()}

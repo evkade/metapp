@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { CreateBeverageForMenuModal } from "../views/createBeverageForMenuModal";
-import { beverageTypes, searchTypes } from "../../constants/searchTypes";
-import { Beer, Cocktail, Beverage } from "../../constants/beverageObjects";
+import { searchTypes } from "../../constants/searchTypes";
+import { Beverage } from "../../constants/beverageObjects";
+
+// todo: all beverages should be added to history when being added to menu
 
 export const CreateBeverageForMenuModalPresenter = ({
   showModal,
@@ -11,30 +13,23 @@ export const CreateBeverageForMenuModalPresenter = ({
   customizedType,
   setCurrentSearchType,
   newBeverage,
-  setNewBeverage
-}) => {   // new beverage should be a prop as it should contain fields from the api / history
-
+  setNewBeverage,
+}) => {
   const onAddToMenu = (beverage: Beverage) => {
-    // beverage = {...newBeverage, 
-    // setNewBeverage()
-    // then 
     addToMenu(beverage);
+    // todo if current search type is new then do this otherwise no
     setCurrentSearchType(searchTypes.API);
     setShowModal(false);
   };
 
   const onCancel = (beverage: Beverage) => {
-    // beverage = {...newBeverage, 
-    // setNewBeverage()
-    // then 
+    // todo if current search type is new then do this otherwise no
     setCurrentSearchType(searchTypes.API);
     setShowModal(false);
   };
 
-  return (
+  const modal = showModal ? (
     <CreateBeverageForMenuModal
-      showModal={showModal}
-      setShowModal={setShowModal}
       menu={menu}
       addToMenu={addToMenu}
       onAddToMenu={onAddToMenu}
@@ -43,5 +38,7 @@ export const CreateBeverageForMenuModalPresenter = ({
       newBeverage={newBeverage}
       setNewBeverage={setNewBeverage}
     />
-  );
+  ) : null;
+
+  return modal;
 };

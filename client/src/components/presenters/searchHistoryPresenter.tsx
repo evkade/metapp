@@ -8,15 +8,25 @@ const drinkModel = new DrinkModel();
 
 // OBS
 // This component is not implemented yet as I need the history from database to do that
-export const SearchHistoryPresenter = ({ showModal, setShowModal, menu, addToMenu, searchType }) => {
+// so basically it just shows the results from API rn instead of from history
+// however the adding of beverage etc works as it should
+
+export const SearchHistoryPresenter = ({
+  setNewBeverage,
+  setShowModal,
+  menu,
+  addToMenu,
+  customizedType,
+  currentSearchType,
+}) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
   const [isLoading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
-  const searchBeverage = (query) => {
+  const searchBeverage = (query: string) => {
     setLoading(true);
-    switch (searchType) {
+    switch (customizedType) {
       case beverageTypes.BEER:
         setBeveragePromise(drinkModel.getBeerBasedOnName(query));
         break;
@@ -28,7 +38,7 @@ export const SearchHistoryPresenter = ({ showModal, setShowModal, menu, addToMen
 
   useEffect(() => {
     if (beverageData) {
-      switch (searchType) {
+      switch (customizedType) {
         case beverageTypes.BEER:
           setSearchResults(
             beverageData.items.map((beer) =>
@@ -55,12 +65,13 @@ export const SearchHistoryPresenter = ({ showModal, setShowModal, menu, addToMen
 
   return (
     <SearchBeverage
-      showModal={showModal}
+      setNewBeverage={setNewBeverage}
       setShowModal={setShowModal}
       searchBeverage={searchBeverage}
       searchResult={searchResults}
       isLoading={isLoading}
       addToMenu={(beverage) => addToMenu(beverage)}
+      currentSearchType={currentSearchType}
     />
   );
 };
