@@ -1,17 +1,19 @@
-FROM node:alpine
+FROM node
 
 # Create app directory
 WORKDIR /app
 
 # Install app dependencies
-COPY ./package*.json ./
+COPY package.json /app
+COPY package-lock.json /app
 
 RUN npm install 
 
 # Bundle app source
-COPY . .
+COPY . /app
 
 EXPOSE 8080
 
+RUN npm -v
 
 CMD ["npm","run","dev"]

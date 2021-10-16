@@ -33,7 +33,8 @@ loaders.push({
 
 loaders.push({
   test: /\.(t|j)sx?$/,
-  use: { loader: "awesome-typescript-loader" },
+  loader: "ts-loader",
+  exclude: /node_modules/,
 });
 
 loaders.push({

@@ -14,6 +14,8 @@ export default class AuthService {
       console.log("password must be implemented",password)
 
       const user = existinguser?existinguser:undefined;
+
+      console.log(user)
   
       if(user=== undefined){
           throw new Error("user not exist")
@@ -22,7 +24,8 @@ export default class AuthService {
       const token = jwt.sign(
         {
           username: user.username,
-          email: user.email
+          email: user.email,
+          isAdmin: user.credentials === 'admin'
         },
         process.env.JWT_KEY!, // secret jwt key to sign and verify
         {
