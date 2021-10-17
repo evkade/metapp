@@ -32,13 +32,14 @@ const HandleUserSignIn = ({ user, signIn }) => {
       body: JSON.stringify({ username: username, password: password }),
     })
       .then((data) => data.json())
-      .then((user) =>
+      .then((user) => {
         signIn({
           username: user.username,
           isAdmin: user.credentials === "admin",
-        })
-      );
-    history.push("/menu");
+        });
+        if (user.credentials === "user") history.push("/menu");
+        if (user.credentials === "admin") history.push("/customizeMenu");
+      });
   };
 
   return (

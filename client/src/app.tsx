@@ -30,7 +30,8 @@ const PrivateRoute = ({ component: Component, path, ...rest }) => (
     path={path}
     render={(props) =>
       store.getState().user.loggedIn ? (
-        <Component {...props} {...rest} />
+        (console.log(store.getState().user.loggedIn),
+        (<Component {...props} {...rest} />))
       ) : (
         <Redirect to="/" />
       )
@@ -44,8 +45,6 @@ const AdminRoute = ({ component: Component, path, ...rest }) => (
     render={(props) =>
       store.getState().user.loggedIn && store.getState().user.isAdmin ? (
         <Component {...props} {...rest} />
-      ) : store.getState().user.loggedIn ? (
-        <Redirect to="/vieworders" /> // TODO what is first page
       ) : (
         <Redirect to="/" />
       )
@@ -54,16 +53,24 @@ const AdminRoute = ({ component: Component, path, ...rest }) => (
 );
 
 const PublicRoute = ({ component: Component, path, ...rest }) => (
-  <Route
-    path={path}
-    render={(props) =>
-      store.getState().user.loggedIn ? (
-        <Redirect to="/menu" /> // TODO what is first page?
-      ) : (
-        <Component {...props} {...rest} />
-      )
-    }
-  />
+  console.log("här är jag publik"),
+  (
+    <Route
+      path={path}
+      render={(props) =>
+        store.getState().user.loggedIn ? (
+          !store.getState().user.isAdmin ? (
+            <Redirect to="/menu" />
+          ) : (
+            <Redirect to="/customizeMenu" />
+          )
+        ) : (
+          // TODO what is first page?
+          <Component {...props} {...rest} />
+        )
+      }
+    />
+  )
 );
 
 const App = () => {
@@ -76,8 +83,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        {(user || store.getState().user.loggedIn) &&
-        !store.getState().user.isAdmin ? (
+        {user ||
+        store.getState().user.loggedIn ||
+        store.getState().user.isAdmin ? (
           <MainNavbar signout={signOut} />
         ) : null}
         <Switch>
@@ -86,8 +94,8 @@ const App = () => {
             path="/customizeMenu"
             component={CustomizeMenuPresenter}
           />
-          <PrivateRoute
-            exakt
+          <AdminRoute
+            exact
             path="/vieworders"
             component={AdminViewDrinkOrdersPresenter}
           />
