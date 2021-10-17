@@ -1,4 +1,5 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
+import "./components/components.scss";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -20,16 +21,17 @@ import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrin
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
 import MainNavbar from "./components/views/mainNavbar";
 import { signIn, signOut } from "./redux/actions/user";
+import userMenuPresenter from "./components/presenters/userMenuPresenter";
 
 const drinkModel = new DrinkModel();
-
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => (
   <Route
     path={path}
     render={(props) =>
       store.getState().user.loggedIn ? (
-        <Component {...props} {...rest} />
+        (console.log(store.getState().user.loggedIn),
+        (<Component {...props} {...rest} />))
       ) : (
         <Redirect to="/" />
       )
@@ -43,8 +45,6 @@ const AdminRoute = ({ component: Component, path, ...rest }) => (
     render={(props) =>
       store.getState().user.loggedIn && store.getState().user.isAdmin ? (
         <Component {...props} {...rest} />
-      ) : store.getState().user.loggedIn ? (
-        <Redirect to="/vieworders" /> // TODO what is first page
       ) : (
         <Redirect to="/" />
       )
@@ -53,16 +53,24 @@ const AdminRoute = ({ component: Component, path, ...rest }) => (
 );
 
 const PublicRoute = ({ component: Component, path, ...rest }) => (
-  <Route
-    path={path}
-    render={(props) =>
-      store.getState().user.loggedIn ? (
-        <Redirect to="/vieworders" /> // TODO what is first page?
-      ) : (
-        <Component {...props} {...rest} />
-      )
-    }
-  />
+  console.log("här är jag publik"),
+  (
+    <Route
+      path={path}
+      render={(props) =>
+        store.getState().user.loggedIn ? (
+          !store.getState().user.isAdmin ? (
+            <Redirect to="/menu" />
+          ) : (
+            <Redirect to="/customizeMenu" />
+          )
+        ) : (
+          // TODO what is first page?
+          <Component {...props} {...rest} />
+        )
+      }
+    />
+  )
 );
 
 const App = () => {
@@ -75,26 +83,26 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        {(user || store.getState().user.loggedIn) &&
-        !store.getState().user.isAdmin ? (
+        {user ||
+        store.getState().user.loggedIn ||
+        store.getState().user.isAdmin ? (
           <MainNavbar signout={signOut} />
         ) : null}
         <Switch>
-
           <AdminRoute
             exact
             path="/customizeMenu"
             component={CustomizeMenuPresenter}
           />
-          <PrivateRoute
-            exakt
+          <AdminRoute
+            exact
             path="/vieworders"
             component={AdminViewDrinkOrdersPresenter}
           />
+          <PrivateRoute exact path="/menu" component={userMenuPresenter} />
           <PublicRoute exact path="/signIn" component={HandleUserSignIn} />
           <PublicRoute exact path="/signUp" component={HandleUserSignUp} />
           <PublicRoute exact path="/" component={EntryView} />
-          
         </Switch>
       </Router>
     </Provider>

@@ -1,0 +1,312 @@
+// @import "../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+$neon-color-pink: #ee2a7b;
+$light-neon-color-pink: #fbd0e2;
+$neon-color-green: #2aee4b;
+$light-neon-color-green: #d0fbd7;
+$neon-color-yellow: #deee2a;
+$light-neon-color-yellow: #f8fbd0;
+$dark-background: rgb(26, 26, 26);
+$barcode-font: "Libre Barcode 39 Extended Text", cursive;
+$button-entryView-font: "Pacifico", cursive;
+$general-font: "Montserrat", sans-serif;
+
+@mixin keyframe-flicker(
+  $name,
+  $neon-color-close1,
+  $neon-color-close2,
+  $neon-color
+) {
+  @keyframes #{$name} {
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+      text-shadow: 0 0 3px $neon-color-close1, 0 0 10px $neon-color-close2,
+        0 0 21px $neon-color, 0 0 42px $neon-color, 0 0 82px $neon-color,
+        0 0 92px $neon-color, 0 0 102px $neon-color, 0 0 111px $neon-color;
+      box-shadow: 0px 0px 10px 1px $neon-color;
+    }
+    20%,
+    20.1% {
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
+}
+
+@mixin centerVerticalHorizontal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin alignedGeneralFont {
+  text-align: center;
+  font-family: $general-font;
+}
+
+@mixin pageTitleFont {
+  @include alignedGeneralFont();
+  font-size: 10vh;
+}
+
+@mixin brickBackground {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url("https://i.imgur.com/mnVAkgM.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  flex-direction: column;
+  @include centerVerticalHorizontal();
+}
+
+@include keyframe-flicker(flicker-cerise, white, white, $neon-color-pink);
+@include keyframe-flicker(
+  flicker-green,
+  black,
+  $neon-color-green,
+  $neon-color-green
+);
+
+@include keyframe-flicker(
+  flicker-yellow,
+  black,
+  $neon-color-yellow,
+  $neon-color-yellow
+);
+
+body {
+  margin: 0px !important;
+}
+
+.signInForm {
+  @include alignedGeneralFont();
+}
+
+.signInForm__form {
+  background: rgb(240, 240, 240);
+  background-image: linear-gradient(to left, rgb(240, 240, 240), #ffff);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+  box-shadow: 5px 5px 8px;
+  width: 90%;
+  max-width: 600px;
+  aspect-ratio: 5/3;
+}
+
+.signInForm__form--flexRow {
+  display: flex;
+  height: 30%;
+  margin-bottom: 20px;
+}
+
+.signInForm__logo {
+  flex: 0.5;
+  height: 100%;
+  @include centerVerticalHorizontal();
+}
+
+.signInForm__title {
+  display: flex;
+  flex: 0.5;
+  align-items: center;
+  font-size: 40px;
+}
+
+.signInForm__logo img {
+  height: 100%;
+}
+
+.signInForm__inputContainer {
+  flex: 1;
+  display: grid;
+}
+
+div.signInForm__inputContainer input,
+div.signInForm__inputContainer button {
+  font-size: 20px;
+  padding: 5px;
+  font-family: $general-font;
+}
+
+.signInForm__inputContainer--input {
+}
+
+.signInForm__errElement {
+  padding: 20px;
+  color: red;
+}
+
+.signInForm__successElement {
+  display: block;
+  color: white;
+}
+
+.entryView {
+  @include brickBackground();
+}
+
+.entryView__neonText {
+  color: white;
+  font-size: 20vw;
+  font-family: $barcode-font;
+  animation: flicker-cerise 1.5s infinite alternate;
+  box-shadow: none !important;
+  margin-bottom: 10vh;
+}
+
+.entryView__buttons {
+  background: rgba(0, 0, 0, 0.6);
+  font-family: $button-entryView-font;
+  font-size: 4vw;
+  margin: 20px;
+  width: 5em;
+  padding-bottom: 2vh;
+  border-radius: 25px;
+}
+
+.entryView__buttons--green {
+  color: $neon-color-green;
+  border: 3px solid $neon-color-green;
+  animation: flicker-green 8s infinite alternate;
+}
+
+.entryView__buttons--yellow {
+  color: $neon-color-yellow;
+  border: 3px solid $neon-color-yellow;
+  animation: flicker-yellow 10s infinite alternate;
+}
+
+@media screen and (prefers-reduced-motion) {
+  .entryView__neonText,
+  .entryView__buttons--green,
+  .entryView__buttons--yellow {
+    animation: none !important;
+  }
+}
+
+.entryView__logos img {
+  height: 8vh;
+  margin-bottom: 10vh;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.drinkCard {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 10%;
+  margin: 10px;
+  padding: 10px;
+  background-color: $light-neon-color-pink;
+}
+
+.drinkCard--made {
+  background-color: $light-neon-color-yellow;
+}
+
+.drinkCard--finished {
+  background-color: $light-neon-color-green;
+}
+
+.menuView {
+  width: 100%;
+  @include brickBackground();
+}
+
+.menuView__drinkCard {
+  height: 15%;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  @include alignedGeneralFont();
+}
+
+.menuView__drinkCard__image {
+  flex: 1;
+  height: 100%;
+  border-radius: 6px;
+  border: 1px solid white;
+}
+
+.menuView__drinkCard__name,
+.menuView__drinkCard__pricealc {
+  flex: 1;
+  color: white;
+}
+
+.menuView__drinkCard__addToCart {
+  flex-direction: row;
+  flex: 1;
+  @include centerVerticalHorizontal();
+}
+
+.menuView__drinkCard__addToCart {
+  font-family: $general-font;
+  color: white;
+  button {
+    background: none;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white;
+    border-radius: 6px;
+    border: 1px solid white;
+  }
+}
+
+.menuView__container {
+  height: 80%;
+  width: 90%;
+  max-width: 800px;
+  overflow: scroll;
+  background-color: black;
+  border-radius: 6px;
+}
+
+.pageTitleNeon {
+  z-index: 1;
+  color: white;
+  box-shadow: none !important;
+  @include pageTitleFont();
+  animation: flicker-cerise 1.5s infinite alternate;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  width: 500px;
+  background-color: #fff;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 10px;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.modal-body {
+  padding: 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import "../components.css";
+import "../components.scss";
 import Fingerprint from "../images/fingerprint.png";
-import { useTransition, animated } from "react-spring";
+// import { useTransition, animated } from "react-spring";
 
 const UserSignIn = ({ userAuth, checkUserAuth }) => {
   const [username, setUsername] = useState("");
@@ -10,7 +10,7 @@ const UserSignIn = ({ userAuth, checkUserAuth }) => {
 
   return (
     <>
-      <div className="signInForm brickBackground">
+      <div className="signInForm entryView">
         {!userAuth && (
           <>
             <div id="form-login" className="signInForm__form">

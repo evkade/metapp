@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import DrinkModel from "../../model/drinkModel";
 import UserSignIn from "../views/userSignIn";
 import usePromise from "../../hooks/usePromise";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { signIn } from "../../redux/actions/user";
 
 const HandleUserSignIn = ({ user, signIn }) => {
   const [userAuth, setUserAuth] = useState(false);
   const [signInError, setSignInError] = useState(false);
-  const history = useHistory();
+
+  let history = useHistory();
 
   const handleUserAuthDisplay = (param: boolean) => {
     setUserAuth(param);
@@ -31,13 +32,14 @@ const HandleUserSignIn = ({ user, signIn }) => {
       body: JSON.stringify({ username: username, password: password }),
     })
       .then((data) => data.json())
-      .then((user) =>
+      .then((user) => {
         signIn({
           username: user.username,
           isAdmin: user.credentials === "admin",
-        })
-      );
-    history.push("/vieworders");
+        });
+        if (user.credentials === "user") history.push("/menu");
+        if (user.credentials === "admin") history.push("/customizeMenu");
+      });
   };
 
   return (
