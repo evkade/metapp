@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import "../components.scss";
 import Fingerprint from "../images/fingerprint.png";
 // import { useTransition, animated } from "react-spring";
 

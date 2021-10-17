@@ -1,4 +1,5 @@
-// import "bootstrap/dist/scss/bootstrap.min.scss";
+// import "bootstrap/dist/css/bootstrap.min.css";
+import "./components/components.scss";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -17,9 +18,9 @@ import AddBeverageToMenuPresenter from "./components/presenters/addBeverageToMen
 import { searchTypes } from "./constants/searchTypes";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
-import MenuPresenter from "./components/presenters/menuPresenter";
 import MainNavbar from "./components/views/mainNavbar";
 import { signIn, signOut } from "./redux/actions/user";
+import { MenuPresenter } from "./components/presenters/menuPresenter";
 
 const drinkModel = new DrinkModel();
 
@@ -43,7 +44,7 @@ const AdminRoute = ({ component: Component, path, ...rest }) => (
       store.getState().user.loggedIn && store.getState().user.isAdmin ? (
         <Component {...props} {...rest} />
       ) : store.getState().user.loggedIn ? (
-        <Redirect to="/menu" /> // TODO what is first page
+        <Redirect to="/vieworders" /> // TODO what is first page
       ) : (
         <Redirect to="/" />
       )
@@ -56,7 +57,7 @@ const PublicRoute = ({ component: Component, path, ...rest }) => (
     path={path}
     render={(props) =>
       store.getState().user.loggedIn ? (
-        <Redirect to="/vieworders" /> // TODO what is first page?
+        <Redirect to="/menu" /> // TODO what is first page?
       ) : (
         <Component {...props} {...rest} />
       )
@@ -91,10 +92,10 @@ const App = () => {
             path="/vieworders"
             component={AdminViewDrinkOrdersPresenter}
           />
+          <PrivateRoute exact path="/menu" component={MenuPresenter} />
           <PublicRoute exact path="/signIn" component={HandleUserSignIn} />
           <PublicRoute exact path="/signUp" component={HandleUserSignUp} />
           <PublicRoute exact path="/" component={EntryView} />
-          <PublicRoute exact path="/menu" component={MenuPresenter} />
         </Switch>
       </Router>
     </Provider>
