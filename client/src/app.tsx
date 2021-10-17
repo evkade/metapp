@@ -12,15 +12,16 @@ import {
 } from "react-router-dom";
 
 import EntryView from "./components/views/entryView";
+
+import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
 import HandleUserSignIn from "./components/presenters/handleUserSignIn";
 import DrinkModel from "./model/drinkModel";
-import AddBeverageToMenuPresenter from "./components/presenters/addBeverageToMenuPresenter";
 import { searchTypes } from "./constants/searchTypes";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
 import MainNavbar from "./components/views/mainNavbar";
 import { signIn, signOut } from "./redux/actions/user";
-import { MenuPresenter } from "./components/presenters/menuPresenter";
+import userMenuPresenter from "./components/presenters/userMenuPresenter";
 
 const drinkModel = new DrinkModel();
 
@@ -82,17 +83,15 @@ const App = () => {
         <Switch>
           <AdminRoute
             exact
-            path="/modifyMenu"
-            drinkModel={drinkModel}
-            searchType={searchTypes.COCKTAIL}
-            component={AddBeverageToMenuPresenter}
+            path="/customizeMenu"
+            component={CustomizeMenuPresenter}
           />
           <PrivateRoute
             exakt
             path="/vieworders"
             component={AdminViewDrinkOrdersPresenter}
           />
-          <PrivateRoute exact path="/menu" component={MenuPresenter} />
+          <PrivateRoute exact path="/menu" component={userMenuPresenter} />
           <PublicRoute exact path="/signIn" component={HandleUserSignIn} />
           <PublicRoute exact path="/signUp" component={HandleUserSignUp} />
           <PublicRoute exact path="/" component={EntryView} />

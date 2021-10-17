@@ -12,6 +12,10 @@ export interface Beer extends Beverage {
 }
 
 export interface Cocktail extends Beverage {
-    ingredientList: string[]
+    ingredientList: string[],
     ingredientMeasuresList: string[]
+}
+
+export interface Menu {
+    menu: Beverage[]
 }
