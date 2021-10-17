@@ -10,6 +10,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { connect } from "react-redux";
 
 import EntryView from "./components/views/entryView";
 
@@ -23,99 +24,22 @@ import MainNavbar from "./components/views/mainNavbar";
 import { signIn, signOut } from "./redux/actions/user";
 import userMenuPresenter from "./components/presenters/userMenuPresenter";
 
-const drinkModel = new DrinkModel();
+import RoutingApp from "./routingApp";
 
-const PrivateRoute = ({ component: Component, path, ...rest }) => (
-  <Route
-    path={path}
-    render={(props) =>
-      store.getState().user.loggedIn ? (
-        (console.log(store.getState().user.loggedIn),
-        (<Component {...props} {...rest} />))
-      ) : (
-        <Redirect to="/" />
-      )
-    }
-  />
-);
-
-const AdminRoute = ({ component: Component, path, ...rest }) => (
-  <Route
-    path={path}
-    render={(props) =>
-      store.getState().user.loggedIn && store.getState().user.isAdmin ? (
-        <Component {...props} {...rest} />
-      ) : (
-        <Redirect to="/" />
-      )
-    }
-  />
-);
-
-const PublicRoute = ({ component: Component, path, ...rest }) => (
-  console.log("här är jag publik"),
-  (
-    <Route
-      path={path}
-      render={(props) =>
-        store.getState().user.loggedIn ? (
-          !store.getState().user.isAdmin ? (
-            <Redirect to="/menu" />
-          ) : (
-            <Redirect to="/customizeMenu" />
-          )
-        ) : (
-          // TODO what is first page?
-          <Component {...props} {...rest} />
-        )
-      }
-    />
-  )
-);
-
-const App = () => {
-  const [user, setUser] = React.useState(null);
-
-  checkValidUser().then(() => setUser(store.getState().user.username));
-
-  console.log(store.getState().user);
-
+const App = ({}) => {
   return (
     <Provider store={store}>
-      <Router>
-        {user ||
-        store.getState().user.loggedIn ||
-        store.getState().user.isAdmin ? (
-          <MainNavbar signout={signOut} />
-        ) : null}
-        <Switch>
-          <AdminRoute
-            exact
-            path="/customizeMenu"
-            component={CustomizeMenuPresenter}
-          />
-          <AdminRoute
-            exact
-            path="/vieworders"
-            component={AdminViewDrinkOrdersPresenter}
-          />
-          <PrivateRoute exact path="/menu" component={userMenuPresenter} />
-          <PublicRoute exact path="/signIn" component={HandleUserSignIn} />
-          <PublicRoute exact path="/signUp" component={HandleUserSignUp} />
-          <PublicRoute exact path="/" component={EntryView} />
-        </Switch>
-      </Router>
+      <RoutingApp />
     </Provider>
   );
 };
 
-const checkValidUser = async () => {
-  await fetch("http://localhost:5000/api/auth/currentuser", {
-    credentials: "include",
-  })
-    .then((data) => data.json())
-    .then((user) => store.dispatch(signIn(user.currentUser)))
-    .catch((err) => console.log("No signed in user"));
+const mapStateToProps = (store) => {
+  return {
+    user: store.user,
+  };
 };
+
+export default connect(mapStateToProps)(App);
 
 ReactDOM.render(<App />, document.querySelector("#app"));
