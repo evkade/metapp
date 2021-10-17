@@ -1,59 +1,102 @@
-import React from "react";
-import {searchTypes} from "../../constants/searchTypes";
+import React, { useState } from "react";
+import { SearchNewBeveragePresenter } from "../presenters/searchNewBeveragePresenter";
+import { SearchHistoryPresenter } from "../presenters/searchHistoryPresenter";
+import { CreateBeverageForMenuModalPresenter } from "../presenters/createBeverageForMenuModalPresenter";
+
+import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
+import { searchTypes, beverageTypes } from "../../constants/searchTypes";
+
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
 
 export const AddBeverageToMenu = ({
-  searchType,
-  toggleSearchType,
-  searchBeverage,
-  searchResult,
-  setSearchResults,
-  isLoading,
+  showModal,
+  setShowModal,
+  currentSearchType,
+  setCurrentSearchType,
+  searchedBeverageType,
+  menu,
   addToMenu,
-  removeFromMenu
 }) => {
-  const [query, setQuery] = React.useState('');
-  const toggleSearchTypeButtonClick = () => {
-    toggleSearchType(); 
-    setQuery('');
-    setSearchResults('');
-  }
+  // This is the new beverage that is created
+  const [newBeverage, setNewBeverage] = useState<Beverage>(
+    searchedBeverageType === beverageTypes.BEER ? beer : cocktail
+  );
 
-  const toggleSearchTypeButtonLabel : string = "Add " + (searchType ===  searchTypes.BEER ? searchTypes.COCKTAIL : searchTypes.BEER) + " to menu";
+  const shownSearchType = () => {
+    switch (currentSearchType) {
+      case searchTypes.API:
+        return (
+          <SearchNewBeveragePresenter
+            newBeverage={newBeverage}
+            setNewBeverage={setNewBeverage}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            menu={menu}
+            addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+            customizedType={searchedBeverageType}
+            currentSearchType={currentSearchType}
+            setCurrentSearchType={setCurrentSearchType}
+          />
+        );
+      case searchTypes.HISTORY:
+        return (
+          <SearchHistoryPresenter
+            setNewBeverage={setNewBeverage}
+            setShowModal={setShowModal}
+            menu={menu}
+            addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+            currentSearchType={currentSearchType}
+            customizedType={searchedBeverageType}
+          />
+        );
+      case searchTypes.NEW:
+        setShowModal(true);
+        return (
+          <CreateBeverageForMenuModalPresenter
+            newBeverage={newBeverage}
+            setNewBeverage={setNewBeverage}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            menu={menu}
+            addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+            customizedType={searchedBeverageType}
+            setCurrentSearchType={setCurrentSearchType}
+          />
+        );
+      default:
+        return null; // todo: add types then you can remove this
+    }
+  };
+
   return (
     <div>
-      <button type="submit" onClick={() => toggleSearchTypeButtonClick()}>{ toggleSearchTypeButtonLabel } </button>
-      <input id="searchQuery" value={query} onChange={(event) => setQuery(event.target.value)}></input>
-      <button type="submit" onClick={() => searchBeverage(query)}>Search</button>
-      {!isLoading && searchResult ? (
-        searchResult.map((beverage) => (
-          <div onClick={() => console.log(beverage.name)}>
-            <div> {hashListToDiv(beverage)} </div> 
-            <button type="submit" onClick={() => addToMenu(beverage)}>Add to menu </button>
-            <button type="submit" onClick={() => removeFromMenu(beverage)}>Remove from menu </button>
-            <br/>
-          </div>
-        ))
-      ) : ( // todo fixa snygg loading + att den kommer upp på rätt tillfällen
-        <div> Loading </div>
-      )}
+      <button onClick={() => setCurrentSearchType(searchTypes.API)} disabled={currentSearchType === searchTypes.API}>
+        Search new
+      </button>
+      <button onClick={() => setCurrentSearchType(searchTypes.HISTORY)} disabled={currentSearchType === searchTypes.HISTORY}>
+        Find old
+      </button>
+      <button onClick={() => setCurrentSearchType(searchTypes.NEW)} disabled={currentSearchType === searchTypes.NEW}>
+        Create
+      </button>
+      {shownSearchType()}
     </div>
   );
 };
 
-// temporary graphic solution for showing the beverages
-const hashListToDiv = (hashList) => {
-  var divList = [];
-  for (var k in hashList) {
-    const value = hashList[k];
-    if (value === "ingredientList" || value === "ingredientMeasuresList") {
-      // type of value is object
-      divList = [...divList, <div>{hashListToDiv(value)}</div>];
-    } else {
-      divList = [...divList, <div>{k + ": " + value}</div>];
-    }
-  }
-  return divList;
+const beer: Beer = {
+  name: "",
+  price: 0,
+  type: "",
+  volume: 0,
+  alcoholPercentage: 0,
+};
+
+const cocktail: Cocktail = {
+  name: "",
+  price: 0,
+  ingredientList: [],
+  ingredientMeasuresList: [],
 };

@@ -11,9 +11,10 @@ import {
 } from "react-router-dom";
 
 import EntryView from "./components/views/entryView";
+
+import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
 import HandleUserSignIn from "./components/presenters/handleUserSignIn";
 import DrinkModel from "./model/drinkModel";
-import AddBeverageToMenuPresenter from "./components/presenters/addBeverageToMenuPresenter";
 import { searchTypes } from "./constants/searchTypes";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
@@ -21,6 +22,7 @@ import MainNavbar from "./components/views/mainNavbar";
 import { signIn, signOut } from "./redux/actions/user";
 
 const drinkModel = new DrinkModel();
+
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => (
   <Route
@@ -78,12 +80,11 @@ const App = () => {
           <MainNavbar signout={signOut} />
         ) : null}
         <Switch>
+
           <AdminRoute
             exact
-            path="/modifyMenu"
-            drinkModel={drinkModel}
-            searchType={searchTypes.COCKTAIL}
-            component={AddBeverageToMenuPresenter}
+            path="/customizeMenu"
+            component={CustomizeMenuPresenter}
           />
           <PrivateRoute
             exakt
@@ -93,6 +94,7 @@ const App = () => {
           <PublicRoute exact path="/signIn" component={HandleUserSignIn} />
           <PublicRoute exact path="/signUp" component={HandleUserSignUp} />
           <PublicRoute exact path="/" component={EntryView} />
+          
         </Switch>
       </Router>
     </Provider>
