@@ -31,7 +31,10 @@ const HandleUserSignIn = ({ user, signIn }) => {
       credentials: "include",
       body: JSON.stringify({ username: username, password: password }),
     })
-      .then((data) => data.json())
+      .then((data) => {
+        if (data.ok) return data.json();
+        else throw new Error("No user with these credentials");
+      })
       .then((user) => {
         signIn({
           username: user.username,
@@ -39,6 +42,10 @@ const HandleUserSignIn = ({ user, signIn }) => {
         });
         if (user.credentials === "user") history.push("/menu");
         if (user.credentials === "admin") history.push("/customizeMenu");
+      })
+      .catch((err) => {
+        console.log(err);
+        setSignInError(true);
       });
   };
 
