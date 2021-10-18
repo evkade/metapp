@@ -11,20 +11,21 @@ export const CreateBeverageForMenuModalPresenter = ({
   menu,
   addToMenu,
   customizedType,
+  currentSearchType,
   setCurrentSearchType,
   modalBeverage,
   setModalBeverage,
 }) => {
   const onAddToMenu = (beverage: Beverage) => {
     addToMenu(beverage);
-    // todo if current search type is new then do this otherwise no
-    setCurrentSearchType(searchTypes.API);
+    if (currentSearchType === searchTypes.NEW)
+      setCurrentSearchType(searchTypes.API);
     setShowModal(false);
   };
 
   const onCancel = (beverage: Beverage) => {
-    // todo if current search type is new then do this otherwise no
-    setCurrentSearchType(searchTypes.API);
+    if (currentSearchType === searchTypes.NEW)
+      setCurrentSearchType(searchTypes.API);
     setShowModal(false);
   };
 

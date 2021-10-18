@@ -41,6 +41,7 @@ export const CustomizeMenu = ({
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
         customizedType={customizedType}
+        currentSearchType={currentSearchType}
         setCurrentSearchType={setCurrentSearchType}
       />
     </div>
