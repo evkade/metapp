@@ -10,9 +10,7 @@ import { searchTypes, beverageTypes } from "../../constants/searchTypes";
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
 
 export const AddBeverageToMenu = ({
-  modalBeverage,
   setModalBeverage,
-  showModal,
   setShowModal,
   currentSearchType,
   setCurrentSearchType,
@@ -25,15 +23,12 @@ export const AddBeverageToMenu = ({
       case searchTypes.API:
         return (
           <SearchNewBeveragePresenter
-            newBeverage={modalBeverage}
             setNewBeverage={setModalBeverage}
-            showModal={showModal}
             setShowModal={setShowModal}
             menu={menu}
             addToMenu={(beverage: Beverage) => addToMenu(beverage)}
             customizedType={searchedBeverageType}
             currentSearchType={currentSearchType}
-            setCurrentSearchType={setCurrentSearchType}
           />
         );
       case searchTypes.HISTORY:

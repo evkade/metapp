@@ -19,18 +19,13 @@ export const CustomizeMenu = ({
   return (
     <div>
       <AdminMenuPresenter
-        modalBeverage={modalBeverage}
         setModalBeverage={setModalBeverage}
-        showModal={showModal}
         setShowModal={setShowModal}
         menu={menu}
         removeFromMenu={removeFromMenu}
-        customizedType={customizedType}
       />
       <AddBeverageToMenuPresenter
-        modalBeverage={modalBeverage}
         setModalBeverage={setModalBeverage}
-        showModal={showModal}
         setShowModal={setShowModal}
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}

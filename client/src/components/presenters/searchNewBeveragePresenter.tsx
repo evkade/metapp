@@ -11,15 +11,12 @@ const drinkModel = new DrinkModel();
 // todo: also special case if it is present in history
 
 export const SearchNewBeveragePresenter = ({
-  newBeverage,
   setNewBeverage,
-  showModal,
   setShowModal,
   menu,
   addToMenu,
   customizedType,
   currentSearchType,
-  setCurrentSearchType,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);

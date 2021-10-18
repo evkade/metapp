@@ -6,7 +6,6 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 
 export const AdminMenu = ({
   setModalBeverage,
-  showModal,
   setShowModal,
   menu,
   removeFromMenu,
