@@ -9,7 +9,12 @@ const UserSignIn = ({ userAuth, signin, signInError }) => {
 
   return (
     <>
-      <div className="signInForm entryView">
+      <div
+        className="signInForm entryView"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") signin(username, pwd);
+        }}
+      >
         {!userAuth && (
           <>
             <div id="form-login" className="signInForm__form">

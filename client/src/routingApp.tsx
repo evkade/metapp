@@ -95,7 +95,7 @@ const RoutingApp = () => {
           <PrivateRoute exact path="/menu" component={userMenuPresenter} />
           <PublicRoute exact path="/signIn" component={HandleUserSignIn} />
           <PublicRoute exact path="/signUp" component={HandleUserSignUp} />
-          <PublicRoute exact path="/" component={EntryView} />
+          <PublicRoute path="/" component={EntryView} />
         </Switch>
       </Router>
     </Provider>

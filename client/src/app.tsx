@@ -1,37 +1,31 @@
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./components/components.scss";
-import React, { Component } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-} from "react-router-dom";
 import { connect } from "react-redux";
-
-import EntryView from "./components/views/entryView";
-
-import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
-import HandleUserSignIn from "./components/presenters/handleUserSignIn";
-import DrinkModel from "./model/drinkModel";
-import { searchTypes } from "./constants/searchTypes";
-import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
-import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
-import MainNavbar from "./components/views/mainNavbar";
-import { signIn, signOut } from "./redux/actions/user";
-import userMenuPresenter from "./components/presenters/userMenuPresenter";
+import { signIn } from "./redux/actions/user";
 
 import RoutingApp from "./routingApp";
 
 const App = ({}) => {
+  checkValidUser();
+
   return (
     <Provider store={store}>
       <RoutingApp />
     </Provider>
   );
+};
+
+const checkValidUser = async () => {
+  await fetch("http://localhost:5000/api/auth/currentuser", {
+    credentials: "include",
+  })
+    .then((data) => data.json())
+    .then((user) => store.dispatch(signIn(user.currentUser)))
+    .catch((err) => console.log("No signed in user"));
 };
 
 const mapStateToProps = (store) => {

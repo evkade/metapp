@@ -7,9 +7,8 @@ import { useHistory } from "react-router-dom";
 import { switchCurrentBar } from "../../redux/actions/menu";
 import { signOut } from "../../redux/actions/user";
 
-const MainNavbar = ({ signOut, switchCurrentBar }) => {
+const MainNavbar = ({ user, signOut, switchCurrentBar }) => {
   const history = useHistory();
-  console.log(history);
 
   const [currentLogo, setCurrentLogo] = React.useState(dkmlogo);
   const [notCurrentLogo, setNotCurrentLogo] = React.useState(mkmlogo);
@@ -43,11 +42,19 @@ const MainNavbar = ({ signOut, switchCurrentBar }) => {
       <Navbar.Toggle aria-controls="navbar" />
       <Navbar.Collapse id="navbar">
         <Nav>
-          <Nav.Link onClick={() => history.push("/menu")}>Menu</Nav.Link>
+          {user.isAdmin ? (
+            <Nav.Link onClick={() => history.push("/customizeMenu")}>
+              Customize Menu{" "}
+            </Nav.Link>
+          ) : (
+            <Nav.Link onClick={() => history.push("/menu")}>Menu</Nav.Link>
+          )}
           <Nav.Link href="profile">Profile</Nav.Link>
-          <Nav.Link onClick={() => history.push("/vieworders")}>
-            Orders
-          </Nav.Link>
+          {user.isAdmin ? (
+            <Nav.Link onClick={() => history.push("/vieworders")}>
+              Orders
+            </Nav.Link>
+          ) : null}
           <Nav.Link
             onClick={() => {
               logout();
