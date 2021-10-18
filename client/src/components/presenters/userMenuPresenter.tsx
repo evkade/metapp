@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import usePromise from "../../hooks/usePromise";
-import { searchTypes } from "../../constants/searchTypes";
 import MenuView from "../views/menuView";
+import { orderMade } from "../../redux/actions/orders";
+import { isTypeNode } from "typescript";
 
-export const MenuPresenter = () => {
+export const MenuPresenter = ({ orders, orderMade }) => {
   const [orderItems, setOrderItems] = useState([]);
 
   const menuItems = [
@@ -121,8 +121,10 @@ export const MenuPresenter = () => {
     }
   };
 
+  console.log(orderItems);
+
   const removeFromOrder = (name) => {
-    const modifiedOrderList = orderItems.map((item) => {
+    const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
         return {
           name: item.name,
@@ -132,7 +134,15 @@ export const MenuPresenter = () => {
         return item;
       }
     });
-    setOrderItems(modifiedOrderList);
+    const modifiedOrderListWithoutZeros = modifiedOrderList.filter(
+      (item) => item.count !== 0
+    );
+    setOrderItems(modifiedOrderListWithoutZeros);
+  };
+
+  const finalizeOrder = () => {
+    orderMade(orderItems);
+    setOrderItems([]);
   };
 
   return (
@@ -142,18 +152,23 @@ export const MenuPresenter = () => {
       menuItems={menuItems}
       addToOrder={(name) => addOrIncreaseOrder(name)}
       removeFromOrder={(name) => removeFromOrder(name)}
+      finalizeOrder={() => finalizeOrder()}
     ></MenuView>
   );
 };
 
 const mapStateToProps = (store) => {
   return {
-    menu: store.menu, // hade state.reducer.menu innan men funkade ej
+    orders: store.orders,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    orderMade: (beverage) => dispatch(orderMade(beverage)),
+    // drinkMade: (id, timeMade) => dispatch(drinkMade(id, timeMade)),
+    // drinkPaid: (id, timePaid) => dispatch(drinkPaid(id, timePaid)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuPresenter);
