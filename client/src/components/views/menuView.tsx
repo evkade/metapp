@@ -16,7 +16,6 @@ const MenuView = ({
       <div className="menuView__container">
         {menuItems.map((item, index) => {
           var orderCount: number = 0;
-          console.log(orderItems.length);
           const filteredOutItem = orderItems.filter(
             (orderItem) => orderItem.name == item.name
           );

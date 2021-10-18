@@ -33,8 +33,7 @@ const PrivateRoute = ({ component: Component, path, ...rest }) => (
     path={path}
     render={(props) =>
       store.getState().user.loggedIn ? (
-        (console.log(store.getState().user.loggedIn),
-        (<Component {...props} {...rest} />))
+        <Component {...props} {...rest} />
       ) : (
         <Redirect to="/" />
       )

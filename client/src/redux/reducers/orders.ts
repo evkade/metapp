@@ -56,6 +56,7 @@ const initalState = {
       timePaid: "23:45",
     },
   ],
+  userOrders: [],
 };
 
 const orderReducer = (state = initalState, action) => {
@@ -83,11 +84,13 @@ const orderReducer = (state = initalState, action) => {
         ...state,
       };
     case "ORDER_MADE":
-      var newOrder = {};
-      newOrder["id"] = state.orders.length + 1;
+      const newOrder = {};
+      newOrder["id"] = state.userOrders.length + 1;
       newOrder["drinks"] = action.payload.beverage;
+      const newOrderList = [...state.userOrders, newOrder];
       return {
-        orders: [...state.orders, newOrder],
+        ...state,
+        userOrders: newOrderList,
       };
     default:
       return state;

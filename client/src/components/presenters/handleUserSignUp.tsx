@@ -7,7 +7,6 @@ export const HandleUserSignUp = () => {
 
   const handleUserAuthDisplay = (param: boolean) => {
     setUserAuth(param);
-    console.log(userAuth);
   };
 
   const checkUserAuth = (username: string, password: string) => {
