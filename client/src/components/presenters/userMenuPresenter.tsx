@@ -4,9 +4,18 @@ import usePromise from "../../hooks/usePromise";
 import { searchTypes } from "../../constants/searchTypes";
 import MenuView from "../views/menuView";
 
-export const MenuPresenter = () => {
+// todo: bara skicka delen av menyn som är customized type och ej skicka hela menyn + customizedtype
+export const MenuPresenter = ({
+  menuViewType,
+  showModal,
+  setShowModal,
+  menu,
+  removeFromMenu,
+  customizedType,
+}) => {
   const [orderItems, setOrderItems] = useState([]);
 
+  // todo : remove this, meny should be filled from redux
   const menuItems = [
     {
       id: 1,
@@ -94,11 +103,11 @@ export const MenuPresenter = () => {
     },
   ];
 
-  const addToOrder = (name) => {
+  const addToOrder = (name: string) => {
     setOrderItems([...orderItems, { name, count: 1 }]);
   };
 
-  const increaseOrderCount = (name) => {
+  const increaseOrderCount = (name: string) => {
     const modifiedOrderList = orderItems.map((item) => {
       if (item.name === name) {
         return {
@@ -112,7 +121,7 @@ export const MenuPresenter = () => {
     setOrderItems(modifiedOrderList);
   };
 
-  const addOrIncreaseOrder = (name) => {
+  const addOrIncreaseOrder = (name: string) => {
     const isItemPresent: boolean = orderItems.some((item) => item.name == name);
     if (isItemPresent) {
       increaseOrderCount(name);
@@ -121,7 +130,7 @@ export const MenuPresenter = () => {
     }
   };
 
-  const removeFromOrder = (name) => {
+  const removeFromOrder = (name: string) => {
     const modifiedOrderList = orderItems.map((item) => {
       if (item.name === name && item.count !== 0) {
         return {
@@ -137,18 +146,25 @@ export const MenuPresenter = () => {
 
   return (
     <MenuView
+      menuViewType={menuViewType}
+      // props for when menu is used by user
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
       menuItems={menuItems}
-      addToOrder={(name) => addOrIncreaseOrder(name)}
-      removeFromOrder={(name) => removeFromOrder(name)}
+      addToOrder={(name: string) => addOrIncreaseOrder(name)}
+      removeFromOrder={(name: string) => removeFromOrder(name)}
+      // props for when menu is used by admin
+      showModal={showModal}
+      setShowModal={setShowModal}
+      removeFromMenu={removeFromMenu}
+      customizedType={customizedType}
     ></MenuView>
   );
 };
 
 const mapStateToProps = (store) => {
   return {
-    menu: store.menu, // hade state.reducer.menu innan men funkade ej
+    menu: store.menu,
   };
 };
 
