@@ -5,8 +5,9 @@ import mkmlogo from "../images/mkm_logo.png";
 import dkmlogo from "../images/dkm_logo.png";
 import { useHistory } from "react-router-dom";
 import { switchCurrentBar } from "../../redux/actions/menu";
+import { signOut } from "../../redux/actions/user";
 
-const MainNavbar = ({ signout, switchCurrentBar }) => {
+const MainNavbar = ({ signOut, switchCurrentBar }) => {
   const history = useHistory();
   console.log(history);
 
@@ -27,8 +28,7 @@ const MainNavbar = ({ signout, switchCurrentBar }) => {
         "Content-Type": "application/json",
       },
       credentials: "include",
-    }).then(() => signout());
-    history.push("/");
+    }).then(() => signOut(), history.push("/"));
   };
 
   return (
@@ -45,10 +45,12 @@ const MainNavbar = ({ signout, switchCurrentBar }) => {
         <Nav>
           <Nav.Link onClick={() => history.push("/menu")}>Menu</Nav.Link>
           <Nav.Link href="profile">Profile</Nav.Link>
-          <Nav.Link href="/orders">Orders</Nav.Link>
+          <Nav.Link onClick={() => history.push("/vieworders")}>
+            Orders
+          </Nav.Link>
           <Nav.Link
             onClick={() => {
-              logout(), history.push("/");
+              logout();
             }}
           >
             Log out
@@ -60,12 +62,15 @@ const MainNavbar = ({ signout, switchCurrentBar }) => {
 };
 
 const mapStateToProps = (store) => {
-  return {};
+  return {
+    user: store.user,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     switchCurrentBar: () => dispatch(switchCurrentBar()),
+    signOut: () => dispatch(signOut()),
   };
 };
 

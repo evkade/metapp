@@ -1,0 +1,231 @@
+:root {
+  --neon-color-pink: #ee2a7b;
+  --light-neon-color-pink: #fbd0e2;
+  --neon-color-green: #2aee4b;
+  --light-neon-color-green: #d0fbd7;
+  --neon-color-yellow: #deee2a;
+  --light-neon-color-yellow: #f8fbd0;
+  --dark-background: rgb(26, 26, 26);
+  --barcode-font: "Libre Barcode 39 Extended Text", cursive;
+  --button-neon-font: "Pacifico", cursive;
+  --general-font: "Montserrat", sans-serif;
+}
+
+body {
+  margin: 0px !important;
+}
+
+.signInForm {
+  text-align: center;
+  font-family: var(--general-font);
+}
+
+.signInForm__form {
+  background: rgb(240, 240, 240);
+  background-image: linear-gradient(to left, rgb(240, 240, 240), #ffff);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+  box-shadow: 5px 5px 8px;
+  width: 90%;
+  max-width: 600px;
+  aspect-ratio: 5/3;
+}
+
+.signInForm__form--flexRow {
+  display: flex;
+  height: 30%;
+  margin-bottom: 20px;
+}
+
+.signInForm__logo {
+  flex: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.signInForm__title {
+  display: flex;
+  flex: 0.5;
+  align-items: center;
+  font-size: 40px;
+}
+
+.signInForm__logo img {
+  height: 100%;
+}
+
+.signInForm__inputContainer {
+  flex: 1;
+  display: grid;
+}
+
+div.signInForm__inputContainer input,
+div.signInForm__inputContainer button {
+  font-size: 20px;
+  padding: 5px;
+  font-family: var(--general-font);
+}
+
+.signInForm__inputContainer--input {
+}
+
+.signInForm__errElement {
+  padding: 20px;
+  color: red;
+}
+
+.signInForm__successElement {
+  display: block;
+  color: white;
+}
+
+.red-brick {
+  color: red;
+  width: 50px;
+  height: 50px;
+}
+
+.entryView {
+}
+
+.brickBackground {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url("https://i.imgur.com/mnVAkgM.jpg");
+  display: flex;
+  background-repeat: no-repeat;
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.entryView__neonText {
+  color: white;
+  font-size: 20vw;
+  font-family: var(--barcode-font);
+  --neon-color: var(--neon-color-pink);
+  --neon-color-close1: white;
+  --neon-color-close2: white;
+  animation: flicker 1.5s infinite alternate;
+  box-shadow: none !important;
+  margin-bottom: 10vh;
+}
+
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 3px var(--neon-color-close1),
+      0 0 10px var(--neon-color-close2), 0 0 21px var(--neon-color),
+      0 0 42px var(--neon-color), 0 0 82px var(--neon-color),
+      0 0 92px var(--neon-color), 0 0 102px var(--neon-color),
+      0 0 111px var(--neon-color);
+    box-shadow: 0px 0px 10px 1px var(--neon-color);
+  }
+  20%,
+  20.1% {
+    text-shadow: none;
+    box-shadow: none;
+  }
+}
+
+.entryView__buttons {
+  background: rgba(0, 0, 0, 0.6);
+  font-family: var(--button-neon-font);
+  font-size: 5vw;
+  margin: 20px;
+  width: 4em;
+  padding-bottom: 2vh;
+  border-radius: 25px;
+}
+
+.entryView__buttons--green {
+  color: var(--neon-color-green);
+  border: 3px solid var(--neon-color-green);
+  --neon-color: var(--neon-color-green);
+  --neon-color-close1: black;
+  --neon-color-close2: var(--neon-color-green);
+  animation: flicker 8s infinite alternate;
+}
+
+.entryView__buttons--yellow {
+  color: var(--neon-color-yellow);
+  border: 3px solid var(--neon-color-yellow);
+  --neon-color: var(--neon-color-yellow);
+  --neon-color-close1: black;
+  --neon-color-close2: var(--neon-color-yellow);
+  animation: flicker 10s infinite alternate;
+}
+
+@media screen and (prefers-reduced-motion) {
+  .entryView__neonText,
+  .entryView__buttons--green,
+  .entryView__buttons--yellow {
+    animation: none !important;
+  }
+}
+
+.entryView__logos img {
+  height: 8vh;
+  margin-bottom: 10vh;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.drinkCard {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 10%;
+  margin: 10px;
+  padding: 10px;
+  background-color: var(--light-neon-color-pink);
+}
+
+.drinkCard--made {
+  background-color: var(--light-neon-color-yellow);
+}
+
+.drinkCard--finished {
+  background-color: var(--light-neon-color-green);
+}
+
+.modal {
+  position: fixed;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  width: 500px;
+  background-color: #fff;
+}
+
+.modal-header, .modal-footer {
+  padding: 10px;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.modal-body {
+  padding: 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
