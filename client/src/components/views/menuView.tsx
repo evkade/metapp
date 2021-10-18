@@ -8,6 +8,7 @@ const MenuView = ({
   menuItems,
   addToOrder,
   removeFromOrder,
+  finalizeOrder,
 }) => {
   return (
     <div className="menuView">
@@ -15,6 +16,7 @@ const MenuView = ({
       <div className="menuView__container">
         {menuItems.map((item, index) => {
           var orderCount: number = 0;
+          console.log(orderItems.length);
           const filteredOutItem = orderItems.filter(
             (orderItem) => orderItem.name == item.name
           );
@@ -33,6 +35,14 @@ const MenuView = ({
           );
         })}
       </div>
+      {orderItems.length > 0 && (
+        <button
+          className="menuView__orderButton"
+          onClick={() => finalizeOrder()}
+        >
+          Place order
+        </button>
+      )}
     </div>
   );
 };
