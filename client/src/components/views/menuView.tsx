@@ -8,14 +8,15 @@ const MenuView = ({
   menuItems,
   addToOrder,
   removeFromOrder,
-  finalizeOrder,
+  placeUnFinishedOrder,
   addToFavorites,
   removeFromFavorites,
   favoriteList,
+  totalInfo,
 }) => {
   return (
     <div className="menuView">
-      <div className="pageTitleNeon">Menu</div>
+      <div className="pageTitleNeon--big">Menu</div>
       <div className="menuView__container">
         {menuItems.map((item, index) => {
           var orderCount: number = 0;
@@ -30,12 +31,13 @@ const MenuView = ({
               key={index}
               item={item}
               index={index}
-              addToOrder={(name) => addToOrder(name)}
+              addToOrder={(name, cost) => addToOrder(name, cost)}
               removeFromOrder={(name) => removeFromOrder(name)}
               count={orderCount}
               addFavorite={(name) => addToFavorites(name)}
               removeFavorite={(name) => removeFromFavorites(name)}
               favoriteList={favoriteList}
+              menuDisplay={true}
             />
           );
         })}
@@ -43,9 +45,11 @@ const MenuView = ({
       {orderItems.length > 0 && (
         <button
           className="menuView__orderButton"
-          onClick={() => finalizeOrder()}
+          onClick={() => placeUnFinishedOrder()}
         >
-          Place order
+          Place order <br />
+          {totalInfo.totalCount} {totalInfo.totalCount == 1 ? "item" : "items"}{" "}
+          á {totalInfo.totalCost} SEK
         </button>
       )}
     </div>

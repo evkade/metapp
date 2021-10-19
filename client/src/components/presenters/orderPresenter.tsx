@@ -1,27 +1,25 @@
+import OrderView from "../views/orderView";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import MenuView from "../views/menuView";
 import { orderPlaced, unfinishedOrderPlaced } from "../../redux/actions/user";
 import { addFavorite } from "../../redux/actions/user";
 import { removeFavorite } from "../../redux/actions/user";
-import { useHistory } from "react-router-dom";
 
-export const MenuPresenter = ({
+export const OrderPresenter = ({
+  unfinishedOrder,
   orders,
   orderPlaced,
   addFavorite,
   removeFavorite,
   favorites,
   unfinishedOrderPlaced,
-  unfinishedOrder,
 }) => {
+  console.log(unfinishedOrder);
   const [orderItems, setOrderItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
 
   useEffect(() => {
-    setFavoriteList(favorites);
-
     if (
       !(
         Object.keys(unfinishedOrder).length === 0 &&
@@ -41,95 +39,6 @@ export const MenuPresenter = ({
       setOrderItems([]);
     }
   }, []);
-
-  let history = useHistory();
-
-  const menuItems = [
-    {
-      id: 1,
-      name: "Beer",
-      description: "fruity",
-      price: 100,
-      alc: 4.4,
-    },
-    {
-      id: 2,
-      name: "Wine",
-      description: "DRY",
-      price: 20,
-      alc: 13,
-    },
-    {
-      id: 3,
-      name: "Cider",
-      description: "Boozy",
-      price: 10,
-      alc: 5,
-    },
-    {
-      id: 3,
-      name: "Cider2",
-      description: "Boozy",
-      price: 5,
-      alc: 5,
-    },
-    {
-      id: 3,
-      name: "Cider3",
-      description: "Boozy",
-      price: 50,
-      alc: 5,
-    },
-    {
-      id: 3,
-      name: "Cider4",
-      description: "Boozy",
-      price: 40,
-      alc: 5,
-    },
-    {
-      id: 3,
-      name: "Cider5",
-      description: "Boozy",
-      price: 10,
-      alc: 5,
-    },
-    {
-      id: 3,
-      name: "Cider6",
-      description: "Boozy",
-      price: 10,
-      alc: 5,
-    },
-    {
-      id: 3,
-      name: "Cider7",
-      description: "Boozy",
-      price: 10,
-      alc: 5,
-    },
-    {
-      id: 3,
-      name: "Cider8",
-      description: "Boozy",
-      price: 10,
-      alc: 5,
-    },
-    {
-      id: 3,
-      name: "Cider9",
-      description: "Boozy",
-      price: 10,
-      alc: 5,
-    },
-    {
-      id: 3,
-      name: "Cider10",
-      description: "Boozy",
-      price: 10,
-      alc: 5,
-    },
-  ];
 
   const addToTotalInfo = (cost) => {
     const newTotalCost = totalInfo.totalCost + cost;
@@ -185,11 +94,6 @@ export const MenuPresenter = ({
     setOrderItems(modifiedOrderListWithoutZeros);
   };
 
-  const placeUnFinishedOrder = () => {
-    unfinishedOrderPlaced(orderItems);
-    history.push("/order");
-  };
-
   const addToFavorites = (name) => {
     addFavorite(name);
   };
@@ -198,26 +102,28 @@ export const MenuPresenter = ({
     removeFavorite(name);
   };
 
+  const finalizeOrder = () => {
+    orderPlaced(unfinishedOrder);
+  };
+
   return (
-    <MenuView
+    <OrderView
+      unfinishedOrder={unfinishedOrder}
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
-      menuItems={menuItems}
       addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name) => removeFromOrder(name)}
-      placeUnFinishedOrder={() => placeUnFinishedOrder()}
       addToFavorites={(name) => addToFavorites(name)}
       removeFromFavorites={(name) => removeFromFavorites(name)}
       favoriteList={favoriteList}
       totalInfo={totalInfo}
-    ></MenuView>
+      finalizeOrder={() => finalizeOrder()}
+    />
   );
 };
 
 const mapStateToProps = (store) => {
   return {
-    orders: store.orders,
-    favorites: store.user.favorites,
     unfinishedOrder: store.user.unfinishedOrder,
   };
 };
@@ -232,4 +138,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuPresenter);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderPresenter);

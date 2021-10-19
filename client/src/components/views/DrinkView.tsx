@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import "../components.scss";
-import mkmlogo from "../images/mkm_logo.png";
-import dkmlogo from "../images/dkm_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import PlaceholderImage from "../images/stockphoto_placeholder.jpg";
 
 const Drink = ({
   item,
@@ -16,6 +13,7 @@ const Drink = ({
   addFavorite,
   removeFavorite,
   favoriteList,
+  menuDisplay,
 }) => {
   useEffect(() => {
     if (favoriteList.includes(item.name)) {
@@ -41,21 +39,40 @@ const Drink = ({
 
   return (
     <div key={index} className="menuView__drinkCard">
-      <FontAwesomeIcon
-        id={`starIcon${index}`}
-        icon={faStar}
-        className="menuView__drinkCard__star fa-2x"
-        onClick={() => activateStar(item.name, false)}
-      />
-      <img src="" className="menuView__drinkCard__image" />
+      {menuDisplay && (
+        <>
+          <div className="menuView__drinkCard__star">
+            <FontAwesomeIcon
+              id={`starIcon${index}`}
+              icon={faStar}
+              className="fa-2x"
+              onClick={() => activateStar(item.name, false)}
+            />
+          </div>
+          <img src={PlaceholderImage} className="menuView__drinkCard__image" />
+        </>
+      )}
       <div className="menuView__drinkCard__name">{item.name}</div>
       <div className="menuView__drinkCard__pricealc">
-        {item.price} SEK | {item.alc} %
+        {item.price} SEK{" "}
+        {menuDisplay && (
+          <>
+            <br />
+            {item.alc} %
+          </>
+        )}
       </div>
       <div className="menuView__drinkCard__addToCart">
-        <button onClick={() => addToOrder(item.name)}>+</button>
-        <span> {count} </span>
-        <button onClick={() => removeFromOrder(item.name)}>-</button>
+        {menuDisplay ? (
+          <>
+            {" "}
+            <button onClick={() => addToOrder(item.name, item.price)}>+</button>
+            <span> {count} </span>
+            <button onClick={() => removeFromOrder(item.name)}>-</button>
+          </>
+        ) : (
+          <span>{count} st</span>
+        )}
       </div>
     </div>
   );
