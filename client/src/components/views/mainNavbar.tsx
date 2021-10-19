@@ -49,7 +49,7 @@ const MainNavbar = ({ user, signOut, switchCurrentBar }) => {
           ) : (
             <Nav.Link onClick={() => history.push("/menu")}>Menu</Nav.Link>
           )}
-          <Nav.Link href="profile">Profile</Nav.Link>
+          <Nav.Link onClick={() => history.push("/profile")}>Profile</Nav.Link>
           {user.isAdmin ? (
             <Nav.Link onClick={() => history.push("/vieworders")}>
               Orders

@@ -9,6 +9,9 @@ const MenuView = ({
   addToOrder,
   removeFromOrder,
   finalizeOrder,
+  addToFavorites,
+  removeFromFavorites,
+  favoriteList,
 }) => {
   return (
     <div className="menuView">
@@ -16,7 +19,6 @@ const MenuView = ({
       <div className="menuView__container">
         {menuItems.map((item, index) => {
           var orderCount: number = 0;
-          console.log(orderItems.length);
           const filteredOutItem = orderItems.filter(
             (orderItem) => orderItem.name == item.name
           );
@@ -31,6 +33,9 @@ const MenuView = ({
               addToOrder={(name) => addToOrder(name)}
               removeFromOrder={(name) => removeFromOrder(name)}
               count={orderCount}
+              addFavorite={(name) => addToFavorites(name)}
+              removeFavorite={(name) => removeFromFavorites(name)}
+              favoriteList={favoriteList}
             />
           );
         })}

@@ -82,13 +82,6 @@ const orderReducer = (state = initalState, action) => {
         orders: [orderPaidTmp, rest1],
         ...state,
       };
-    case "ORDER_MADE":
-      var newOrder = {};
-      newOrder["id"] = state.orders.length + 1;
-      newOrder["drinks"] = action.payload.beverage;
-      return {
-        orders: [...state.orders, newOrder],
-      };
     default:
       return state;
   }

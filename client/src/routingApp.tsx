@@ -1,6 +1,6 @@
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./components/components.scss";
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -25,6 +25,7 @@ import MainNavbar from "./components/views/mainNavbar";
 import { signIn, signOut } from "./redux/actions/user";
 import userMenuPresenter from "./components/presenters/userMenuPresenter";
 import { useSelector } from "react-redux";
+import userProfilePresenter from "./components/presenters/userProfilePresenter";
 
 const drinkModel = new DrinkModel();
 
@@ -33,8 +34,7 @@ const PrivateRoute = ({ component: Component, path, ...rest }) => (
     path={path}
     render={(props) =>
       store.getState().user.loggedIn ? (
-        (console.log(store.getState().user.loggedIn),
-        (<Component {...props} {...rest} />))
+        <Component {...props} {...rest} />
       ) : (
         <Redirect to="/" />
       )
@@ -55,16 +55,12 @@ const AdminRoute = ({ component: Component, path, ...rest }) => (
   />
 );
 
-const PublicRoute = ({ component: Component, path, ...rest }) => (
+const PublicRoute = ({ component: Component, path, pathName, ...rest }) => (
   <Route
     path={path}
     render={(props) =>
       store.getState().user.loggedIn ? (
-        !store.getState().user.isAdmin ? (
-          <Redirect to="/menu" />
-        ) : (
-          <Redirect to="/customizeMenu" />
-        )
+        <Redirect to={pathName == null ? "/" : pathName} />
       ) : (
         // TODO what is first page?
         <Component {...props} {...rest} />
@@ -77,6 +73,22 @@ const RoutingApp = () => {
   const user = useSelector((state: RootState) => {
     return state.user;
   });
+
+  const [pathName, setPathName] = useState("/");
+
+  window.onbeforeunload = () => {
+    localStorage.setItem("pathname", window.location.pathname);
+  };
+
+  useEffect(() => {
+    window.onload = () => {
+      const pathname = localStorage.getItem("pathname");
+      if (pathname !== null) {
+        setPathName(pathname);
+      }
+    };
+  }, []);
+
   return (
     <Provider store={store}>
       <Router>
@@ -93,9 +105,24 @@ const RoutingApp = () => {
             component={AdminViewDrinkOrdersPresenter}
           />
           <PrivateRoute exact path="/menu" component={userMenuPresenter} />
-          <PublicRoute exact path="/signIn" component={HandleUserSignIn} />
-          <PublicRoute exact path="/signUp" component={HandleUserSignUp} />
-          <PublicRoute path="/" component={EntryView} />
+          <PrivateRoute
+            exact
+            path="/profile"
+            component={userProfilePresenter}
+          />
+          <PublicRoute
+            exact
+            path="/signIn"
+            component={HandleUserSignIn}
+            pathName={pathName}
+          />
+          <PublicRoute
+            exact
+            path="/signUp"
+            component={HandleUserSignUp}
+            pathName={pathName}
+          />
+          <PublicRoute path="/" component={EntryView} pathName={pathName} />
         </Switch>
       </Router>
     </Provider>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Menu } from "../views/menu";
 import { connect } from "react-redux";
-import { orderMade } from "../../redux/actions/orders";
+import { orderPlaced } from "../../redux/actions/user";
 
 export const MenuPresenter = ({
   showModal,
@@ -30,7 +30,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    orderMade: (beverage) => dispatch(orderMade(beverage)),
+    orderPlaced: (beverage) => dispatch(orderPlaced(beverage)),
     // drinkMade: (id, timeMade) => dispatch(drinkMade(id, timeMade)),
     // drinkPaid: (id, timePaid) => dispatch(drinkPaid(id, timePaid)),
   };

@@ -13,10 +13,3 @@ export const drinkPaid = (orderID, timePaid) => ({
     timePaid: timePaid,
   },
 });
-
-export const orderMade = (orderBeverage) => ({
-  type: "ORDER_MADE",
-  payload: {
-    beverage: orderBeverage,
-  },
-});

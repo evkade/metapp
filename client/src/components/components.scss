@@ -82,6 +82,7 @@ $general-font: "Montserrat", sans-serif;
 
 body {
   margin: 0px !important;
+  font-family: $general-font;
 }
 
 #app {
@@ -293,6 +294,17 @@ div.signInForm__inputContainer button {
   margin-bottom: 20px;
 }
 
+.menuView__drinkCard__star {
+  color: lightgray;
+  margin-right: -20px;
+  margin-top: 15%;
+  z-index: 1;
+}
+
+.menuView__drinkCard__star--active {
+  color: rgb(240, 200, 48);
+}
+
 .pageTitleNeon {
   z-index: 1;
   color: white;
@@ -344,4 +356,44 @@ div.signInForm__inputContainer button {
   width: 70%;
   border: 1px solid black;
   background: rgb(240, 200, 48);
+}
+
+.profileContainer {
+  @include brickBackground();
+}
+
+.profileContainer__block {
+  background: black;
+  color: white;
+  width: 80%;
+  height: 20%;
+  border-radius: 6px;
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
+.profileContainer__block--row {
+  flex-direction: row;
+  @include centerVerticalHorizontal();
+  border-bottom: 1px solid white;
+  padding: 10px 0px;
+}
+
+.profileContainer__block--column {
+  text-align: left;
+  flex: 1;
+}
+
+.profileContainer__block--column--flex {
+  flex: 1;
+  @include centerVerticalHorizontal();
+}
+
+.profileContainer__block__scrollContainer {
+  height: 80%;
+  overflow: scroll;
+}
+
+.profileContainer__block__title {
+  font-size: 20px;
 }
