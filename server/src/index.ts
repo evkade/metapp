@@ -1,13 +1,17 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { userRouter } from './routes/user'
 import connectDB from './db'
-import { beerRouter } from './routes/beers';
 
 import cookieSession from "cookie-session";
 import cookieParser from 'cookie-parser';
+
 import { authRouter } from './routes/auth';
+import { apiBeerRouter } from './routes/apibeers';
+import { beerRouter } from './routes/beers';
+import { cocktailRouter } from './routes/cocktail';
+import { userRouter } from './routes/user'
+import { menuRouter } from './routes/menu'
 
 const bp = require('body-parser');
 const app = express();
@@ -69,7 +73,10 @@ app.use(bp.urlencoded({ extended: true }));
 
 app.use(userRouter);
 app.use(beerRouter);
+app.use(cocktailRouter)
+app.use(apiBeerRouter)
 app.use(authRouter);
+app.use(menuRouter);
 
 app.get('/', (req, res) => {
   console.log('received request');
