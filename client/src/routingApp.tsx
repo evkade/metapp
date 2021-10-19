@@ -60,11 +60,7 @@ const PublicRoute = ({ component: Component, path, pathName, ...rest }) => (
     path={path}
     render={(props) =>
       store.getState().user.loggedIn ? (
-        !store.getState().user.isAdmin ? (
-          <Redirect to={pathName == null ? "/" : pathName} />
-        ) : (
-          <Redirect to="/customizeMenu" />
-        )
+        <Redirect to={pathName == null ? "/" : pathName} />
       ) : (
         // TODO what is first page?
         <Component {...props} {...rest} />
