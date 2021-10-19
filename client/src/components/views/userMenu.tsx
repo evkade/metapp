@@ -1,8 +1,11 @@
 import React from "react";
-import "../components.scss";
+import "../components.scss"; // behövs detta?
+import { BeverageCard } from "./beverageCard";
+import { beverageCardTypes } from "../../constants/beverageCardType";
+import { Beverage } from "../../constants/beverageObjects";
 import Drink from "./DrinkView";
 
-const MenuView = ({
+export const UserMenu = ({
   orderItems,
   setOrderItems,
   menuItems,
@@ -17,7 +20,7 @@ const MenuView = ({
     <div className="menuView">
       <div className="pageTitleNeon">Menu</div>
       <div className="menuView__container">
-        {menuItems.map((item, index) => {
+        {menuItems.map((item: Beverage, index: number) => {
           var orderCount: number = 0;
           const filteredOutItem = orderItems.filter(
             (orderItem) => orderItem.name == item.name
@@ -27,11 +30,10 @@ const MenuView = ({
           }
           return (
             <Drink
-              key={index}
               item={item}
               index={index}
-              addToOrder={(name) => addToOrder(name)}
-              removeFromOrder={(name) => removeFromOrder(name)}
+              addToOrder={(name: string) => addToOrder(name)}
+              removeFromOrder={(name: string) => removeFromOrder(name)}
               count={orderCount}
               addFavorite={(name) => addToFavorites(name)}
               removeFavorite={(name) => removeFromFavorites(name)}
@@ -51,5 +53,3 @@ const MenuView = ({
     </div>
   );
 };
-
-export default MenuView;

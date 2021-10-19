@@ -1,6 +1,6 @@
 import React from "react";
 import { AddBeverageToMenuPresenter } from "../presenters/addBeverageToMenuPresenter";
-import { MenuPresenter } from "../presenters/menuPresenter";
+import { AdminMenuPresenter } from "../presenters/adminMenuPresenter";
 import { Beverage } from "../../constants/beverageObjects";
 
 export const CustomizeMenu = ({
@@ -13,7 +13,7 @@ export const CustomizeMenu = ({
 }) => {
   return (
     <div>
-      <MenuPresenter
+      <AdminMenuPresenter
         showModal={showModal}
         setShowModal={setShowModal}
         menu={menu}

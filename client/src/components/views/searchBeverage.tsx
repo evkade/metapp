@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { searchTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
+import { BeverageCard } from "./beverageCard";
+import { beverageCardTypes } from "../../constants/beverageCardType";
 
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
@@ -18,7 +20,7 @@ export const SearchBeverage = ({
 }) => {
   const [query, setQuery] = useState<string>("");
 
-  const openModal = (beverage : Beverage) => {
+  const openModal = (beverage: Beverage) => {
     setNewBeverage(beverage);
     setShowModal(true);
   };
@@ -33,26 +35,25 @@ export const SearchBeverage = ({
       <button type="submit" onClick={() => searchBeverage(query)}>
         Search
       </button>
-      {!isLoading && searchResult ? (
-        searchResult.map((beverage) => (
-          <div>
-            <div> {hashListToDiv(beverage)} </div>
-            <button
-              type="submit"
-              onClick={() =>
-                currentSearchType === searchTypes.API
-                  ? openModal(beverage)
-                  : addToMenu(beverage)
-              }
-            >Add to menu
-            </button>
-            <br />
-          </div>
-        ))
-      ) : (
-        // todo fixa snygg loading + att den kommer upp på rätt tillfällen
-        <div> Loading </div>
-      )}
+      <div className="menuView__container">
+        {!isLoading && searchResult ? (
+          searchResult.map((beverage: Beverage, index: number) => (
+            <BeverageCard
+              beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
+              beverage={beverage}
+              index={index}
+              addToOrder={null}
+              removeFromOrder={null}
+              count={null}
+              setShowModal={setShowModal}
+              removeFromMenu={null}
+            />
+          ))
+        ) : (
+          // todo fixa snygg loading + att den kommer upp på rätt tillfällen
+          <div> Loading </div>
+        )}
+      </div>
     </div>
   );
 };
