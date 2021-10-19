@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import MenuView from "../views/menuView";
-import { orderMade } from "../../redux/actions/orders";
+import { orderPlaced } from "../../redux/actions/user";
 import { addFavorite } from "../../redux/actions/user";
 import { removeFavorite } from "../../redux/actions/user";
 
 export const MenuPresenter = ({
   orders,
-  orderMade,
+  orderPlaced,
   addFavorite,
   removeFavorite,
   favorites,
@@ -151,7 +151,7 @@ export const MenuPresenter = ({
   };
 
   const finalizeOrder = () => {
-    orderMade(orderItems);
+    orderPlaced(orderItems);
     setOrderItems([]);
   };
 
@@ -187,7 +187,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    orderMade: (beverage) => dispatch(orderMade(beverage)),
+    orderPlaced: (beverage) => dispatch(orderPlaced(beverage)),
     addFavorite: (name) => dispatch(addFavorite(name)),
     removeFavorite: (name) => dispatch(removeFavorite(name)),
   };

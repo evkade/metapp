@@ -3,6 +3,7 @@ const initialState = {
   isAdmin: false,
   loggedIn: false,
   favorites: [],
+  userOrders: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -33,6 +34,15 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         favorites: newFilterArray,
+      };
+    case "ORDER_PLACED":
+      const newOrder = {};
+      newOrder["id"] = state.userOrders.length + 1; //todo: set id to next order
+      newOrder["order"] = action.payload.beverage;
+      const newOrderList = [...state.userOrders, newOrder];
+      return {
+        ...state,
+        userOrders: newOrderList,
       };
     default:
       return state;

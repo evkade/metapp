@@ -16,35 +16,43 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
       <div className="profileContainer__block">
         <div className="profileContainer__block__title">Previous Orders</div>
         <div className="profileContainer__block__scrollContainer">
-          {orders.map((order, index) => {
-            return (
-              <div className="profileContainer__block--row" key={index}>
-                <div className="profileContainer__block--column--flex">
-                  <b>OrderID: {order.id}</b>
+          {orders.length > 0 ? (
+            orders.map((order, index) => {
+              return (
+                <div className="profileContainer__block--row" key={index}>
+                  <div className="profileContainer__block--column--flex">
+                    <b>OrderID: {order.id}</b>
+                  </div>
+                  <div className="profileContainer__block--column">
+                    {order.order.map((orderDetail, index) => {
+                      const length = order.order.length;
+                      if (index == length - 1) {
+                        return (
+                          <span key={index}>
+                            {" "}
+                            {orderDetail.count} {orderDetail.name}
+                          </span>
+                        );
+                      } else {
+                        return (
+                          <span key={index}>
+                            {" "}
+                            {orderDetail.count} {orderDetail.name},
+                          </span>
+                        );
+                      }
+                    })}
+                  </div>
                 </div>
-                <div className="profileContainer__block--column">
-                  {order.order.map((orderDetail, index) => {
-                    const length = order.order.length;
-                    if (index == length - 1) {
-                      return (
-                        <span key={index}>
-                          {" "}
-                          {orderDetail.count} {orderDetail.name}
-                        </span>
-                      );
-                    } else {
-                      return (
-                        <span key={index}>
-                          {" "}
-                          {orderDetail.count} {orderDetail.name},
-                        </span>
-                      );
-                    }
-                  })}
-                </div>
+              );
+            })
+          ) : (
+            <div className="profileContainer__block--row">
+              <div className="profileContainer__block--column--flex">
+                You haven't placed any orders.
               </div>
-            );
-          })}
+            </div>
+          )}
         </div>
       </div>
       <GeneralFavoriteCard

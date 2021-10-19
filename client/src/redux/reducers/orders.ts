@@ -56,43 +56,6 @@ const initalState = {
       timePaid: "23:45",
     },
   ],
-  userOrders: [
-    {
-      id: 1,
-      order: [
-        {
-          name: "Beer",
-          count: 4,
-        },
-      ],
-    },
-    {
-      id: 2,
-      order: [
-        {
-          name: "Cider",
-          count: 2,
-        },
-        {
-          name: "Cider2",
-          count: 15,
-        },
-        {
-          name: "Cider3",
-          count: 22,
-        },
-      ],
-    },
-    {
-      id: 3,
-      order: [
-        {
-          name: "Wine",
-          count: 1,
-        },
-      ],
-    },
-  ],
 };
 
 const orderReducer = (state = initalState, action) => {
@@ -118,15 +81,6 @@ const orderReducer = (state = initalState, action) => {
       return {
         orders: [orderPaidTmp, rest1],
         ...state,
-      };
-    case "ORDER_MADE":
-      const newOrder = {};
-      newOrder["id"] = state.userOrders.length + 1; //todo: set id to next order
-      newOrder["order"] = action.payload.beverage;
-      const newOrderList = [...state.userOrders, newOrder];
-      return {
-        ...state,
-        userOrders: newOrderList,
       };
     default:
       return state;

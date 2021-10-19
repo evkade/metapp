@@ -16,3 +16,10 @@ export const removeFavorite = (name) => ({
   type: "REMOVE_FAVORITE",
   payload: name,
 });
+
+export const orderPlaced = (orderBeverage) => ({
+  type: "ORDER_PLACED",
+  payload: {
+    beverage: orderBeverage,
+  },
+});
