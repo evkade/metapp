@@ -415,43 +415,43 @@ div.signInForm__inputContainer button {
       background-color: grey;
     }
   }
+}
 
-  .customizeMenu__GridContainer {
-    display: grid;
-    grid-column-gap: 5px;
-  }
+.customizeMenu__GridContainer {
+  display: grid;
+  grid-column-gap: 5px;
+}
 
-  .customizeMenu__Menu {
-    background-color: black;
-    border-radius: 6px;
-    grid-column-start: 1;
-    grid-column-end: 1;
-    grid-row-start: 1;
-    grid-row-end: 2;
-  }
+.customizeMenu__Menu {
+  background-color: black;
+  border-radius: 6px;
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
 
-  .customizeMenu__AddBeverageToMenu {
-    background-color: black;
-    border-radius: 6px;
-    grid-column-start: 2;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-  }
+.customizeMenu__AddBeverageToMenu {
+  background-color: black;
+  border-radius: 6px;
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
 
-  .customizeMenu__Button {
-    background: none;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color: white;
-    border-radius: 6px;
-    border: 1px solid white;
-  }
+.customizeMenu__Button {
+  background: none;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: white;
+  border-radius: 6px;
+  border: 1px solid white;
+}
 
-  .customizeMenu__Button:disabled {
-    color: grey;
-    border: 1px solid grey;
-  }
+.customizeMenu__Button:disabled {
+  color: grey;
+  border: 1px solid grey;
 }
