@@ -3,7 +3,7 @@ import "../components.scss"; // behövs detta?
 import { BeverageCard } from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 import { Beverage } from "../../constants/beverageObjects";
-import Drink from "./DrinkView";
+import Drink from "./drinkView";
 
 export const UserMenu = ({
   orderItems,

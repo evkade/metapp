@@ -4,7 +4,6 @@ import usePromise from "../../hooks/usePromise";
 import { beverageTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
 import { Beverage } from "../../constants/beverageObjects";
-import { CreateBeverageForMenuModalPresenter } from "../presenters/createBeverageForMenuModalPresenter";
 
 const drinkModel = new DrinkModel();
 
@@ -76,16 +75,6 @@ export const SearchNewBeveragePresenter = ({
         isLoading={isLoading}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
         currentSearchType={currentSearchType}
-      />
-      <CreateBeverageForMenuModalPresenter
-        newBeverage={newBeverage}
-        setNewBeverage={setNewBeverage}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        menu={menu}
-        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-        customizedType={customizedType}
-        setCurrentSearchType={setCurrentSearchType}
       />
     </div>
   );

@@ -45,7 +45,7 @@ export const SearchBeverage = ({
               addToOrder={null}
               removeFromOrder={null}
               count={null}
-              setShowModal={setShowModal}
+              openModal={() => openModal(beverage)}
               removeFromMenu={null}
             />
           ))

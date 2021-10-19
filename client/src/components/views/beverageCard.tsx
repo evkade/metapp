@@ -9,7 +9,7 @@ export const BeverageCard = ({
   addToOrder,
   removeFromOrder,
   count,
-  setShowModal,
+  openModal,
   removeFromMenu,
 }) => {
   const buttons = () => {
@@ -25,14 +25,14 @@ export const BeverageCard = ({
       case beverageCardTypes.ADMIN_MENU:
         return (
           <div>
-            <button onClick={() => setShowModal(true)}> Edit </button>
+            <button onClick={() => openModal(beverage)}> Edit </button>
             <button onClick={() => removeFromMenu(beverage)}> Delete </button>
           </div>
         );
       case beverageCardTypes.ADMIN_SEARCH_RESULTS:
         return (
           <div>
-            <button onClick={() => setShowModal(true)}> Add to Menu </button>
+            <button onClick={() => openModal(beverage)}> Add to Menu </button>
           </div>
         );
       default:

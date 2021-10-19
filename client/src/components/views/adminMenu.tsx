@@ -5,12 +5,17 @@ import { BeverageCard } from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 
 export const AdminMenu = ({
+  setModalBeverage,
   showModal,
   setShowModal,
   menu,
   removeFromMenu,
 }) => {
-  console.log("Menu", menu);
+  const openModal = (beverage) => {
+    setModalBeverage(beverage);
+    setShowModal(true);
+  };
+
   return (
     <div>
       <div className="menuView__container">
@@ -22,7 +27,7 @@ export const AdminMenu = ({
             addToOrder={null}
             removeFromOrder={null}
             count={null}
-            setShowModal={setShowModal}
+            openModal={() => openModal(beverage)}
             removeFromMenu={removeFromMenu}
           />
         ))}

@@ -12,8 +12,8 @@ export const CreateBeverageForMenuModalPresenter = ({
   addToMenu,
   customizedType,
   setCurrentSearchType,
-  newBeverage,
-  setNewBeverage,
+  modalBeverage,
+  setModalBeverage,
 }) => {
   const onAddToMenu = (beverage: Beverage) => {
     addToMenu(beverage);
@@ -35,8 +35,8 @@ export const CreateBeverageForMenuModalPresenter = ({
       onAddToMenu={onAddToMenu}
       onCancel={onCancel}
       beverageType={customizedType}
-      newBeverage={newBeverage}
-      setNewBeverage={setNewBeverage}
+      newBeverage={modalBeverage}
+      setNewBeverage={setModalBeverage}
     />
   ) : null;
 

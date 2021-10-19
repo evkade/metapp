@@ -4,18 +4,21 @@ import { Beverage } from "constants/beverageObjects";
 import { searchTypes } from "../../constants/searchTypes";
 
 export const AddBeverageToMenuPresenter = ({
+  modalBeverage,
+  setModalBeverage,
   showModal,
   setShowModal,
   menu,
   addToMenu,
   customizedType,
+  currentSearchType,
+  setCurrentSearchType,
 }) => {
-
-  const [currentSearchType, setCurrentSearchType] = useState<string>(searchTypes.API)
-
   return (
     <div>
       <AddBeverageToMenu
+        modalBeverage={modalBeverage}
+        setModalBeverage={setModalBeverage}
         showModal={showModal}
         setShowModal={setShowModal}
         currentSearchType={currentSearchType}
