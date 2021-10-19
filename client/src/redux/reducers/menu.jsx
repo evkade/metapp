@@ -1,6 +1,6 @@
 const initialState = {
-    menu: [],
-    currentBar: 'dkm'
+  menu: [],
+  currentBar: "dkm",
 };
 
 const menuReducer = (state = initialState, action) => {
@@ -10,19 +10,34 @@ const menuReducer = (state = initialState, action) => {
         ...state,
         menu: [...state.menu, action.payload],
       };
+
     case "REMOVE_FROM_MENU":
       return {
+        ...state,
         menu: [
           ...state.menu.filter(
-            beverage => beverage.name !== action.payload.name
+            (beverage) => beverage.name !== action.payload.name
           ),
         ],
       };
-    case 'SWITCH_CURRENT_BAR':
+
+    case "EDIT_IN_MENU":
       return {
         ...state,
-        currentBar: (state.currentBar === 'dkm') ? 'mkm' : 'dkm'
+        menu: [
+          ...state.menu.filter(
+            (beverage) => beverage.name !== action.payload.name
+          ),
+          action.payload,
+        ],
       };
+
+    case "SWITCH_CURRENT_BAR":
+      return {
+        ...state,
+        currentBar: state.currentBar === "dkm" ? "mkm" : "dkm",
+      };
+
     default:
       return state;
   }

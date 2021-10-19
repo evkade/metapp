@@ -10,17 +10,19 @@ export const AddBeverageToMenuPresenter = ({
   customizedType,
   currentSearchType,
   setCurrentSearchType,
+  setBeverageCardType,
 }) => {
   return (
     <div>
       <AddBeverageToMenu
         setModalBeverage={setModalBeverage}
         setShowModal={setShowModal}
+        menu={menu}
+        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
         currentSearchType={currentSearchType}
         setCurrentSearchType={setCurrentSearchType}
         searchedBeverageType={customizedType}
-        menu={menu}
-        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+        setBeverageCardType={setBeverageCardType}
       />
     </div>
   );

@@ -6,14 +6,20 @@ export const AdminMenuPresenter = ({
   setShowModal,
   menu,
   removeFromMenu,
+  editInMenu,
+  customizedType,
+  setBeverageCardType,
 }) => {
   // todo: bara skicka delen av menyn som är customized (beer or cocktail)
   return (
     <AdminMenu
-      setModalBeverage={setModalBeverage}
       setShowModal={setShowModal}
+      setModalBeverage={setModalBeverage}
       menu={menu}
       removeFromMenu={removeFromMenu}
+      editInMenu={editInMenu}
+      customizedType={customizedType}
+      setBeverageCardType={setBeverageCardType}
     />
   );
 };

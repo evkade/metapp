@@ -12,11 +12,12 @@ import { searchTypes, beverageTypes } from "../../constants/searchTypes";
 export const AddBeverageToMenu = ({
   setModalBeverage,
   setShowModal,
+  menu,
+  addToMenu,
   currentSearchType,
   setCurrentSearchType,
   searchedBeverageType,
-  menu,
-  addToMenu,
+  setBeverageCardType,
 }) => {
   const shownSearchType = () => {
     switch (currentSearchType) {
@@ -29,6 +30,7 @@ export const AddBeverageToMenu = ({
             addToMenu={(beverage: Beverage) => addToMenu(beverage)}
             customizedType={searchedBeverageType}
             currentSearchType={currentSearchType}
+            setBeverageCardType={setBeverageCardType}
           />
         );
       case searchTypes.HISTORY:
@@ -40,6 +42,7 @@ export const AddBeverageToMenu = ({
             addToMenu={(beverage: Beverage) => addToMenu(beverage)}
             currentSearchType={currentSearchType}
             customizedType={searchedBeverageType}
+            setBeverageCardType={setBeverageCardType}
           />
         );
       case searchTypes.NEW:
@@ -52,18 +55,21 @@ export const AddBeverageToMenu = ({
   return (
     <div>
       <button
+        className="customizeMenu__Button"
         onClick={() => setCurrentSearchType(searchTypes.API)}
         disabled={currentSearchType === searchTypes.API}
       >
         Search new
       </button>
       <button
+        className="customizeMenu__Button"
         onClick={() => setCurrentSearchType(searchTypes.HISTORY)}
         disabled={currentSearchType === searchTypes.HISTORY}
       >
         Find old
       </button>
       <button
+        className="customizeMenu__Button"
         onClick={() => setCurrentSearchType(searchTypes.NEW)}
         disabled={currentSearchType === searchTypes.NEW}
       >

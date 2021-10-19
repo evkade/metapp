@@ -1,9 +1,11 @@
 import React from "react";
 import "../components.scss";
 import { beverageCardTypes } from "../../constants/beverageCardType";
+import { beverageTypes } from "../../constants/searchTypes";
 
 export const BeverageCard = ({
   beverageCardType,
+  beverageType,
   beverage,
   index,
   addToOrder,
@@ -11,6 +13,7 @@ export const BeverageCard = ({
   count,
   openModal,
   removeFromMenu,
+  editInMenu,
 }) => {
   const buttons = () => {
     switch (beverageCardType) {
@@ -40,13 +43,35 @@ export const BeverageCard = ({
     }
   };
 
+  const information = () => {
+    console.log(typeof beverage);
+    console.log(beverage);
+    console.log("alcoholPercentage" in beverage);
+    switch (beverageCardType) {
+      case beverageCardTypes.USER_MENU:
+        return beverage.price + " SEK | " + beverageType === beverageTypes.BEER
+          ? beverage.alcoholPercentage + "%"
+          : beverage.alcoholVolume + " cl";
+
+      case beverageCardTypes.ADMIN_MENU:
+        return beverage.price + " SEK | " + beverageType === beverageTypes.BEER
+          ? beverage.alcoholPercentage + "%"
+          : beverage.alcoholVolume + " cl";
+
+      case beverageCardTypes.ADMIN_SEARCH_RESULTS:
+        return beverageType === beverageTypes.BEER
+          ? beverage.price + " SEK | " + beverage.alcoholPercentage + "%"
+          : null;
+      default:
+        return null; // todo: remove when typing has been fixed
+    }
+  };
+
   return (
     <div key={index} className="menuView__drinkCard">
       <img src="" className="menuView__drinkCard__image" />
       <div className="menuView__drinkCard__name">{beverage.name}</div>
-      <div className="menuView__drinkCard__pricealc">
-        {beverage.price} SEK | {beverage.alcoholPercentage} %
-      </div>
+      <div className="menuView__drinkCard__pricealc">{information()}</div>
       <div className="menuView__drinkCard__addToCart">{buttons()}</div>
     </div>
   );

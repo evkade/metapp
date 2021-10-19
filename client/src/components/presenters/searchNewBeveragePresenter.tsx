@@ -17,6 +17,7 @@ export const SearchNewBeveragePresenter = ({
   addToMenu,
   customizedType,
   currentSearchType,
+  setBeverageCardType,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
@@ -65,6 +66,7 @@ export const SearchNewBeveragePresenter = ({
   return (
     <div>
       <SearchBeverage
+        customizedType={customizedType}
         setNewBeverage={setNewBeverage}
         setShowModal={setShowModal}
         searchBeverage={searchBeverage}
@@ -72,6 +74,7 @@ export const SearchNewBeveragePresenter = ({
         isLoading={isLoading}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
         currentSearchType={currentSearchType}
+        setBeverageCardType={setBeverageCardType}
       />
     </div>
   );

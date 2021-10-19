@@ -17,11 +17,14 @@ export const SearchBeverage = ({
   isLoading,
   addToMenu,
   currentSearchType,
+  setBeverageCardType,
+  customizedType,
 }) => {
   const [query, setQuery] = useState<string>("");
 
   const openModal = (beverage: Beverage) => {
     setNewBeverage(beverage);
+    setBeverageCardType(beverageCardTypes.ADMIN_SEARCH_RESULTS);
     setShowModal(true);
   };
 
@@ -32,13 +35,18 @@ export const SearchBeverage = ({
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       ></input>
-      <button type="submit" onClick={() => searchBeverage(query)}>
+      <button
+        type="submit"
+        onClick={() => searchBeverage(query)}
+        className="customizeMenu__Button"
+      >
         Search
       </button>
       <div className="menuView__container">
         {!isLoading && searchResult ? (
           searchResult.map((beverage: Beverage, index: number) => (
             <BeverageCard
+              beverageType={customizedType}
               beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
               beverage={beverage}
               index={index}
@@ -47,6 +55,7 @@ export const SearchBeverage = ({
               count={null}
               openModal={() => openModal(beverage)}
               removeFromMenu={null}
+              editInMenu={null}
             />
           ))
         ) : (

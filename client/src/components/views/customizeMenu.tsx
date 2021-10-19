@@ -12,37 +12,50 @@ export const CustomizeMenu = ({
   menu,
   addToMenu,
   removeFromMenu,
+  editInMenu,
   customizedType,
   currentSearchType,
   setCurrentSearchType,
+  beverageCardType,
+  setBeverageCardType,
 }) => {
   return (
-    <div>
-      <AdminMenuPresenter
-        setModalBeverage={setModalBeverage}
-        setShowModal={setShowModal}
-        menu={menu}
-        removeFromMenu={removeFromMenu}
-      />
-      <AddBeverageToMenuPresenter
-        setModalBeverage={setModalBeverage}
-        setShowModal={setShowModal}
-        menu={menu}
-        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-        customizedType={customizedType}
-        currentSearchType={currentSearchType}
-        setCurrentSearchType={setCurrentSearchType}
-      />
+    <div className="customizeMenu__GridContainer">
+      <div className="customizeMenu__Menu">
+        <AdminMenuPresenter
+          setShowModal={setShowModal}
+          setModalBeverage={setModalBeverage}
+          menu={menu}
+          removeFromMenu={removeFromMenu}
+          editInMenu={editInMenu}
+          customizedType={customizedType}
+          setBeverageCardType={setBeverageCardType}
+        />
+      </div>
+      <div className="customizeMenu__AddBeverageToMenu">
+        <AddBeverageToMenuPresenter
+          setShowModal={setShowModal}
+          setModalBeverage={setModalBeverage}
+          menu={menu}
+          addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+          customizedType={customizedType}
+          currentSearchType={currentSearchType}
+          setCurrentSearchType={setCurrentSearchType}
+          setBeverageCardType={setBeverageCardType}
+        />
+      </div>
       <CreateBeverageForMenuModalPresenter
-        modalBeverage={modalBeverage}
-        setModalBeverage={setModalBeverage}
         showModal={showModal}
         setShowModal={setShowModal}
+        modalBeverage={modalBeverage}
+        setModalBeverage={setModalBeverage}
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+        editInMenu={(beverage: Beverage) => editInMenu(beverage)}
         customizedType={customizedType}
         currentSearchType={currentSearchType}
         setCurrentSearchType={setCurrentSearchType}
+        beverageCardType={beverageCardType}
       />
     </div>
   );

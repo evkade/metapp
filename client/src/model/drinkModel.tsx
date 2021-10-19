@@ -1,9 +1,7 @@
 import { Beer, Cocktail } from "../constants/beverageObjects";
 
 // todo maybe change name of this
-// basically it is the class controlling the add to menu function
 export default class DrinkModel {
-
   setAPIBeerToObject(apiBeer): Beer {
     const beer: Beer = {
       name: apiBeer.name,
@@ -16,6 +14,7 @@ export default class DrinkModel {
   }
 
   setAPICocktailToObject(apiCocktail): Cocktail {
+    console.log(apiCocktail);
     var hashNumber: number = 1;
     var ingredientHash: string = "strIngredient" + hashNumber.toString();
     var measureHash: string = "strMeasure" + hashNumber.toString();
@@ -35,7 +34,8 @@ export default class DrinkModel {
 
     const cocktail: Cocktail = {
       name: apiCocktail.strDrink,
-      price: 0, // default
+      price: 0,
+      alcoholVolume: 0,
       ingredientList: ingredientList,
       ingredientMeasuresList: ingredientMeasuresList,
     };
