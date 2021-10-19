@@ -2,6 +2,7 @@ const initialState = {
   username: null,
   isAdmin: false,
   loggedIn: false,
+  favorites: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -19,6 +20,19 @@ const userReducer = (state = initialState, action) => {
         loggedIn: false,
         username: null,
         isAdmin: false,
+      };
+    case "ADD_FAVORITE":
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload],
+      };
+    case "REMOVE_FAVORITE":
+      const newFilterArray = state.favorites.filter(
+        (favorite) => favorite !== action.payload
+      );
+      return {
+        ...state,
+        favorites: newFilterArray,
       };
     default:
       return state;

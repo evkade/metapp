@@ -2,10 +2,22 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import MenuView from "../views/menuView";
 import { orderMade } from "../../redux/actions/orders";
-import { isTypeNode } from "typescript";
+import { addFavorite } from "../../redux/actions/user";
+import { removeFavorite } from "../../redux/actions/user";
 
-export const MenuPresenter = ({ orders, orderMade }) => {
+export const MenuPresenter = ({
+  orders,
+  orderMade,
+  addFavorite,
+  removeFavorite,
+  favorites,
+}) => {
   const [orderItems, setOrderItems] = useState([]);
+  const [favoriteList, setFavoriteList] = useState([]);
+
+  useEffect(() => {
+    setFavoriteList(favorites);
+  }, []);
 
   const menuItems = [
     {
@@ -121,8 +133,6 @@ export const MenuPresenter = ({ orders, orderMade }) => {
     }
   };
 
-  console.log(orderItems);
-
   const removeFromOrder = (name) => {
     const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
@@ -145,6 +155,14 @@ export const MenuPresenter = ({ orders, orderMade }) => {
     setOrderItems([]);
   };
 
+  const addToFavorites = (name) => {
+    addFavorite(name);
+  };
+
+  const removeFromFavorites = (name) => {
+    removeFavorite(name);
+  };
+
   return (
     <MenuView
       orderItems={orderItems}
@@ -153,6 +171,9 @@ export const MenuPresenter = ({ orders, orderMade }) => {
       addToOrder={(name) => addOrIncreaseOrder(name)}
       removeFromOrder={(name) => removeFromOrder(name)}
       finalizeOrder={() => finalizeOrder()}
+      addToFavorites={(name) => addToFavorites(name)}
+      removeFromFavorites={(name) => removeFromFavorites(name)}
+      favoriteList={favoriteList}
     ></MenuView>
   );
 };
@@ -160,14 +181,15 @@ export const MenuPresenter = ({ orders, orderMade }) => {
 const mapStateToProps = (store) => {
   return {
     orders: store.orders,
+    favorites: store.user.favorites,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     orderMade: (beverage) => dispatch(orderMade(beverage)),
-    // drinkMade: (id, timeMade) => dispatch(drinkMade(id, timeMade)),
-    // drinkPaid: (id, timePaid) => dispatch(drinkPaid(id, timePaid)),
+    addFavorite: (name) => dispatch(addFavorite(name)),
+    removeFavorite: (name) => dispatch(removeFavorite(name)),
   };
 };
 

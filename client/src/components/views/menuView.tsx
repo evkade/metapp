@@ -9,6 +9,9 @@ const MenuView = ({
   addToOrder,
   removeFromOrder,
   finalizeOrder,
+  addToFavorites,
+  removeFromFavorites,
+  favoriteList,
 }) => {
   return (
     <div className="menuView">
@@ -30,6 +33,9 @@ const MenuView = ({
               addToOrder={(name) => addToOrder(name)}
               removeFromOrder={(name) => removeFromOrder(name)}
               count={orderCount}
+              addFavorite={(name) => addToFavorites(name)}
+              removeFavorite={(name) => removeFromFavorites(name)}
+              favoriteList={favoriteList}
             />
           );
         })}
