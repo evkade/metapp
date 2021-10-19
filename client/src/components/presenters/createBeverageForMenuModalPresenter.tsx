@@ -1,9 +1,9 @@
 import React from "react";
 import { CreateBeverageForMenuModal } from "../views/createBeverageForMenuModal";
-import { searchTypes } from "../../constants/searchTypes";
+import { beverageTypes, searchTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
 import { beverageCardTypes } from "../../constants/beverageCardType";
-
+import { baseBeer, baseCocktail } from "../../constants/beverageObjects";
 // todo: all beverages should be added to history when being added to menu
 
 export const CreateBeverageForMenuModalPresenter = ({
@@ -19,11 +19,13 @@ export const CreateBeverageForMenuModalPresenter = ({
   setModalBeverage,
   beverageCardType,
 }) => {
-  // todo: in add and edit, set new beverage to empty one with setNewBeverage
   const onAddToMenu = (beverage: Beverage) => {
     addToMenu(beverage);
     if (currentSearchType === searchTypes.NEW)
       setCurrentSearchType(searchTypes.API);
+    setModalBeverage(
+      customizedType === beverageTypes.BEER ? baseBeer : baseCocktail
+    );
     setShowModal(false);
   };
 
@@ -31,12 +33,18 @@ export const CreateBeverageForMenuModalPresenter = ({
     editInMenu(beverage);
     if (currentSearchType === searchTypes.NEW)
       setCurrentSearchType(searchTypes.API);
+    setModalBeverage(
+      customizedType === beverageTypes.BEER ? baseBeer : baseCocktail
+    );
     setShowModal(false);
   };
 
   const onCancel = (beverage: Beverage) => {
     if (currentSearchType === searchTypes.NEW)
       setCurrentSearchType(searchTypes.API);
+    setModalBeverage(
+      customizedType === beverageTypes.BEER ? baseBeer : baseCocktail
+    );
     setShowModal(false);
   };
 

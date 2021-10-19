@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { SearchNewBeveragePresenter } from "../presenters/searchNewBeveragePresenter";
 import { SearchHistoryPresenter } from "../presenters/searchHistoryPresenter";
-
-import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
+import { Beverage } from "../../constants/beverageObjects";
 import { searchTypes, beverageTypes } from "../../constants/searchTypes";
 
 // todo: lägga till en bättre loading

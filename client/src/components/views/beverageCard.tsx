@@ -2,6 +2,7 @@ import React from "react";
 import "../components.scss";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 import { beverageTypes, getTypeOfBeverage } from "../../constants/searchTypes";
+import { Beverage } from "../../constants/beverageObjects";
 
 export const BeverageCard = ({
   beverageCardType,
@@ -13,6 +14,7 @@ export const BeverageCard = ({
   openModal,
   removeFromMenu,
   editInMenu,
+  menu,
 }) => {
   const buttons = () => {
     switch (beverageCardType) {
@@ -34,7 +36,15 @@ export const BeverageCard = ({
       case beverageCardTypes.ADMIN_SEARCH_RESULTS:
         return (
           <div>
-            <button onClick={() => openModal(beverage)}> Add to Menu </button>
+            <button
+              onClick={() => openModal(beverage)}
+              disabled={menu.some(
+                (menuItem: Beverage) => menuItem.name === beverage.name
+              )}
+            >
+              {" "}
+              Add to Menu{" "}
+            </button>
           </div>
         );
       default:

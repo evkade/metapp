@@ -15,6 +15,7 @@ export const SearchBeverage = ({
   searchBeverage,
   searchResult,
   isLoading,
+  menu,
   addToMenu,
   currentSearchType,
   setBeverageCardType,
@@ -53,6 +54,7 @@ export const SearchBeverage = ({
               removeFromOrder={null}
               count={null}
               openModal={() => openModal(beverage)}
+              menu={menu}
               removeFromMenu={null}
               editInMenu={null}
             />

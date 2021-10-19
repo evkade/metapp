@@ -72,6 +72,7 @@ export const SearchNewBeveragePresenter = ({
         searchBeverage={searchBeverage}
         searchResult={searchResults}
         isLoading={isLoading}
+        menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
         currentSearchType={currentSearchType}
         setBeverageCardType={setBeverageCardType}

@@ -8,7 +8,13 @@ import {
 import { CustomizeMenu } from "../views/customizeMenu";
 import { searchTypes } from "../../constants/searchTypes";
 import { beverageTypes } from "../../constants/searchTypes";
-import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
+import {
+  Beverage,
+  Beer,
+  Cocktail,
+  baseCocktail,
+  baseBeer,
+} from "../../constants/beverageObjects";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 
 // props contain menu, addToMenu, removeFromMenu, editInMenu
@@ -25,9 +31,8 @@ export const CustomizeMenuPresenter = (props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   // this is the new beverage that will be added to the menu
   const [modalBeverage, setModalBeverage] = useState<Beverage>(
-    customizedType === beverageTypes.BEER ? beer : cocktail
+    customizedType === beverageTypes.BEER ? baseBeer : baseCocktail
   );
-  // this is also information for the modal ( change this ? )
   const [beverageCardType, setBeverageCardType] = useState<string>(
     beverageCardTypes.ADMIN_SEARCH_RESULTS
   );
@@ -55,7 +60,7 @@ export const CustomizeMenuPresenter = (props) => {
         setShowModal={setShowModal}
         modalBeverage={modalBeverage}
         setModalBeverage={setModalBeverage}
-        menu={props.menu.menu}
+        menu={props.menu.menu} // vet ej varför man måste skriva såhär
         addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
         removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}
         editInMenu={(beverage: Beverage) => props.editInMenu(beverage)}
@@ -89,19 +94,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(CustomizeMenuPresenter);
-
-const beer: Beer = {
-  name: "",
-  price: 0,
-  type: "",
-  volume: 0,
-  alcoholPercentage: 0,
-};
-
-const cocktail: Cocktail = {
-  name: "",
-  price: 0,
-  alcoholVolume: 0,
-  ingredientList: [],
-  ingredientMeasuresList: [],
-};

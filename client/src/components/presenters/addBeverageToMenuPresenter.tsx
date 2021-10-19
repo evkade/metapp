@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { AddBeverageToMenu } from "../views/addBeverageToMenu";
 import { Beverage } from "constants/beverageObjects";
 

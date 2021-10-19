@@ -3,7 +3,6 @@ import "../components.scss";
 import { Beverage } from "../../constants/beverageObjects";
 import { BeverageCard } from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
-import { beverageTypes } from "../../constants/searchTypes";
 
 export const AdminMenu = ({
   setModalBeverage,
@@ -11,7 +10,7 @@ export const AdminMenu = ({
   menu,
   removeFromMenu,
   editInMenu,
-  customizedType, // maybe will be needed to only show beers / cocktails
+  customizedType, // will be needed to only show beers / cocktails
   setBeverageCardType,
 }) => {
   const openModal = (beverage: Beverage) => {
@@ -26,6 +25,7 @@ export const AdminMenu = ({
       <div className="menuView__container">
         {menu.map((beverage: Beverage, index: number) => (
           <BeverageCard
+            menu={menu}
             beverageCardType={beverageCardTypes.ADMIN_MENU}
             beverage={beverage}
             index={index}
