@@ -19,6 +19,7 @@ export const CreateBeverageForMenuModalPresenter = ({
   setModalBeverage,
   beverageCardType,
 }) => {
+  // todo: in add and edit, set new beverage to empty one with setNewBeverage
   const onAddToMenu = (beverage: Beverage) => {
     addToMenu(beverage);
     if (currentSearchType === searchTypes.NEW)

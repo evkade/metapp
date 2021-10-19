@@ -1,4 +1,4 @@
-import { Beer, Cocktail } from "../constants/beverageObjects";
+import { Beverage, Beer, Cocktail } from "../constants/beverageObjects";
 
 // todo maybe change name of this
 export default class DrinkModel {

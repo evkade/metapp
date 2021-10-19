@@ -35,11 +35,6 @@ export const AdminMenu = ({
             openModal={() => openModal(beverage)}
             removeFromMenu={removeFromMenu}
             editInMenu={editInMenu}
-            beverageType={
-              "alcoholPercentage" in beverage
-                ? beverageTypes.BEER
-                : beverageTypes.COCKTAIL
-            }
           />
         ))}
       </div>

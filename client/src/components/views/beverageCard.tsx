@@ -1,11 +1,10 @@
 import React from "react";
 import "../components.scss";
 import { beverageCardTypes } from "../../constants/beverageCardType";
-import { beverageTypes } from "../../constants/searchTypes";
+import { beverageTypes, getTypeOfBeverage } from "../../constants/searchTypes";
 
 export const BeverageCard = ({
   beverageCardType,
-  beverageType,
   beverage,
   index,
   addToOrder,
@@ -44,9 +43,8 @@ export const BeverageCard = ({
   };
 
   const information = () => {
-    console.log(typeof beverage);
-    console.log(beverage);
-    console.log("alcoholPercentage" in beverage);
+    const beverageType = getTypeOfBeverage(beverage);
+
     switch (beverageCardType) {
       case beverageCardTypes.USER_MENU:
         return beverage.price + " SEK | " + beverageType === beverageTypes.BEER
@@ -54,9 +52,13 @@ export const BeverageCard = ({
           : beverage.alcoholVolume + " cl";
 
       case beverageCardTypes.ADMIN_MENU:
-        return beverage.price + " SEK | " + beverageType === beverageTypes.BEER
-          ? beverage.alcoholPercentage + "%"
-          : beverage.alcoholVolume + " cl";
+        return (
+          beverage.price +
+          " SEK | " +
+          (beverageType === beverageTypes.BEER
+            ? beverage.alcoholPercentage + "%"
+            : beverage.alcoholVolume + " cl")
+        );
 
       case beverageCardTypes.ADMIN_SEARCH_RESULTS:
         return beverageType === beverageTypes.BEER
