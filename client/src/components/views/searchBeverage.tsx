@@ -89,7 +89,6 @@ export const SearchBeverage = ({
             />
           ))
         ) : (
-          // todo fixa snygg loading + att den kommer upp på rätt tillfällen
           <div> Loading </div>
         )}
       </div>

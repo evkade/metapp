@@ -14,8 +14,6 @@ export const CreateBeverageForMenuModal = ({
   beverageCardType,
   modalTitle,
 }) => {
-  // todo: change modal title based on what you are adding to menu
-
   return (
     <div className="modal">
       <div className="modal-content">
