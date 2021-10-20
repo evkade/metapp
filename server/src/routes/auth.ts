@@ -3,13 +3,11 @@ import { isSignedIn } from "../services/middleware";
 import { body } from "express-validator";
 import AuthService from "../services/auth";
 import { addUser } from "../controllers/users";
-
 import { User } from "../models/interfaces";
 
 const router = express.Router();
 
 router.get("/api/auth/currentuser", isSignedIn, (req, res) => {
-  console.log(req.currentUser);
 
   if (!req.currentUser) {
     return res.status(400).send("not authorized");
@@ -33,24 +31,20 @@ router.post(
     const { user, token } = await AuthService.signIn(username, password).catch(
       (error) => {
         req.session = null;
-        throw new Error("error")
+        throw new Error("wrong Credentials")
       }
     );
 
     if (user === null || user === undefined) {
-      console.log("Enttered inf")
       return res.status(400).send("User does not exist");
     }
     else {
-
       req.session = {
         jwt: token,
       };
 
       res.status(200).send(user);
     }
-
-
   }
 );
 

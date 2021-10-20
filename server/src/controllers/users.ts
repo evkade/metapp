@@ -1,5 +1,6 @@
 import { UserModel } from '../models/userSchema';
 import { User } from '../models/interfaces'
+import bcrypt from 'bcrypt'
 
 export async function getUsers() {
 
@@ -13,9 +14,7 @@ export async function getUsers() {
     return data;
 }
 
-
 export async function findUser(username: string): Promise<User | null> {
-    console.log("findUser")
     try {
         // @ts-ignore
         const userPromise: User = await UserModel.findOne({ username: username }, (err, userDoc) => {
@@ -24,34 +23,36 @@ export async function findUser(username: string): Promise<User | null> {
             //@ts-ignore
         }).clone()
 
-        if (userPromise) {
-            console.log("users,  userpromise")
+        if (userPromise !== null) {
             return userPromise
         }
         else {
-            console.log("users, no userpromise")
             return null
         }
 
     } catch (err) {
         throw new Error("error")
     }
+}
 
+export async function verifyPassword(username: string, password: string): Promise<Boolean | null> {
+    // @ts-ignore
+    const userPromise: User = await UserModel.findOne({ username: username }, (err, userDoc) => {
+        if (err) throw err;
+        return userDoc
+        //@ts-ignore
+    }).clone().catch(() => { throw new Error("error") })
 
+    const isMatch = await bcrypt.compare(password, (userPromise.password) as string)
+    return isMatch;
 }
 
 export async function addUser(user: User): Promise<User | null> {
-
-
     try {
         // @ts-ignore
         const userPromise: User = await findUser((user.username) as string).catch((err) => { throw new Error() })
-
-        console.log(userPromise)
         if (userPromise === null) {
-            console.log("entered if")
             const insertedUser = await new UserModel(user);
-            console.log(insertedUser)
             insertedUser.save();
             return insertedUser;
         } else {
