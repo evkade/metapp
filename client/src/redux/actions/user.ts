@@ -23,3 +23,10 @@ export const orderPlaced = (orderBeverage) => ({
     beverage: orderBeverage,
   },
 });
+
+export const unfinishedOrderPlaced = (orderBeverage) => ({
+  type: "ORDER_QUEUED",
+  payload: {
+    beverage: orderBeverage,
+  },
+});

@@ -1,7 +1,6 @@
-
-import jwt from 'jsonwebtoken';
-import { User } from '../models/interfaces'
-import { findUser, verifyPassword } from '../controllers/users';
+import { findUser, verifyPassword } from "../controllers/users";
+import jwt from "jsonwebtoken";
+import { User } from "../models/interfaces";
 
 export default class AuthService {
   public static async signIn(

@@ -26,6 +26,7 @@ import { signIn, signOut } from "./redux/actions/user";
 import userMenuPresenter from "./components/presenters/userMenuPresenter";
 import { useSelector } from "react-redux";
 import userProfilePresenter from "./components/presenters/userProfilePresenter";
+import orderPresenter from "./components/presenters/orderPresenter";
 
 const drinkModel = new DrinkModel();
 
@@ -69,7 +70,7 @@ const PublicRoute = ({ component: Component, path, pathName, ...rest }) => (
   />
 );
 
-const RoutingApp = () => {
+const RoutingApp = ({ socket }) => {
   const user = useSelector((state: RootState) => {
     return state.user;
   });
@@ -103,6 +104,7 @@ const RoutingApp = () => {
             exact
             path="/vieworders"
             component={AdminViewDrinkOrdersPresenter}
+            socket={socket}
           />
           <PrivateRoute exact path="/menu" component={userMenuPresenter} />
           <PrivateRoute
@@ -110,6 +112,7 @@ const RoutingApp = () => {
             path="/profile"
             component={userProfilePresenter}
           />
+          <PrivateRoute exact path="/order" component={orderPresenter} />
           <PublicRoute
             exact
             path="/signIn"

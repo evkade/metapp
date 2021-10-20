@@ -51,8 +51,12 @@ $general-font: "Montserrat", sans-serif;
 }
 
 @mixin pageTitleFont {
+  z-index: 1;
+  color: white;
+  box-shadow: none !important;
   @include alignedGeneralFont();
-  font-size: 10vh;
+  animation: flicker-cerise 1.5s infinite alternate;
+  flex: 0;
 }
 
 @mixin brickBackground {
@@ -211,18 +215,33 @@ div.signInForm__inputContainer button {
 .drinkCard {
   display: inline-block;
   border: 1px solid black;
-  border-radius: 10%;
+  border-radius: 8%;
   margin: 10px;
   padding: 10px;
   background-color: $light-neon-color-pink;
+  opacity: 0.8;
+  border: 1px solid $neon-color-pink;
 }
 
 .drinkCard--made {
   background-color: $light-neon-color-yellow;
+  border: 1px solid $neon-color-yellow;
 }
 
 .drinkCard--finished {
   background-color: $light-neon-color-green;
+  border: 1px solid $neon-color-green;
+}
+
+.drinkCard__text--title {
+  cursor: pointer;
+}
+
+.drinkCard__button {
+  border-radius: 10px;
+  padding: 5px;
+  margin: 3px;
+  background-color: white;
 }
 
 .menuView {
@@ -252,7 +271,6 @@ div.signInForm__inputContainer button {
 }
 
 .menuView__drinkCard__image {
-  flex: 1;
   height: 100%;
   border-radius: 6px;
   border: 1px solid white;
@@ -297,7 +315,7 @@ div.signInForm__inputContainer button {
 .menuView__drinkCard__star {
   color: lightgray;
   margin-right: -20px;
-  margin-top: 15%;
+  margin-top: 5%;
   z-index: 1;
 }
 
@@ -305,13 +323,14 @@ div.signInForm__inputContainer button {
   color: rgb(240, 200, 48);
 }
 
-.pageTitleNeon {
-  z-index: 1;
-  color: white;
-  box-shadow: none !important;
+.pageTitleNeon--big {
+  font-size: 10vh;
   @include pageTitleFont();
-  animation: flicker-cerise 1.5s infinite alternate;
-  flex: 0;
+}
+
+.pageTitleNeon--small {
+  font-size: 7vh;
+  @include pageTitleFont();
 }
 
 .modal {
@@ -344,6 +363,15 @@ div.signInForm__inputContainer button {
   padding: 10px;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
+}
+
+.adminOrderView {
+    width: 100%;
+  @include brickBackground();
+}
+
+.adminOrderView__subtitle {
+  color: white;
 }
 
 .menuView__orderButton {
@@ -454,4 +482,20 @@ div.signInForm__inputContainer button {
 .customizeMenu__Button:disabled {
   color: grey;
   border: 1px solid grey;
+}
+
+.orderView__container {
+  width: 100%;
+  @include brickBackground();
+}
+
+.orderView__card {
+  background: black;
+  color: white;
+  width: 80%;
+  height: 70%;
+  border-radius: 6px;
+  padding: 6px;
+  margin-bottom: 10px;
+  @include centerVerticalHorizontal();
 }
