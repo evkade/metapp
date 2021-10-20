@@ -54,21 +54,21 @@ export const AddBeverageToMenu = ({
   return (
     <div>
       <button
-        className="customizeMenu__Button"
+        className="customizeMenu__Tab"
         onClick={() => setCurrentSearchType(searchTypes.API)}
         disabled={currentSearchType === searchTypes.API}
       >
         Search new
       </button>
       <button
-        className="customizeMenu__Button"
+        className="customizeMenu__Tab"
         onClick={() => setCurrentSearchType(searchTypes.HISTORY)}
         disabled={currentSearchType === searchTypes.HISTORY}
       >
         Find old
       </button>
       <button
-        className="customizeMenu__Button"
+        className="customizeMenu__Tab"
         onClick={() => setCurrentSearchType(searchTypes.NEW)}
         disabled={currentSearchType === searchTypes.NEW}
       >
