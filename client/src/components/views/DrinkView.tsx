@@ -58,7 +58,7 @@ const Drink = ({
         {menuDisplay && (
           <>
             <br />
-            {item.alc} %
+            {item.alcoholPercentage} %
           </>
         )}
       </div>
