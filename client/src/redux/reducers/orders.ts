@@ -1,19 +1,4 @@
-interface Order {
-  _id: String;
-  beverage: String;
-  quantity: Number;
-  user: String;
-  made?: boolean;
-  paid?: boolean;
-  timeMade?: String;
-  timePaid?: String;
-  date: String;
-}
-
-interface OrderState {
-  loading: boolean;
-  orders: Order[];
-}
+import { OrderState } from "../../constants/beverageObjects";
 
 const initalState: OrderState = {
   loading: false,

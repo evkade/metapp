@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { makeOrder, payForOrder, getOrders } from "../../redux/actions/orders";
+import OrderModel from "../../model/orderModel";
 import { AdminViewDrinkOrder } from "../views/adminViewDrinkOrder";
+
+const ordermodel = new OrderModel();
 
 const AdminViewDrinkOrdersPresenter = ({
   socket,
@@ -52,9 +54,10 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeOrder: (id, timeMade) => dispatch(makeOrder(id, timeMade)),
-    payForOrder: (id, timePaid) => dispatch(payForOrder(id, timePaid)),
-    getOrders: (currentBar) => dispatch(getOrders(currentBar)),
+    makeOrder: (id, timeMade) => dispatch(ordermodel.makeOrder(id, timeMade)),
+    payForOrder: (id, timePaid) =>
+      dispatch(ordermodel.payForOrder(id, timePaid)),
+    getOrders: (currentBar) => dispatch(ordermodel.getOrders(currentBar)),
   };
 };
 
