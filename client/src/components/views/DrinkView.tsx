@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../components.scss";
-import mkmlogo from "../images/mkm_logo.png";
-import dkmlogo from "../images/dkm_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 

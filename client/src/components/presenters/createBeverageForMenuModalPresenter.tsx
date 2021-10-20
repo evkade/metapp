@@ -1,8 +1,9 @@
 import React from "react";
 import { CreateBeverageForMenuModal } from "../views/createBeverageForMenuModal";
-import { searchTypes } from "../../constants/searchTypes";
+import { beverageTypes, searchTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
-
+import { beverageCardTypes } from "../../constants/beverageCardType";
+import { baseBeer, baseCocktail } from "../../constants/beverageObjects";
 // todo: all beverages should be added to history when being added to menu
 
 export const CreateBeverageForMenuModalPresenter = ({
@@ -10,33 +11,58 @@ export const CreateBeverageForMenuModalPresenter = ({
   setShowModal,
   menu,
   addToMenu,
+  editInMenu,
   customizedType,
+  currentSearchType,
   setCurrentSearchType,
-  newBeverage,
-  setNewBeverage,
+  modalBeverage,
+  setModalBeverage,
+  beverageCardType,
 }) => {
   const onAddToMenu = (beverage: Beverage) => {
     addToMenu(beverage);
-    // todo if current search type is new then do this otherwise no
-    setCurrentSearchType(searchTypes.API);
+    if (currentSearchType === searchTypes.NEW)
+      setCurrentSearchType(searchTypes.API);
+    setModalBeverage(
+      customizedType === beverageTypes.BEER ? baseBeer : baseCocktail
+    );
+    setShowModal(false);
+  };
+
+  const onEditInMenu = (beverage: Beverage) => {
+    editInMenu(beverage);
+    if (currentSearchType === searchTypes.NEW)
+      setCurrentSearchType(searchTypes.API);
+    setModalBeverage(
+      customizedType === beverageTypes.BEER ? baseBeer : baseCocktail
+    );
     setShowModal(false);
   };
 
   const onCancel = (beverage: Beverage) => {
-    // todo if current search type is new then do this otherwise no
-    setCurrentSearchType(searchTypes.API);
+    if (currentSearchType === searchTypes.NEW)
+      setCurrentSearchType(searchTypes.API);
+    setModalBeverage(
+      customizedType === beverageTypes.BEER ? baseBeer : baseCocktail
+    );
     setShowModal(false);
   };
 
+  const modalTitle: string =
+    beverageCardType === beverageCardTypes.ADMIN_MENU
+      ? "Edit " + customizedType
+      : "Add " + customizedType + " to menu";
+
   const modal = showModal ? (
     <CreateBeverageForMenuModal
-      menu={menu}
-      addToMenu={addToMenu}
       onAddToMenu={onAddToMenu}
+      onEditInMenu={onEditInMenu}
       onCancel={onCancel}
       beverageType={customizedType}
-      newBeverage={newBeverage}
-      setNewBeverage={setNewBeverage}
+      newBeverage={modalBeverage}
+      setNewBeverage={setModalBeverage}
+      beverageCardType={beverageCardType}
+      modalTitle={modalTitle}
     />
   ) : null;
 

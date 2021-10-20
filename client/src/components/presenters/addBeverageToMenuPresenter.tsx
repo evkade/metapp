@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import { AddBeverageToMenu } from "../views/addBeverageToMenu";
 import { Beverage } from "constants/beverageObjects";
-import { searchTypes } from "../../constants/searchTypes";
 
 export const AddBeverageToMenuPresenter = ({
-  showModal,
+  setModalBeverage,
   setShowModal,
   menu,
   addToMenu,
   customizedType,
+  currentSearchType,
+  setCurrentSearchType,
+  setBeverageCardType,
 }) => {
-
-  const [currentSearchType, setCurrentSearchType] = useState<string>(searchTypes.API)
-
   return (
     <div>
       <AddBeverageToMenu
-        showModal={showModal}
+        setModalBeverage={setModalBeverage}
         setShowModal={setShowModal}
+        menu={menu}
+        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
         currentSearchType={currentSearchType}
         setCurrentSearchType={setCurrentSearchType}
         searchedBeverageType={customizedType}
-        menu={menu}
-        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+        setBeverageCardType={setBeverageCardType}
       />
     </div>
   );
