@@ -102,11 +102,10 @@ export const BeverageCard = ({
   };
 
   return (
-    <div key={index} className="drink-list__row">
-      <img src="" className="drink-list__image" />
-      <div className="drink-list__column--flexed">{beverage.name}</div>
-      <div className="drink-list__column--flexed">{information()}</div>
-      <div className="drink-list__buttons">{buttons()}</div>
+    <div key={index} className="menuView__drinkCard">
+      <div className="menuView__drinkCard__name">{beverage.name}</div>
+      <div className="menuView__drinkCard__pricealc">{information()}</div>
+      <div className="menuView__drinkCard__addToCart">{buttons()}</div>
     </div>
   );
 };

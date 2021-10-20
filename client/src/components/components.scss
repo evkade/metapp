@@ -143,19 +143,36 @@ body {
 .card-drink {
   display: inline-block;
   border: 1px solid black;
-  border-radius: 10%;
+  border-radius: 8%;
   margin: 10px;
   padding: 10px;
   background-color: $light-neon-color-pink;
-  .card-drink--made {
-    background-color: $light-neon-color-yellow;
-  }
-  .card-drink--finished {
-    background-color: $light-neon-color-green;
-  }
+  opacity: 0.8;
+  border: 1px solid $neon-color-pink;
 }
 
-.drink-list {
+.drinkCard--made {
+  background-color: $light-neon-color-yellow;
+  border: 1px solid $neon-color-yellow;
+}
+
+.drinkCard--finished {
+  background-color: $light-neon-color-green;
+  border: 1px solid $neon-color-green;
+}
+
+.drinkCard__text--title {
+  cursor: pointer;
+}
+
+.drinkCard__button {
+  border-radius: 10px;
+  padding: 5px;
+  margin: 3px;
+  background-color: white;
+}
+
+.menuView {
   width: 100%;
   flex: 1;
   @at-root #{&}__container {
@@ -227,30 +244,172 @@ body {
 
 .modal {
   position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  @include centerVerticalHorizontal();
-  @at-root #{&}__content {
-    width: 500px;
-    background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  width: 500px;
+  border-radius: 12px;
+  label {
+    margin: 5px;
   }
-  @at-root #{&}__headfoot {
-    padding: 10px;
+  input {
+    height: 25px;
+    margin: 5px;
+    padding: 3px 5px;
+    border-radius: 5px;
   }
-  @at-root #{&}__title {
-    margin: 0;
+  input:hover {
+    background-color: lightgrey;
   }
-  @at-root #{&}__body {
-    padding: 10px;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+  button {
+    border-radius: 5px;
   }
 }
 
-.general-button--bw {
+.modal-header,
+.modal-footer {
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.modal-title {
+  padding: 5px;
+}
+
+.adminOrderView {
+  width: 100%;
+  @include brickBackground();
+}
+
+.adminOrderView__subtitle {
+  color: white;
+}
+
+.menuView__orderButton {
+  z-index: 1;
+  position: absolute;
+  bottom: 30px;
+  border-radius: 6px;
+  font-family: "Pacifico", cursive;
+  font-size: 5vw;
+  width: 70%;
+  border: 1px solid black;
+  background: rgb(240, 200, 48);
+}
+
+.profileContainer {
+  @include brickBackground();
+}
+
+.profileContainer__block {
+  background: black;
+  color: white;
+  width: 80%;
+  height: 20%;
+  border-radius: 6px;
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
+.profileContainer__block--row {
+  flex-direction: row;
+  @include centerVerticalHorizontal();
+  border-bottom: 1px solid white;
+  padding: 10px 0px;
+}
+
+.profileContainer__block--column {
+  text-align: left;
+  flex: 1;
+}
+
+.profileContainer__block--column--flex {
+  flex: 1;
+  @include centerVerticalHorizontal();
+}
+
+.profileContainer__block__scrollContainer {
+  height: 80%;
+  overflow: scroll;
+}
+
+.profileContainer__block__title {
+  font-size: 20px;
+}
+
+.customizeMenu {
+  height: 70%;
+}
+
+.customizeMenu__Container {
+  display: flex;
+  height: 100vh;
+  max-width: 100%;
+}
+
+.customizeMenu__Rectangle {
+  background-color: black;
+  flex: 1 0 50%;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.customizeMenu__Tabs {
+  margin-left: 6px;
+}
+
+.customizeMenu__Tab {
+  background: grey;
+  padding: 5px;
+  color: white;
+  display: inline-block;
+  border-radius: 3px 3px 0px 0px;
+}
+
+.customizeMenu__Tab:disabled {
+  background: black;
+}
+
+.customizeMenu__Menu {
+  border-radius: 0px 7px 7px 7px;
+  margin-left: 6px;
+  margin-right: 3px;
+}
+
+.customizeMenu__AddBeverageToMenu {
+  border-radius: 7px 7px 7px 7px;
+  margin-left: 3px;
+  margin-right: 6px;
+  input {
+    height: 30px;
+    width: 40%;
+    padding: 3px 5px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  input:hover {
+    background-color: lightgrey;
+  }
+  select {
+    height: 30px;
+    padding: 3px 5px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  input,
+  select {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+}
+
+.customizeMenu__Button {
   background: none;
   margin: 5px;
   color: white;
@@ -258,9 +417,8 @@ body {
   border: 1px solid white;
 }
 
-.general-button--bw:disabled {
-  color: grey;
-  border: 1px solid grey;
+.customizeMenu__Button:hover {
+  background-color: grey;
 }
 
 .profile-view {

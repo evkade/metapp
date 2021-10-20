@@ -38,23 +38,25 @@ export const CustomizeMenuPresenter = (props) => {
   );
 
   return (
-    <div className="admin-menu-container">
-      <button
-        className="general-button--bw"
-        type="submit"
-        onClick={() => setCustomizedType(beverageTypes.BEER)}
-        disabled={customizedType === beverageTypes.BEER}
-      >
-        Beer
-      </button>
-      <button
-        className="general-button--bw"
-        type="submit"
-        onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
-        disabled={customizedType === beverageTypes.COCKTAIL}
-      >
-        Cocktail
-      </button>
+    <div className="customizeMenu">
+      <div className="customizeMenu__Tabs">
+        <button
+          className="customizeMenu__Tab"
+          type="submit"
+          onClick={() => setCustomizedType(beverageTypes.BEER)}
+          disabled={customizedType === beverageTypes.BEER}
+        >
+          Beer
+        </button>
+        <button
+          className="customizeMenu__Tab"
+          type="submit"
+          onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
+          disabled={customizedType === beverageTypes.COCKTAIL}
+        >
+          Cocktail
+        </button>
+      </div>
       <CustomizeMenu
         showModal={showModal}
         setShowModal={setShowModal}

@@ -3,13 +3,11 @@ import { isSignedIn } from "../services/middleware";
 import { body } from "express-validator";
 import AuthService from "../services/auth";
 import { addUser } from "../controllers/users";
-
 import { User } from "../models/interfaces";
 
 const router = express.Router();
 
 router.get("/api/auth/currentuser", isSignedIn, (req, res) => {
-  console.log(req.currentUser);
 
   if (!req.currentUser) {
     return res.status(400).send("not authorized");
@@ -33,17 +31,20 @@ router.post(
     const { user, token } = await AuthService.signIn(username, password).catch(
       (error) => {
         req.session = null;
-        return res.status(400).send({ error: error });
+        throw new Error("wrong Credentials")
       }
     );
 
-    req.session = {
-      jwt: token,
-    };
+    if (user === null || user === undefined) {
+      return res.status(400).send("User does not exist");
+    }
+    else {
+      req.session = {
+        jwt: token,
+      };
 
-    user.password = undefined;
-    console.log(user);
-    res.status(200).send(user);
+      res.status(200).send(user);
+    }
   }
 );
 
@@ -58,9 +59,12 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     //@ts-ignore
-    const user: User = await addUser(req.body).catch(() =>
-      res.status(401).send("Error")
+    const user: User = await addUser(req.body).catch((err) =>
+      res.status(401).send("User already exists")
     );
+    if (user === null) {
+      return res.status(401).send("User already exists")
+    }
     res.status(201).send(user);
   }
 );

@@ -1,38 +1,40 @@
-
-import jwt from 'jsonwebtoken';
-import { User } from '../models/interfaces'
-import { getUserByUsername, getUsers } from '../controllers/users';
+import { findUser, verifyPassword } from "../controllers/users";
+import jwt from "jsonwebtoken";
+import { User } from "../models/interfaces";
 
 export default class AuthService {
-    public static async signIn(
-      username: string,
-      password: string
-    ): Promise<{ user: User; token: string }> {
-      const existinguser : User|undefined  = await getUserByUsername(username)
-
-      console.log(existinguser)
-      console.log("password must be implemented",password)
-
-      const user = existinguser?existinguser:undefined;
-
-      console.log(user)
-  
-      if(user=== undefined){
-          throw new Error("user not exist")
-      }
-      // generate JWT
-      const token = jwt.sign(
-        {
-          username: user.username,
-          email: user.email,
-          isAdmin: user.credentials === 'admin'
-        },
-        process.env.JWT_KEY!, // secret jwt key to sign and verify
-        {
-          expiresIn: "15d"
+  public static async signIn(
+    username: string,
+    password: string
+  ): Promise<{ user: User | null; token: string }> {
+    //@ts-ignore
+    let user: User | null = await findUser(username).catch((err) => { throw new Error("user not exist") })
+    let token = ""
+    if (user !== null) {
+      try {
+        const bool = await verifyPassword(username, password)
+        if (bool === true) {
+          // generate JWT
+          token = jwt.sign(
+            {
+              username: user.username,
+              email: user.email,
+              isAdmin: user.credentials === 'admin'
+            },
+            process.env.JWT_KEY!, // secret jwt key to sign and verify
+            {
+              expiresIn: "15d"
+            }
+          );
         }
-      );
-  
-      return { user, token };
+        else {
+          user = null;
+        }
+      } catch (error) {
+        throw new Error("wrong credentials")
+      }
     }
+
+    return { user, token };
+  }
 }

@@ -19,9 +19,9 @@ export const NewBeverageForm = ({
           onChange={(e) =>
             setNewBeverage({ ...newBeverage, name: e.target.value })
           }
-          readOnly={newBeverage.name !== "" ? true : false}
         />
       </label>
+      <br />
       <label>
         Price:
         <input
@@ -33,6 +33,7 @@ export const NewBeverageForm = ({
           }
         />
       </label>
+      <br />
       {customizedType === beverageTypes.BEER ? (
         <div>
           <label>
@@ -46,6 +47,7 @@ export const NewBeverageForm = ({
               }
             />
           </label>
+          <br />
           <label>
             Volume:
             <input
@@ -57,6 +59,7 @@ export const NewBeverageForm = ({
               }
             />
           </label>
+          <br />
           <label>
             Alcohol percentage:
             <input
@@ -88,6 +91,7 @@ export const NewBeverageForm = ({
               }
             />
           </label>
+          <br />
           <label>
             Alcohol volume:
             <input
