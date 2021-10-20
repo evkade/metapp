@@ -10,10 +10,10 @@ const router = express.Router();
 router.get(
   "/api/beer",
   async (req: Request, res: Response) => {
-    if (req.query && req.query.currentpub) {
+    if (req.query && req.query.currentbar) {
 
-      const currentpub = (req.query as any).currentpub;
-      const body = await getBeers(currentpub).then(data => data).catch(err => { res.status(404) });
+      const currentbar = (req.query as any).currentbar;
+      const body = await getBeers(currentbar).then(data => data).catch(err => { res.status(404) });
       if (body) res.status(200).send(body);
       else res.status(404)
     }
@@ -26,10 +26,10 @@ router.get(
 router.get(
   "/api/activebeers",
   async (req: Request, res: Response) => {
-    if (req.query && req.query.currentpub) {
+    if (req.query && req.query.currentbar) {
 
-      const currentpub = (req.query as any).currentpub;
-      const body = await getActiveBeers(currentpub).then(data => data).catch(err => { res.status(404) });
+      const currentbar = (req.query as any).currentbar;
+      const body = await getActiveBeers(currentbar).then(data => data).catch(err => { res.status(404) });
       if (body) res.status(200).send(body);
       else res.status(404)
     }
@@ -47,11 +47,11 @@ router.post(
       return res.status(400).send("Not authorized");
     }
 
-    if (req.query && req.query.currentpub && req.currentUser.isAdmin) {
-      const currentpub = (req.query as any).currentpub;
+    if (req.query && req.query.currentbar && req.currentUser.isAdmin) {
+      const currentbar = (req.query as any).currentbar;
 
-      if (currentpub === "DKM" || currentpub === "MKM") {
-        const body = await upsertBeer(currentpub, req.body).then(data => data);
+      if (currentbar === "dkm" || currentbar === "mkm") {
+        const body = await upsertBeer(currentbar, req.body).then(data => data);
         if (body) return res.status(200).send(body);
         else return res.sendStatus(403)
       }
@@ -63,14 +63,14 @@ router.post(
 router.get(
   "/api/beer/:id",
   async (req: Request, res: Response) => {
-    if (req.query && req.query.currentpub && req.params && req.params.id) {
-      const currentpub = (req.query as any).currentpub;
+    if (req.query && req.query.currentbar && req.params && req.params.id) {
+      const currentbar = (req.query as any).currentbar;
       const beerId = (req.params as any).id;
-      if (!(currentpub === "DKM" || currentpub === "MKM")) {
+      if (!(currentbar === "dkm" || currentbar === "mkm")) {
         res.sendStatus(400)
       }
       else {
-        const body = await getBeerById(currentpub, beerId).then(data => data);
+        const body = await getBeerById(currentbar, beerId).then(data => data);
         if (body) res.status(200).send(body);
         else res.status(404)
       }
@@ -88,15 +88,15 @@ router.delete(
     if (req.currentUser === undefined) {
       return res.status(403).send("Not authorized");
     }
-    if (req.query && req.query.currentpub && req.params && req.params.id && req.currentUser.isAdmin) {
-      const currentpub = (req.query as any).currentpub;
+    if (req.query && req.query.currentbar && req.params && req.params.id && req.currentUser.isAdmin) {
+      const currentbar = (req.query as any).currentbar;
       const beerId = (req.params as any).id;
-      if (!(currentpub === "DKM" || currentpub === "MKM")) {
+      if (!(currentbar === "dkm" || currentbar === "mkm")) {
         res.sendStatus(400)
       }
       else {
 
-        const body = await deleteBeerById(currentpub, beerId).then(data => data);
+        const body = await deleteBeerById(currentbar, beerId).then(data => data);
         if (body) res.status(200).send(body);
         else res.status(404)
       }

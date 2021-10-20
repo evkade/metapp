@@ -10,10 +10,10 @@ const router = express.Router();
 router.get(
   "/api/cocktail",
   async (req: Request, res: Response) => {
-    if (req.query && req.query.currentpub) {
+    if (req.query && req.query.currentbar) {
 
-      const currentpub = (req.query as any).currentpub;
-      const body = await getCocktails(currentpub).then(data => data).catch(err => { res.status(404) });
+      const currentbar = (req.query as any).currentbar;
+      const body = await getCocktails(currentbar).then(data => data).catch(err => { res.status(404) });
       if (body) res.status(200).send(body);
       else res.status(404)
     }
@@ -26,10 +26,10 @@ router.get(
 router.get(
   "/api/activecocktails",
   async (req: Request, res: Response) => {
-    if (req.query && req.query.currentpub) {
+    if (req.query && req.query.currentbar) {
 
-      const currentpub = (req.query as any).currentpub;
-      const body = await getActiveCocktails(currentpub).then(data => data).catch(err => { res.status(404) });
+      const currentbar = (req.query as any).currentbar;
+      const body = await getActiveCocktails(currentbar).then(data => data).catch(err => { res.status(404) });
       if (body) res.status(200).send(body);
       else res.status(404)
     }
@@ -47,11 +47,11 @@ router.post(
       return res.status(400).send("Not authorized");
     }
 
-    if (req.query && req.query.currentpub && req.currentUser.isAdmin) {
-      const currentpub = (req.query as any).currentpub;
+    if (req.query && req.query.currentbar && req.currentUser.isAdmin) {
+      const currentbar = (req.query as any).currentbar;
 
-      if (currentpub === "DKM" || currentpub === "MKM") {
-        const body = await upsertCocktail(currentpub, req.body).then(data => data);
+      if (currentbar === "dkm" || currentbar === "mkm") {
+        const body = await upsertCocktail(currentbar, req.body).then(data => data);
         if (body) return res.status(200).send(body);
         else return res.sendStatus(403)
       }
@@ -63,14 +63,14 @@ router.post(
 router.get(
   "/api/cocktail/:id",
   async (req: Request, res: Response) => {
-    if (req.query && req.query.currentpub && req.params && req.params.id) {
-      const currentpub = (req.query as any).currentpub;
+    if (req.query && req.query.currentbar && req.params && req.params.id) {
+      const currentbar = (req.query as any).currentbar;
       const cocktailId = (req.params as any).id;
-      if (!(currentpub === "DKM" || currentpub === "MKM")) {
+      if (!(currentbar === "dkm" || currentbar === "mkm")) {
         res.sendStatus(400)
       }
       else {
-        const body = await getCocktailById(currentpub, cocktailId).then(data => data);
+        const body = await getCocktailById(currentbar, cocktailId).then(data => data);
         if (body) res.status(200).send(body);
         else res.status(404)
       }
@@ -88,15 +88,15 @@ router.delete(
     if (req.currentUser === undefined) {
       return res.status(403).send("Not authorized");
     }
-    if (req.query && req.query.currentpub && req.params && req.params.id && req.currentUser.isAdmin) {
-      const currentpub = (req.query as any).currentpub;
+    if (req.query && req.query.currentbar && req.params && req.params.id && req.currentUser.isAdmin) {
+      const currentbar = (req.query as any).currentbar;
       const cocktailId = (req.params as any).id;
-      if (!(currentpub === "DKM" || currentpub === "MKM")) {
+      if (!(currentbar === "dkm" || currentbar === "mkm")) {
         res.sendStatus(400)
       }
       else {
 
-        const body = await deleteCocktailById(currentpub, cocktailId).then(data => data);
+        const body = await deleteCocktailById(currentbar, cocktailId).then(data => data);
         if (body) res.status(200).send(body);
         else res.status(404)
       }

@@ -9,13 +9,13 @@ router.get(
     "/api/menu",
     async (req: Request, res: Response) => {
 
-        if (req.query && req.query.currentpub) {
-            const currentpub = (req.query as any).currentpub;
-            if (!(currentpub === "DKM" || currentpub === "MKM")) {
+        if (req.query && req.query.currentbar) {
+            const currentbar = (req.query as any).currentbar;
+            if (!(currentbar === "dkm" || currentbar === "mkm")) {
                 res.sendStatus(400)
             }
-            const beerBody = await getActiveBeers(currentpub).then(data => data);
-            const cocktailBody = await getActiveCocktails(currentpub).then(data => data);
+            const beerBody = await getActiveBeers(currentbar).then(data => data);
+            const cocktailBody = await getActiveCocktails(currentbar).then(data => data);
             const Menu = { BeerMenu: beerBody, CocktailMenu: cocktailBody };
 
             if (beerBody && cocktailBody) res.status(200).send(Menu);
@@ -29,13 +29,13 @@ router.get(
     "/api/fullmenu",
     async (req: Request, res: Response) => {
 
-        if (req.query && req.query.currentpub) {
-            const currentpub = (req.query as any).currentpub;
-            if (!(currentpub === "DKM" || currentpub === "MKM")) {
+        if (req.query && req.query.currentbar) {
+            const currentbar = (req.query as any).currentbar;
+            if (!(currentbar === "dkm" || currentbar === "mkm")) {
                 res.sendStatus(400)
             }
-            const beerBody = await getBeers(currentpub).then(data => data);
-            const cocktailBody = await getCocktails(currentpub).then(data => data);
+            const beerBody = await getBeers(currentbar).then(data => data);
+            const cocktailBody = await getCocktails(currentbar).then(data => data);
             const Menu = { BeerMenu: beerBody, CocktailMenu: cocktailBody };
 
             if (beerBody && cocktailBody) res.status(200).send(Menu);

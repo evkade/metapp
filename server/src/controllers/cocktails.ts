@@ -1,9 +1,9 @@
 import { CocktailModelDKM, CocktailModelMKM } from '../models/cocktailSchema';
 import { Cocktail } from '../models/interfaces'
 
-export async function getActiveCocktails(currentPub: String) {
+export async function getActiveCocktails(currentBar: String) {
 
-    const model = (currentPub === "DKM") ? CocktailModelDKM : CocktailModelMKM;
+    const model = (currentBar === "dkm") ? CocktailModelDKM : CocktailModelMKM;
 
     // @ts-ignore
     const data = await model.find({ active: true }, '', (err, cocktails) => {
@@ -15,9 +15,9 @@ export async function getActiveCocktails(currentPub: String) {
     return data;
 }
 
-export async function getCocktails(currentPub: String) {
+export async function getCocktails(currentBar: String) {
 
-    const model = (currentPub === "DKM") ? CocktailModelDKM : CocktailModelMKM;
+    const model = (currentBar === "dkm") ? CocktailModelDKM : CocktailModelMKM;
 
     // @ts-ignore
     const data = await model.find({}, '', (err, cocktails) => {
@@ -29,9 +29,9 @@ export async function getCocktails(currentPub: String) {
     return data;
 }
 
-export async function getCocktailById(currentPub: String, id: String) {
+export async function getCocktailById(currentBar: String, id: String) {
 
-    const model = (currentPub === "DKM") ? CocktailModelDKM : CocktailModelMKM;
+    const model = (currentBar === "dkm") ? CocktailModelDKM : CocktailModelMKM;
     //@ts-ignore
     const data = await model.find({ _id: id }, '', (err, cocktails) => {
         if (err) throw new Error("error")
@@ -42,9 +42,9 @@ export async function getCocktailById(currentPub: String, id: String) {
     return data;
 }
 
-export async function deleteCocktailById(currentPub: String, id: String) {
+export async function deleteCocktailById(currentBar: String, id: String) {
 
-    const model = (currentPub === "DKM") ? CocktailModelDKM : CocktailModelMKM;
+    const model = (currentBar === "dkm") ? CocktailModelDKM : CocktailModelMKM;
     //@ts-ignore
     const data = await model.deleteOne({ _id: id }, function (err) {
         if (!err) {
@@ -59,9 +59,9 @@ export async function deleteCocktailById(currentPub: String, id: String) {
     return data;
 }
 
-export async function upsertCocktail(currentpub: String, cocktail: Cocktail): Promise<Cocktail> {
+export async function upsertCocktail(currentBar: String, cocktail: Cocktail): Promise<Cocktail> {
 
-    const model = (currentpub === "DKM") ? CocktailModelDKM : CocktailModelMKM;
+    const model = (currentBar === "dkm") ? CocktailModelDKM : CocktailModelMKM;
 
     //@ts-ignore
     let upsertedCocktail = await model.findOneAndUpdate({ name: cocktail.name }, cocktail, { upsert: true, new: true }, function (err, cocktail) {
