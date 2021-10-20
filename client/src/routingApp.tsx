@@ -63,7 +63,7 @@ const PublicRoute = ({ component: Component, path, ...rest }) => (
         !store.getState().user.isAdmin ? (
           <Redirect to="/menu" />
         ) : (
-          <Redirect to="/customizeMenu" />
+          <Redirect to="/viewOrders" />
         )
       ) : (
         // TODO what is first page?
@@ -73,7 +73,7 @@ const PublicRoute = ({ component: Component, path, ...rest }) => (
   />
 );
 
-const RoutingApp = () => {
+const RoutingApp = ({ socket }) => {
   const user = useSelector((state: RootState) => {
     return state.user;
   });
@@ -91,6 +91,7 @@ const RoutingApp = () => {
             exact
             path="/vieworders"
             component={AdminViewDrinkOrdersPresenter}
+            socket={socket}
           />
           <PrivateRoute exact path="/menu" component={userMenuPresenter} />
           <PublicRoute exact path="/signIn" component={HandleUserSignIn} />

@@ -41,6 +41,7 @@ loaders.push({
   enforce: "pre",
   test: /\.js$/,
   loader: "source-map-loader",
+  exclude: /node_modules/,
 });
 
 export default {
@@ -66,5 +67,11 @@ export default {
   },
   devServer: {
     historyApiFallback: true,
+    proxy: {
+      "/socket.io": {
+        target: "http://127.0.0.1:5000",
+        ws: true,
+      },
+    },
   },
 };
