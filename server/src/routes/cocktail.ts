@@ -1,19 +1,19 @@
 
 import express, { Request, Response } from "express";
 import { isSignedIn } from "../services/middleware";
-import { getBeerById, getActiveBeers, getBeers, upsertBeer, deleteBeerById } from '../controllers/beers'
+import { getCocktailById, getActiveCocktails, getCocktails, upsertCocktail, deleteCocktailById } from '../controllers/cocktails';
 
 const router = express.Router();
 
 
 
 router.get(
-  "/api/beer",
+  "/api/cocktail",
   async (req: Request, res: Response) => {
     if (req.query && req.query.currentpub) {
 
       const currentpub = (req.query as any).currentpub;
-      const body = await getBeers(currentpub).then(data => data).catch(err => { res.status(404) });
+      const body = await getCocktails(currentpub).then(data => data).catch(err => { res.status(404) });
       if (body) res.status(200).send(body);
       else res.status(404)
     }
@@ -24,12 +24,12 @@ router.get(
 );
 
 router.get(
-  "/api/activebeers",
+  "/api/activecocktails",
   async (req: Request, res: Response) => {
     if (req.query && req.query.currentpub) {
 
       const currentpub = (req.query as any).currentpub;
-      const body = await getActiveBeers(currentpub).then(data => data).catch(err => { res.status(404) });
+      const body = await getActiveCocktails(currentpub).then(data => data).catch(err => { res.status(404) });
       if (body) res.status(200).send(body);
       else res.status(404)
     }
@@ -40,7 +40,7 @@ router.get(
 );
 
 router.post(
-  "/api/beer", isSignedIn,
+  "/api/cocktail", isSignedIn,
   async (req: Request, res: Response) => {
 
     if (req.currentUser === undefined) {
@@ -51,7 +51,7 @@ router.post(
       const currentpub = (req.query as any).currentpub;
 
       if (currentpub === "DKM" || currentpub === "MKM") {
-        const body = await upsertBeer(currentpub, req.body).then(data => data);
+        const body = await upsertCocktail(currentpub, req.body).then(data => data);
         if (body) return res.status(200).send(body);
         else return res.sendStatus(403)
       }
@@ -61,16 +61,16 @@ router.post(
   });
 
 router.get(
-  "/api/beer/:id",
+  "/api/cocktail/:id",
   async (req: Request, res: Response) => {
     if (req.query && req.query.currentpub && req.params && req.params.id) {
       const currentpub = (req.query as any).currentpub;
-      const beerId = (req.params as any).id;
+      const cocktailId = (req.params as any).id;
       if (!(currentpub === "DKM" || currentpub === "MKM")) {
         res.sendStatus(400)
       }
       else {
-        const body = await getBeerById(currentpub, beerId).then(data => data);
+        const body = await getCocktailById(currentpub, cocktailId).then(data => data);
         if (body) res.status(200).send(body);
         else res.status(404)
       }
@@ -83,20 +83,20 @@ router.get(
 );
 
 router.delete(
-  "/api/beer/:id", isSignedIn,
+  "/api/cocktail/:id", isSignedIn,
   async (req: Request, res: Response) => {
     if (req.currentUser === undefined) {
       return res.status(403).send("Not authorized");
     }
     if (req.query && req.query.currentpub && req.params && req.params.id && req.currentUser.isAdmin) {
       const currentpub = (req.query as any).currentpub;
-      const beerId = (req.params as any).id;
+      const cocktailId = (req.params as any).id;
       if (!(currentpub === "DKM" || currentpub === "MKM")) {
         res.sendStatus(400)
       }
       else {
 
-        const body = await deleteBeerById(currentpub, beerId).then(data => data);
+        const body = await deleteCocktailById(currentpub, cocktailId).then(data => data);
         if (body) res.status(200).send(body);
         else res.status(404)
       }
@@ -110,11 +110,11 @@ router.delete(
 
 //failsafe if ID is forgotten
 router.delete(
-  "/api/beer", isSignedIn,
+  "/api/cocktail", isSignedIn,
   async (req: Request, res: Response) => {
 
     res.sendStatus(400)
   }
 );
 
-export { router as beerRouter };
+export { router as cocktailRouter };
