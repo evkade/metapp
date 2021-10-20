@@ -4,6 +4,7 @@ const initialState = {
   loggedIn: false,
   favorites: [],
   userOrders: [],
+  unfinishedOrder: {},
 };
 
 const userReducer = (state = initialState, action) => {
@@ -36,13 +37,19 @@ const userReducer = (state = initialState, action) => {
         favorites: newFilterArray,
       };
     case "ORDER_PLACED":
-      const newOrder = {};
-      newOrder["id"] = state.userOrders.length + 1; //todo: set id to next order
-      newOrder["order"] = action.payload.beverage;
-      const newOrderList = [...state.userOrders, newOrder];
+      const newOrderList = [...state.userOrders, state.unfinishedOrder];
       return {
         ...state,
         userOrders: newOrderList,
+        unfinishedOrder: {},
+      };
+    case "ORDER_QUEUED":
+      const newUnFinishedOrder = {};
+      newUnFinishedOrder["id"] = state.userOrders.length + 1; //todo: set id to next order
+      newUnFinishedOrder["order"] = action.payload.beverage;
+      return {
+        ...state,
+        unfinishedOrder: newUnFinishedOrder,
       };
     default:
       return state;

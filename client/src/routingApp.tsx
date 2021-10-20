@@ -26,6 +26,7 @@ import { signIn, signOut } from "./redux/actions/user";
 import userMenuPresenter from "./components/presenters/userMenuPresenter";
 import { useSelector } from "react-redux";
 import userProfilePresenter from "./components/presenters/userProfilePresenter";
+import orderPresenter from "./components/presenters/orderPresenter";
 
 const drinkModel = new DrinkModel();
 
@@ -110,6 +111,7 @@ const RoutingApp = () => {
             path="/profile"
             component={userProfilePresenter}
           />
+          <PrivateRoute exact path="/order" component={orderPresenter} />
           <PublicRoute
             exact
             path="/signIn"
