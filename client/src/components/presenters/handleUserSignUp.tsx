@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import UserSignUp from "../views/userSignUp";
 
 export const HandleUserSignUp = () => {
   const [userAuth, setUserAuth] = useState(false);
   const [signUpError, setSignUpError] = useState(false);
-
-  const handleUserAuthDisplay = (param: boolean) => {
-    setUserAuth(param);
-  };
 
   const checkUserAuth = (username: string, password: string) => {
     //todo: add user to database

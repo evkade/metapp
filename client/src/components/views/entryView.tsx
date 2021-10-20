@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import "../components.scss";
 import mkmlogo from "../images/mkm_logo.png";
 import dkmlogo from "../images/dkm_logo.png";
 

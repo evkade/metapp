@@ -1,7 +1,4 @@
 import React from "react";
-import "../components.scss"; // behövs detta?
-import { BeverageCard } from "./beverageCard";
-import { beverageCardTypes } from "../../constants/beverageCardType";
 import { Beverage } from "../../constants/beverageObjects";
 import Drink from "./drinkView";
 

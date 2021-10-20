@@ -1,5 +1,4 @@
 import React from "react";
-import "../components.scss";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 import { beverageTypes, getTypeOfBeverage } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";

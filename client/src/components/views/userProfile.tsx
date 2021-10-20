@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import "../components.scss";
 import GeneralFavoriteCard from "./generalFavoriteCard";
 
 const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {

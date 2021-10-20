@@ -75,14 +75,12 @@ export const CustomizeMenuPresenter = (props) => {
 };
 
 const mapStateToProps = (store) => {
-  console.log("mapStateToProps", store, store.state);
   return {
     menu: store.menu,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  console.log("mapDispatchToProps");
   return {
     addToMenu: (beverage: Beverage) => dispatch(addToMenu(beverage)),
     removeFromMenu: (beverage: Beverage) => dispatch(removeFromMenu(beverage)),

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import DrinkModel from "../../model/drinkModel";
+import React, { useState } from "react";
 import UserSignIn from "../views/userSignIn";
 import usePromise from "../../hooks/usePromise";
 import { useHistory } from "react-router-dom";
@@ -14,7 +13,6 @@ const HandleUserSignIn = ({ user, signIn }) => {
 
   const handleUserAuthDisplay = (param: boolean) => {
     setUserAuth(param);
-    console.log(userAuth);
   };
 
   const checkUserAuth = (username: string, password: string) => {

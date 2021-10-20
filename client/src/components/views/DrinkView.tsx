@@ -1,7 +1,4 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import "../components.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 

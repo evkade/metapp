@@ -4,8 +4,6 @@ import { orderPlaced } from "../../redux/actions/user";
 import { addFavorite } from "../../redux/actions/user";
 import { removeFavorite } from "../../redux/actions/user";
 import { UserMenu } from "../views/userMenu";
-import { drinkMade } from "../../redux/actions/orders";
-import { isTypeNode } from "typescript";
 
 export const UserMenuPresenter = ({
   orders,
