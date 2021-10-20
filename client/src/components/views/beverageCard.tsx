@@ -81,7 +81,6 @@ export const BeverageCard = ({
 
   return (
     <div key={index} className="menuView__drinkCard">
-      <img src="" className="menuView__drinkCard__image" />
       <div className="menuView__drinkCard__name">{beverage.name}</div>
       <div className="menuView__drinkCard__pricealc">{information()}</div>
       <div className="menuView__drinkCard__addToCart">{buttons()}</div>

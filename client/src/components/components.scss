@@ -335,10 +335,6 @@ div.signInForm__inputContainer button {
 
 .modal {
   position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -347,22 +343,33 @@ div.signInForm__inputContainer button {
 
 .modal-content {
   width: 500px;
-  background-color: #fff;
+  border-radius: 12px;
+  label {
+    margin: 5px;
+  }
+  input {
+    height: 25px;
+    margin: 5px;
+    padding: 3px 5px;
+    border-radius: 5px;
+  }
+  input:hover {
+    background-color: lightgrey;
+  }
+  button {
+    border-radius: 5px;
+  }
 }
 
 .modal-header,
 .modal-footer {
-  padding: 10px;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .modal-title {
-  margin: 0;
-}
-
-.modal-body {
-  padding: 10px;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  padding: 5px;
 }
 
 .adminOrderView {
@@ -424,64 +431,85 @@ div.signInForm__inputContainer button {
 
 .profileContainer__block__title {
   font-size: 20px;
-  .customizeMenu {
-    background-color: lightgrey;
-    border-radius: 6px;
-    height: 70%;
-    input {
-      border: 1px solid black;
-      border-radius: 5px;
-      padding-top: 15px;
-      width: 60%;
-      padding: 2px 2px 2px 2px;
-      outline: 0;
-      background-color: #f5f5f5;
-    }
-    input:hover,
-    input:focus {
-      border: 1.5px solid grey;
-      background-color: grey;
-    }
-  }
 }
 
-.customizeMenu__GridContainer {
-  display: grid;
-  grid-column-gap: 5px;
+.customizeMenu {
+  height: 70%;
+}
+
+.customizeMenu__Container {
+  display: flex;
+  height: 100vh;
+  max-width: 100%;
+}
+
+.customizeMenu__Rectangle {
+  background-color: black;
+  flex: 1 0 50%;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.customizeMenu__Tabs {
+  margin-left: 6px;
+}
+
+.customizeMenu__Tab {
+  background: grey;
+  padding: 5px;
+  color: white;
+  display: inline-block;
+  border-radius: 3px 3px 0px 0px;
+}
+
+.customizeMenu__Tab:disabled {
+  background: black;
 }
 
 .customizeMenu__Menu {
-  background-color: black;
-  border-radius: 6px;
-  grid-column-start: 1;
-  grid-column-end: 1;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  border-radius: 0px 7px 7px 7px;
+  margin-left: 6px;
+  margin-right: 3px;
 }
 
 .customizeMenu__AddBeverageToMenu {
-  background-color: black;
-  border-radius: 6px;
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  border-radius: 7px 7px 7px 7px;
+  margin-left: 3px;
+  margin-right: 6px;
+  input {
+    height: 30px;
+    width: 40%;
+    padding: 3px 5px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  input:hover {
+    background-color: lightgrey;
+  }
+  select {
+    height: 30px;
+    padding: 3px 5px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  input,
+  select {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
 }
 
 .customizeMenu__Button {
   background: none;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: 5px;
   color: white;
   border-radius: 6px;
   border: 1px solid white;
 }
 
-.customizeMenu__Button:disabled {
-  color: grey;
-  border: 1px solid grey;
+.customizeMenu__Button:hover {
+  background-color: grey;
 }
 
 .orderView__container {
