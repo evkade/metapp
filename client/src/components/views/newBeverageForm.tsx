@@ -9,7 +9,7 @@ export const NewBeverageForm = ({
   // todo: fix the ingredients situation
 
   return (
-    <form>
+    <form className="beverage-form">
       <label>
         Name:
         <input

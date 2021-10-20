@@ -16,18 +16,18 @@ export const CreateBeverageForMenuModal = ({
 }) => {
   return (
     <div className="modal">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h4 className="modal-title">{modalTitle}</h4>
+      <div className="modal__content">
+        <div className="modal__headfoot">
+          <h4 className="modal__title">{modalTitle}</h4>
         </div>
-        <div>
+        <div className="modal__body">
           <NewBeverageFormPresenter
             customizedType={beverageType}
             newBeverage={newBeverage}
             setNewBeverage={setNewBeverage}
           />
         </div>
-        <div className="modal-footer">
+        <div className="modal__headfoot">
           <button className="button" onClick={() => onCancel()}>
             Cancel
           </button>

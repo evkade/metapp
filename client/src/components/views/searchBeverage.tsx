@@ -37,7 +37,7 @@ export const SearchBeverage = ({
   };
 
   return (
-    <div>
+    <div className="admin-menu-container__column">
       <input
         id="searchQuery"
         value={query}
@@ -65,18 +65,14 @@ export const SearchBeverage = ({
       >
         Search
       </button>
-<<<<<<< HEAD
-      <div className="drink-list__container">
-=======
       <button
         type="submit"
         onClick={() => openNewBeverageModal(query)}
-        className="customizeMenu__Button"
+        className="admin-menu-container__button"
       >
         Create
       </button>
-      <div className="menuView__container">
->>>>>>> 29b35c9902e7effadc3f317df60420a2d854a151
+      <div className="drink-list__container">
         {!isLoading && searchResult ? (
           searchResult.map((beverage: Beverage, index: number) => (
             <BeverageCard

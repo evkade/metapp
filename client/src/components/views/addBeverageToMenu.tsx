@@ -18,32 +18,6 @@ export const AddBeverageToMenu = ({
   setBeverageCardType,
 }) => {
   return (
-<<<<<<< HEAD
-    <div>
-      <button
-        className="general-button--bw"
-        onClick={() => setCurrentSearchType(searchTypes.API)}
-        disabled={currentSearchType === searchTypes.API}
-      >
-        Search new
-      </button>
-      <button
-        className="general-button--bw"
-        onClick={() => setCurrentSearchType(searchTypes.HISTORY)}
-        disabled={currentSearchType === searchTypes.HISTORY}
-      >
-        Find old
-      </button>
-      <button
-        className="general-button--bw"
-        onClick={() => setCurrentSearchType(searchTypes.NEW)}
-        disabled={currentSearchType === searchTypes.NEW}
-      >
-        Create
-      </button>
-      {shownSearchType()}
-    </div>
-=======
     <SearchBeveragePresenter
       setNewBeverage={setModalBeverage}
       setShowModal={setShowModal}
@@ -54,6 +28,5 @@ export const AddBeverageToMenu = ({
       setCurrentSearchType={setCurrentSearchType}
       setBeverageCardType={setBeverageCardType}
     />
->>>>>>> 29b35c9902e7effadc3f317df60420a2d854a151
   );
 };
