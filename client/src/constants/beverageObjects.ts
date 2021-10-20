@@ -1,5 +1,3 @@
-// todo ev lägga till searchTypes / beverageobjects här ?
-
 export interface Beverage {
   name: string;
   price: number;

@@ -17,9 +17,6 @@ export const AddBeverageToMenu = ({
   searchedBeverageType,
   setBeverageCardType,
 }) => {
-  // case searchTypes.NEW:
-  // setShowModal(true);
-
   return (
     <SearchBeveragePresenter
       setNewBeverage={setModalBeverage}
