@@ -1,13 +1,17 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import { userRouter } from "./routes/user";
-import connectDB from "./db";
-import { beerRouter } from "./routes/beers";
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import connectDB from './db'
 
 import cookieSession from "cookie-session";
-import cookieParser from "cookie-parser";
-import { authRouter } from "./routes/auth";
+import cookieParser from 'cookie-parser';
+
+import { authRouter } from './routes/auth';
+import { apiBeerRouter } from './routes/apibeers';
+import { beerRouter } from './routes/beers';
+import { cocktailRouter } from './routes/cocktail';
+import { userRouter } from './routes/user'
+import { menuRouter } from './routes/menu'
 import { orderRouter } from "./routes/orders";
 
 const socket = require("socket.io");
@@ -71,8 +75,11 @@ app.use(bp.urlencoded({ extended: true }));
 
 app.use(userRouter);
 app.use(beerRouter);
+app.use(cocktailRouter)
+app.use(apiBeerRouter)
 app.use(authRouter);
 app.use(orderRouter);
+app.use(menuRouter);
 
 app.get("/", (req, res) => {
   console.log("received request");

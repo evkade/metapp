@@ -51,8 +51,12 @@ $general-font: "Montserrat", sans-serif;
 }
 
 @mixin pageTitleFont {
+  z-index: 1;
+  color: white;
+  box-shadow: none !important;
   @include alignedGeneralFont();
-  font-size: 10vh;
+  animation: flicker-cerise 1.5s infinite alternate;
+  flex: 0;
 }
 
 @mixin brickBackground {
@@ -82,6 +86,14 @@ $general-font: "Montserrat", sans-serif;
 
 body {
   margin: 0px !important;
+  font-family: $general-font;
+}
+
+#app {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .signInForm {
@@ -235,6 +247,19 @@ div.signInForm__inputContainer button {
 .menuView {
   width: 100%;
   @include brickBackground();
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url("https://i.imgur.com/mnVAkgM.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* height: 100vh; */
+  /* height: 100%; */
+  height: 80vh;
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .menuView__drinkCard {
@@ -246,7 +271,6 @@ div.signInForm__inputContainer button {
 }
 
 .menuView__drinkCard__image {
-  flex: 1;
   height: 100%;
   border-radius: 6px;
   border: 1px solid white;
@@ -284,14 +308,29 @@ div.signInForm__inputContainer button {
   overflow: scroll;
   background-color: black;
   border-radius: 6px;
+  flex: 1;
+  margin-bottom: 20px;
 }
 
-.pageTitleNeon {
+.menuView__drinkCard__star {
+  color: lightgray;
+  margin-right: -20px;
+  margin-top: 5%;
   z-index: 1;
-  color: white;
-  box-shadow: none !important;
+}
+
+.menuView__drinkCard__star--active {
+  color: rgb(240, 200, 48);
+}
+
+.pageTitleNeon--big {
+  font-size: 10vh;
   @include pageTitleFont();
-  animation: flicker-cerise 1.5s infinite alternate;
+}
+
+.pageTitleNeon--small {
+  font-size: 7vh;
+  @include pageTitleFont();
 }
 
 .modal {
@@ -327,10 +366,136 @@ div.signInForm__inputContainer button {
 }
 
 .adminOrderView {
-  width: 100%;
+    width: 100%;
   @include brickBackground();
 }
 
 .adminOrderView__subtitle {
   color: white;
+}
+
+.menuView__orderButton {
+  z-index: 1;
+  position: absolute;
+  bottom: 30px;
+  border-radius: 6px;
+  font-family: "Pacifico", cursive;
+  font-size: 5vw;
+  width: 70%;
+  border: 1px solid black;
+  background: rgb(240, 200, 48);
+}
+
+.profileContainer {
+  @include brickBackground();
+}
+
+.profileContainer__block {
+  background: black;
+  color: white;
+  width: 80%;
+  height: 20%;
+  border-radius: 6px;
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
+.profileContainer__block--row {
+  flex-direction: row;
+  @include centerVerticalHorizontal();
+  border-bottom: 1px solid white;
+  padding: 10px 0px;
+}
+
+.profileContainer__block--column {
+  text-align: left;
+  flex: 1;
+}
+
+.profileContainer__block--column--flex {
+  flex: 1;
+  @include centerVerticalHorizontal();
+}
+
+.profileContainer__block__scrollContainer {
+  height: 80%;
+  overflow: scroll;
+}
+
+.profileContainer__block__title {
+  font-size: 20px;
+  .customizeMenu {
+    background-color: lightgrey;
+    border-radius: 6px;
+    height: 70%;
+    input {
+      border: 1px solid black;
+      border-radius: 5px;
+      padding-top: 15px;
+      width: 60%;
+      padding: 2px 2px 2px 2px;
+      outline: 0;
+      background-color: #f5f5f5;
+    }
+    input:hover,
+    input:focus {
+      border: 1.5px solid grey;
+      background-color: grey;
+    }
+  }
+}
+
+.customizeMenu__GridContainer {
+  display: grid;
+  grid-column-gap: 5px;
+}
+
+.customizeMenu__Menu {
+  background-color: black;
+  border-radius: 6px;
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.customizeMenu__AddBeverageToMenu {
+  background-color: black;
+  border-radius: 6px;
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.customizeMenu__Button {
+  background: none;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: white;
+  border-radius: 6px;
+  border: 1px solid white;
+}
+
+.customizeMenu__Button:disabled {
+  color: grey;
+  border: 1px solid grey;
+}
+
+.orderView__container {
+  width: 100%;
+  @include brickBackground();
+}
+
+.orderView__card {
+  background: black;
+  color: white;
+  width: 80%;
+  height: 70%;
+  border-radius: 6px;
+  padding: 6px;
+  margin-bottom: 10px;
+  @include centerVerticalHorizontal();
 }

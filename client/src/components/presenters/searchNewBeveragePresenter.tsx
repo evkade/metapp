@@ -4,7 +4,6 @@ import usePromise from "../../hooks/usePromise";
 import { beverageTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
 import { Beverage } from "../../constants/beverageObjects";
-import { CreateBeverageForMenuModalPresenter } from "../presenters/createBeverageForMenuModalPresenter";
 
 const drinkModel = new DrinkModel();
 
@@ -12,15 +11,13 @@ const drinkModel = new DrinkModel();
 // todo: also special case if it is present in history
 
 export const SearchNewBeveragePresenter = ({
-  newBeverage,
   setNewBeverage,
-  showModal,
   setShowModal,
   menu,
   addToMenu,
   customizedType,
   currentSearchType,
-  setCurrentSearchType,
+  setBeverageCardType,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
@@ -69,23 +66,16 @@ export const SearchNewBeveragePresenter = ({
   return (
     <div>
       <SearchBeverage
+        customizedType={customizedType}
         setNewBeverage={setNewBeverage}
         setShowModal={setShowModal}
         searchBeverage={searchBeverage}
         searchResult={searchResults}
         isLoading={isLoading}
-        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-        currentSearchType={currentSearchType}
-      />
-      <CreateBeverageForMenuModalPresenter
-        newBeverage={newBeverage}
-        setNewBeverage={setNewBeverage}
-        showModal={showModal}
-        setShowModal={setShowModal}
         menu={menu}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-        customizedType={customizedType}
-        setCurrentSearchType={setCurrentSearchType}
+        currentSearchType={currentSearchType}
+        setBeverageCardType={setBeverageCardType}
       />
     </div>
   );

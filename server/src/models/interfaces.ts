@@ -18,3 +18,22 @@ export interface Order extends mongoose.Document {
   bar: String;
   date: String;
 }
+
+export interface Beer extends mongoose.Document {
+    name: String;
+    active: Boolean;
+    price: Number;
+    percentage: Number;
+    description: String;
+
+}
+
+export interface Cocktail extends mongoose.Document {
+    name: String;
+    active: Boolean;
+    price: Number;
+    ingredients: String[];
+    description: String;
+    alcoholVolume: Number,
+
+}
