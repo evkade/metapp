@@ -1,11 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 
 import jwt from "jsonwebtoken";
+
 interface UserPayload {
   id: string;
   email: string;
   isAdmin: boolean;
 }
+
 // currentUser to the req object
 declare global {
   namespace Express {
@@ -15,14 +17,18 @@ declare global {
   }
 }
 
-export const isSignedIn = (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.session?.jwt);
+export const isSignedIn = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const payload = jwt.verify(req.session?.jwt, process.env.JWT_KEY!) as any;
-    //console.log('payload ', payload)
+    const payload = jwt.verify(
+      req.session?.jwt,
+      process.env.JWT_KEY!
+    ) as any;
     req.currentUser = payload;
-  } catch (err) {
-    console.log("error");
-  }
+  } catch (err) { console.log('error') }
+
   next();
 };
