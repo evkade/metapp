@@ -3,22 +3,21 @@ import { SearchBeverage } from "../views/searchBeverage";
 import usePromise from "../../hooks/usePromise";
 import { beverageTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
-import { Beverage } from "../../constants/beverageObjects";
+import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
 
 const drinkModel = new DrinkModel();
 
-// OBS
-// This component is not implemented yet as I need the history from database to do that
-// so basically it just shows the results from API rn instead of from history
-// however the adding of beverage etc works as it should
+// todo: is if in menu you should not be able to add it
+// todo: also special case if it is present in history
 
-export const SearchHistoryPresenter = ({
+export const SearchBeveragePresenter = ({
   setNewBeverage,
   setShowModal,
   menu,
   addToMenu,
   customizedType,
   currentSearchType,
+  setCurrentSearchType,
   setBeverageCardType,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
@@ -27,6 +26,7 @@ export const SearchHistoryPresenter = ({
   const [searchResults, setSearchResults] = useState([]);
 
   const searchBeverage = (query: string) => {
+    // if currentSearchType === API
     setLoading(true);
     switch (customizedType) {
       case beverageTypes.BEER:
@@ -36,6 +36,7 @@ export const SearchHistoryPresenter = ({
         setBeveragePromise(drinkModel.getCocktailBasedOnName(query));
         break;
     }
+    // else if currentSearchType === HISTORY do this
   };
 
   useEffect(() => {
@@ -66,17 +67,20 @@ export const SearchHistoryPresenter = ({
   }, [beverageData, beverageError]);
 
   return (
-    <SearchBeverage
-      customizedType={customizedType}
-      setNewBeverage={setNewBeverage}
-      setShowModal={setShowModal}
-      searchBeverage={searchBeverage}
-      searchResult={searchResults}
-      isLoading={isLoading}
-      menu={menu}
-      addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-      currentSearchType={currentSearchType}
-      setBeverageCardType={setBeverageCardType}
-    />
+    <div>
+      <SearchBeverage
+        customizedType={customizedType}
+        setNewBeverage={setNewBeverage}
+        setShowModal={setShowModal}
+        searchBeverage={searchBeverage}
+        searchResult={searchResults}
+        isLoading={isLoading}
+        menu={menu}
+        addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+        currentSearchType={currentSearchType}
+        setCurrentSearchType={setCurrentSearchType}
+        setBeverageCardType={setBeverageCardType}
+      />
+    </div>
   );
 };

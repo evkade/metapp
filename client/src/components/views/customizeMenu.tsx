@@ -20,8 +20,8 @@ export const CustomizeMenu = ({
   setBeverageCardType,
 }) => {
   return (
-    <div className="customizeMenu__GridContainer">
-      <div className="customizeMenu__Menu">
+    <div className="customizeMenu__Container">
+      <div className="customizeMenu__Rectangle customizeMenu__Menu">
         <AdminMenuPresenter
           setShowModal={setShowModal}
           setModalBeverage={setModalBeverage}
@@ -32,7 +32,7 @@ export const CustomizeMenu = ({
           setBeverageCardType={setBeverageCardType}
         />
       </div>
-      <div className="customizeMenu__AddBeverageToMenu">
+      <div className="customizeMenu__Rectangle customizeMenu__AddBeverageToMenu">
         <AddBeverageToMenuPresenter
           setShowModal={setShowModal}
           setModalBeverage={setModalBeverage}

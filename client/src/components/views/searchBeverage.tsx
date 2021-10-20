@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { searchTypes } from "../../constants/searchTypes";
+import { searchTypes, beverageTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
 import { BeverageCard } from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
-
+import { baseBeer, baseCocktail } from "../../constants/beverageObjects";
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
@@ -18,6 +18,7 @@ export const SearchBeverage = ({
   menu,
   addToMenu,
   currentSearchType,
+  setCurrentSearchType,
   setBeverageCardType,
   customizedType,
 }) => {
@@ -29,6 +30,12 @@ export const SearchBeverage = ({
     setShowModal(true);
   };
 
+  const openNewBeverageModal = (name: string) => {
+    customizedType === beverageTypes.BEER
+      ? openModal({ ...baseBeer, name: name })
+      : openModal({ ...baseCocktail, name: name });
+  };
+
   return (
     <div>
       <input
@@ -36,12 +43,34 @@ export const SearchBeverage = ({
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       ></input>
+      <select name="searchType" id="searchType">
+        <option
+          value="new"
+          selected
+          onClick={() => setCurrentSearchType(searchTypes.API)}
+        >
+          Search new
+        </option>
+        <option
+          value="history"
+          onClick={() => setCurrentSearchType(searchTypes.HISTORY)}
+        >
+          Find in history
+        </option>
+      </select>
       <button
         type="submit"
         onClick={() => searchBeverage(query)}
         className="customizeMenu__Button"
       >
         Search
+      </button>
+      <button
+        type="submit"
+        onClick={() => openNewBeverageModal(query)}
+        className="customizeMenu__Button"
+      >
+        Create
       </button>
       <div className="menuView__container">
         {!isLoading && searchResult ? (
@@ -66,19 +95,4 @@ export const SearchBeverage = ({
       </div>
     </div>
   );
-};
-
-// temporary graphic solution for showing the beverages
-const hashListToDiv = (hashList) => {
-  var divList = [];
-  for (var k in hashList) {
-    const value = hashList[k];
-    if (value === "ingredientList" || value === "ingredientMeasuresList") {
-      // type of value is object
-      divList = [...divList, <div>{hashListToDiv(value)}</div>];
-    } else {
-      divList = [...divList, <div>{k + ": " + value}</div>];
-    }
-  }
-  return divList;
 };
