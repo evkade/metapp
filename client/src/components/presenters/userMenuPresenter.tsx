@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import usePromise from "../../hooks/usePromise";
-import { searchTypes } from "../../constants/searchTypes";
-import MenuView from "../views/menuView";
+import { orderPlaced } from "../../redux/actions/user";
+import { addFavorite } from "../../redux/actions/user";
+import { removeFavorite } from "../../redux/actions/user";
+import { UserMenu } from "../views/userMenu";
+import { drinkMade } from "../../redux/actions/orders";
+import { isTypeNode } from "typescript";
 
-export const MenuPresenter = () => {
+export const UserMenuPresenter = ({
+  orders,
+  orderPlaced,
+  addFavorite,
+  removeFavorite,
+  favorites,
+}) => {
   const [orderItems, setOrderItems] = useState([]);
+  const [favoriteList, setFavoriteList] = useState([]);
+
+  useEffect(() => {
+    setFavoriteList(favorites);
+  }, []);
 
   const menuItems = [
     {
@@ -13,84 +27,84 @@ export const MenuPresenter = () => {
       name: "Beer",
       description: "fruity",
       price: 100,
-      alc: 4.4,
+      alcoholPercentage: 4.4,
     },
     {
       id: 2,
       name: "Wine",
       description: "DRY",
       price: 20,
-      alc: 13,
+      alcoholPercentage: 13,
     },
     {
       id: 3,
       name: "Cider",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider2",
       description: "Boozy",
       price: 5,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider3",
       description: "Boozy",
       price: 50,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider4",
       description: "Boozy",
       price: 40,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider5",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider6",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider7",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider8",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider9",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider10",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
   ];
 
@@ -122,7 +136,7 @@ export const MenuPresenter = () => {
   };
 
   const removeFromOrder = (name) => {
-    const modifiedOrderList = orderItems.map((item) => {
+    const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
         return {
           name: item.name,
@@ -132,28 +146,53 @@ export const MenuPresenter = () => {
         return item;
       }
     });
-    setOrderItems(modifiedOrderList);
+    const modifiedOrderListWithoutZeros = modifiedOrderList.filter(
+      (item) => item.count !== 0
+    );
+    setOrderItems(modifiedOrderListWithoutZeros);
+  };
+
+  const finalizeOrder = () => {
+    orderPlaced(orderItems);
+    setOrderItems([]);
+  };
+
+  const addToFavorites = (name) => {
+    addFavorite(name);
+  };
+
+  const removeFromFavorites = (name) => {
+    removeFavorite(name);
   };
 
   return (
-    <MenuView
+    <UserMenu
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
       menuItems={menuItems}
       addToOrder={(name) => addOrIncreaseOrder(name)}
       removeFromOrder={(name) => removeFromOrder(name)}
-    ></MenuView>
+      finalizeOrder={() => finalizeOrder()}
+      addToFavorites={(name) => addToFavorites(name)}
+      removeFromFavorites={(name) => removeFromFavorites(name)}
+      favoriteList={favoriteList}
+    />
   );
 };
 
 const mapStateToProps = (store) => {
   return {
-    menu: store.menu, // hade state.reducer.menu innan men funkade ej
+    orders: store.orders,
+    favorites: store.user.favorites,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    orderPlaced: (beverage) => dispatch(orderPlaced(beverage)),
+    addFavorite: (name) => dispatch(addFavorite(name)),
+    removeFavorite: (name) => dispatch(removeFavorite(name)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuPresenter);
+export default connect(mapStateToProps, mapDispatchToProps)(UserMenuPresenter);

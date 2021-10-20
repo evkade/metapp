@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { searchTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
+import { BeverageCard } from "./beverageCard";
+import { beverageCardTypes } from "../../constants/beverageCardType";
 
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
@@ -13,13 +15,17 @@ export const SearchBeverage = ({
   searchBeverage,
   searchResult,
   isLoading,
+  menu,
   addToMenu,
   currentSearchType,
+  setBeverageCardType,
+  customizedType,
 }) => {
   const [query, setQuery] = useState<string>("");
 
-  const openModal = (beverage : Beverage) => {
+  const openModal = (beverage: Beverage) => {
     setNewBeverage(beverage);
+    setBeverageCardType(beverageCardTypes.ADMIN_SEARCH_RESULTS);
     setShowModal(true);
   };
 
@@ -30,29 +36,34 @@ export const SearchBeverage = ({
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       ></input>
-      <button type="submit" onClick={() => searchBeverage(query)}>
+      <button
+        type="submit"
+        onClick={() => searchBeverage(query)}
+        className="customizeMenu__Button"
+      >
         Search
       </button>
-      {!isLoading && searchResult ? (
-        searchResult.map((beverage) => (
-          <div>
-            <div> {hashListToDiv(beverage)} </div>
-            <button
-              type="submit"
-              onClick={() =>
-                currentSearchType === searchTypes.API
-                  ? openModal(beverage)
-                  : addToMenu(beverage)
-              }
-            >Add to menu
-            </button>
-            <br />
-          </div>
-        ))
-      ) : (
-        // todo fixa snygg loading + att den kommer upp på rätt tillfällen
-        <div> Loading </div>
-      )}
+      <div className="menuView__container">
+        {!isLoading && searchResult ? (
+          searchResult.map((beverage: Beverage, index: number) => (
+            <BeverageCard
+              beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
+              beverage={beverage}
+              index={index}
+              addToOrder={null}
+              removeFromOrder={null}
+              count={null}
+              openModal={() => openModal(beverage)}
+              menu={menu}
+              removeFromMenu={null}
+              editInMenu={null}
+            />
+          ))
+        ) : (
+          // todo fixa snygg loading + att den kommer upp på rätt tillfällen
+          <div> Loading </div>
+        )}
+      </div>
     </div>
   );
 };
