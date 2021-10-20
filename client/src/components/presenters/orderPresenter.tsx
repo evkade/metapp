@@ -1,30 +1,24 @@
+import OrderView from "../views/orderView";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import {
-  orderPlaced,
-  unfinishedOrderPlaced,
-  addFavorite,
-  removeFavorite,
-} from "../../redux/actions/user";
-import { useHistory } from "react-router-dom";
-import { UserMenu } from "../views/userMenu";
+import { orderPlaced, unfinishedOrderPlaced } from "../../redux/actions/user";
+import { addFavorite } from "../../redux/actions/user";
+import { removeFavorite } from "../../redux/actions/user";
 
-export const UserMenuPresenter = ({
+export const OrderPresenter = ({
+  unfinishedOrder,
   orders,
   orderPlaced,
   addFavorite,
   removeFavorite,
   favorites,
   unfinishedOrderPlaced,
-  unfinishedOrder,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
 
   useEffect(() => {
-    setFavoriteList(favorites);
-
     if (
       !(
         Object.keys(unfinishedOrder).length === 0 &&
@@ -44,95 +38,6 @@ export const UserMenuPresenter = ({
       setOrderItems([]);
     }
   }, []);
-
-  let history = useHistory();
-
-  const menuItems = [
-    {
-      id: 1,
-      name: "Beer",
-      description: "fruity",
-      price: 100,
-      alcoholPercentage: 4.4,
-    },
-    {
-      id: 2,
-      name: "Wine",
-      description: "DRY",
-      price: 20,
-      alcoholPercentage: 13,
-    },
-    {
-      id: 3,
-      name: "Cider",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider2",
-      description: "Boozy",
-      price: 5,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider3",
-      description: "Boozy",
-      price: 50,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider4",
-      description: "Boozy",
-      price: 40,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider5",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider6",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider7",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider8",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider9",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider10",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-  ];
 
   const addToTotalInfo = (cost) => {
     const newTotalCost = totalInfo.totalCost + cost;
@@ -188,11 +93,6 @@ export const UserMenuPresenter = ({
     setOrderItems(modifiedOrderListWithoutZeros);
   };
 
-  const placeUnFinishedOrder = () => {
-    unfinishedOrderPlaced(orderItems);
-    history.push("/order");
-  };
-
   const addToFavorites = (name) => {
     addFavorite(name);
   };
@@ -201,26 +101,28 @@ export const UserMenuPresenter = ({
     removeFavorite(name);
   };
 
+  const finalizeOrder = () => {
+    orderPlaced(unfinishedOrder);
+  };
+
   return (
-    <UserMenu
+    <OrderView
+      unfinishedOrder={unfinishedOrder}
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
-      menuItems={menuItems}
       addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name) => removeFromOrder(name)}
-      placeUnFinishedOrder={() => placeUnFinishedOrder()}
       addToFavorites={(name) => addToFavorites(name)}
       removeFromFavorites={(name) => removeFromFavorites(name)}
       favoriteList={favoriteList}
       totalInfo={totalInfo}
+      finalizeOrder={() => finalizeOrder()}
     />
   );
 };
 
 const mapStateToProps = (store) => {
   return {
-    orders: store.orders,
-    favorites: store.user.favorites,
     unfinishedOrder: store.user.unfinishedOrder,
   };
 };
@@ -235,4 +137,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenuPresenter);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderPresenter);

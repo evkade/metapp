@@ -20,8 +20,8 @@ export const AdminMenu = ({
   };
 
   return (
-    <div>
-      <div className="menuView__container">
+    <div className="container--centered">
+      <div className="drink-list__container">
         {menu.map((beverage: Beverage, index: number) => (
           <BeverageCard
             menu={menu}

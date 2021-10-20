@@ -38,9 +38,9 @@ export const CustomizeMenuPresenter = (props) => {
   );
 
   return (
-    <div className="customizeMenu">
+    <div className="admin-menu-container">
       <button
-        className="customizeMenu__Button"
+        className="general-button--bw"
         type="submit"
         onClick={() => setCustomizedType(beverageTypes.BEER)}
         disabled={customizedType === beverageTypes.BEER}
@@ -48,7 +48,7 @@ export const CustomizeMenuPresenter = (props) => {
         Beer
       </button>
       <button
-        className="customizeMenu__Button"
+        className="general-button--bw"
         type="submit"
         onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
         disabled={customizedType === beverageTypes.COCKTAIL}

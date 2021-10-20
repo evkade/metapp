@@ -39,11 +39,11 @@ export const SearchBeverage = ({
       <button
         type="submit"
         onClick={() => searchBeverage(query)}
-        className="customizeMenu__Button"
+        className="general-button--bw"
       >
         Search
       </button>
-      <div className="menuView__container">
+      <div className="drink-list__container">
         {!isLoading && searchResult ? (
           searchResult.map((beverage: Beverage, index: number) => (
             <BeverageCard

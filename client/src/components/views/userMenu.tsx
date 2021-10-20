@@ -8,15 +8,16 @@ export const UserMenu = ({
   menuItems,
   addToOrder,
   removeFromOrder,
-  finalizeOrder,
+  placeUnFinishedOrder,
   addToFavorites,
   removeFromFavorites,
   favoriteList,
+  totalInfo,
 }) => {
   return (
-    <div className="menuView">
-      <div className="pageTitleNeon">Menu</div>
-      <div className="menuView__container">
+    <div className="drink-list container--general">
+      <div className="title-neon--big">Menu</div>
+      <div className="drink-list__container">
         {menuItems.map((item: Beverage, index: number) => {
           var orderCount: number = 0;
           const filteredOutItem = orderItems.filter(
@@ -28,23 +29,29 @@ export const UserMenu = ({
           return (
             <Drink
               item={item}
+              key={index}
               index={index}
-              addToOrder={(name: string) => addToOrder(name)}
+              addToOrder={(name: string, cost: string) =>
+                addToOrder(name, cost)
+              }
               removeFromOrder={(name: string) => removeFromOrder(name)}
               count={orderCount}
               addFavorite={(name) => addToFavorites(name)}
               removeFavorite={(name) => removeFromFavorites(name)}
               favoriteList={favoriteList}
+              menuDisplay={true}
             />
           );
         })}
       </div>
       {orderItems.length > 0 && (
         <button
-          className="menuView__orderButton"
-          onClick={() => finalizeOrder()}
+          className="drink-list__button"
+          onClick={() => placeUnFinishedOrder()}
         >
-          Place order
+          Place order <br />
+          {totalInfo.totalCount} {totalInfo.totalCount == 1 ? "item" : "items"}{" "}
+          á {totalInfo.totalCost} SEK
         </button>
       )}
     </div>
