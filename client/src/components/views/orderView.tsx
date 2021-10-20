@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../components.scss";
-import Drink from "./DrinkView";
+import Drink from "./drinkView";
 import { useHistory } from "react-router-dom";
 
 const OrderView = ({

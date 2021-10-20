@@ -3,6 +3,7 @@ import { SearchBeverage } from "../views/searchBeverage";
 import usePromise from "../../hooks/usePromise";
 import { beverageTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
+import { Beverage } from "../../constants/beverageObjects";
 
 const drinkModel = new DrinkModel();
 
@@ -18,6 +19,7 @@ export const SearchHistoryPresenter = ({
   addToMenu,
   customizedType,
   currentSearchType,
+  setBeverageCardType,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
@@ -65,13 +67,16 @@ export const SearchHistoryPresenter = ({
 
   return (
     <SearchBeverage
+      customizedType={customizedType}
       setNewBeverage={setNewBeverage}
       setShowModal={setShowModal}
       searchBeverage={searchBeverage}
       searchResult={searchResults}
       isLoading={isLoading}
-      addToMenu={(beverage) => addToMenu(beverage)}
+      menu={menu}
+      addToMenu={(beverage: Beverage) => addToMenu(beverage)}
       currentSearchType={currentSearchType}
+      setBeverageCardType={setBeverageCardType}
     />
   );
 };

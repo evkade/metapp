@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import MenuView from "../views/menuView";
-import { orderPlaced, unfinishedOrderPlaced } from "../../redux/actions/user";
-import { addFavorite } from "../../redux/actions/user";
-import { removeFavorite } from "../../redux/actions/user";
+import {
+  orderPlaced,
+  unfinishedOrderPlaced,
+  addFavorite,
+  removeFavorite,
+} from "../../redux/actions/user";
 import { useHistory } from "react-router-dom";
+import { UserMenu } from "../views/userMenu";
 
-export const MenuPresenter = ({
+export const UserMenuPresenter = ({
   orders,
   orderPlaced,
   addFavorite,
@@ -50,84 +53,84 @@ export const MenuPresenter = ({
       name: "Beer",
       description: "fruity",
       price: 100,
-      alc: 4.4,
+      alcoholPercentage: 4.4,
     },
     {
       id: 2,
       name: "Wine",
       description: "DRY",
       price: 20,
-      alc: 13,
+      alcoholPercentage: 13,
     },
     {
       id: 3,
       name: "Cider",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider2",
       description: "Boozy",
       price: 5,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider3",
       description: "Boozy",
       price: 50,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider4",
       description: "Boozy",
       price: 40,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider5",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider6",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider7",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider8",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider9",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
     {
       id: 3,
       name: "Cider10",
       description: "Boozy",
       price: 10,
-      alc: 5,
+      alcoholPercentage: 5,
     },
   ];
 
@@ -199,7 +202,7 @@ export const MenuPresenter = ({
   };
 
   return (
-    <MenuView
+    <UserMenu
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
       menuItems={menuItems}
@@ -210,7 +213,7 @@ export const MenuPresenter = ({
       removeFromFavorites={(name) => removeFromFavorites(name)}
       favoriteList={favoriteList}
       totalInfo={totalInfo}
-    ></MenuView>
+    />
   );
 };
 
@@ -232,4 +235,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuPresenter);
+export default connect(mapStateToProps, mapDispatchToProps)(UserMenuPresenter);
