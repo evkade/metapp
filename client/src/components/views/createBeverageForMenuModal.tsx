@@ -21,28 +21,28 @@ export const CreateBeverageForMenuModal = ({
       <div className="modal-content">
         <div className="modal-header">
           <h4 className="modal-title">{modalTitle}</h4>
-          <div className="modal-body">
-            <NewBeverageFormPresenter
-              customizedType={beverageType}
-              newBeverage={newBeverage}
-              setNewBeverage={setNewBeverage}
-            />
-          </div>
-          <div className="modal-footer">
-            <button className="button" onClick={() => onCancel()}>
-              Cancel
-            </button>
-            <button
-              className="button"
-              onClick={
-                beverageCardType === beverageCardTypes.ADMIN_MENU
-                  ? () => onEditInMenu(newBeverage)
-                  : () => onAddToMenu(newBeverage)
-              }
-            >
-              OK
-            </button>
-          </div>
+        </div>
+        <div>
+          <NewBeverageFormPresenter
+            customizedType={beverageType}
+            newBeverage={newBeverage}
+            setNewBeverage={setNewBeverage}
+          />
+        </div>
+        <div className="modal-footer">
+          <button className="button" onClick={() => onCancel()}>
+            Cancel
+          </button>
+          <button
+            className="button"
+            onClick={
+              beverageCardType === beverageCardTypes.ADMIN_MENU
+                ? () => onEditInMenu(newBeverage)
+                : () => onAddToMenu(newBeverage)
+            }
+          >
+            OK
+          </button>
         </div>
       </div>
     </div>

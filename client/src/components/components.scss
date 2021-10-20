@@ -320,10 +320,6 @@ div.signInForm__inputContainer button {
 
 .modal {
   position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -332,22 +328,33 @@ div.signInForm__inputContainer button {
 
 .modal-content {
   width: 500px;
-  background-color: #fff;
+  border-radius: 12px;
+  label {
+    margin: 5px;
+  }
+  input {
+    height: 25px;
+    margin: 5px;
+    padding: 3px 5px;
+    border-radius: 5px;
+  }
+  input:hover {
+    background-color: lightgrey;
+  }
+  button {
+    border-radius: 5px;
+  }
 }
 
 .modal-header,
 .modal-footer {
-  padding: 10px;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .modal-title {
-  margin: 0;
-}
-
-.modal-body {
-  padding: 10px;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  padding: 5px;
 }
 
 .menuView__orderButton {
@@ -475,9 +482,10 @@ div.signInForm__inputContainer button {
   color: white;
   border-radius: 6px;
   border: 1px solid white;
-  :hover {
-    background-color: grey;
-  }
+}
+
+.customizeMenu__Button:hover {
+  background-color: grey;
 }
 
 .orderView__container {
