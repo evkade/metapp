@@ -11,14 +11,15 @@ export const UserMenu = ({
   menuItems,
   addToOrder,
   removeFromOrder,
-  finalizeOrder,
+  placeUnFinishedOrder,
   addToFavorites,
   removeFromFavorites,
   favoriteList,
+  totalInfo,
 }) => {
   return (
     <div className="menuView">
-      <div className="pageTitleNeon">Menu</div>
+      <div className="pageTitleNeon--big">Menu</div>
       <div className="menuView__container">
         {menuItems.map((item: Beverage, index: number) => {
           var orderCount: number = 0;
@@ -31,13 +32,17 @@ export const UserMenu = ({
           return (
             <Drink
               item={item}
+              key={index}
               index={index}
-              addToOrder={(name: string) => addToOrder(name)}
+              addToOrder={(name: string, cost: string) =>
+                addToOrder(name, cost)
+              }
               removeFromOrder={(name: string) => removeFromOrder(name)}
               count={orderCount}
               addFavorite={(name) => addToFavorites(name)}
               removeFavorite={(name) => removeFromFavorites(name)}
               favoriteList={favoriteList}
+              menuDisplay={true}
             />
           );
         })}
@@ -45,9 +50,11 @@ export const UserMenu = ({
       {orderItems.length > 0 && (
         <button
           className="menuView__orderButton"
-          onClick={() => finalizeOrder()}
+          onClick={() => placeUnFinishedOrder()}
         >
-          Place order
+          Place order <br />
+          {totalInfo.totalCount} {totalInfo.totalCount == 1 ? "item" : "items"}{" "}
+          á {totalInfo.totalCost} SEK
         </button>
       )}
     </div>

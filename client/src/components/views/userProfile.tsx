@@ -12,7 +12,7 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
 
   return (
     <div className="profileContainer">
-      <div className="pageTitleNeon">{username}</div>
+      <div className="pageTitleNeon--big">{username}</div>
       <div className="profileContainer__block">
         <div className="profileContainer__block__title">Previous Orders</div>
         <div className="profileContainer__block__scrollContainer">
