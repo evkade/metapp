@@ -1,0 +1,334 @@
+@import "variables.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "mixins.scss";
+
+@include keyframe__neon--flicker(
+  flicker-cerise,
+  white,
+  white,
+  $neon-color-pink
+);
+@include keyframe__neon--flicker(
+  flicker-green,
+  black,
+  $neon-color-green,
+  $neon-color-green
+);
+
+@include keyframe__neon--flicker(
+  flicker-yellow,
+  black,
+  $neon-color-yellow,
+  $neon-color-yellow
+);
+
+body {
+  margin: 0px !important;
+  font-family: $general-font;
+}
+
+#app {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-form {
+  height: 100vh !important;
+  @include alignedGeneralFont();
+  @at-root #{&}__card {
+    background: rgb(240, 240, 240);
+    background-image: linear-gradient(to left, rgb(240, 240, 240), #ffff);
+    border-radius: 6px;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 5px 5px 8px;
+    width: 90%;
+    max-width: 600px;
+    aspect-ratio: 5/3;
+    @include centerVerticalHorizontal();
+    align-items: unset;
+  }
+  @at-root #{&}__flex-row {
+    display: flex;
+    height: 30%;
+  }
+  @at-root #{&}__logo {
+    flex: 0.5;
+    @include centerVerticalHorizontal();
+  }
+  @at-root #{&}__logo img {
+    height: 100%;
+  }
+  @at-root #{&}__title {
+    flex: 0.5;
+    font-size: 40px;
+    @include centerVerticalHorizontal();
+  }
+  @at-root #{&}__errElement {
+    height: 50px;
+    padding: 20px;
+    color: red;
+  }
+}
+
+.container--centered {
+  @include centerVerticalHorizontal();
+}
+
+.input-container {
+  flex: 1;
+  display: grid;
+  font-family: $general-font;
+  @at-root #{&}__element {
+    border: 1px solid black;
+    border-radius: 6px;
+    margin: 4px;
+    padding: 10px;
+  }
+}
+
+.container--general {
+  @include brickBackground();
+}
+
+.entry-view {
+  height: 100vh !important;
+  @at-root #{&}__neon-text {
+    @include pageTitleFont();
+    font-size: 20vw;
+    font-family: $barcode-font;
+    margin-bottom: 10vh;
+    max-height: 300px;
+  }
+  @at-root #{&}__logos img {
+    height: 8vh;
+    margin-bottom: 2vh;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+.neon-button {
+  background: rgba(0, 0, 0, 0.6);
+  font-family: $button-entryView-font;
+  font-size: 5vw;
+  margin: 20px;
+  width: 5em;
+  padding: 2vh;
+  border-radius: 25px;
+  @at-root {
+    .neon-button--green {
+      color: $neon-color-green;
+      border: 3px solid $neon-color-green;
+      animation: flicker-green 8s infinite alternate;
+    }
+    .neon-button--yellow {
+      color: $neon-color-yellow;
+      border: 3px solid $neon-color-yellow;
+      animation: flicker-yellow 10s infinite alternate;
+    }
+  }
+}
+
+@media screen and (prefers-reduced-motion) {
+  .entry-view__neon-text,
+  .neon-button--green,
+  .neon-button--yellow {
+    animation: none !important;
+  }
+}
+
+.card-drink {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 10%;
+  margin: 10px;
+  padding: 10px;
+  background-color: $light-neon-color-pink;
+  .card-drink--made {
+    background-color: $light-neon-color-yellow;
+  }
+  .card-drink--finished {
+    background-color: $light-neon-color-green;
+  }
+}
+
+.drink-list {
+  width: 100%;
+  flex: 1;
+  @at-root #{&}__container {
+    height: 80%;
+    width: 90%;
+    max-width: 800px;
+    overflow-y: scroll;
+    background-color: black;
+    border-radius: 6px;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+  @at-root #{&}__button {
+    z-index: 1;
+    position: absolute;
+    bottom: 30px;
+    border-radius: 6px;
+    font-family: "Pacifico", cursive;
+    font-size: 3vmax;
+    width: 70%;
+    border: 1px solid black;
+    background: rgb(240, 200, 48);
+  }
+  @at-root #{&}__row {
+    height: 15%;
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    @include alignedGeneralFont();
+  }
+  @at-root #{&}__image {
+    height: 100%;
+    border-radius: 6px;
+    border: 1px solid white;
+  }
+  @at-root #{&}__column--flexed {
+    flex: 1;
+    color: white;
+  }
+  @at-root #{&}__buttons {
+    flex-direction: row;
+    flex: 1;
+    @include centerVerticalHorizontal();
+    font-family: $general-font;
+    color: white;
+  }
+  @at-root #{&}__star {
+    color: lightgray;
+    margin-right: -20px;
+    margin-top: 5%;
+    z-index: 1;
+  }
+  @at-root #{&}__star--active {
+    color: rgb(240, 200, 48);
+  }
+}
+
+.title-neon--big {
+  font-size: 10vh;
+  animation: flicker-cerise 10s infinite alternate;
+  @include pageTitleFont();
+}
+
+.title-neon--small {
+  font-size: 7vh;
+  animation: flicker-cerise 10s infinite alternate;
+  @include pageTitleFont();
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  @include centerVerticalHorizontal();
+  @at-root #{&}__content {
+    width: 500px;
+    background-color: #fff;
+  }
+  @at-root #{&}__headfoot {
+    padding: 10px;
+  }
+  @at-root #{&}__title {
+    margin: 0;
+  }
+  @at-root #{&}__body {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+.general-button--bw {
+  background: none;
+  margin: 5px;
+  color: white;
+  border-radius: 6px;
+  border: 1px solid white;
+}
+
+.general-button--bw:disabled {
+  color: grey;
+  border: 1px solid grey;
+}
+
+.profile-view {
+  height: 100vh !important;
+}
+
+.info-card-drink {
+  background: black;
+  color: white;
+  width: 80%;
+  height: 20%;
+  border-radius: 6px;
+  padding: 6px;
+  margin-bottom: 10px;
+  @at-root #{&}__row {
+    flex-direction: row;
+    @include centerVerticalHorizontal();
+    border-bottom: 1px solid white;
+    padding: 10px 0px;
+  }
+  @at-root #{&}__column {
+    text-align: left;
+    flex: 1;
+  }
+  @at-root #{&}__column--flex {
+    flex: 1;
+    @include centerVerticalHorizontal();
+  }
+  @at-root #{&}__container--scroll {
+    height: 70%;
+    overflow-y: scroll;
+  }
+  @at-root #{&}__title {
+    font-size: 20px;
+  }
+}
+
+.admin-menu-container {
+  background-color: lightgrey;
+  height: 100%;
+  input {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-top: 15px;
+    width: 60%;
+    padding: 2px 2px 2px 2px;
+    outline: 0;
+    background-color: #f5f5f5;
+  }
+  input:hover,
+  input:focus {
+    border: 1.5px solid grey;
+    background-color: grey;
+  }
+  @at-root #{&}__row {
+    display: grid;
+    grid-column-gap: 5px;
+  }
+  @at-root #{&}__column {
+    background-color: black;
+    border-radius: 6px;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 2;
+  }
+  @at-root #{&}__column--flex {
+    grid-column-start: 1;
+    grid-column-end: 1;
+  }
+}
