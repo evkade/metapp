@@ -2,9 +2,9 @@ import { BeerModelDKM, BeerModelMKM } from '../models/beerSchema';
 import { Beer } from '../models/interfaces'
 
 
-export async function getActiveBeers(currentPub: String) {
+export async function getActiveBeers(currentBar: String) {
 
-    const model = (currentPub === "DKM") ? BeerModelDKM : BeerModelMKM;
+    const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
 
     // @ts-ignore
     const data = await model.find({ active: true }, '', (err, beers) => {
@@ -16,9 +16,9 @@ export async function getActiveBeers(currentPub: String) {
     return data;
 }
 
-export async function getBeers(currentPub: String) {
+export async function getBeers(currentBar: String) {
 
-    const model = (currentPub === "DKM") ? BeerModelDKM : BeerModelMKM;
+    const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
 
     // @ts-ignore
     const data = await model.find({}, '', (err, beers) => {
@@ -30,9 +30,9 @@ export async function getBeers(currentPub: String) {
     return data;
 }
 
-export async function getBeerById(currentPub: String, id: String) {
+export async function getBeerById(currentBar: String, id: String) {
 
-    const model = (currentPub === "DKM") ? BeerModelDKM : BeerModelMKM;
+    const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
     //@ts-ignore
     const data = await model.find({ _id: id }, '', (err, beers) => {
         if (err) throw new Error("error")
@@ -43,9 +43,9 @@ export async function getBeerById(currentPub: String, id: String) {
     return data;
 }
 
-export async function deleteBeerById(currentPub: String, id: String) {
+export async function deleteBeerById(currentBar: String, id: String) {
 
-    const model = (currentPub === "DKM") ? BeerModelDKM : BeerModelMKM;
+    const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
     //@ts-ignore
     const data = await model.deleteOne({ _id: id }, function (err) {
         if (!err) {
@@ -60,9 +60,9 @@ export async function deleteBeerById(currentPub: String, id: String) {
     return data;
 }
 
-export async function upsertBeer(currentpub: String, beer: Beer): Promise<Beer> {
+export async function upsertBeer(currentBar: String, beer: Beer): Promise<Beer> {
 
-    const model = (currentpub === "DKM") ? BeerModelDKM : BeerModelMKM;
+    const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
 
     //@ts-ignore
     let upsertedBeer = await model.findOneAndUpdate({ name: beer.name }, beer, { upsert: true, new: true }, function (err, doc) {
