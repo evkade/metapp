@@ -1,48 +1,67 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { drinkMade, drinkPaid } from '../../redux/actions/orders';
-import { AdminViewDrinkOrder } from '../views/adminViewDrinkOrder';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import OrderModel from "../../model/orderModel";
+import { AdminViewDrinkOrder } from "../views/adminViewDrinkOrder";
 
-const AdminViewDrinkOrdersPresenter = ({orders, drinkMade, drinkPaid}) => {
+const ordermodel = new OrderModel();
 
-    const getTimeStamp = () => {
-        const today = new Date();
-        const hour = today.getHours()
-        const minute = today.getMinutes()
-        return ((hour < 10) ? '0'+hour : ''+hour) + ':' + ((minute < 10) ? '0'+minute : ''+minute)
-    }
+const AdminViewDrinkOrdersPresenter = ({
+  socket,
+  orders,
+  makeOrder,
+  payForOrder,
+  getOrders,
+  menu,
+}) => {
+  useEffect(() => {
+    getOrders(menu.currentBar);
+  }, []);
 
-    const pay = (id) => {
-        drinkPaid(id, getTimeStamp())
-    }
-
-    const make = (id) => {
-        drinkMade(id, getTimeStamp())
-    }
-
+  const getTimeStamp = () => {
+    const today = new Date();
+    const hour = today.getHours();
+    const minute = today.getMinutes();
     return (
-        <AdminViewDrinkOrder 
-            orders={orders.orders}
-            drinkMade={make}
-            drinkPaid={pay}
-        />
-    )
+      (hour < 10 ? "0" + hour : "" + hour) +
+      ":" +
+      (minute < 10 ? "0" + minute : "" + minute)
+    );
+  };
+
+  const pay = (id) => {
+    payForOrder(id, getTimeStamp());
+  };
+
+  const make = (id) => {
+    makeOrder(id, getTimeStamp());
+  };
+
+  return (
+    <AdminViewDrinkOrder
+      orders={orders.orders}
+      drinkMade={make}
+      drinkPaid={pay}
+    />
+  );
 };
 
 const mapStateToProps = (store) => {
-    return {
-      orders: store.orders
-    };
+  return {
+    orders: store.orders,
+    menu: store.menu,
   };
-  
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    drinkMade: (id, timeMade) => dispatch(drinkMade(id, timeMade)),
-    drinkPaid: (id, timePaid) => dispatch(drinkPaid(id, timePaid))
+    makeOrder: (id, timeMade) => dispatch(ordermodel.makeOrder(id, timeMade)),
+    payForOrder: (id, timePaid) =>
+      dispatch(ordermodel.payForOrder(id, timePaid)),
+    getOrders: (currentBar) => dispatch(ordermodel.getOrders(currentBar)),
   };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(AdminViewDrinkOrdersPresenter);
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminViewDrinkOrdersPresenter);

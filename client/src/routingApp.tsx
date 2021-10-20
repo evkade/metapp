@@ -70,7 +70,7 @@ const PublicRoute = ({ component: Component, path, pathName, ...rest }) => (
   />
 );
 
-const RoutingApp = () => {
+const RoutingApp = ({ socket }) => {
   const user = useSelector((state: RootState) => {
     return state.user;
   });
@@ -104,6 +104,7 @@ const RoutingApp = () => {
             exact
             path="/vieworders"
             component={AdminViewDrinkOrdersPresenter}
+            socket={socket}
           />
           <PrivateRoute exact path="/menu" component={userMenuPresenter} />
           <PrivateRoute

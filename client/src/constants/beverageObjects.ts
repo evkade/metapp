@@ -21,6 +21,22 @@ export interface Menu {
   menu: Beverage[];
 }
 
+export interface Order {
+  _id: String;
+  beverage: String;
+  quantity: Number;
+  user: String;
+  made?: boolean;
+  paid?: boolean;
+  timeMade?: String;
+  timePaid?: String;
+  date: String;
+}
+
+export interface OrderState {
+  loading: boolean;
+  orders: Order[];
+}
 export const baseBeer: Beer = {
   name: "",
   price: 0,

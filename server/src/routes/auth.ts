@@ -9,7 +9,7 @@ import { User } from "../models/interfaces";
 const router = express.Router();
 
 router.get("/api/auth/currentuser", isSignedIn, (req, res) => {
-  console.log(req.currentUser);
+  //console.log(req.currentUser);
 
   if (!req.currentUser) {
     return res.status(400).send("not authorized");

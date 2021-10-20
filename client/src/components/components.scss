@@ -215,18 +215,33 @@ div.signInForm__inputContainer button {
 .drinkCard {
   display: inline-block;
   border: 1px solid black;
-  border-radius: 10%;
+  border-radius: 8%;
   margin: 10px;
   padding: 10px;
   background-color: $light-neon-color-pink;
+  opacity: 0.8;
+  border: 1px solid $neon-color-pink;
 }
 
 .drinkCard--made {
   background-color: $light-neon-color-yellow;
+  border: 1px solid $neon-color-yellow;
 }
 
 .drinkCard--finished {
   background-color: $light-neon-color-green;
+  border: 1px solid $neon-color-green;
+}
+
+.drinkCard__text--title {
+  cursor: pointer;
+}
+
+.drinkCard__button {
+  border-radius: 10px;
+  padding: 5px;
+  margin: 3px;
+  background-color: white;
 }
 
 .menuView {
@@ -348,6 +363,15 @@ div.signInForm__inputContainer button {
   padding: 10px;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
+}
+
+.adminOrderView {
+    width: 100%;
+  @include brickBackground();
+}
+
+.adminOrderView__subtitle {
+  color: white;
 }
 
 .menuView__orderButton {
