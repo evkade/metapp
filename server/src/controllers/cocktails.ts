@@ -1,7 +1,6 @@
 import { CocktailModelDKM, CocktailModelMKM } from '../models/cocktailSchema';
 import { Cocktail } from '../models/interfaces'
 
-
 export async function getActiveCocktails(currentPub: String) {
 
     const model = (currentPub === "DKM") ? CocktailModelDKM : CocktailModelMKM;
@@ -72,7 +71,6 @@ export async function upsertCocktail(currentpub: String, cocktail: Cocktail): Pr
         }
         //@ts-ignore
     }).clone().catch(function (err) { throw new Error("Error") })
-
     return upsertedCocktail;
 
 

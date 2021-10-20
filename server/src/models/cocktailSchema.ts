@@ -20,6 +20,10 @@ const CocktailSchema = new mongoose.Schema({
         type: [String],
         required: [true, "Please enter atleast one ingredient"],
     },
+    alcoholVolume: {
+        type: Number,
+        required: false
+    },
     description: {
         type: String,
         required: false

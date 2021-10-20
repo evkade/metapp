@@ -22,5 +22,6 @@ export interface Cocktail extends mongoose.Document {
     price: Number;
     ingredients: String[];
     description: String;
+    alcoholVolume: Number,
 
 }

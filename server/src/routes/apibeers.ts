@@ -3,7 +3,6 @@ import express, { Request, Response } from "express";
 
 const router = express.Router();
 
-
 router.post(
     "/api/apibeers",
     async (req: Request, res: Response) => {
@@ -12,6 +11,5 @@ router.post(
         else res.status(404)
     }
 );
-
 
 export { router as apiBeerRouter };
