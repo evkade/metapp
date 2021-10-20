@@ -1,27 +1,31 @@
 
 import jwt from 'jsonwebtoken';
 import { User } from '../models/interfaces'
-import { getUserByUsername, getUsers } from '../controllers/users';
+import { addUser, findUser, getUsers } from '../controllers/users';
 
 export default class AuthService {
-    public static async signIn(
-      username: string,
-      password: string
-    ): Promise<{ user: User; token: string }> {
-      const existinguser : User|undefined  = await getUserByUsername(username)
+  public static async signIn(
+    username: string,
+    password: string
+    //@ts-ignore
+  ): Promise<{ user: User | null; token: string }> {
 
-      console.log(existinguser)
-      console.log("password must be implemented",password)
+    console.log("entered sign in")
+    //@ts-ignore
+    const user: User | null = await findUser(username).catch((err) => { throw new Error("user not exist") })
+    let token = ""
 
-      const user = existinguser?existinguser:undefined;
+    console.log("auth", user)
 
-      console.log(user)
-  
-      if(user=== undefined){
-          throw new Error("user not exist")
+    if (user !== null) {
+
+      try {
+        console.log("password must be implemented", password)
+      } catch (error) {
+        throw new Error("wrong credentials")
       }
       // generate JWT
-      const token = jwt.sign(
+      token = jwt.sign(
         {
           username: user.username,
           email: user.email,
@@ -32,7 +36,8 @@ export default class AuthService {
           expiresIn: "15d"
         }
       );
-  
-      return { user, token };
     }
+
+    return { user, token };
+  }
 }

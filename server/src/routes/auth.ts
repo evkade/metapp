@@ -33,17 +33,24 @@ router.post(
     const { user, token } = await AuthService.signIn(username, password).catch(
       (error) => {
         req.session = null;
-        return res.status(400).send({ error: error });
+        throw new Error("error")
       }
     );
 
-    req.session = {
-      jwt: token,
-    };
+    if (user === null || user === undefined) {
+      console.log("Enttered inf")
+      return res.status(400).send("User does not exist");
+    }
+    else {
 
-    user.password = undefined;
-    console.log(user);
-    res.status(200).send(user);
+      req.session = {
+        jwt: token,
+      };
+
+      res.status(200).send(user);
+    }
+
+
   }
 );
 
@@ -58,9 +65,12 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     //@ts-ignore
-    const user: User = await addUser(req.body).catch(() =>
-      res.status(401).send("Error")
+    const user: User = await addUser(req.body).catch((err) =>
+      res.status(401).send("User already exists")
     );
+    if (user === null) {
+      return res.status(401).send("User already exists")
+    }
     res.status(201).send(user);
   }
 );
