@@ -4,8 +4,6 @@ import express, { NextFunction, Request, Response } from "express";
 import { ErrorException } from "../services/error-handler/errorException";
 import { ErrorCode } from "../services/error-handler/errorCode";
 
-
-
 const router = express.Router();
 
 
@@ -25,7 +23,7 @@ router.get(
                 else next(new ErrorException(ErrorCode.NotFound))
             }
         }
-        next(new ErrorException(ErrorCode.badRequest))
+        else next(new ErrorException(ErrorCode.badRequest))
     }
 );
 
@@ -45,7 +43,7 @@ router.get(
             if (beerBody && cocktailBody) res.status(200).send(Menu);
             else next(new ErrorException(ErrorCode.NotFound))
         }
-        next(new ErrorException(ErrorCode.badRequest))
+        else next(new ErrorException(ErrorCode.badRequest))
     }
 );
 

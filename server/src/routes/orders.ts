@@ -45,7 +45,7 @@ router.post(
     console.log("makeDink ", req.body);
     await makeBeverage(req.body.id, req.body.timestamp);
 
-    res.send(200);
+    res.sendStatus(200);
   }
 );
 
@@ -60,7 +60,7 @@ router.post(
     console.log("payDrink ", req.body);
     await payForBeverage(req.body.id, req.body.timestamp);
 
-    res.send(200);
+    res.sendStatus(200);
   }
 );
 

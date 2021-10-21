@@ -49,6 +49,7 @@ router.post(
       user.password = undefined
       res.status(200).send(user);
     }
+
   }
 );
 
@@ -68,9 +69,7 @@ router.post(
       next(new ErrorException(ErrorCode.UserAlreadyExists))
     }
     else {
-      user.password = undefined!
-      res.status(201).send(user);
-
+      res.status(201).send({ id: user._id, name: user.username, Credential: user.credentials, email: user.email });
     }
 
   }

@@ -22,7 +22,8 @@ router.get(
       }
       else next(new ErrorException(ErrorCode.badRequest))
     }
-    next(new ErrorException(ErrorCode.badRequest))
+    else next(new ErrorException(ErrorCode.badRequest))
+
 
 
 
@@ -41,7 +42,7 @@ router.get(
         else next(new ErrorException(ErrorCode.BeverageNotFound))
       }
     }
-    next(new ErrorException(ErrorCode.badRequest))
+    else next(new ErrorException(ErrorCode.badRequest))
 
 
   }
@@ -101,7 +102,7 @@ router.delete(
         else next(new ErrorException(ErrorCode.BeverageNotFound))
       }
     }
-    next(new ErrorException(ErrorCode.badRequest))
+    else next(new ErrorException(ErrorCode.badRequest))
   }
 );
 
