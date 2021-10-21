@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SearchBeverage } from "../views/searchBeverage";
 import usePromise from "../../hooks/usePromise";
-import { beverageTypes } from "../../constants/searchTypes";
+import { beverageTypes, searchTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
 import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
 
@@ -26,43 +26,76 @@ export const SearchBeveragePresenter = ({
   const [searchResults, setSearchResults] = useState([]);
 
   const searchBeverage = (query: string) => {
-    // if currentSearchType === API
     setLoading(true);
-    switch (customizedType) {
-      case beverageTypes.BEER:
-        setBeveragePromise(drinkModel.getBeerBasedOnName(query));
-        break;
-      case beverageTypes.COCKTAIL:
-        setBeveragePromise(drinkModel.getCocktailBasedOnName(query));
-        break;
+    if (currentSearchType === searchTypes.API) {
+      switch (customizedType) {
+        case beverageTypes.BEER:
+          setBeveragePromise(drinkModel.getBeerBasedOnName(query));
+          break;
+        case beverageTypes.COCKTAIL:
+          setBeveragePromise(drinkModel.getCocktailBasedOnName(query));
+          break;
+      }
+    } else {
+      // history
+      switch (
+        customizedType // todo: get current bar from somewhere idk where
+      ) {
+        case beverageTypes.BEER:
+          setBeveragePromise(drinkModel.getBeersHistory("dkm"));
+          break;
+        case beverageTypes.COCKTAIL:
+          setBeveragePromise(drinkModel.getCocktailsHistory("dkm"));
+          break;
+      }
     }
-    // else if currentSearchType === HISTORY do this
   };
 
   useEffect(() => {
-    if (beverageData) {
-      switch (customizedType) {
-        case beverageTypes.BEER:
-          setSearchResults(
-            beverageData.items.map((beer) =>
-              drinkModel.setAPIBeerToObject(beer)
-            )
-          );
-          break;
-        case beverageTypes.COCKTAIL:
-          setSearchResults(
-            beverageData.drinks.map((cocktail) =>
-              drinkModel.setAPICocktailToObject(cocktail)
-            )
-          );
-          break;
+    if (currentSearchType === searchTypes.API) {
+      if (beverageData) {
+        switch (customizedType) {
+          case beverageTypes.BEER:
+            setSearchResults(
+              beverageData.items.map((beer) =>
+                drinkModel.setAPIBeerToObject(beer)
+              )
+            );
+            break;
+          case beverageTypes.COCKTAIL:
+            setSearchResults(
+              beverageData.drinks.map((cocktail) =>
+                drinkModel.setAPICocktailToObject(cocktail)
+              )
+            );
+            break;
+        }
+        setBeveragePromise(null);
+        setLoading(false);
+      } else if (beverageError) {
+        // todo: visa felmeddelanden
+        setBeveragePromise(null);
+        setLoading(false);
       }
-      setBeveragePromise(null);
-      setLoading(false);
-    } else if (beverageError) {
-      // todo: visa felmeddelanden
-      setBeveragePromise(null);
-      setLoading(false);
+    } else {
+      // todo: history - vet ej om detta funkar HAHA då inget finns i history?
+      if (beverageData) {
+        console.log(beverageData);
+        switch (customizedType) {
+          case beverageTypes.BEER:
+            setSearchResults(beverageData);
+            break;
+          case beverageTypes.COCKTAIL:
+            setSearchResults(beverageData);
+            break;
+        }
+        setBeveragePromise(null);
+        setLoading(false);
+      } else if (beverageError) {
+        // todo: visa felmeddelanden
+        setBeveragePromise(null);
+        setLoading(false);
+      }
     }
   }, [beverageData, beverageError]);
 

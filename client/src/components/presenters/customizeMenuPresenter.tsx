@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { CustomizeMenu } from "../views/customizeMenu";
 import {
   addToMenu,
   editInMenu,
   removeFromMenu,
 } from "../../redux/actions/menu";
-import { CustomizeMenu } from "../views/customizeMenu";
 import { searchTypes } from "../../constants/searchTypes";
 import { beverageTypes } from "../../constants/searchTypes";
 import {
@@ -16,9 +16,11 @@ import {
   baseBeer,
 } from "../../constants/beverageObjects";
 import { beverageCardTypes } from "../../constants/beverageCardType";
+import DrinkModel from "../../model/drinkModel";
 
 // props contain menu, addToMenu, removeFromMenu, editInMenu
 // todo: add props types to all props
+const drinkModel = new DrinkModel();
 
 export const CustomizeMenuPresenter = (props) => {
   // Contains the information about which part of the menu we are customizing
@@ -36,6 +38,10 @@ export const CustomizeMenuPresenter = (props) => {
   const [beverageCardType, setBeverageCardType] = useState<string>(
     beverageCardTypes.ADMIN_SEARCH_RESULTS
   );
+
+  // useEffect(() => {
+  //   drinkModel.getBeersMenu("dkm").then(dispa);
+  // });
 
   return (
     <div className="admin-menu-container">
@@ -79,11 +85,13 @@ export const CustomizeMenuPresenter = (props) => {
 const mapStateToProps = (store) => {
   return {
     menu: store.menu,
+    currentBar: store.currentBar,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    // getHistory: (bar) => dispatch(getHistory(bar)),
     addToMenu: (beverage: Beverage) => dispatch(addToMenu(beverage)),
     removeFromMenu: (beverage: Beverage) => dispatch(removeFromMenu(beverage)),
     editInMenu: (beverage: Beverage) => dispatch(editInMenu(beverage)),

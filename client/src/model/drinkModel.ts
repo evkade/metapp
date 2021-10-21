@@ -2,6 +2,98 @@ import { Beverage, Beer, Cocktail } from "../constants/beverageObjects";
 
 // todo maybe change name of this
 export default class DrinkModel {
+  getCocktailsMenu(currentBar) {
+    const beers = fetch(
+      `http://localhost:5000/api/activecocktails?currentbar=${currentBar}`,
+      {
+        credentials: "include",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+    return beers;
+  }
+
+  getBeersMenu(currentBar) {
+    const beers = fetch(
+      `http://localhost:5000/api/activebeers?currentbar=${currentBar}`,
+      {
+        credentials: "include",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+    return beers;
+  }
+
+  getCocktailsHistory(currentBar) {
+    const beers = fetch(
+      `http://localhost:5000/api/cocktail?currentbar=${currentBar}`,
+      {
+        credentials: "include",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+    return beers;
+  }
+
+  getBeersHistory(currentBar) {
+    const beers = fetch(
+      `http://localhost:5000/api/beer?currentbar=${currentBar}`,
+      {
+        credentials: "include",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+    return beers;
+  }
+
+  addBeerInHistory(beer: Beer) {
+    // and menu
+    return;
+  }
+
+  addCocktailInHistory(cokctail: Cocktail) {
+    // and menu
+    return;
+  }
+
+  getCocktailBasedOnName(name: string): Promise<any> {
+    const cocktails = this.getFetch(
+      "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + name
+    ).then((data) => data);
+    return cocktails;
+  }
+
+  async getFetch(url: string) {
+    return await fetch(url, {
+      method: "GET",
+    }).then((response) => response.json());
+  }
+
+  getBeerBasedOnName(name: string) {
+    const beers = this.postFetch("http://localhost:5000/api/apibeers", {
+      name: name,
+    }).then((data) => data);
+    return beers;
+  }
+
+  async postFetch(url: string, data) {
+    return await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((response) => response.json());
+  }
+
   setAPIBeerToObject(apiBeer): Beer {
     const beer: Beer = {
       name: apiBeer.name,
@@ -41,35 +133,5 @@ export default class DrinkModel {
     };
 
     return cocktail;
-  }
-
-  getCocktailBasedOnName(name: string): Promise<any> {
-    const cocktails = this.getFetch(
-      "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + name
-    ).then((data) => data);
-    return cocktails;
-  }
-
-  async getFetch(url: string) {
-    return await fetch(url, {
-      method: "GET",
-    }).then((response) => response.json());
-  }
-
-  getBeerBasedOnName(name: string) {
-    const beers = this.postFetch("http://localhost:5000/api/apibeers", {
-      name: name,
-    }).then((data) => data);
-    return beers;
-  }
-
-  async postFetch(url: string, data) {
-    return await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((response) => response.json());
   }
 }
