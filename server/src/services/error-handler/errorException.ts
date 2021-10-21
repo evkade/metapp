@@ -16,7 +16,16 @@ export class ErrorException extends Error {
             case ErrorCode.badRequest:
                 this.status = 400;
                 break;
+            case ErrorCode.UserNotFound:
+                this.status = 400;
+                break;
+            case ErrorCode.UserAlreadyExists:
+                this.status = 400;
+                break;
             case ErrorCode.AsyncError:
+                this.status = 400;
+                break;
+            case ErrorCode.BeverageNotFound:
                 this.status = 400;
                 break;
             case ErrorCode.NotFound:
