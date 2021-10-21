@@ -38,7 +38,7 @@ export const AdminMenu = ({
                 editInMenu={editInMenu}
               />
             ))
-          : menu.beer.map((beverage: Beverage, index: number) => (
+          : menu.cocktail.map((beverage: Beverage, index: number) => (
               <BeverageCard
                 menu={menu}
                 beverageCardType={beverageCardTypes.ADMIN_MENU}
