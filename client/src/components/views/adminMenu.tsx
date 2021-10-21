@@ -1,8 +1,8 @@
 import React from "react";
-import "../components.scss";
 import { Beverage } from "../../constants/beverageObjects";
 import { BeverageCard } from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
+import { beverageTypes } from "../../constants/searchTypes";
 
 export const AdminMenu = ({
   setModalBeverage,
@@ -21,22 +21,37 @@ export const AdminMenu = ({
   };
 
   return (
-    <div>
-      <div className="menuView__container">
-        {menu.map((beverage: Beverage, index: number) => (
-          <BeverageCard
-            menu={menu}
-            beverageCardType={beverageCardTypes.ADMIN_MENU}
-            beverage={beverage}
-            index={index}
-            addToOrder={null}
-            removeFromOrder={null}
-            count={null}
-            openModal={() => openModal(beverage)}
-            removeFromMenu={removeFromMenu}
-            editInMenu={editInMenu}
-          />
-        ))}
+    <div className="container--centered">
+      <div className="drink-list__container">
+        {customizedType === beverageTypes.BEER
+          ? menu.beer.map((beverage: Beverage, index: number) => (
+              <BeverageCard
+                menu={menu}
+                beverageCardType={beverageCardTypes.ADMIN_MENU}
+                beverage={beverage}
+                index={index}
+                addToOrder={null}
+                removeFromOrder={null}
+                count={null}
+                openModal={() => openModal(beverage)}
+                removeFromMenu={removeFromMenu}
+                editInMenu={editInMenu}
+              />
+            ))
+          : menu.cocktail.map((beverage: Beverage, index: number) => (
+              <BeverageCard
+                menu={menu}
+                beverageCardType={beverageCardTypes.ADMIN_MENU}
+                beverage={beverage}
+                index={index}
+                addToOrder={null}
+                removeFromOrder={null}
+                count={null}
+                openModal={() => openModal(beverage)}
+                removeFromMenu={removeFromMenu}
+                editInMenu={editInMenu}
+              />
+            ))}
       </div>
     </div>
   );

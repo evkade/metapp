@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { CustomizeMenu } from "../views/customizeMenu";
 import {
   addToMenu,
   editInMenu,
   removeFromMenu,
+  getBeerHistory,
+  getCocktailHistory,
+  addToHistory,
 } from "../../redux/actions/menu";
-import { CustomizeMenu } from "../views/customizeMenu";
 import { searchTypes } from "../../constants/searchTypes";
 import { beverageTypes } from "../../constants/searchTypes";
 import {
@@ -21,6 +24,7 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 // todo: add props types to all props
 
 export const CustomizeMenuPresenter = (props) => {
+  console.log("PROPS", props);
   // Contains the information about which part of the menu we are customizing
   const [customizedType, setCustomizedType] = useState<string>(
     beverageTypes.BEER
@@ -37,11 +41,16 @@ export const CustomizeMenuPresenter = (props) => {
     beverageCardTypes.ADMIN_SEARCH_RESULTS
   );
 
+  useEffect(() => {
+    getBeerHistory();
+    getCocktailHistory();
+  });
+
   return (
-    <div className="customizeMenu">
-      <div className="customizeMenu__Tabs">
+    <div className="admin-menu-container">
+      <div className="admin-menu-container__tabs">
         <button
-          className="customizeMenu__Tab"
+          className="admin-menu-container__tab"
           type="submit"
           onClick={() => setCustomizedType(beverageTypes.BEER)}
           disabled={customizedType === beverageTypes.BEER}
@@ -49,7 +58,7 @@ export const CustomizeMenuPresenter = (props) => {
           Beer
         </button>
         <button
-          className="customizeMenu__Tab"
+          className="admin-menu-container__tab"
           type="submit"
           onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
           disabled={customizedType === beverageTypes.COCKTAIL}
@@ -62,7 +71,8 @@ export const CustomizeMenuPresenter = (props) => {
         setShowModal={setShowModal}
         modalBeverage={modalBeverage}
         setModalBeverage={setModalBeverage}
-        menu={props.menu.menu} // vet ej varför man måste skriva såhär
+        menu={props.menu}
+        history={props.history}
         addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
         removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}
         editInMenu={(beverage: Beverage) => props.editInMenu(beverage)}
@@ -77,16 +87,21 @@ export const CustomizeMenuPresenter = (props) => {
 };
 
 const mapStateToProps = (store) => {
-  console.log("mapStateToProps", store, store.state);
+  console.log("STORE", store);
   return {
-    menu: store.menu,
+    currentBar: store.currentBar,
+    menu: store.menu.menu,
+    history: store.menu.history,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  console.log("mapDispatchToProps");
   return {
+    getBeerHistory: () => dispatch(getBeerHistory()),
+    getCocktailHistory: () => dispatch(getCocktailHistory()),
+    // todo: add, remove, and edit should also do this in the database menus
     addToMenu: (beverage: Beverage) => dispatch(addToMenu(beverage)),
+    addToHistory: (beverage: Beverage) => dispatch(addToHistory(beverage)),
     removeFromMenu: (beverage: Beverage) => dispatch(removeFromMenu(beverage)),
     editInMenu: (beverage: Beverage) => dispatch(editInMenu(beverage)),
   };

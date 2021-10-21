@@ -8,10 +8,8 @@ export const NewBeverageForm = ({
 }) => {
   // todo: fix the ingredients situation
 
-  console.log("New Beverage", newBeverage);
-
   return (
-    <form>
+    <form className="beverage-form">
       <label>
         Name:
         <input

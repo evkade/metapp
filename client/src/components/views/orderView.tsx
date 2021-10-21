@@ -32,9 +32,9 @@ const OrderView = ({
   }, []);
 
   return (
-    <div className="menuView">
-      <div className="pageTitleNeon--small">Finish order</div>
-      <div className="menuView__container">
+    <div className="drink-list container--general">
+      <div className="title-neon--big">Finish order</div>
+      <div className="drink-list__container">
         {order.map((item, index) => {
           return (
             <Drink
@@ -52,20 +52,24 @@ const OrderView = ({
           );
         })}
         {submittedOrder && (
-          <div style={{ color: "white" }}>
+          <div className="drink-list__row--white">
             Your order has been sent, go to your profile to see when it's ready
             to be picked up!
           </div>
         )}
       </div>
       {order.length > 0 && !submittedOrder && (
-        <>
-          <button>Cancel</button>
-          <button onClick={() => history.push("/menu")}>
+        <div>
+          <button className="general-button--bw">Cancel</button>
+          <button
+            className="general-button--bw"
+            onClick={() => history.push("/menu")}
+          >
             Edit
             <br />
           </button>
           <button
+            className="general-button--bw"
             onClick={() => {
               finalizeOrder();
               setSubmittedOrder(true);
@@ -73,7 +77,7 @@ const OrderView = ({
           >
             Submit
           </button>
-        </>
+        </div>
       )}
     </div>
   );

@@ -1,83 +1,22 @@
-// @import "../node_modules/bootstrap/scss/bootstrap";
+@import "variables.scss";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "mixins.scss";
 
-$neon-color-pink: #ee2a7b;
-$light-neon-color-pink: #fbd0e2;
-$neon-color-green: #2aee4b;
-$light-neon-color-green: #d0fbd7;
-$neon-color-yellow: #deee2a;
-$light-neon-color-yellow: #f8fbd0;
-$dark-background: rgb(26, 26, 26);
-$barcode-font: "Libre Barcode 39 Extended Text", cursive;
-$button-entryView-font: "Pacifico", cursive;
-$general-font: "Montserrat", sans-serif;
+@include keyframe__neon--flicker(
+  flicker-cerise,
+  white,
+  white,
+  $neon-color-pink
+);
 
-@mixin keyframe-flicker(
-  $name,
-  $neon-color-close1,
-  $neon-color-close2,
-  $neon-color
-) {
-  @keyframes #{$name} {
-    0%,
-    18%,
-    22%,
-    25%,
-    53%,
-    57%,
-    100% {
-      text-shadow: 0 0 3px $neon-color-close1, 0 0 10px $neon-color-close2,
-        0 0 21px $neon-color, 0 0 42px $neon-color, 0 0 82px $neon-color,
-        0 0 92px $neon-color, 0 0 102px $neon-color, 0 0 111px $neon-color;
-      box-shadow: 0px 0px 10px 1px $neon-color;
-    }
-    20%,
-    20.1% {
-      text-shadow: none;
-      box-shadow: none;
-    }
-  }
-}
-
-@mixin centerVerticalHorizontal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin alignedGeneralFont {
-  text-align: center;
-  font-family: $general-font;
-}
-
-@mixin pageTitleFont {
-  z-index: 1;
-  color: white;
-  box-shadow: none !important;
-  @include alignedGeneralFont();
-  animation: flicker-cerise 1.5s infinite alternate;
-  flex: 0;
-}
-
-@mixin brickBackground {
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-    url("https://i.imgur.com/mnVAkgM.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
-  flex-direction: column;
-  @include centerVerticalHorizontal();
-}
-
-@include keyframe-flicker(flicker-cerise, white, white, $neon-color-pink);
-@include keyframe-flicker(
+@include keyframe__neon--flicker(
   flicker-green,
   black,
   $neon-color-green,
   $neon-color-green
 );
 
-@include keyframe-flicker(
+@include keyframe__neon--flicker(
   flicker-yellow,
   black,
   $neon-color-yellow,
@@ -96,411 +35,258 @@ body {
   flex-direction: column;
 }
 
-.signInForm {
+.user-form {
+  height: 100vh !important;
   @include alignedGeneralFont();
+  @at-root #{&}__card {
+    background: rgb(240, 240, 240);
+    background-image: linear-gradient(to left, rgb(240, 240, 240), #ffff);
+    border-radius: 6px;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 5px 5px 8px;
+    width: 90%;
+    max-width: 600px;
+    aspect-ratio: 5/3;
+    @include centerVerticalHorizontal();
+    align-items: unset;
+  }
+  @at-root #{&}__flex-row {
+    display: flex;
+    height: 30%;
+  }
+  @at-root #{&}__logo {
+    flex: 0.5;
+    @include centerVerticalHorizontal();
+  }
+  @at-root #{&}__logo img {
+    height: 100%;
+  }
+  @at-root #{&}__title {
+    flex: 0.5;
+    font-size: 40px;
+    @include centerVerticalHorizontal();
+  }
+  @at-root #{&}__errElement {
+    height: 50px;
+    padding: 20px;
+    color: red;
+  }
 }
 
-.signInForm__form {
-  background: rgb(240, 240, 240);
-  background-image: linear-gradient(to left, rgb(240, 240, 240), #ffff);
-  border-radius: 6px;
+.beverage-form {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  justify-content: center;
-  box-shadow: 5px 5px 8px;
-  width: 90%;
-  max-width: 600px;
-  aspect-ratio: 5/3;
 }
 
-.signInForm__form--flexRow {
-  display: flex;
-  height: 30%;
-  margin-bottom: 20px;
-}
-
-.signInForm__logo {
-  flex: 0.5;
-  height: 100%;
+.container--centered {
   @include centerVerticalHorizontal();
 }
 
-.signInForm__title {
-  display: flex;
-  flex: 0.5;
-  align-items: center;
-  font-size: 40px;
-}
-
-.signInForm__logo img {
-  height: 100%;
-}
-
-.signInForm__inputContainer {
+.input-container {
   flex: 1;
   display: grid;
-}
-
-div.signInForm__inputContainer input,
-div.signInForm__inputContainer button {
-  font-size: 20px;
-  padding: 5px;
   font-family: $general-font;
+  @at-root #{&}__element {
+    border: 1px solid black;
+    border-radius: 6px;
+    margin: 4px;
+    padding: 10px;
+  }
 }
 
-.signInForm__inputContainer--input {
-}
-
-.signInForm__errElement {
-  padding: 20px;
-  color: red;
-}
-
-.signInForm__successElement {
-  display: block;
-  color: white;
-}
-
-.entryView {
+.container--general {
   @include brickBackground();
 }
 
-.entryView__neonText {
-  color: white;
-  font-size: 20vw;
-  font-family: $barcode-font;
-  animation: flicker-cerise 1.5s infinite alternate;
-  box-shadow: none !important;
-  margin-bottom: 10vh;
+.entry-view {
+  height: 100vh !important;
+  @at-root #{&}__neon-text {
+    @include pageTitleFont();
+    font-size: 20vw;
+    font-family: $barcode-font;
+    margin-bottom: 10vh;
+    max-height: 300px;
+  }
+  @at-root #{&}__logos img {
+    height: 8vh;
+    margin-bottom: 2vh;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
-.entryView__buttons {
+.neon-button {
   background: rgba(0, 0, 0, 0.6);
   font-family: $button-entryView-font;
-  font-size: 4vw;
+  font-size: 5vw;
   margin: 20px;
   width: 5em;
-  padding-bottom: 2vh;
+  padding: 2vh;
   border-radius: 25px;
-}
-
-.entryView__buttons--green {
-  color: $neon-color-green;
-  border: 3px solid $neon-color-green;
-  animation: flicker-green 8s infinite alternate;
-}
-
-.entryView__buttons--yellow {
-  color: $neon-color-yellow;
-  border: 3px solid $neon-color-yellow;
-  animation: flicker-yellow 10s infinite alternate;
+  @at-root {
+    .neon-button--green {
+      color: $neon-color-green;
+      border: 3px solid $neon-color-green;
+      animation: flicker-green 8s infinite alternate;
+    }
+    .neon-button--yellow {
+      color: $neon-color-yellow;
+      border: 3px solid $neon-color-yellow;
+      animation: flicker-yellow 10s infinite alternate;
+    }
+  }
 }
 
 @media screen and (prefers-reduced-motion) {
-  .entryView__neonText,
-  .entryView__buttons--green,
-  .entryView__buttons--yellow {
+  .entry-view__neon-text,
+  .neon-button--green,
+  .neon-button--yellow {
     animation: none !important;
   }
 }
 
-.entryView__logos img {
-  height: 8vh;
-  margin-bottom: 10vh;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.drinkCard {
+.card-drink {
   display: inline-block;
   border: 1px solid black;
-  border-radius: 8%;
+  border-radius: 10%;
   margin: 10px;
   padding: 10px;
   background-color: $light-neon-color-pink;
-  opacity: 0.8;
-  border: 1px solid $neon-color-pink;
-}
-
-.drinkCard--made {
-  background-color: $light-neon-color-yellow;
-  border: 1px solid $neon-color-yellow;
-}
-
-.drinkCard--finished {
-  background-color: $light-neon-color-green;
-  border: 1px solid $neon-color-green;
-}
-
-.drinkCard__text--title {
-  cursor: pointer;
-}
-
-.drinkCard__button {
-  border-radius: 10px;
-  padding: 5px;
-  margin: 3px;
-  background-color: white;
-}
-
-.menuView {
-  width: 100%;
-  @include brickBackground();
-  width: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-    url("https://i.imgur.com/mnVAkgM.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* height: 100vh; */
-  /* height: 100%; */
-  height: 80vh;
-  flex: 1;
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.menuView__drinkCard {
-  height: 15%;
-  display: flex;
-  align-items: center;
-  margin: 10px;
-  @include alignedGeneralFont();
-}
-
-.menuView__drinkCard__image {
-  height: 100%;
-  border-radius: 6px;
-  border: 1px solid white;
-}
-
-.menuView__drinkCard__name,
-.menuView__drinkCard__pricealc {
-  flex: 1;
-  color: white;
-}
-
-.menuView__drinkCard__addToCart {
-  flex-direction: row;
-  flex: 1;
-  @include centerVerticalHorizontal();
-}
-
-.menuView__drinkCard__addToCart {
-  font-family: $general-font;
-  color: white;
-  button {
-    background: none;
-    margin-left: 5px;
-    margin-right: 5px;
-    color: white;
-    border-radius: 6px;
-    border: 1px solid white;
+  .card-drink--made {
+    background-color: $light-neon-color-yellow;
+    border: 1px solid $neon-color-yellow;
+  }
+  .card-drink--finished {
+    background-color: $light-neon-color-green;
+    border: 1px solid $neon-color-green;
+  }
+  .card-drink__text {
+    cursor: pointer;
+  }
+  .card-drink__button {
+    border-radius: 10px;
+    padding: 5px;
+    margin: 3px;
+    background-color: white;
   }
 }
 
-.menuView__container {
-  height: 80%;
-  width: 90%;
-  max-width: 800px;
-  overflow: scroll;
-  background-color: black;
-  border-radius: 6px;
+.drink-list {
+  width: 100%;
   flex: 1;
-  margin-bottom: 20px;
+  @at-root #{&}__container {
+    height: 80%;
+    width: 90%;
+    max-width: 800px;
+    overflow-y: scroll;
+    background-color: black;
+    border-radius: 6px;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+  @at-root #{&}__button {
+    z-index: 1;
+    position: absolute;
+    bottom: 30px;
+    border-radius: 6px;
+    font-family: "Pacifico", cursive;
+    font-size: 3vmax;
+    width: 70%;
+    border: 1px solid black;
+    background: rgb(240, 200, 48);
+  }
+  @at-root #{&}__row {
+    height: 15%;
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    @include alignedGeneralFont();
+  }
+  @at-root #{&}__row--white {
+    color: white;
+    text-align: center;
+  }
+  @at-root #{&}__image {
+    height: 100%;
+    border-radius: 6px;
+    border: 1px solid white;
+  }
+  @at-root #{&}__column--flexed {
+    flex: 1;
+    color: white;
+  }
+  @at-root #{&}__buttons {
+    flex-direction: row;
+    flex: 1;
+    @include centerVerticalHorizontal();
+    font-family: $general-font;
+    color: white;
+  }
+  @at-root #{&}__star {
+    color: lightgray;
+    margin-right: -20px;
+    margin-top: 5%;
+    z-index: 1;
+  }
+  @at-root #{&}__star--active {
+    color: rgb(240, 200, 48);
+  }
 }
 
-.menuView__drinkCard__star {
-  color: lightgray;
-  margin-right: -20px;
-  margin-top: 5%;
-  z-index: 1;
-}
-
-.menuView__drinkCard__star--active {
-  color: rgb(240, 200, 48);
-}
-
-.pageTitleNeon--big {
+.title-neon--big {
   font-size: 10vh;
+  animation: flicker-cerise 10s infinite alternate;
   @include pageTitleFont();
 }
 
-.pageTitleNeon--small {
+.title-neon--small {
   font-size: 7vh;
+  animation: flicker-cerise 10s infinite alternate;
   @include pageTitleFont();
 }
 
 .modal {
   position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
-  width: 500px;
-  border-radius: 12px;
-  label {
-    margin: 5px;
-  }
-  input {
-    height: 25px;
-    margin: 5px;
-    padding: 3px 5px;
-    border-radius: 5px;
-  }
-  input:hover {
-    background-color: lightgrey;
-  }
-  button {
-    border-radius: 5px;
-  }
-}
-
-.modal-header,
-.modal-footer {
-  padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.modal-title {
-  padding: 5px;
-}
-
-.adminOrderView {
-    width: 100%;
-  @include brickBackground();
-}
-
-.adminOrderView__subtitle {
-  color: white;
-}
-
-.menuView__orderButton {
-  z-index: 1;
-  position: absolute;
-  bottom: 30px;
-  border-radius: 6px;
-  font-family: "Pacifico", cursive;
-  font-size: 5vw;
-  width: 70%;
-  border: 1px solid black;
-  background: rgb(240, 200, 48);
-}
-
-.profileContainer {
-  @include brickBackground();
-}
-
-.profileContainer__block {
-  background: black;
-  color: white;
-  width: 80%;
-  height: 20%;
-  border-radius: 6px;
-  padding: 6px;
-  margin-bottom: 10px;
-}
-
-.profileContainer__block--row {
-  flex-direction: row;
   @include centerVerticalHorizontal();
-  border-bottom: 1px solid white;
-  padding: 10px 0px;
-}
-
-.profileContainer__block--column {
-  text-align: left;
-  flex: 1;
-}
-
-.profileContainer__block--column--flex {
-  flex: 1;
-  @include centerVerticalHorizontal();
-}
-
-.profileContainer__block__scrollContainer {
-  height: 80%;
-  overflow: scroll;
-}
-
-.profileContainer__block__title {
-  font-size: 20px;
-}
-
-.customizeMenu {
-  height: 70%;
-}
-
-.customizeMenu__Container {
-  display: flex;
-  height: 100vh;
-  max-width: 100%;
-}
-
-.customizeMenu__Rectangle {
-  background-color: black;
-  flex: 1 0 50%;
-  padding: 20px;
-  overflow-y: scroll;
-}
-
-.customizeMenu__Tabs {
-  margin-left: 6px;
-}
-
-.customizeMenu__Tab {
-  background: grey;
-  padding: 5px;
-  color: white;
-  display: inline-block;
-  border-radius: 3px 3px 0px 0px;
-}
-
-.customizeMenu__Tab:disabled {
-  background: black;
-}
-
-.customizeMenu__Menu {
-  border-radius: 0px 7px 7px 7px;
-  margin-left: 6px;
-  margin-right: 3px;
-}
-
-.customizeMenu__AddBeverageToMenu {
-  border-radius: 7px 7px 7px 7px;
-  margin-left: 3px;
-  margin-right: 6px;
-  input {
-    height: 30px;
-    width: 40%;
-    padding: 3px 5px;
-    margin: 5px;
-    border-radius: 5px;
+  @at-root #{&}__content {
+    width: 500px;
+    background-color: #fff;
+    label {
+      margin: 5px;
+    }
+    input {
+      height: 25px;
+      margin: 5px;
+      padding: 3px 5px;
+      border-radius: 5px;
+    }
+    input:hover {
+      background-color: lightgrey;
+    }
+    button {
+      border-radius: 5px;
+    }
   }
-  input:hover {
-    background-color: lightgrey;
+  @at-root #{&}__headfoot {
+    padding: 10px;
   }
-  select {
-    height: 30px;
-    padding: 3px 5px;
-    margin: 5px;
-    border-radius: 5px;
+  @at-root #{&}__title {
+    margin: 0;
   }
-  input,
-  select {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+  @at-root #{&}__body {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
   }
 }
 
-.customizeMenu__Button {
+.general-button--bw {
   background: none;
   margin: 5px;
   color: white;
@@ -508,22 +294,116 @@ div.signInForm__inputContainer button {
   border: 1px solid white;
 }
 
-.customizeMenu__Button:hover {
-  background-color: grey;
+.general-button--bw:disabled {
+  color: grey;
+  border: 1px solid grey;
 }
 
-.orderView__container {
-  width: 100%;
-  @include brickBackground();
+.profile-view {
+  height: 100vh !important;
 }
 
-.orderView__card {
+.info-card-drink {
   background: black;
   color: white;
   width: 80%;
-  height: 70%;
+  height: 20%;
   border-radius: 6px;
   padding: 6px;
   margin-bottom: 10px;
-  @include centerVerticalHorizontal();
+  @at-root #{&}__row {
+    flex-direction: row;
+    @include centerVerticalHorizontal();
+    border-bottom: 1px solid white;
+    padding: 10px 0px;
+  }
+  @at-root #{&}__column {
+    text-align: left;
+    flex: 1;
+  }
+  @at-root #{&}__column--flex {
+    flex: 1;
+    @include centerVerticalHorizontal();
+  }
+  @at-root #{&}__container--scroll {
+    height: 70%;
+    overflow-y: scroll;
+  }
+  @at-root #{&}__title {
+    font-size: 20px;
+  }
+}
+
+.admin-menu-container {
+  background-color: lightgrey;
+  height: 100%;
+  padding: 10px;
+  @at-root #{&}__button {
+    background: none;
+    margin: 5px;
+    color: white;
+    border-radius: 6px;
+    border: 1px solid white;
+  }
+  @at-root #{&}__button:hover {
+    background-color: grey;
+  }
+  @at-root #{&}__tabs {
+    margin-left: 6px;
+  }
+  @at-root #{&}__tab {
+    background: grey;
+    padding: 5px;
+    color: white;
+    display: inline-block;
+    border: 1px solid black;
+    margin-bottom: -1px;
+    border-radius: 3px 3px 0px 0px;
+  }
+  @at-root #{&}__tab:disabled {
+    background: black;
+  }
+  @at-root #{&}__row {
+    display: flex;
+    max-width: 100%;
+  }
+  @at-root #{&}__column {
+    background-color: black;
+    flex: 1 0 45%;
+    padding: 20px;
+    overflow-y: scroll;
+    border-radius: 7px 7px 7px 7px;
+    margin-left: 3px;
+    margin-right: 6px;
+    input {
+      height: 30px;
+      width: 100%;
+      padding: 3px 5px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid black;
+      background-color: #f5f5f5;
+    }
+    input:hover,
+    select:hover,
+    input:focus {
+      border: 1.5px solid grey;
+      background-color: grey;
+    }
+    select {
+      height: 30px;
+      padding: 3px 5px;
+      margin: 5px;
+      border-radius: 5px;
+      width: 100%;
+    }
+  }
+  @at-root #{&}__column--flex {
+    border-radius: 0px 7px 7px 7px;
+    margin-left: 6px;
+    margin-right: 3px;
+  }
+  @at-root #{&}__subtitle {
+    color: white;
+  }
 }

@@ -1,80 +1,60 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
-// import { useTransition, animated } from "react-spring";
 
 const UserSignIn = ({ userAuth, signin, signInError }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
   return (
-    <>
-      <div
-        className="signInForm entryView"
-        onKeyDown={(e) => {
-          if (e.key === "Enter") signin(username, pwd);
-        }}
-      >
-        {!userAuth && (
-          <>
-            <div id="form-login" className="signInForm__form">
-              <div className="signInForm__form--flexRow">
-                <div className="signInForm__logo">
-                  <img src={Fingerprint} />
-                </div>
-                <div className="signInForm__title">Log in</div>
+    <div
+      className="container--general user-form"
+      onKeyDown={(e) => {
+        if (e.key === "Enter") signin(username, pwd);
+      }}
+    >
+      {!userAuth && (
+        <>
+          <div className="user-form__card">
+            <div className="user-form__flex-row">
+              <div className="user-form__logo">
+                <img src={Fingerprint} />
               </div>
-              <div className="signInForm__inputContainer">
-                <input
-                  type="text"
-                  id="signInUsr"
-                  name="username"
-                  className="signInForm__inputContainer--input"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(event) => setUsername(event.target.value)}
-                ></input>
-                <input
-                  type="password"
-                  id="signInPwd"
-                  name="password"
-                  className="signInForm__form__input"
-                  placeholder="Password"
-                  value={pwd}
-                  onChange={(event) => setPwd(event.target.value)}
-                ></input>
-                <button
-                  id="signInForm__form__submit"
-                  className="signInForm__form__submit"
-                  onClick={() => {
-                    signin(username, pwd);
-                  }}
-                >
-                  Submit
-                </button>
-              </div>
+              <div className="user-form__title">Log in</div>
             </div>
-            {signInError && (
-              <div className="signInForm__errElements">
-                <div id="usr-pwdError" className="signInForm__errElement">
-                  🚫 There is no user with these credentials.
-                </div>
-              </div>
-            )}
-          </>
-        )}
-        {userAuth && (
-          <div className="signInForm--success">
-            <div
-              id="signInForm__successElement"
-              className="signInForm__successElement"
-            >
-              You're successfully logged in!
+            <div className="input-container">
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                className="input-container__element"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              ></input>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                className="input-container__element"
+                value={pwd}
+                onChange={(event) => setPwd(event.target.value)}
+              ></input>
+              <button
+                className="input-container__element"
+                onClick={() => {
+                  signin(username, pwd);
+                }}
+              >
+                Log in
+              </button>
             </div>
           </div>
-        )}
-      </div>
-    </>
+          <div className="user-form__errElement">
+            {signInError && <>🚫 There is no user with these credentials.</>}
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 

@@ -1,5 +1,4 @@
 import React from "react";
-import "../components.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
@@ -9,31 +8,29 @@ const GeneralFavoriteCard = ({
   removeFromFavorites,
 }) => {
   return (
-    <div className="profileContainer__block">
-      <div className="profileContainer__block__title">{title}</div>
-      <div className="profileContainer__block__scrollContainer">
+    <div className="info-card-drink">
+      <div className="info-card-drink__title">{title}</div>
+      <div className="info-card-drink__container--scroll">
         {favoriteObject.length > 0 ? (
           favoriteObject.map((favorite, index) => {
             const favoriteName = favorite;
             return (
-              <div className="profileContainer__block--row" key={index}>
-                <div className="profileContainer__block--column--flex">
+              <div className="info-card-drink__row" key={index}>
+                <div className="info-card-drink__column--flex">
                   <FontAwesomeIcon
                     id={`starIcon${index}`}
                     icon={faStar}
-                    className="menuView__drinkCard__star--active"
+                    className="drink-list__star--active"
                     onClick={() => removeFromFavorites(favoriteName)}
                   />
                 </div>
-                <div className="profileContainer__block--column">
-                  {favorite}
-                </div>
+                <div className="info-card-drink__column">{favorite}</div>
               </div>
             );
           })
         ) : (
-          <div className="profileContainer__block--row">
-            <div className="profileContainer__block--column--flex">
+          <div className="info-card-drink__row">
+            <div className="info-card-drink__column--flex">
               You haven't added any favorites
             </div>
           </div>

@@ -1,7 +1,4 @@
 import React from "react";
-import "../components.scss"; // behövs detta?
-import { BeverageCard } from "./beverageCard";
-import { beverageCardTypes } from "../../constants/beverageCardType";
 import { Beverage } from "../../constants/beverageObjects";
 import Drink from "./drinkView";
 
@@ -18,9 +15,9 @@ export const UserMenu = ({
   totalInfo,
 }) => {
   return (
-    <div className="menuView">
-      <div className="pageTitleNeon--big">Menu</div>
-      <div className="menuView__container">
+    <div className="drink-list container--general">
+      <div className="title-neon--big">Menu</div>
+      <div className="drink-list__container">
         {menuItems.map((item: Beverage, index: number) => {
           var orderCount: number = 0;
           const filteredOutItem = orderItems.filter(
@@ -34,10 +31,12 @@ export const UserMenu = ({
               item={item}
               key={index}
               index={index}
-              addToOrder={(name: string, cost: string) =>
-                addToOrder(name, cost)
+              addToOrder={(name: string, price: string) =>
+                addToOrder(name, price)
               }
-              removeFromOrder={(name: string) => removeFromOrder(name)}
+              removeFromOrder={(name: string, price: string) =>
+                removeFromOrder(name, price)
+              }
               count={orderCount}
               addFavorite={(name) => addToFavorites(name)}
               removeFavorite={(name) => removeFromFavorites(name)}
@@ -49,7 +48,7 @@ export const UserMenu = ({
       </div>
       {orderItems.length > 0 && (
         <button
-          className="menuView__orderButton"
+          className="drink-list__button"
           onClick={() => placeUnFinishedOrder()}
         >
           Place order <br />
