@@ -1,18 +1,18 @@
 import { findUser, verifyPassword } from "../controllers/users";
 import jwt from "jsonwebtoken";
 import { User } from "../models/interfaces";
+import { ErrorException } from "./error-handler/errorException";
+import { ErrorCode } from "./error-handler/errorCode";
 
 export default class AuthService {
   public static async signIn(
     username: string,
     password: string
-  ): Promise<{ user: User | null; token: string }> {
+  ): Promise<{ user: User | null | undefined; token: string }> {
     //@ts-ignore
-    let user: User | null = await findUser(username).catch((err) => {
-      throw new Error("user not exist");
-    });
-    let token = "";
-    if (user !== null) {
+    let user: User | null | undefined = await findUser(username)
+    let token = ""
+    if (user !== null && user !== undefined) {
       try {
         const bool = await verifyPassword(username, password);
         if (bool === true) {
@@ -29,11 +29,12 @@ export default class AuthService {
               expiresIn: "15d",
             }
           );
-        } else {
-          user = null;
+        }
+        else {
+          user = undefined; //means undefined
         }
       } catch (error) {
-        throw new Error("wrong credentials");
+        Promise.reject(new ErrorException(ErrorCode.WrongCredentials))
       }
     }
 
