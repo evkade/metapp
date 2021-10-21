@@ -98,13 +98,10 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
 
   const finishedOrdersCard = (drink) => {
     return (
-      <Card key={drink._id} className="card-drink card-drink--finished">
-       {drink.order.map((b) => (
-          <span key={drink.order.id} className="card-drink__text">
-            {" "}
-            {b.quantity} {b.beverage},
-          </span>
-        ))}
+      <Card key={drink.id} className="card-drink card-drink--finished">
+        <span key={drink.order.id} className="card-drink__text">
+          {drink.order.map((b) => b.quantity + " " + b.beverage + ", ")}
+        </span>
         <p className="card-drink__text">Ordered by: {drink.user}</p>
         <p className="card-drink__text">Made at: {drink.timeMade}</p>
         <p className="card-drink__text">Paid at: {drink.timePaid}</p>
@@ -114,7 +111,7 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
 
   const getBeverageDetail = (beverage) => {
     return (
-      <div>
+      <div key={beverage.id}>
         <h4>{beverage.quantity + " " + beverage.beverage}</h4>
       </div>
     );

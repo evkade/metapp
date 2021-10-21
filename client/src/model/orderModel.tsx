@@ -3,8 +3,9 @@ import {
   setOrders,
   orderMade,
   orderPaid,
+  setUserOrders,
 } from "../redux/actions/orders";
-import { setUserOrders } from "../redux/actions/user";
+import { orderPlaced } from "../redux/actions/user";
 
 export default class OrderModel {
   getTimeStamp() {
@@ -12,7 +13,11 @@ export default class OrderModel {
     const hour = today.getHours();
     const minute = today.getMinutes();
 
-    return (hour < 10 ? "0" + hour : hour) + ":" + (minute < 10 ? "0" : minute);
+    return (
+      (hour < 10 ? "0" + hour : hour) +
+      ":" +
+      (minute < 10 ? "0" + minute : minute)
+    );
   }
 
   getDateStamp() {
@@ -31,7 +36,6 @@ export default class OrderModel {
   }
 
   getOrders(currentBar) {
-    console.log(currentBar);
     return (dispatch) => {
       dispatch(fetchRequest());
       fetch(`http://localhost:5000/api/orders?currentbar=${currentBar}`, {
@@ -43,7 +47,7 @@ export default class OrderModel {
     };
   }
 
-  makeOrder(orderId) {
+  makeOrder(orderId, socket) {
     const time = this.getTimeStamp();
     return (dispatch) => {
       dispatch(fetchRequest());
@@ -56,14 +60,16 @@ export default class OrderModel {
         body: JSON.stringify({ id: orderId, timestamp: time }),
       })
         .then((res) => {
-          if (res.ok) dispatch(orderMade(orderId, time));
-          else throw new Error("Something went wrong");
+          if (res.ok) {
+            dispatch(orderMade(orderId, time));
+            socket.emit("made", { id: orderId, timestamp: time });
+          } else throw new Error("Something went wrong");
         })
         .catch((err) => console.log(err));
     };
   }
 
-  payForOrder(orderId) {
+  payForOrder(orderId, socket) {
     const time = this.getTimeStamp();
     return (dispatch) => {
       dispatch(fetchRequest());
@@ -76,14 +82,16 @@ export default class OrderModel {
         body: JSON.stringify({ id: orderId, timestamp: time }),
       })
         .then((res) => {
-          if (res.ok) dispatch(orderPaid(orderId, time));
-          else throw new Error("Something went wrong");
+          if (res.ok) {
+            dispatch(orderPaid(orderId, time));
+            socket.emit("paid", { id: orderId, timestamp: time });
+          } else throw new Error("Something went wrong");
         })
         .catch((err) => console.log(err));
     };
   }
 
-  placeOrder(order, userId, currentBar) {
+  placeOrder(order, userId, currentBar, socket) {
     const date = this.getDateStamp();
     const time = this.getTimeStamp();
     const finalOrder = {
@@ -95,14 +103,25 @@ export default class OrderModel {
       }),
     };
 
-    fetch("http://localhost:5000/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(finalOrder),
-    });
+    return (dispatch) => {
+      fetch("http://localhost:5000/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(finalOrder),
+      })
+        .then((res) => {
+          if (res.ok) return res.json();
+          else throw new Error("Could not place order");
+        })
+        .then((result) => {
+          dispatch(orderPlaced());
+          socket.emit("orderPlaced", result);
+        })
+        .catch((err: Error) => console.log(err));
+    };
   }
 
   getUserOrders(userId) {

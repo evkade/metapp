@@ -47,10 +47,8 @@ const userReducer = (state = initialState, action) => {
         favorites: newFilterArray,
       };
     case "ORDER_PLACED":
-      const newOrderList = [...state.userOrders, state.unfinishedOrder];
       return {
         ...state,
-        userOrders: newOrderList,
         unfinishedOrder: {},
       };
     case "ORDER_QUEUED":
@@ -60,11 +58,6 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         unfinishedOrder: newUnFinishedOrder,
-      };
-    case "SET_USER_ORDERS":
-      return {
-        ...state,
-        userOrders: action.payload,
       };
     default:
       return state;

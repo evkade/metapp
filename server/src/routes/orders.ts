@@ -24,9 +24,9 @@ router.post("/api/orders", isSignedIn, async (req: Request, res: Response) => {
   if (!req.currentUser) return res.send(400);
   console.log("addOrder ", req.body);
 
-  await addOrder(req.body);
+  const order = await addOrder(req.body);
 
-  res.send(200);
+  res.status(200).send(order);
 });
 
 router.post(

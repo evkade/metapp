@@ -14,8 +14,6 @@ export async function getOrders(bar: string | any): Promise<Order> {
     (yesterday.getMonth() + 1) +
     "-" +
     yesterday.getDate();
-
-  console.log("2021-10-21" === todayString);
   // @ts-ignore
   const data = await OrderModel.find(
     { bar: bar, date: { $gte: yesterdayString, $lte: todayString } },
@@ -28,8 +26,6 @@ export async function getOrders(bar: string | any): Promise<Order> {
     .populate("user")
     .catch((err: Error) => console.log(err));
 
-  console.log(data);
-
   return data.map((order: Order) => {
     return {
       id: order._id,
@@ -41,6 +37,7 @@ export async function getOrders(bar: string | any): Promise<Order> {
       timeMade: order.timeMade,
       paid: order.paid,
       timePaid: order.timePaid,
+      bar: order.bar,
     };
   });
 }
@@ -55,7 +52,6 @@ export async function makeBeverage(
   drinkId: String,
   timeMade: String
 ): Promise<void> {
-  console.log(drinkId, timeMade);
   await OrderModel.findByIdAndUpdate(
     drinkId,
     { made: true, timeMade: timeMade },
@@ -90,7 +86,18 @@ export async function getUserOrders(userId: String | any) {
     .clone()
     .catch((err: Error) => console.log(err));
 
-  console.log(data);
-
-  return data;
+  return data.map((order: any) => {
+    return {
+      id: order._id,
+      order: order.order,
+      date: order.date,
+      // @ts-ignore
+      user: order.user,
+      made: order.made,
+      timeMade: order.timeMade,
+      paid: order.paid,
+      timePaid: order.timePaid,
+      bar: order.bar,
+    };
+  });
 }

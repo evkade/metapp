@@ -9,10 +9,12 @@ import OrderModel from "../../model/orderModel";
 const ordermodel = new OrderModel();
 
 export const OrderPresenter = ({
+  socket,
   unfinishedOrder,
   userId,
   currentBar,
   orders,
+  orderPlaced,
   addFavorite,
   removeFavorite,
   favorites,
@@ -106,7 +108,7 @@ export const OrderPresenter = ({
   };
 
   const finalizeOrder = () => {
-    ordermodel.placeOrder(unfinishedOrder, userId, currentBar);
+    orderPlaced(unfinishedOrder, userId, currentBar, socket);
   };
 
   return (
@@ -135,6 +137,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    orderPlaced: (order, userId, currentbar, socket) =>
+      dispatch(ordermodel.placeOrder(order, userId, currentbar, socket)),
     addFavorite: (name) => dispatch(addFavorite(name)),
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     unfinishedOrderPlaced: (beverages) =>

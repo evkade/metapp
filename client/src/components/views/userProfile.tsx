@@ -57,7 +57,7 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
               .sort((a, b) => {
                 return +new Date(a.date) - +new Date(b.date);
               })
-              .map((order, index) => {
+              .map((order) => {
                 return (
                   <div className="info-card-drink__row" key={order.id}>
                     <div className="info-card-drink__column--flex">
