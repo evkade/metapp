@@ -72,7 +72,7 @@ const Drink = ({
             <span> {count} </span>
             <button
               className="general-button--bw"
-              onClick={() => removeFromOrder(item.name)}
+              onClick={() => removeFromOrder(item.name, item.price)}
             >
               -
             </button>

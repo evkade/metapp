@@ -31,10 +31,12 @@ export const UserMenu = ({
               item={item}
               key={index}
               index={index}
-              addToOrder={(name: string, cost: string) =>
-                addToOrder(name, cost)
+              addToOrder={(name: string, price: string) =>
+                addToOrder(name, price)
               }
-              removeFromOrder={(name: string) => removeFromOrder(name)}
+              removeFromOrder={(name: string, price: string) =>
+                removeFromOrder(name, price)
+              }
               count={orderCount}
               addFavorite={(name) => addToFavorites(name)}
               removeFavorite={(name) => removeFromFavorites(name)}
