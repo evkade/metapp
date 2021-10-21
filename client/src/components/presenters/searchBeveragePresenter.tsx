@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SearchBeverage } from "../views/searchBeverage";
 import usePromise from "../../hooks/usePromise";
-import { beverageTypes } from "../../constants/searchTypes";
+import { beverageTypes, searchTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
 import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
 
@@ -14,6 +14,7 @@ export const SearchBeveragePresenter = ({
   setNewBeverage,
   setShowModal,
   menu,
+  history,
   addToMenu,
   customizedType,
   currentSearchType,
@@ -26,45 +27,74 @@ export const SearchBeveragePresenter = ({
   const [searchResults, setSearchResults] = useState([]);
 
   const searchBeverage = (query: string) => {
-    // if currentSearchType === API
     setLoading(true);
-    switch (customizedType) {
-      case beverageTypes.BEER:
-        setBeveragePromise(drinkModel.getBeerBasedOnName(query));
-        break;
-      case beverageTypes.COCKTAIL:
-        setBeveragePromise(drinkModel.getCocktailBasedOnName(query));
-        break;
-    }
-    // else if currentSearchType === HISTORY do this
-  };
-
-  useEffect(() => {
-    if (beverageData) {
+    if (currentSearchType === searchTypes.API) {
+      switch (customizedType) {
+        case beverageTypes.BEER:
+          setBeveragePromise(drinkModel.getBeerBasedOnName(query));
+          break;
+        case beverageTypes.COCKTAIL:
+          setBeveragePromise(drinkModel.getCocktailBasedOnName(query));
+          break;
+      }
+    } else {
+      // history
       switch (customizedType) {
         case beverageTypes.BEER:
           setSearchResults(
-            beverageData.items.map((beer) =>
-              drinkModel.setAPIBeerToObject(beer)
-            )
+            history.beer.filter((beer) => beer.name.contains(query))
           );
           break;
         case beverageTypes.COCKTAIL:
           setSearchResults(
-            beverageData.drinks.map((cocktail) =>
-              drinkModel.setAPICocktailToObject(cocktail)
-            )
+            history.cocktail.filter((cocktail) => cocktail.name.contains(query))
           );
           break;
       }
-      setBeveragePromise(null);
-      setLoading(false);
-    } else if (beverageError) {
-      // todo: visa felmeddelanden
-      setBeveragePromise(null);
-      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (currentSearchType === searchTypes.API) {
+      if (beverageData) {
+        switch (customizedType) {
+          case beverageTypes.BEER:
+            setSearchResults(
+              beverageData.items.map((beer) =>
+                drinkModel.setAPIBeerToObject(beer)
+              )
+            );
+            break;
+          case beverageTypes.COCKTAIL:
+            setSearchResults(
+              beverageData.drinks.map((cocktail) =>
+                drinkModel.setAPICocktailToObject(cocktail)
+              )
+            );
+            break;
+        }
+        setBeveragePromise(null);
+        setLoading(false);
+      } else if (beverageError) {
+        // todo: visa felmeddelanden
+        setBeveragePromise(null);
+        setLoading(false);
+      }
     }
   }, [beverageData, beverageError]);
+
+  useEffect(() => {
+    if (currentSearchType === searchTypes.HISTORY) {
+      switch (customizedType) {
+        case beverageTypes.BEER:
+          setSearchResults(history.beer);
+          break;
+        case beverageTypes.COCKTAIL:
+          setSearchResults(history.cocktail);
+          break;
+      }
+    }
+  }, []);
 
   return (
     <div>
