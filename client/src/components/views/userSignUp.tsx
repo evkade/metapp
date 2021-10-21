@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import "../components.scss";
 import Fingerprint from "../images/fingerprint.png";
-// import { useTransition, animated } from "react-spring";
 
 const UserSignIn = ({ userAuth, checkUserAuth }) => {
   const [username, setUsername] = useState("");
@@ -10,64 +8,44 @@ const UserSignIn = ({ userAuth, checkUserAuth }) => {
 
   return (
     <>
-      <div className="signInForm entryView">
+      <div className="user-form container--general">
         {!userAuth && (
           <>
-            <div id="form-login" className="signInForm__form">
-              <div className="signInForm__form--flexRow">
-                <div className="signInForm__logo">
+            <div className="user-form__card">
+              <div className="user-form__flex-row">
+                <div className="user-form__logo">
                   <img src={Fingerprint} />
                 </div>
-                <div className="signInForm__title">Sign up</div>
+                <div className="user-form__title">Sign up</div>
               </div>
-              <div className="signInForm__inputContainer">
+              <div className="input-container">
                 <input
                   type="text"
-                  id="signInUsr"
                   name="username"
-                  className="signInForm__inputContainer--input"
+                  className="input-container__element"
                   placeholder="Username"
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
                 ></input>
                 <input
                   type="password"
-                  id="signInPwd"
                   name="password"
-                  className="signInForm__form__input"
+                  className="input-container__element"
                   placeholder="Password"
                   value={pwd}
                   onChange={(event) => setPwd(event.target.value)}
                 ></input>
                 <button
-                  id="signInForm__form__submit"
-                  className="signInForm__form__submit"
+                  className="input-container__element"
                   onClick={() => {
                     checkUserAuth(username, pwd);
                   }}
                 >
-                  Submit
+                  Create account
                 </button>
               </div>
             </div>
-            {/* {signInError && (
-              <div className="signInForm__errElements">
-                <div id="usr-pwdError" className="signInForm__errElement">
-                  🚫 There is no user with these credentials.
-                </div>
-              </div>
-            )} */}
           </>
-        )}
-        {userAuth && (
-          <div className="signInForm--success">
-            <div
-              id="signInForm__successElement"
-              className="signInForm__successElement"
-            >
-              You have successfully signed up!
-            </div>
-          </div>
         )}
       </div>
     </>

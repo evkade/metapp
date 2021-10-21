@@ -10,15 +10,12 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { connect } from "react-redux";
 import { RootState } from "redux/rootReducer";
 
 import EntryView from "./components/views/entryView";
 
 import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
 import HandleUserSignIn from "./components/presenters/handleUserSignIn";
-import DrinkModel from "./model/drinkModel";
-import { searchTypes } from "./constants/searchTypes";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
 import MainNavbar from "./components/views/mainNavbar";
@@ -27,8 +24,6 @@ import userMenuPresenter from "./components/presenters/userMenuPresenter";
 import { useSelector } from "react-redux";
 import userProfilePresenter from "./components/presenters/userProfilePresenter";
 import orderPresenter from "./components/presenters/orderPresenter";
-
-const drinkModel = new DrinkModel();
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => (
   <Route

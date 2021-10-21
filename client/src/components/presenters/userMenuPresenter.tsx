@@ -133,16 +133,24 @@ export const UserMenuPresenter = ({
     },
   ];
 
-  const addToTotalInfo = (cost) => {
-    const newTotalCost = totalInfo.totalCost + cost;
-    const newTotalCount = totalInfo.totalCount + 1;
+  const addOrRemoveTotalInfo = (cost, action) => {
+    var newTotalCost = 0;
+    var newTotalCount = 0;
+    if (action === "add") {
+      newTotalCost = totalInfo.totalCost + cost;
+      newTotalCount = totalInfo.totalCount + 1;
+    }
+    if (action === "remove") {
+      newTotalCost = totalInfo.totalCost - cost;
+      newTotalCount = totalInfo.totalCount - 1;
+    }
     const newTotalInfo = { totalCost: newTotalCost, totalCount: newTotalCount };
     setTotalInfo(newTotalInfo);
   };
 
   const addToOrder = (name, price) => {
     setOrderItems([...orderItems, { name, price, count: 1 }]);
-    addToTotalInfo(price);
+    addOrRemoveTotalInfo(price, "add");
   };
 
   const increaseOrderCount = (name, price) => {
@@ -158,7 +166,7 @@ export const UserMenuPresenter = ({
       }
     });
     setOrderItems(modifiedOrderList);
-    addToTotalInfo(price);
+    addOrRemoveTotalInfo(price, "add");
   };
 
   const addOrIncreaseOrder = (name, price) => {
@@ -170,7 +178,7 @@ export const UserMenuPresenter = ({
     }
   };
 
-  const removeFromOrder = (name) => {
+  const removeFromOrder = (name, price) => {
     const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
         return {
@@ -185,6 +193,7 @@ export const UserMenuPresenter = ({
       (item) => item.count !== 0
     );
     setOrderItems(modifiedOrderListWithoutZeros);
+    addOrRemoveTotalInfo(price, "remove");
   };
 
   const placeUnFinishedOrder = () => {
@@ -206,7 +215,7 @@ export const UserMenuPresenter = ({
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
       menuItems={menuItems}
       addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
-      removeFromOrder={(name) => removeFromOrder(name)}
+      removeFromOrder={(name, price) => removeFromOrder(name, price)}
       placeUnFinishedOrder={() => placeUnFinishedOrder()}
       addToFavorites={(name) => addToFavorites(name)}
       removeFromFavorites={(name) => removeFromFavorites(name)}

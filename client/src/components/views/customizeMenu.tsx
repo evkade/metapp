@@ -9,6 +9,7 @@ export const CustomizeMenu = ({
   setShowModal,
   modalBeverage,
   setModalBeverage,
+  history,
   menu,
   addToMenu,
   removeFromMenu,
@@ -20,8 +21,8 @@ export const CustomizeMenu = ({
   setBeverageCardType,
 }) => {
   return (
-    <div className="customizeMenu__Container">
-      <div className="customizeMenu__Rectangle customizeMenu__Menu">
+    <div className="admin-menu-container__row">
+      <div className="admin-menu-container__column admin-menu-container__column--flex">
         <AdminMenuPresenter
           setShowModal={setShowModal}
           setModalBeverage={setModalBeverage}
@@ -32,11 +33,12 @@ export const CustomizeMenu = ({
           setBeverageCardType={setBeverageCardType}
         />
       </div>
-      <div className="customizeMenu__Rectangle customizeMenu__AddBeverageToMenu">
+      <div className="admin-menu-container__column">
         <AddBeverageToMenuPresenter
           setShowModal={setShowModal}
           setModalBeverage={setModalBeverage}
           menu={menu}
+          history={history}
           addToMenu={(beverage: Beverage) => addToMenu(beverage)}
           customizedType={customizedType}
           currentSearchType={currentSearchType}

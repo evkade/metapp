@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import "../components.scss";
 import GeneralFavoriteCard from "./generalFavoriteCard";
 import mkmlogo from "../images/mkm_logo.png";
 import dkmlogo from "../images/dkm_logo.png";
@@ -13,16 +11,16 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
   }, [favorites]);
 
   return (
-    <div className="profileContainer">
-      <div className="pageTitleNeon--big">{username}</div>
-      <div className="profileContainer__block">
-        <div className="profileContaine__block__title">Current orders</div>
-        <div className="profileContainer__block__scrollContainer">
+    <div className="profile-view container--general">
+      <div className="title-neon--big">{username}</div>
+      <div className="info-card-drink">
+        <div className="info-card-drink__title">Current orders</div>
+        <div className="info-card-drink__container--scroll">
           {orders
             .filter((o) => !o.paid)
             .map((order) => (
-              <div className="profileContainer__block--row" key={order.id}>
-                <div className="profileContainer__block--column">
+              <div className="info-card-drink__row" key={order.id}>
+                <div className="info-card-drink__column--flex">
                   {/** TODO make modular */}
                   {order.order.map((orderDetail, index) => {
                     const length = order.order.length;
@@ -43,16 +41,16 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
                     }
                   })}
                 </div>
-                <div className="profileContainer__block--column--flex">
+                <div className="info-card-drink__column--flex">
                   {order.made ? "PICK UP!" : "NOT READY"}
                 </div>
               </div>
             ))}
         </div>
       </div>
-      <div className="profileContainer__block">
-        <div className="profileContainer__block__title">Previous Orders</div>
-        <div className="profileContainer__block__scrollContainer">
+      <div className="info-card-drink">
+        <div className="info-card-drink__title">Previous Orders</div>
+        <div className="info-card-drink__container--scroll">
           {orders && orders.length > 0 ? (
             orders
               .filter((o) => o.made && o.paid)
@@ -61,18 +59,18 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
               })
               .map((order, index) => {
                 return (
-                  <div className="profileContainer__block--row" key={order.id}>
-                    <div className="profileContainer__block--column">
+                  <div className="info-card-drink__row" key={order.id}>
+                    <div className="info-card-drink__column--flex">
                       {order.bar === "dkm" ? (
                         <img src={dkmlogo} width="20px" />
                       ) : (
                         <img src={mkmlogo} width="20px" />
                       )}
                     </div>
-                    <div className="profileContainer__block--column">
+                    <div className="info-card-drink__column--flex">
                       <b>{order.date}</b>
                     </div>
-                    <div className="profileContainer__block--column">
+                    <div className="info-card-drink__column--flex">
                       {order.order.map((orderDetail, index) => {
                         const length = order.order.length;
                         if (index === length - 1) {
@@ -96,8 +94,8 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
                 );
               })
           ) : (
-            <div className="profileContainer__block--row">
-              <div className="profileContainer__block--column--flex">
+            <div className="info-card-drink__row">
+              <div className="info-card-drink__column--flex">
                 You haven't placed any orders.
               </div>
             </div>
@@ -114,7 +112,6 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
         favoriteObject={favorites}
         removeFromFavorites={(name) => removeFromFavorites(name)}
       />
-      <div style={{ height: "400px" }}></div>
     </div>
   );
 };

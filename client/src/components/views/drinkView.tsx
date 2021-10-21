@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import "../components.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PlaceholderImage from "../images/stockphoto_placeholder.jpg";
@@ -23,25 +22,23 @@ const Drink = ({
 
   const activateStar = (name, isAlreadyInList) => {
     const star = document.getElementById(`starIcon${index}`);
-    const isStarActive = star.classList.contains(
-      "menuView__drinkCard__star--active"
-    );
+    const isStarActive = star.classList.contains("drink-list__star--active");
     if (!isStarActive && !isAlreadyInList) {
-      star.classList.add("menuView__drinkCard__star--active");
+      star.classList.add("drink-list__star--active");
       addFavorite(name);
     } else if (!isStarActive && isAlreadyInList) {
-      star.classList.add("menuView__drinkCard__star--active");
+      star.classList.add("drink-list__star--active");
     } else {
-      star.classList.remove("menuView__drinkCard__star--active");
+      star.classList.remove("drink-list__star--active");
       removeFavorite(name);
     }
   };
 
   return (
-    <div key={index} className="menuView__drinkCard">
+    <div key={index} className="drink-list__row">
       {menuDisplay && (
         <>
-          <div className="menuView__drinkCard__star">
+          <div className="drink-list__star">
             <FontAwesomeIcon
               id={`starIcon${index}`}
               icon={faStar}
@@ -49,11 +46,11 @@ const Drink = ({
               onClick={() => activateStar(item.name, false)}
             />
           </div>
-          <img src={PlaceholderImage} className="menuView__drinkCard__image" />
+          <img src={PlaceholderImage} className="drink-list__image" />
         </>
       )}
-      <div className="menuView__drinkCard__name">{item.name}</div>
-      <div className="menuView__drinkCard__pricealc">
+      <div className="drink-list__column--flexed">{item.name}</div>
+      <div className="drink-list__column--flexed">
         {item.price} SEK{" "}
         {menuDisplay && (
           <>
@@ -62,13 +59,23 @@ const Drink = ({
           </>
         )}
       </div>
-      <div className="menuView__drinkCard__addToCart">
+      <div className="drink-list__buttons">
         {menuDisplay ? (
           <>
             {" "}
-            <button onClick={() => addToOrder(item.name, item.price)}>+</button>
+            <button
+              className="general-button--bw"
+              onClick={() => addToOrder(item.name, item.price)}
+            >
+              +
+            </button>
             <span> {count} </span>
-            <button onClick={() => removeFromOrder(item.name)}>-</button>
+            <button
+              className="general-button--bw"
+              onClick={() => removeFromOrder(item.name, item.price)}
+            >
+              -
+            </button>
           </>
         ) : (
           <span>{count} st</span>
