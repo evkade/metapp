@@ -14,35 +14,46 @@ const orderReducer = (state = initalState, action) => {
       };
     case "ORDER_MADE":
       const orderMadeTmp = state.orders.filter(
-        (o) => o._id === action.payload.id
+        (o) => o.id === action.payload.id
       )[0];
-      console.log(orderMadeTmp);
       orderMadeTmp.made = true;
       orderMadeTmp.timeMade = action.payload.timeMade;
-      const rest = state.orders.filter((o) => o._id !== action.payload.id);
+      const rest = state.orders.filter((o) => o.id !== action.payload.id);
       return {
-        orders: [...rest, orderMadeTmp],
-        loading: false,
         ...state,
+        orders: [orderMadeTmp, ...rest],
+        loading: false,
       };
     case "ORDER_PAID":
       const orderPaidTmp = state.orders.filter(
-        (o) => o._id === action.payload.id
+        (o) => o.id === action.payload.id
       )[0];
       orderPaidTmp.paid = true;
       orderPaidTmp.timePaid = action.payload.timePaid;
-      const rest1 = state.orders.filter((o) => o._id !== action.payload.id);
+      const rest1 = state.orders.filter((o) => o.id !== action.payload.id);
       return {
-        orders: [orderPaidTmp, rest1],
-        loading: false,
         ...state,
+        orders: [orderPaidTmp, ...rest1],
+        loading: false,
       };
     case "SET_ORDERS":
-      console.log(action.payload);
       return {
         ...state,
         loading: false,
         orders: action.payload.orders,
+      };
+    case "ADD_NEW_ORDER":
+      var tmp = action.payload;
+      tmp.id = action.payload._id;
+      tmp._id = null;
+      return {
+        ...state,
+        orders: [...state.orders, tmp],
+      };
+    case "SET_USER_ORDERS":
+      return {
+        ...state,
+        orders: action.payload,
       };
     default:
       return state;

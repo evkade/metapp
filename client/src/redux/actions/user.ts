@@ -22,11 +22,8 @@ export const removeFavorite = (name) => ({
   payload: name,
 });
 
-export const orderPlaced = (orderBeverage) => ({
+export const orderPlaced = () => ({
   type: "ORDER_PLACED",
-  payload: {
-    beverage: orderBeverage,
-  },
 });
 
 export const unfinishedOrderPlaced = (orderBeverage) => ({

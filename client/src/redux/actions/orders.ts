@@ -22,3 +22,13 @@ export const setOrders = (orders) => ({
   type: "SET_ORDERS",
   payload: orders,
 });
+
+export const addNewOrder = (order) => ({
+  type: "ADD_NEW_ORDER",
+  payload: order,
+});
+
+export const setUserOrders = (orders) => ({
+  type: "SET_USER_ORDERS",
+  payload: orders,
+});

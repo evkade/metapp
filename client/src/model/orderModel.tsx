@@ -3,11 +3,39 @@ import {
   setOrders,
   orderMade,
   orderPaid,
+  setUserOrders,
 } from "../redux/actions/orders";
+import { orderPlaced } from "../redux/actions/user";
 
 export default class OrderModel {
+  getTimeStamp() {
+    const today = new Date();
+    const hour = today.getHours();
+    const minute = today.getMinutes();
+
+    return (
+      (hour < 10 ? "0" + hour : hour) +
+      ":" +
+      (minute < 10 ? "0" + minute : minute)
+    );
+  }
+
+  getDateStamp() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    return (
+      year +
+      "-" +
+      (month < 10 ? "0" + month : month) +
+      "-" +
+      (day < 10 ? "0" + day : day)
+    );
+  }
+
   getOrders(currentBar) {
-    console.log(currentBar);
     return (dispatch) => {
       dispatch(fetchRequest());
       fetch(`http://localhost:5000/api/orders?currentbar=${currentBar}`, {
@@ -19,7 +47,8 @@ export default class OrderModel {
     };
   }
 
-  makeOrder(orderId, timestamp) {
+  makeOrder(orderId, socket) {
+    const time = this.getTimeStamp();
     return (dispatch) => {
       dispatch(fetchRequest());
       fetch("http://localhost:5000/api/orders/make", {
@@ -28,17 +57,20 @@ export default class OrderModel {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ id: orderId, timestamp: timestamp }),
+        body: JSON.stringify({ id: orderId, timestamp: time }),
       })
         .then((res) => {
-          if (res.ok) dispatch(orderMade(orderId, timestamp));
-          else throw new Error("Something went wrong");
+          if (res.ok) {
+            dispatch(orderMade(orderId, time));
+            socket.emit("made", { id: orderId, timestamp: time });
+          } else throw new Error("Something went wrong");
         })
         .catch((err) => console.log(err));
     };
   }
 
-  payForOrder(orderId, timestamp) {
+  payForOrder(orderId, socket) {
+    const time = this.getTimeStamp();
     return (dispatch) => {
       dispatch(fetchRequest());
       fetch("http://localhost:5000/api/orders/pay", {
@@ -47,12 +79,59 @@ export default class OrderModel {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ id: orderId, timestamp: timestamp }),
+        body: JSON.stringify({ id: orderId, timestamp: time }),
       })
         .then((res) => {
-          if (res.ok) dispatch(orderPaid(orderId, timestamp));
-          else throw new Error("Something went wrong");
+          if (res.ok) {
+            dispatch(orderPaid(orderId, time));
+            socket.emit("paid", { id: orderId, timestamp: time });
+          } else throw new Error("Something went wrong");
         })
+        .catch((err) => console.log(err));
+    };
+  }
+
+  placeOrder(order, userId, currentBar, socket) {
+    const date = this.getDateStamp();
+    const time = this.getTimeStamp();
+    const finalOrder = {
+      user: userId,
+      date: date,
+      bar: currentBar,
+      order: order.order.map((o) => {
+        return { beverage: o.name, quantity: o.count };
+      }),
+    };
+
+    return (dispatch) => {
+      fetch("http://localhost:5000/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(finalOrder),
+      })
+        .then((res) => {
+          if (res.ok) return res.json();
+          else throw new Error("Could not place order");
+        })
+        .then((result) => {
+          dispatch(orderPlaced());
+          socket.emit("orderPlaced", result);
+        })
+        .catch((err: Error) => console.log(err));
+    };
+  }
+
+  getUserOrders(userId) {
+    return (dispatch) => {
+      dispatch(fetchRequest());
+      fetch(`http://localhost:5000/api/orders/user?id=${userId}`, {
+        credentials: "include",
+      })
+        .then((data) => data.json())
+        .then((orders) => dispatch(setUserOrders(orders)))
         .catch((err) => console.log(err));
     };
   }
