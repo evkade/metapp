@@ -6,6 +6,7 @@ export const AddBeverageToMenuPresenter = ({
   setModalBeverage,
   setShowModal,
   menu,
+  history,
   addToMenu,
   customizedType,
   currentSearchType,
@@ -18,6 +19,7 @@ export const AddBeverageToMenuPresenter = ({
         setModalBeverage={setModalBeverage}
         setShowModal={setShowModal}
         menu={menu}
+        history={history}
         addToMenu={(beverage: Beverage) => addToMenu(beverage)}
         currentSearchType={currentSearchType}
         setCurrentSearchType={setCurrentSearchType}

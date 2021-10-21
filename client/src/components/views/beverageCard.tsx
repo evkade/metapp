@@ -60,9 +60,15 @@ export const BeverageCard = ({
             <button
               className="general-button--bw"
               onClick={() => openModal(beverage)}
-              disabled={menu.some(
-                (menuItem: Beverage) => menuItem.name === beverage.name
-              )}
+              disabled={
+                menu.beer.some(
+                  // todo: this is a weird solution.
+                  (menuItem: Beverage) => menuItem.name === beverage.name
+                ) ||
+                menu.cocktail.some(
+                  (menuItem: Beverage) => menuItem.name === beverage.name
+                )
+              }
             >
               {" "}
               Add to Menu{" "}
