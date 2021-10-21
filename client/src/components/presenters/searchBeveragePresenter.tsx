@@ -14,6 +14,7 @@ export const SearchBeveragePresenter = ({
   setNewBeverage,
   setShowModal,
   menu,
+  history,
   addToMenu,
   customizedType,
   currentSearchType,
@@ -38,14 +39,16 @@ export const SearchBeveragePresenter = ({
       }
     } else {
       // history
-      switch (
-        customizedType // todo: get current bar from somewhere idk where
-      ) {
+      switch (customizedType) {
         case beverageTypes.BEER:
-          setBeveragePromise(drinkModel.getBeersHistory("dkm"));
+          setSearchResults(
+            history.beer.filter((beer) => beer.name.contains(query))
+          );
           break;
         case beverageTypes.COCKTAIL:
-          setBeveragePromise(drinkModel.getCocktailsHistory("dkm"));
+          setSearchResults(
+            history.cocktail.filter((cocktail) => cocktail.name.contains(query))
+          );
           break;
       }
     }
@@ -77,27 +80,21 @@ export const SearchBeveragePresenter = ({
         setBeveragePromise(null);
         setLoading(false);
       }
-    } else {
-      // todo: history - vet ej om detta funkar HAHA då inget finns i history?
-      if (beverageData) {
-        console.log(beverageData);
-        switch (customizedType) {
-          case beverageTypes.BEER:
-            setSearchResults(beverageData);
-            break;
-          case beverageTypes.COCKTAIL:
-            setSearchResults(beverageData);
-            break;
-        }
-        setBeveragePromise(null);
-        setLoading(false);
-      } else if (beverageError) {
-        // todo: visa felmeddelanden
-        setBeveragePromise(null);
-        setLoading(false);
-      }
     }
   }, [beverageData, beverageError]);
+
+  useEffect(() => {
+    if (currentSearchType === searchTypes.HISTORY) {
+      switch (customizedType) {
+        case beverageTypes.BEER:
+          setSearchResults(history.beer);
+          break;
+        case beverageTypes.COCKTAIL:
+          setSearchResults(history.cocktail);
+          break;
+      }
+    }
+  }, []);
 
   return (
     <div>

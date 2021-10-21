@@ -2,48 +2,48 @@ import { Beverage, Beer, Cocktail } from "../constants/beverageObjects";
 
 // todo maybe change name of this
 export default class DrinkModel {
-  getCocktailsMenu(currentBar) {
-    const beers = fetch(
-      `http://localhost:5000/api/activecocktails?currentbar=${currentBar}`,
-      {
-        credentials: "include",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-    return beers;
-  }
+  // getCocktailsMenu(currentBar) {
+  //   const beers = fetch(
+  //     `http://localhost:5000/api/activecocktails?currentbar=${currentBar}`,
+  //     {
+  //       credentials: "include",
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((data) => data)
+  //     .catch((err) => console.log(err));
+  //   return beers;
+  // }
 
-  getBeersMenu(currentBar) {
-    const beers = fetch(
-      `http://localhost:5000/api/activebeers?currentbar=${currentBar}`,
-      {
-        credentials: "include",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-    return beers;
-  }
+  // getBeersMenu(currentBar) {
+  //   const beers = fetch(
+  //     `http://localhost:5000/api/activebeers?currentbar=${currentBar}`,
+  //     {
+  //       credentials: "include",
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((data) => data)
+  //     .catch((err) => console.log(err));
+  //   return beers;
+  // }
 
-  getCocktailsHistory(currentBar) {
-    const beers = fetch(
-      `http://localhost:5000/api/cocktail?currentbar=${currentBar}`,
-      {
-        credentials: "include",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-    return beers;
-  }
-
-  getBeersHistory(currentBar) {
+  getBeerHistory(currentBar) {
     const beers = fetch(
       `http://localhost:5000/api/beer?currentbar=${currentBar}`,
+      {
+        credentials: "include",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+    return beers;
+  }
+
+  getCocktailHistory(currentBar) {
+    const beers = fetch(
+      `http://localhost:5000/api/cocktail?currentbar=${currentBar}`,
       {
         credentials: "include",
       }

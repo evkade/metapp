@@ -5,6 +5,9 @@ import {
   addToMenu,
   editInMenu,
   removeFromMenu,
+  getBeerHistory,
+  getCocktailHistory,
+  addToHistory,
 } from "../../redux/actions/menu";
 import { searchTypes } from "../../constants/searchTypes";
 import { beverageTypes } from "../../constants/searchTypes";
@@ -23,6 +26,7 @@ import DrinkModel from "../../model/drinkModel";
 const drinkModel = new DrinkModel();
 
 export const CustomizeMenuPresenter = (props) => {
+  console.log("PROPS", props);
   // Contains the information about which part of the menu we are customizing
   const [customizedType, setCustomizedType] = useState<string>(
     beverageTypes.BEER
@@ -39,9 +43,10 @@ export const CustomizeMenuPresenter = (props) => {
     beverageCardTypes.ADMIN_SEARCH_RESULTS
   );
 
-  // useEffect(() => {
-  //   drinkModel.getBeersMenu("dkm").then(dispa);
-  // });
+  useEffect(() => {
+    getBeerHistory();
+    getCocktailHistory();
+  });
 
   return (
     <div className="admin-menu-container">
@@ -68,7 +73,8 @@ export const CustomizeMenuPresenter = (props) => {
         setShowModal={setShowModal}
         modalBeverage={modalBeverage}
         setModalBeverage={setModalBeverage}
-        menu={props.menu.menu} // vet ej varför man måste skriva såhär
+        menu={props.menu}
+        history={props.history}
         addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
         removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}
         editInMenu={(beverage: Beverage) => props.editInMenu(beverage)}
@@ -83,16 +89,21 @@ export const CustomizeMenuPresenter = (props) => {
 };
 
 const mapStateToProps = (store) => {
+  console.log("STORE", store);
   return {
-    menu: store.menu,
     currentBar: store.currentBar,
+    menu: store.menu.menu,
+    history: store.menu.history,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // getHistory: (bar) => dispatch(getHistory(bar)),
+    getBeerHistory: () => dispatch(getBeerHistory()),
+    getCocktailHistory: () => dispatch(getCocktailHistory()),
+    // add, remove, and edit should also do this in the database menus
     addToMenu: (beverage: Beverage) => dispatch(addToMenu(beverage)),
+    addToHistory: (beverage: Beverage) => dispatch(addToHistory(beverage)),
     removeFromMenu: (beverage: Beverage) => dispatch(removeFromMenu(beverage)),
     editInMenu: (beverage: Beverage) => dispatch(editInMenu(beverage)),
   };
