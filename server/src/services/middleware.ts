@@ -28,7 +28,7 @@ export const isSignedIn = (
       process.env.JWT_KEY!
     ) as any;
     req.currentUser = payload;
-  } catch (err) { console.log('error') }
+  } catch (err) { next(err) }
 
   next();
 };

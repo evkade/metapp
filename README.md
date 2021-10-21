@@ -12,15 +12,18 @@ The features has three types of users:
 The goal of the app is that users can order beverage from the app, and rate them. 
 Admins will be able to see orders, and statistics over ratings of the beverages. 
 
+**Required installation**
+- Node (recommended v14.18.0)
+- Npm (recommended v8.0.0)
+
+❗ **Developers Note:** One must have the secret config file `server/src/secret.config.env` to ensure that authentication works properly. Also do not forget to npm install after cloning ❗
+
+
 ## Run client
 1. Go to folder `client` 
 2. Run `npm install`
 3. Run `npm run dev` 
 4. Go to http://localhost:8080/ in your browser
-
-## Client Tests
-1. Go to folder `client` 
-2. Run `npm test`
 
 
 ## Run server
@@ -50,6 +53,16 @@ To startup all images in a detached state
 $ docker-compose up -d
 ``` 
 
+To shutdown all images
+```bash
+$ docker-compose down
+``` 
+
+If something is wrong with the containers (reset docker configuration and remove all cache)
+```
+docker system prune
+``` 
+
 List all active docker containers
 ```bash
 docker ps
@@ -70,6 +83,8 @@ Example: Run npm tests
 ```
 docker exec -it <name of container> npm run test
 ``` 
-docker-compose down
 
+If something is wrong with the containers
+```
 docker system prune
+``` 

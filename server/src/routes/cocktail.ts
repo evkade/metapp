@@ -19,7 +19,7 @@ router.get(
       if (body) res.status(200).send(body);
       else next(new ErrorException(ErrorCode.NotFound))
     }
-    next(new ErrorException(ErrorCode.badRequest))
+    else next(new ErrorException(ErrorCode.badRequest))
 
 
   }
@@ -35,7 +35,7 @@ router.get(
       if (body) res.status(200).send(body);
       else next(new ErrorException(ErrorCode.NotFound))
     }
-    next(new ErrorException(ErrorCode.badRequest))
+    else next(new ErrorException(ErrorCode.badRequest))
 
 
   }
@@ -59,7 +59,7 @@ router.post(
         else return next(new ErrorException(ErrorCode.NotFound))
       }
     }
-    next(new ErrorException(ErrorCode.badRequest))
+    else next(new ErrorException(ErrorCode.badRequest))
   });
 
 router.get(
@@ -74,7 +74,7 @@ router.get(
         else next(new ErrorException(ErrorCode.BeverageNotFound))
       }
     }
-    next(new ErrorException(ErrorCode.badRequest))
+    else next(new ErrorException(ErrorCode.badRequest))
   });
 
 router.delete(
@@ -94,7 +94,7 @@ router.delete(
         else next(new ErrorException(ErrorCode.BeverageNotFound))
       }
     }
-    next(new ErrorException(ErrorCode.badRequest))
+    else next(new ErrorException(ErrorCode.badRequest))
   });
 
 //failsafe if ID is forgotten
