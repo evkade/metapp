@@ -19,11 +19,9 @@ import {
   baseBeer,
 } from "../../constants/beverageObjects";
 import { beverageCardTypes } from "../../constants/beverageCardType";
-import DrinkModel from "../../model/drinkModel";
 
 // props contain menu, addToMenu, removeFromMenu, editInMenu
 // todo: add props types to all props
-const drinkModel = new DrinkModel();
 
 export const CustomizeMenuPresenter = (props) => {
   console.log("PROPS", props);
@@ -101,7 +99,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getBeerHistory: () => dispatch(getBeerHistory()),
     getCocktailHistory: () => dispatch(getCocktailHistory()),
-    // add, remove, and edit should also do this in the database menus
+    // todo: add, remove, and edit should also do this in the database menus
     addToMenu: (beverage: Beverage) => dispatch(addToMenu(beverage)),
     addToHistory: (beverage: Beverage) => dispatch(addToHistory(beverage)),
     removeFromMenu: (beverage: Beverage) => dispatch(removeFromMenu(beverage)),
