@@ -2,13 +2,18 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
-const UserSignIn = ({ userAuth, checkUserAuth, signUpError }) => {
+const UserSignIn = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
   return (
     <>
-      <div className="user-form container--general">
+      <div
+        className="user-form container--general"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") checkUserAuth(username, pwd);
+        }}
+      >
         {!userAuth && (
           <>
             <div className="user-form__card">
@@ -40,8 +45,9 @@ const UserSignIn = ({ userAuth, checkUserAuth, signUpError }) => {
                   onClick={() => {
                     checkUserAuth(username, pwd);
                   }}
+                  disabled={signUpButton !== "Create Account"}
                 >
-                  Create account
+                  {signUpButton}
                 </button>
               </div>
             </div>
