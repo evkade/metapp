@@ -11,11 +11,9 @@ import { ErrorCode } from "../services/error-handler/errorCode";
 const router = express.Router();
 
 router.get("/api/auth/currentuser", isSignedIn, (req: Request, res: Response, next: NextFunction) => {
-
   if (!req.currentUser) {
     next(new ErrorException(ErrorCode.Unauthenticated))
   }
-
   return res.status(200).send({ currentUser: req.currentUser });
 });
 
@@ -48,9 +46,7 @@ router.post(
       req.session = {
         jwt: token,
       };
-
       user.password = undefined
-
       res.status(200).send(user);
     }
   }
@@ -59,7 +55,7 @@ router.post(
 router.post(
   "/api/auth/signup",
   [
-    body("email").isEmail().withMessage("Email must be valid"),
+    body("username").trim().isLength({ min: 3, max: 20 }),
     body("password")
       .trim()
       .isLength({ min: 8, max: 20 })
@@ -74,6 +70,7 @@ router.post(
     else {
       user.password = undefined!
       res.status(201).send(user);
+
     }
 
   }

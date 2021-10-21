@@ -35,6 +35,7 @@ const HandleUserSignIn = ({ user, signIn }) => {
       })
       .then((user) => {
         signIn({
+          _id: user._id,
           username: user.username,
           isAdmin: user.credentials === "admin",
         });

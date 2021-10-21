@@ -4,6 +4,7 @@ import {
   addOrder,
   makeBeverage,
   payForBeverage,
+  getUserOrders,
 } from "../controllers/orders";
 import { isSignedIn } from "../services/middleware";
 import { ErrorException } from "../services/error-handler/errorException";
@@ -19,8 +20,6 @@ router.get("/api/orders", isSignedIn, async (req: Request, res: Response, next: 
   console.log(req.query.currentbar);
   const orders = await getOrders(req.query.currentbar);
 
-  console.log(orders);
-
   res.status(200).send({ orders: orders });
 });
 
@@ -30,9 +29,9 @@ router.post("/api/orders", isSignedIn, async (req: Request, res: Response, next:
   }
   console.log("addOrder ", req.body);
 
-  await addOrder(req.body);
+  const order = await addOrder(req.body);
 
-  res.send(200);
+  res.status(200).send(order);
 });
 
 router.post(
@@ -62,6 +61,19 @@ router.post(
     await payForBeverage(req.body.id, req.body.timestamp);
 
     res.send(200);
+  }
+);
+
+router.get(
+  "/api/orders/user",
+  isSignedIn,
+  async (req: Request, res: Response) => {
+    if (!req.currentUser) return res.send(400);
+
+    console.log(req.query.id);
+    const orders = await getUserOrders(req.query.id);
+
+    res.status(200).send(orders);
   }
 );
 

@@ -4,9 +4,15 @@ import { connect } from "react-redux";
 import { orderPlaced, unfinishedOrderPlaced } from "../../redux/actions/user";
 import { addFavorite } from "../../redux/actions/user";
 import { removeFavorite } from "../../redux/actions/user";
+import OrderModel from "../../model/orderModel";
+
+const ordermodel = new OrderModel();
 
 export const OrderPresenter = ({
+  socket,
   unfinishedOrder,
+  userId,
+  currentBar,
   orders,
   orderPlaced,
   addFavorite,
@@ -102,7 +108,7 @@ export const OrderPresenter = ({
   };
 
   const finalizeOrder = () => {
-    orderPlaced(unfinishedOrder);
+    orderPlaced(unfinishedOrder, userId, currentBar, socket);
   };
 
   return (
@@ -124,12 +130,15 @@ export const OrderPresenter = ({
 const mapStateToProps = (store) => {
   return {
     unfinishedOrder: store.user.unfinishedOrder,
+    userId: store.user.userId,
+    currentBar: store.menu.currentBar,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    orderPlaced: (beverages) => dispatch(orderPlaced(beverages)),
+    orderPlaced: (order, userId, currentbar, socket) =>
+      dispatch(ordermodel.placeOrder(order, userId, currentbar, socket)),
     addFavorite: (name) => dispatch(addFavorite(name)),
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     unfinishedOrderPlaced: (beverages) =>

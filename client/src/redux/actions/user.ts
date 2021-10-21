@@ -3,6 +3,11 @@ export const signIn = (user) => ({
   payload: user,
 });
 
+export const signUp = (user) => ({
+  type: "SIGN_UP",
+  payload: user,
+});
+
 export const signOut = () => ({
   type: "SIGN_OUT",
 });
@@ -17,11 +22,8 @@ export const removeFavorite = (name) => ({
   payload: name,
 });
 
-export const orderPlaced = (orderBeverage) => ({
+export const orderPlaced = () => ({
   type: "ORDER_PLACED",
-  payload: {
-    beverage: orderBeverage,
-  },
 });
 
 export const unfinishedOrderPlaced = (orderBeverage) => ({

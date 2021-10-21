@@ -48,6 +48,7 @@ export const CustomizeMenuPresenter = (props) => {
 
   return (
     <div className="admin-menu-container">
+      <div className="title-neon--small">Customize menu</div>
       <div className="admin-menu-container__tabs">
         <button
           className="admin-menu-container__tab"

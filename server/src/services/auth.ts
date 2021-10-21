@@ -14,18 +14,19 @@ export default class AuthService {
     let token = ""
     if (user !== null && user !== undefined) {
       try {
-        const bool = await verifyPassword(username, password)
+        const bool = await verifyPassword(username, password);
         if (bool === true) {
           // generate JWT
           token = jwt.sign(
             {
+              _id: user._id,
               username: user.username,
               email: user.email,
-              isAdmin: user.credentials === 'admin'
+              isAdmin: user.credentials === "admin",
             },
             process.env.JWT_KEY!, // secret jwt key to sign and verify
             {
-              expiresIn: "15d"
+              expiresIn: "15d",
             }
           );
         }
@@ -36,6 +37,8 @@ export default class AuthService {
         Promise.reject(new ErrorException(ErrorCode.WrongCredentials))
       }
     }
+
+    console.log(user);
 
     return { user, token };
   }

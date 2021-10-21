@@ -92,7 +92,7 @@ export const BeverageCard = ({
       case beverageCardTypes.ADMIN_MENU:
         return (
           beverage.price +
-          " SEK | " +
+          " SEK " +
           (beverageType === beverageTypes.BEER
             ? beverage.alcoholPercentage + "%"
             : beverage.alcoholVolume + " cl")
@@ -110,8 +110,12 @@ export const BeverageCard = ({
   return (
     <div key={index} className="drink-list__row">
       <div className="drink-list__column">{beverage.name}</div>
-      <div className="drink-list__column--flexed">{information()}</div>
-      <div className="drink-list__column--flexed">{buttons()}</div>
+      <div className="drink-list__column drink-list__column--flexed">
+        {information()}
+      </div>
+      <div className="drink-list__column drink-list__column--flexed">
+        {buttons()}
+      </div>
     </div>
   );
 };

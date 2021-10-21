@@ -14,7 +14,7 @@ export const AddBeverageToMenuPresenter = ({
   setBeverageCardType,
 }) => {
   return (
-    <div>
+    <>
       <AddBeverageToMenu
         setModalBeverage={setModalBeverage}
         setShowModal={setShowModal}
@@ -26,6 +26,6 @@ export const AddBeverageToMenuPresenter = ({
         searchedBeverageType={customizedType}
         setBeverageCardType={setBeverageCardType}
       />
-    </div>
+    </>
   );
 };

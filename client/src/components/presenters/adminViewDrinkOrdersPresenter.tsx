@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { addNewOrder } from "../../redux/actions/orders";
 import OrderModel from "../../model/orderModel";
 import { AdminViewDrinkOrder } from "../views/adminViewDrinkOrder";
 
@@ -11,29 +12,29 @@ const AdminViewDrinkOrdersPresenter = ({
   makeOrder,
   payForOrder,
   getOrders,
+  newOrder,
   menu,
 }) => {
   useEffect(() => {
     getOrders(menu.currentBar);
-  }, []);
 
-  const getTimeStamp = () => {
-    const today = new Date();
-    const hour = today.getHours();
-    const minute = today.getMinutes();
-    return (
-      (hour < 10 ? "0" + hour : "" + hour) +
-      ":" +
-      (minute < 10 ? "0" + minute : "" + minute)
-    );
-  };
+    const addNewOrder = (order) => {
+      newOrder(order);
+    };
+
+    socket.on("orderPlaced", addNewOrder);
+
+    return () => {
+      socket.off("orderPlaced", addNewOrder);
+    };
+  }, [menu.currentBar]);
 
   const pay = (id) => {
-    payForOrder(id, getTimeStamp());
+    payForOrder(id, socket);
   };
 
   const make = (id) => {
-    makeOrder(id, getTimeStamp());
+    makeOrder(id, socket);
   };
 
   return (
@@ -54,10 +55,10 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeOrder: (id, timeMade) => dispatch(ordermodel.makeOrder(id, timeMade)),
-    payForOrder: (id, timePaid) =>
-      dispatch(ordermodel.payForOrder(id, timePaid)),
+    makeOrder: (id, socket) => dispatch(ordermodel.makeOrder(id, socket)),
+    payForOrder: (id, socket) => dispatch(ordermodel.payForOrder(id, socket)),
     getOrders: (currentBar) => dispatch(ordermodel.getOrders(currentBar)),
+    newOrder: (order) => dispatch(addNewOrder(order)),
   };
 };
 
