@@ -1,11 +1,13 @@
 import { Beverage } from "../../constants/beverageObjects";
 
-export const getBeerHistory = () => ({
+export const getBeerHistory = (history) => ({
   type: "GET_BEER_HISTORY",
+  payload: history,
 });
 
-export const getCocktailHistory = () => ({
+export const getCocktailHistory = (history) => ({
   type: "GET_COCKTAIL_HISTORY",
+  payload: history,
 });
 
 export const addToMenu = (beverage: Beverage) => ({

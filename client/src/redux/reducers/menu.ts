@@ -13,13 +13,12 @@ const drinkModel = new DrinkModel();
 // todo: the menu reducer and the history reducer should maybe be separated ? and also not sure that currentBar should be here
 
 const menuReducer = (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
     case "GET_BEER_HISTORY":
-      const databaseBeerHistory = drinkModel.getBeerHistory(state.currentBar);
-      console.log("databasebeerhistory", databaseBeerHistory);
       return {
         ...state,
-        history: { ...history, beer: databaseBeerHistory },
+        history: { ...history, beer: action.payload },
       };
 
     case "GET_COCKTAIL_HISTORY":

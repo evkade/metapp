@@ -22,6 +22,9 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 
 // props contain menu, addToMenu, removeFromMenu, editInMenu
 // todo: add props types to all props
+import DrinkModel from "../../model/drinkModel";
+
+const drinkModel = new DrinkModel();
 
 export const CustomizeMenuPresenter = (props) => {
   console.log("PROPS", props);
@@ -42,9 +45,11 @@ export const CustomizeMenuPresenter = (props) => {
   );
 
   useEffect(() => {
-    getBeerHistory();
-    getCocktailHistory();
-  });
+    console.log("USEEFFECT");
+    drinkModel.getBeerHistory(props.currentBar);
+    drinkModel.getCocktailHistory(props.currentBar);
+    // also set cocktail
+  }, []);
 
   return (
     <div className="admin-menu-container">
@@ -90,7 +95,7 @@ export const CustomizeMenuPresenter = (props) => {
 const mapStateToProps = (store) => {
   console.log("STORE", store);
   return {
-    currentBar: store.currentBar,
+    currentBar: store.menu.currentBar,
     menu: store.menu.menu,
     history: store.menu.history,
   };
@@ -98,8 +103,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getBeerHistory: () => dispatch(getBeerHistory()),
-    getCocktailHistory: () => dispatch(getCocktailHistory()),
+    // getBeerHistory: () => dispatch(getBeerHistory()),
+    // getCocktailHistory: () => dispatch(getCocktailHistory()),
     // todo: add, remove, and edit should also do this in the database menus
     addToMenu: (beverage: Beverage) => dispatch(addToMenu(beverage)),
     addToHistory: (beverage: Beverage) => dispatch(addToHistory(beverage)),

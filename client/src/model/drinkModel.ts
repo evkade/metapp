@@ -1,4 +1,5 @@
 import { Beverage, Beer, Cocktail } from "../constants/beverageObjects";
+import { getBeerHistory } from "../redux/actions/menu";
 
 // todo maybe change name of this
 export default class DrinkModel {
@@ -29,29 +30,74 @@ export default class DrinkModel {
   // }
 
   getBeerHistory(currentBar) {
-    const beers = fetch(
-      `http://localhost:5000/api/beer?currentbar=${currentBar}`,
-      {
-        credentials: "include",
-      }
+    return (dispatch) =>
+      fetch("http://localhost:5000/api/beer?currentbar=" + currentBar)
+        .then((response) => response.json())
+        .then((data) =>
+          dispatch(
+            getBeerHistory(
+              data.map((databaseBeer) => ({
+                name: databaseBeer.name,
+                type: databaseBeer.description,
+                volume: 0, // finns ej sparad i databasen
+                alcoholPercentage: databaseBeer.percentage,
+                price: databaseBeer.price,
+              }))
+            )
+          )
+        )
+        .catch((err) => console.log(err));
+  }
+
+  async getCocktailHistory(currentBar) {
+    const beers = await fetch(
+      "http://localhost:5000/api/cocktail?currentbar=" + currentBar
     )
       .then((response) => response.json())
-      .then((data) => data)
+      .then((data) => console.log(data))
       .catch((err) => console.log(err));
     return beers;
   }
 
-  getCocktailHistory(currentBar) {
-    const beers = fetch(
-      `http://localhost:5000/api/cocktail?currentbar=${currentBar}`,
-      {
-        credentials: "include",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-    return beers;
+  addDatabaseBeerToHistory(apiBeer): Beer {
+    const beer: Beer = {
+      name: apiBeer.name,
+      type: apiBeer.type,
+      volume: apiBeer.volume_ml,
+      alcoholPercentage: apiBeer.alcohol_vol,
+      price: +apiBeer.price_sek * 1.25,
+    };
+    return beer;
+  }
+
+  addDatabaseCocktailToHistory(apiCocktail): Cocktail {
+    console.log(apiCocktail);
+    var hashNumber: number = 1;
+    var ingredientHash: string = "strIngredient" + hashNumber.toString();
+    var measureHash: string = "strMeasure" + hashNumber.toString();
+    var ingredientList: string[] = [];
+    var ingredientMeasuresList: string[] = [];
+
+    while (
+      apiCocktail[ingredientHash] !== null &&
+      apiCocktail[measureHash] !== null
+    ) {
+      ingredientList = [...ingredientList, apiCocktail[ingredientHash]];
+      ingredientMeasuresList = [...ingredientList, apiCocktail[measureHash]];
+      hashNumber++;
+      var ingredientHash: string = "strIngredient" + hashNumber.toString();
+      var measureHash: string = "strMeasure" + hashNumber.toString();
+    }
+
+    const cocktail: Cocktail = {
+      name: apiCocktail.strDrink,
+      price: 0,
+      alcoholVolume: 0,
+      ingredientList: ingredientList,
+      ingredientMeasuresList: ingredientMeasuresList,
+    };
+
+    return cocktail;
   }
 
   // todo harmonisera beverage objects med databasen
@@ -65,13 +111,13 @@ export default class DrinkModel {
       description: beer.type,
     };
 
-    console.log(currentBar);
-    console.log(JSON.stringify(beerObjectForAPI));
-
     const response = await fetch(
       "http://localhost:5000/api/beer?currentbar=" + currentBar,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(beerObjectForAPI),
         credentials: "include",
       }
@@ -103,6 +149,7 @@ export default class DrinkModel {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(cocktailbjectForAPI),
+        credentials: "include",
       }
     );
     response.json().then((data) => {
