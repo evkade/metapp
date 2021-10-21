@@ -11,7 +11,6 @@ export const UserProfilePresenter = ({
   orders,
   user,
   userId,
-  orderPlaced,
   favorites,
   removeFavorite,
   getOrders,
@@ -45,7 +44,6 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    orderPlaced: (beverage) => dispatch(orderPlaced(beverage)),
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     getOrders: (userId) => dispatch(ordermodel.getUserOrders(userId)),
   };

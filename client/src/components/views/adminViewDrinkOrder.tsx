@@ -8,7 +8,7 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
   const singleBeverageCard = (drink) => {
     return (
       <Card
-        key={drink._id}
+        key={drink.id}
         className={"drinkCard" + (drink.made ? " drinkCard--made" : "")}
         id={"drinkCard#" + drink.id}
       >
@@ -32,14 +32,14 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
         <button
           className="drinkCard__button"
           disabled={drink.made}
-          onClick={() => drinkMade(drink._id)}
+          onClick={() => drinkMade(drink.id)}
         >
           Ready to serve
         </button>
         <button
           className="drinkCard__button"
           disabled={!drink.made}
-          onClick={() => drinkPaid(drink._id)}
+          onClick={() => drinkPaid(drink.id)}
         >
           Paid
         </button>
@@ -73,14 +73,14 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
         <button
           className="drinkCard__button"
           disabled={drink.made}
-          onClick={() => drinkMade(drink._id)}
+          onClick={() => drinkMade(drink.id)}
         >
           Ready to serve
         </button>
         <button
           className="drinkCard__button"
           disabled={!drink.made}
-          onClick={() => drinkPaid(drink._id)}
+          onClick={() => drinkPaid(drink.id)}
         >
           Paid
         </button>
@@ -90,7 +90,7 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
 
   const finishedOrdersCard = (drink) => {
     return (
-      <Card key={drink._id} className="drinkCard drinkCard--finished">
+      <Card key={drink.id} className="drinkCard drinkCard--finished">
         {drink.order.map((b) => (
           <span key={drink.order.id} className="drinkCard__text">
             {" "}

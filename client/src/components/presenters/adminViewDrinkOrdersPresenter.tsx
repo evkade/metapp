@@ -22,6 +22,7 @@ const AdminViewDrinkOrdersPresenter = ({
   };
 
   const make = (id) => {
+    console.log(id);
     makeOrder(id);
   };
 

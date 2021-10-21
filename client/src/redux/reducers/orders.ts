@@ -14,11 +14,11 @@ const orderReducer = (state = initalState, action) => {
       };
     case "ORDER_MADE":
       const orderMadeTmp = state.orders.filter(
-        (o) => o._id === action.payload.id
+        (o) => o.id === action.payload.id
       )[0];
       orderMadeTmp.made = true;
       orderMadeTmp.timeMade = action.payload.timeMade;
-      const rest = state.orders.filter((o) => o._id !== action.payload.id);
+      const rest = state.orders.filter((o) => o.id !== action.payload.id);
       return {
         ...state,
         orders: [...rest, orderMadeTmp],
@@ -26,11 +26,11 @@ const orderReducer = (state = initalState, action) => {
       };
     case "ORDER_PAID":
       const orderPaidTmp = state.orders.filter(
-        (o) => o._id === action.payload.id
+        (o) => o.id === action.payload.id
       )[0];
       orderPaidTmp.paid = true;
       orderPaidTmp.timePaid = action.payload.timePaid;
-      const rest1 = state.orders.filter((o) => o._id !== action.payload.id);
+      const rest1 = state.orders.filter((o) => o.id !== action.payload.id);
       return {
         ...state,
         orders: [...rest1, orderPaidTmp],

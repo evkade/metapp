@@ -11,7 +11,6 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SIGN_IN":
-      console.log(action.payload);
       return {
         ...state,
         loggedIn: true,
@@ -56,7 +55,6 @@ const userReducer = (state = initialState, action) => {
         unfinishedOrder: newUnFinishedOrder,
       };
     case "SET_USER_ORDERS":
-      console.log(action.payload);
       return {
         ...state,
         userOrders: action.payload,

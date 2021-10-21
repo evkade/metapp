@@ -13,13 +13,11 @@ export const OrderPresenter = ({
   userId,
   currentBar,
   orders,
-  orderPlaced,
   addFavorite,
   removeFavorite,
   favorites,
   unfinishedOrderPlaced,
 }) => {
-  console.log(unfinishedOrder);
   const [orderItems, setOrderItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
@@ -108,7 +106,6 @@ export const OrderPresenter = ({
   };
 
   const finalizeOrder = () => {
-    //orderPlaced(unfinishedOrder);
     ordermodel.placeOrder(unfinishedOrder, userId, currentBar);
   };
 
@@ -138,7 +135,6 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    orderPlaced: (beverages) => dispatch(orderPlaced(beverages)),
     addFavorite: (name) => dispatch(addFavorite(name)),
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     unfinishedOrderPlaced: (beverages) =>

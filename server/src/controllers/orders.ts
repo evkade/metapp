@@ -3,9 +3,22 @@ import { Order } from "../models/interfaces";
 
 export async function getOrders(bar: string | any): Promise<Order> {
   const today = new Date();
+  var yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
+
+  const todayString =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  const yesterdayString =
+    yesterday.getFullYear() +
+    "-" +
+    (yesterday.getMonth() + 1) +
+    "-" +
+    yesterday.getDate();
+
+  console.log("2021-10-21" === todayString);
   // @ts-ignore
   const data = await OrderModel.find(
-    { bar: bar, date: { $gte: "2021-10-21", $lt: "2021-10-22" } },
+    { bar: bar, date: { $gte: yesterdayString, $lte: todayString } },
     (err: Error, orders: Object | any) => {
       if (err) throw new Error("");
       else return orders;
@@ -42,6 +55,7 @@ export async function makeBeverage(
   drinkId: String,
   timeMade: String
 ): Promise<void> {
+  console.log(drinkId, timeMade);
   await OrderModel.findByIdAndUpdate(
     drinkId,
     { made: true, timeMade: timeMade },
@@ -75,6 +89,8 @@ export async function getUserOrders(userId: String | any) {
   }) // @ts-ignore
     .clone()
     .catch((err: Error) => console.log(err));
+
+  console.log(data);
 
   return data;
 }

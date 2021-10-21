@@ -25,7 +25,7 @@ interface OrderDetail {
 }
 
 export interface Order {
-  _id: String;
+  id: String;
   user: String;
   order: Array<OrderDetail>;
   made?: boolean;
