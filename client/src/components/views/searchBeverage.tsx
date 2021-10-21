@@ -37,7 +37,7 @@ export const SearchBeverage = ({
   };
 
   return (
-    <div className="admin-menu-container__column">
+    <>
       <input
         id="searchQuery"
         value={query}
@@ -72,7 +72,7 @@ export const SearchBeverage = ({
       >
         Create
       </button>
-      <div className="drink-list__container">
+      <div className="drink-list__container--grey">
         {!isLoading && searchResult ? (
           searchResult.map((beverage: Beverage, index: number) => (
             <BeverageCard
@@ -92,6 +92,6 @@ export const SearchBeverage = ({
           <div> Loading </div>
         )}
       </div>
-    </div>
+    </>
   );
 };

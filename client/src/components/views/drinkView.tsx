@@ -35,7 +35,7 @@ const Drink = ({
   };
 
   return (
-    <div key={index} className="drink-list__row">
+    <div key={index} className="drink-list__row drink-list__row--constrained">
       {menuDisplay && (
         <>
           <div className="drink-list__star">
@@ -49,8 +49,10 @@ const Drink = ({
           <img src={PlaceholderImage} className="drink-list__image" />
         </>
       )}
-      <div className="drink-list__column--flexed">{item.name}</div>
-      <div className="drink-list__column--flexed">
+      <div className="drink-list__column drink-list__column--flexed">
+        {item.name}
+      </div>
+      <div className="drink-list__column drink-list__column--flexed">
         {item.price} SEK{" "}
         {menuDisplay && (
           <>

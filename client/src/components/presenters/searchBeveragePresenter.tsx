@@ -67,7 +67,7 @@ export const SearchBeveragePresenter = ({
   }, [beverageData, beverageError]);
 
   return (
-    <div>
+    <>
       <SearchBeverage
         customizedType={customizedType}
         setNewBeverage={setNewBeverage}
@@ -81,6 +81,6 @@ export const SearchBeveragePresenter = ({
         setCurrentSearchType={setCurrentSearchType}
         setBeverageCardType={setBeverageCardType}
       />
-    </div>
+    </>
   );
 };

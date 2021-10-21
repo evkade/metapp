@@ -4,6 +4,10 @@ import { Card, Modal } from "react-bootstrap";
 export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
   const [drinkDetail, setDrinkDetail] = React.useState(null);
   const [showDrinkDetailModal, setShowDrinkDetailModal] = React.useState(false);
+  const [collapseInfo, setCollapseInfo] = React.useState({
+    row1: "-",
+    row2: "+",
+  });
 
   console.log(orders);
 
@@ -11,7 +15,11 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
     return (
       <Card
         key={drink._id}
-        className={"card-drink" + (drink.made ? " card-drink--made" : "")}
+        className={
+          "card-drink" +
+          (drink.made ? " card-drink--made" : "") +
+          (drink.paid ? " card-drink--finished" : "")
+        }
         id={"card-drink#" + drink.id}
       >
         <p
@@ -82,29 +90,67 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
     );
   };
 
+  const toggleCollapsible = (id1, id2) => {
+    const collapsible1 = document.getElementById(id1);
+    const collapsible2 = document.getElementById(id2);
+    const isCollaps1Open = collapsible1.classList.contains(
+      "admin-menu-container__collapsible"
+    );
+    if (isCollaps1Open) {
+      collapsible1.classList.add(
+        "admin-menu-container__collapsible--collapsed"
+      );
+      collapsible1.classList.remove("admin-menu-container__collapsible");
+      collapsible2.classList.add("admin-menu-container__collapsible");
+      collapsible2.classList.remove(
+        "admin-menu-container__collapsible--collapsed"
+      );
+      setCollapseInfo({ row1: "+", row2: "-" });
+    } else {
+      collapsible1.classList.remove(
+        "admin-menu-container__collapsible--collapsed"
+      );
+      collapsible1.classList.add("admin-menu-container__collapsible");
+      collapsible2.classList.add(
+        "admin-menu-container__collapsible--collapsed"
+      );
+      setCollapseInfo({ row1: "-", row2: "+" });
+    }
+  };
+
   return (
     <>
       <div className="admin-menu-container">
-        <div className="title-neon--big">Tonight's orders</div>
-        <div>
-          <h3 className="admin-menu-container__subtitle">Current orders</h3>
-          <div>
+        <div className="title-neon--small">Tonight's orders</div>
+        <div className="height100">
+          <h3
+            className="admin-menu-container__subtitle"
+            onClick={() => toggleCollapsible("collapsible1", "collapsible2")}
+          >
+            Current orders {collapseInfo.row1}
+          </h3>
+          <div id="collapsible1" className="admin-menu-container__collapsible">
             {orders &&
               orders
                 .filter((o) => !o.made || !o.paid)
                 .map((d) => currentOrdersCard(d))}
           </div>
-        </div>
-      </div>
-      <div>
-        <h3>Finished orders</h3>
-        <div>
-          <h3 className="admin-menu-container__subtitle">Finished orders</h3>
-          <div>
-            {orders &&
-              orders
-                .filter((o) => o.made && o.paid)
-                .map((d) => finishedOrdersCard(d))}
+          <h3
+            className="admin-menu-container__subtitle"
+            onClick={() => toggleCollapsible("collapsible2", "collapsible1")}
+          >
+            Finished orders {collapseInfo.row2}
+          </h3>
+          <div
+            id="collapsible2"
+            className="admin-menu-container__collapsible--collapsed"
+          >
+            <div>
+              {orders &&
+                orders
+                  .filter((o) => o.made && o.paid)
+                  .map((d) => finishedOrdersCard(d))}
+            </div>
           </div>
         </div>
       </div>

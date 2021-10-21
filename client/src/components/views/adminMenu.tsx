@@ -21,7 +21,7 @@ export const AdminMenu = ({
 
   return (
     <div className="container--centered">
-      <div className="drink-list__container">
+      <div className="drink-list__container--grey drink-list__container--grey-full">
         {menu.map((beverage: Beverage, index: number) => (
           <BeverageCard
             menu={menu}
