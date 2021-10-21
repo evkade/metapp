@@ -34,18 +34,19 @@ const menuReducer = (state = initialState, action) => {
 
     case "ADD_TO_MENU":
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
+        drinkModel.addBeerInHistory(action.payload, state.currentBar);
         return {
           ...state,
           menu: { ...state.menu, beer: [...state.menu.beer, action.payload] },
         };
-      } else
-        return {
-          ...state,
-          menu: {
-            ...state.menu,
-            cocktail: [...state.menu.cocktail, action.payload],
-          },
-        };
+      } else drinkModel.addCocktailInHistory(action.payload, state.currentBar);
+      return {
+        ...state,
+        menu: {
+          ...state.menu,
+          cocktail: [...state.menu.cocktail, action.payload],
+        },
+      };
 
     case "ADD_TO_HISTORY":
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {

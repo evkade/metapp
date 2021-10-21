@@ -54,14 +54,60 @@ export default class DrinkModel {
     return beers;
   }
 
-  addBeerInHistory(beer: Beer) {
-    // and menu
-    return;
+  // todo harmonisera beverage objects med databasen
+  async addBeerInHistory(beer: Beer, currentBar) {
+    // note: beer is automatizally added in menu then as it is marked as active
+    const beerObjectForAPI = {
+      name: beer.name,
+      active: true,
+      price: beer.price,
+      percentage: beer.alcoholPercentage,
+      description: beer.type,
+    };
+
+    console.log(currentBar);
+    console.log(JSON.stringify(beerObjectForAPI));
+
+    const response = await fetch(
+      "http://localhost:5000/api/beer?currentbar=" + currentBar,
+      {
+        method: "POST",
+        body: JSON.stringify(beerObjectForAPI),
+        credentials: "include",
+      }
+    );
+    response.json().then((data) => {
+      console.log(data);
+    });
   }
 
-  addCocktailInHistory(cokctail: Cocktail) {
-    // and menu
-    return;
+  // todo harmonisera beverage objects med databasen
+  async addCocktailInHistory(cocktail: Cocktail, currentBar) {
+    const cocktailbjectForAPI = {
+      name: cocktail.name,
+      active: true,
+      price: cocktail.price,
+      ingredients: cocktail.ingredientList.map(
+        (ingredient, index) =>
+          ingredient + " " + cocktail.ingredientMeasuresList[index]
+      ),
+      alcoholVolume: cocktail.alcoholVolume,
+      description: "", // finns ej i cocktail object
+    };
+
+    const response = await fetch(
+      "http://localhost:5000/api/cocktail?currentbar=" + currentBar,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cocktailbjectForAPI),
+      }
+    );
+    response.json().then((data) => {
+      console.log(data);
+    });
   }
 
   getCocktailBasedOnName(name: string): Promise<any> {
