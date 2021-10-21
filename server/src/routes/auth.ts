@@ -8,7 +8,6 @@ import { User } from "../models/interfaces";
 const router = express.Router();
 
 router.get("/api/auth/currentuser", isSignedIn, (req, res) => {
-
   if (!req.currentUser) {
     return res.status(400).send("not authorized");
   }
@@ -31,14 +30,13 @@ router.post(
     const { user, token } = await AuthService.signIn(username, password).catch(
       (error) => {
         req.session = null;
-        throw new Error("wrong Credentials")
+        throw new Error("wrong Credentials");
       }
     );
 
     if (user === null || user === undefined) {
       return res.status(400).send("User does not exist");
-    }
-    else {
+    } else {
       req.session = {
         jwt: token,
       };
@@ -51,7 +49,7 @@ router.post(
 router.post(
   "/api/auth/signup",
   [
-    body("email").isEmail().withMessage("Email must be valid"),
+    body("username").trim().isLength({ min: 3, max: 20 }),
     body("password")
       .trim()
       .isLength({ min: 8, max: 20 })
@@ -63,7 +61,7 @@ router.post(
       res.status(401).send("User already exists")
     );
     if (user === null) {
-      return res.status(401).send("User already exists")
+      return res.status(401).send("User already exists");
     }
     res.status(201).send(user);
   }

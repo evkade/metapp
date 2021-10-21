@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
-const UserSignIn = ({ userAuth, checkUserAuth }) => {
+const UserSignIn = ({ userAuth, checkUserAuth, signUpError }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -44,6 +44,7 @@ const UserSignIn = ({ userAuth, checkUserAuth }) => {
                   Create account
                 </button>
               </div>
+              {signUpError && <div>That user already exists!</div>}
             </div>
           </>
         )}
