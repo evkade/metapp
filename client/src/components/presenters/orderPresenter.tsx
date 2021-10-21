@@ -14,7 +14,6 @@ export const OrderPresenter = ({
   favorites,
   unfinishedOrderPlaced,
 }) => {
-  console.log(unfinishedOrder);
   const [orderItems, setOrderItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });

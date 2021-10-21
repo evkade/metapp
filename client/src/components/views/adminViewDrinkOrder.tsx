@@ -11,11 +11,11 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
     return (
       <Card
         key={drink._id}
-        className={"drinkCard" + (drink.made ? " drinkCard--made" : "")}
-        id={"drinkCard#" + drink.id}
+        className={"card-drink" + (drink.made ? " card-drink--made" : "")}
+        id={"card-drink#" + drink.id}
       >
         <p
-          className="drinkCard__text drinkCard__text--title"
+          className="card-drink__text"
           onClick={() => {
             setDrinkDetail(drink);
             setShowDrinkDetailModal(true);
@@ -23,23 +23,23 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
         >
           Drink name: {drink.beverage}
         </p>
-        <p className="drinkCard__text">Quantity: {drink.quantity}</p>
-        <p className="drinkCard__text">Ordered by: {drink.user}</p>
-        <p className="drinkCard__text">Price per drink: {drink.price}</p>{" "}
+        <p className="card-drink__text">Quantity: {drink.quantity}</p>
+        <p className="card-drink__text">Ordered by: {drink.user}</p>
+        <p className="card-drink__text">Price per drink: {drink.price}</p>{" "}
         {/** TODO get from menu */}
-        <p className="drinkCard__text">
+        <p className="card-drink__text">
           Total price: {drink.price * drink.quantity}{" "}
           {/** TODO get from menu */}
         </p>
         <button
-          className="drinkCard__button"
+          className="card-drink__button"
           disabled={drink.made}
           onClick={() => drinkMade(drink._id)}
         >
           Ready to serve
         </button>
         <button
-          className="drinkCard__button"
+          className="card-drink__button"
           disabled={!drink.made}
           onClick={() => drinkPaid(drink._id)}
         >
@@ -51,12 +51,12 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
 
   const finishedOrdersCard = (drink) => {
     return (
-      <Card key={drink._id} className="drinkCard drinkCard--finished">
-        <p className="drinkCard__text">Drink name: {drink.beverage}</p>
-        <p className="drinkCard__text">Quantity: {drink.quantity}</p>
-        <p className="drinkCard__text">Ordered by: {drink.user}</p>
-        <p className="drinkCard__text">Made at: {drink.timeMade}</p>
-        <p className="drinkCard__text">Paid at: {drink.timePaid}</p>
+      <Card key={drink._id} className="card-drink card-drink--finished">
+        <p className="card-drink__text">Drink name: {drink.beverage}</p>
+        <p className="card-drink__text">Quantity: {drink.quantity}</p>
+        <p className="card-drink__text">Ordered by: {drink.user}</p>
+        <p className="card-drink__text">Made at: {drink.timeMade}</p>
+        <p className="card-drink__text">Paid at: {drink.timePaid}</p>
       </Card>
     );
   };
@@ -84,10 +84,10 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
 
   return (
     <>
-      <div className="adminOrderView">
-        <div className="pageTitleNeon">Tonight's orders</div>
+      <div className="admin-menu-container">
+        <div className="title-neon--big">Tonight's orders</div>
         <div>
-          <h3 className="adminOrderView__subtitle">Current orders</h3>
+          <h3 className="admin-menu-container__subtitle">Current orders</h3>
           <div>
             {orders &&
               orders
@@ -95,8 +95,11 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
                 .map((d) => currentOrdersCard(d))}
           </div>
         </div>
+      </div>
+      <div>
+        <h3>Finished orders</h3>
         <div>
-          <h3 className="adminOrderView__subtitle">Finished orders</h3>
+          <h3 className="admin-menu-container__subtitle">Finished orders</h3>
           <div>
             {orders &&
               orders

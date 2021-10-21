@@ -38,10 +38,10 @@ export const CustomizeMenuPresenter = (props) => {
   );
 
   return (
-    <div className="customizeMenu">
-      <div className="customizeMenu__Tabs">
+    <div className="admin-menu-container">
+      <div className="admin-menu-container__tabs">
         <button
-          className="customizeMenu__Tab"
+          className="admin-menu-container__tab"
           type="submit"
           onClick={() => setCustomizedType(beverageTypes.BEER)}
           disabled={customizedType === beverageTypes.BEER}
@@ -49,7 +49,7 @@ export const CustomizeMenuPresenter = (props) => {
           Beer
         </button>
         <button
-          className="customizeMenu__Tab"
+          className="admin-menu-container__tab"
           type="submit"
           onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
           disabled={customizedType === beverageTypes.COCKTAIL}
@@ -77,14 +77,12 @@ export const CustomizeMenuPresenter = (props) => {
 };
 
 const mapStateToProps = (store) => {
-  console.log("mapStateToProps", store, store.state);
   return {
     menu: store.menu,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  console.log("mapDispatchToProps");
   return {
     addToMenu: (beverage: Beverage) => dispatch(addToMenu(beverage)),
     removeFromMenu: (beverage: Beverage) => dispatch(removeFromMenu(beverage)),
