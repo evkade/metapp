@@ -18,6 +18,13 @@ const userReducer = (state = initialState, action) => {
         isAdmin: action.payload.isAdmin,
         userId: action.payload._id,
       };
+    case "SIGN_UP":
+      return {
+        ...state,
+        loggedIn: false,
+        username: action.payload.username,
+        isAdmin: action.payload.isAdmin,
+      };
     case "SIGN_OUT":
       return {
         ...state,

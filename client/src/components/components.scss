@@ -81,6 +81,8 @@ body {
 
 .container--centered {
   @include centerVerticalHorizontal();
+  height: 100%;
+  width: 100%;
 }
 
 .input-container {
@@ -153,18 +155,18 @@ body {
   margin: 10px;
   padding: 10px;
   background-color: $light-neon-color-pink;
-  .card-drink--made {
-    background-color: $light-neon-color-yellow;
-    border: 1px solid $neon-color-yellow;
+  &--made {
+    background-color: $light-neon-color-yellow !important;
+    border: 1px solid $neon-color-yellow !important;
   }
-  .card-drink--finished {
+  &--finished {
     background-color: $light-neon-color-green;
     border: 1px solid $neon-color-green;
   }
-  .card-drink__text {
+  &__text {
     cursor: pointer;
   }
-  .card-drink__button {
+  &__button {
     border-radius: 10px;
     padding: 5px;
     margin: 3px;
@@ -185,6 +187,17 @@ body {
     flex: 1;
     margin-bottom: 20px;
   }
+  @at-root #{&}__container--grey {
+    background-color: lightgrey;
+    height: 70%;
+    max-height: 200px;
+    overflow-y: scroll;
+  }
+  @at-root #{&}__container--grey-full {
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+  }
   @at-root #{&}__button {
     z-index: 1;
     position: absolute;
@@ -197,11 +210,13 @@ body {
     background: rgb(240, 200, 48);
   }
   @at-root #{&}__row {
-    height: 15%;
     display: flex;
     align-items: center;
     margin: 10px;
     @include alignedGeneralFont();
+  }
+  @at-root #{&}__row--constrained {
+    height: 15%;
   }
   @at-root #{&}__row--white {
     color: white;
@@ -212,9 +227,12 @@ body {
     border-radius: 6px;
     border: 1px solid white;
   }
+  @at-root #{&}__column {
+    color: white;
+    width: 30%;
+  }
   @at-root #{&}__column--flexed {
     flex: 1;
-    color: white;
   }
   @at-root #{&}__buttons {
     flex-direction: row;
@@ -335,7 +353,7 @@ body {
 }
 
 .admin-menu-container {
-  background-color: lightgrey;
+  background-color: black;
   height: 100%;
   padding: 10px;
   @at-root #{&}__button {
@@ -352,32 +370,34 @@ body {
     margin-left: 6px;
   }
   @at-root #{&}__tab {
-    background: grey;
+    background: black;
     padding: 5px;
     color: white;
     display: inline-block;
-    border: 1px solid black;
+    border: 1px solid white;
     margin-bottom: -1px;
     border-radius: 3px 3px 0px 0px;
   }
   @at-root #{&}__tab:disabled {
-    background: black;
+    background: lightgrey;
+    color: black;
   }
   @at-root #{&}__row {
     display: flex;
     max-width: 100%;
+    height: 70%;
   }
   @at-root #{&}__column {
-    background-color: black;
+    background-color: lightgray;
     flex: 1 0 45%;
-    padding: 20px;
-    overflow-y: scroll;
-    border-radius: 7px 7px 7px 7px;
+    border-radius: 7px;
     margin-left: 3px;
-    margin-right: 6px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     input {
       height: 30px;
-      width: 100%;
       padding: 3px 5px;
       margin: 5px;
       border-radius: 5px;
@@ -395,7 +415,6 @@ body {
       padding: 3px 5px;
       margin: 5px;
       border-radius: 5px;
-      width: 100%;
     }
   }
   @at-root #{&}__column--flex {
@@ -406,4 +425,17 @@ body {
   @at-root #{&}__subtitle {
     color: white;
   }
+  @at-root #{&}__collapsible--collapsed {
+    display: none !important;
+  }
+  @at-root #{&}__collapsible {
+    height: 50%;
+    display: block;
+    overflow-y: scroll;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+}
+.height100 {
+  height: 100%;
 }

@@ -22,7 +22,7 @@ export const AdminMenu = ({
 
   return (
     <div className="container--centered">
-      <div className="drink-list__container">
+      <div className="drink-list__container--grey drink-list__container--grey-full">
         {customizedType === beverageTypes.BEER
           ? menu.beer.map((beverage: Beverage, index: number) => (
               <BeverageCard
