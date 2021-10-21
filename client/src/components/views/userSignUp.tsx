@@ -44,7 +44,14 @@ const UserSignIn = ({ userAuth, checkUserAuth, signUpError }) => {
                   Create account
                 </button>
               </div>
-              {signUpError && <div>That user already exists!</div>}
+            </div>
+            <div className="user-form__errElement">
+              {signUpError && (
+                <>
+                  🚫 Something went wrong, there's already a user with these
+                  credentials
+                </>
+              )}
             </div>
           </>
         )}

@@ -16,7 +16,6 @@ export const HandleUserSignUp = (signUp) => {
   const checkUserAuth = (username: string, password: string) => {
     //todo: add user to database
     signUpFunc(username, password);
-    setUserAuth(true);
     // todo: error handling for user sign up (like database is down and stuff)
     // else if (username != "username" || password != "password") {
     //   setSignUpError(true);
