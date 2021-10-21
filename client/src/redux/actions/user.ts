@@ -17,11 +17,8 @@ export const removeFavorite = (name) => ({
   payload: name,
 });
 
-export const orderPlaced = (orderBeverage) => ({
+export const orderPlaced = () => ({
   type: "ORDER_PLACED",
-  payload: {
-    beverage: orderBeverage,
-  },
 });
 
 export const unfinishedOrderPlaced = (orderBeverage) => ({
@@ -29,4 +26,9 @@ export const unfinishedOrderPlaced = (orderBeverage) => ({
   payload: {
     beverage: orderBeverage,
   },
+});
+
+export const setUserOrders = (orders) => ({
+  type: "SET_USER_ORDERS",
+  payload: orders,
 });

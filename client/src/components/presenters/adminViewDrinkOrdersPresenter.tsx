@@ -15,25 +15,15 @@ const AdminViewDrinkOrdersPresenter = ({
 }) => {
   useEffect(() => {
     getOrders(menu.currentBar);
-  }, []);
-
-  const getTimeStamp = () => {
-    const today = new Date();
-    const hour = today.getHours();
-    const minute = today.getMinutes();
-    return (
-      (hour < 10 ? "0" + hour : "" + hour) +
-      ":" +
-      (minute < 10 ? "0" + minute : "" + minute)
-    );
-  };
+  }, [menu.currentBar]);
 
   const pay = (id) => {
-    payForOrder(id, getTimeStamp());
+    payForOrder(id);
   };
 
   const make = (id) => {
-    makeOrder(id, getTimeStamp());
+    console.log(id);
+    makeOrder(id);
   };
 
   return (
@@ -54,9 +44,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeOrder: (id, timeMade) => dispatch(ordermodel.makeOrder(id, timeMade)),
-    payForOrder: (id, timePaid) =>
-      dispatch(ordermodel.payForOrder(id, timePaid)),
+    makeOrder: (id) => dispatch(ordermodel.makeOrder(id)),
+    payForOrder: (id) => dispatch(ordermodel.payForOrder(id)),
     getOrders: (currentBar) => dispatch(ordermodel.getOrders(currentBar)),
   };
 };

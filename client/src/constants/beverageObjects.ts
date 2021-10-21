@@ -19,11 +19,15 @@ export interface Menu {
   menu: Beverage[];
 }
 
-export interface Order {
-  _id: String;
+interface OrderDetail {
   beverage: String;
   quantity: Number;
+}
+
+export interface Order {
+  id: String;
   user: String;
+  order: Array<OrderDetail>;
   made?: boolean;
   paid?: boolean;
   timeMade?: String;

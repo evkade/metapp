@@ -5,9 +5,49 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
   const [drinkDetail, setDrinkDetail] = React.useState(null);
   const [showDrinkDetailModal, setShowDrinkDetailModal] = React.useState(false);
 
-  console.log(orders);
+  const singleBeverageCard = (drink) => {
+    return (
+      <Card
+        key={drink.id}
+        className={"drinkCard" + (drink.made ? " drinkCard--made" : "")}
+        id={"drinkCard#" + drink.id}
+      >
+        <p
+          className="card-drink__text card-drink__text--title"
+          onClick={() => {
+            setDrinkDetail(drink);
+            setShowDrinkDetailModal(true);
+          }}
+        >
+          {drink.order[0].quantity + " " + drink.order[0].beverage}
+        </p>
+        <p className="card-drink__text">Ordered by: {drink.user}</p>{" "}
+        {/** TODO get username */}
+        <p className="card-drink__text">Price per drink: {drink.price}</p>{" "}
+        {/** TODO get from menu */}
+        <p className="card-drink__text">
+          Total price: {drink.price * drink.quantity}{" "}
+          {/** TODO get from menu */}
+        </p>
+        <button
+          className="card-drink__button"
+          disabled={drink.made}
+          onClick={() => drinkMade(drink.id)}
+        >
+          Ready to serve
+        </button>
+        <button
+          className="card-drink__button"
+          disabled={!drink.made}
+          onClick={() => drinkPaid(drink.id)}
+        >
+          Paid
+        </button>
+      </Card>
+    );
+  };
 
-  const currentOrdersCard = (drink) => {
+  const multipleBeveragesCard = (drink) => {
     return (
       <Card
         key={drink._id}
@@ -21,9 +61,8 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
             setShowDrinkDetailModal(true);
           }}
         >
-          Drink name: {drink.beverage}
+          Multiple beverages (click for details)
         </p>
-        <p className="card-drink__text">Quantity: {drink.quantity}</p>
         <p className="card-drink__text">Ordered by: {drink.user}</p>
         <p className="card-drink__text">Price per drink: {drink.price}</p>{" "}
         {/** TODO get from menu */}
@@ -34,14 +73,14 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
         <button
           className="card-drink__button"
           disabled={drink.made}
-          onClick={() => drinkMade(drink._id)}
+          onClick={() => drinkMade(drink.id)}
         >
           Ready to serve
         </button>
         <button
           className="card-drink__button"
           disabled={!drink.made}
-          onClick={() => drinkPaid(drink._id)}
+          onClick={() => drinkPaid(drink.id)}
         >
           Paid
         </button>
@@ -52,12 +91,24 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
   const finishedOrdersCard = (drink) => {
     return (
       <Card key={drink._id} className="card-drink card-drink--finished">
-        <p className="card-drink__text">Drink name: {drink.beverage}</p>
-        <p className="card-drink__text">Quantity: {drink.quantity}</p>
+       {drink.order.map((b) => (
+          <span key={drink.order.id} className="card-drink__text">
+            {" "}
+            {b.quantity} {b.beverage},
+          </span>
+        ))}
         <p className="card-drink__text">Ordered by: {drink.user}</p>
         <p className="card-drink__text">Made at: {drink.timeMade}</p>
         <p className="card-drink__text">Paid at: {drink.timePaid}</p>
       </Card>
+    );
+  };
+
+  const getBeverageDetail = (beverage) => {
+    return (
+      <div>
+        <h4>{beverage.quantity + " " + beverage.beverage}</h4>
+      </div>
     );
   };
 
@@ -69,14 +120,10 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
         centered
       >
         <Modal.Header>
-          <Modal.Title>
-            Details - {drinkDetail ? drinkDetail.drink : ""}
-          </Modal.Title>
+          <Modal.Title>Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Ingredients</h4>
-          <ul>Gin</ul>
-          <ul>Tonic</ul>
+          {drinkDetail.order.map((b) => getBeverageDetail(b))}
         </Modal.Body>
       </Modal>
     );
@@ -92,7 +139,11 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
             {orders &&
               orders
                 .filter((o) => !o.made || !o.paid)
-                .map((d) => currentOrdersCard(d))}
+                .map((b) =>
+                  b.order.length === 1
+                    ? singleBeverageCard(b)
+                    : multipleBeveragesCard(b)
+                )}
           </div>
         </div>
       </div>
@@ -108,7 +159,7 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
           </div>
         </div>
       </div>
-      {drinkDetailModal()}
+      {drinkDetail && drinkDetailModal()}
     </>
   );
 };

@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { Order } from "./interfaces";
+import { UserModel } from "./userSchema";
 
-const OrderSchema = new mongoose.Schema({
+const OrderDetailSchema = new mongoose.Schema({
   beverage: {
     type: String,
     required: true,
@@ -10,8 +11,16 @@ const OrderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+});
+
+const OrderSchema = new mongoose.Schema({
   user: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: UserModel,
+    required: true,
+  },
+  order: {
+    type: [OrderDetailSchema],
     required: true,
   },
   made: Boolean,

@@ -11,7 +11,6 @@ import { UserMenu } from "../views/userMenu";
 
 export const UserMenuPresenter = ({
   orders,
-  orderPlaced,
   addFavorite,
   removeFavorite,
   favorites,
@@ -236,7 +235,6 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    orderPlaced: (beverages) => dispatch(orderPlaced(beverages)),
     addFavorite: (name) => dispatch(addFavorite(name)),
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     unfinishedOrderPlaced: (beverages) =>

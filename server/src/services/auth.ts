@@ -8,32 +8,36 @@ export default class AuthService {
     password: string
   ): Promise<{ user: User | null; token: string }> {
     //@ts-ignore
-    let user: User | null = await findUser(username).catch((err) => { throw new Error("user not exist") })
-    let token = ""
+    let user: User | null = await findUser(username).catch((err) => {
+      throw new Error("user not exist");
+    });
+    let token = "";
     if (user !== null) {
       try {
-        const bool = await verifyPassword(username, password)
+        const bool = await verifyPassword(username, password);
         if (bool === true) {
           // generate JWT
           token = jwt.sign(
             {
+              _id: user._id,
               username: user.username,
               email: user.email,
-              isAdmin: user.credentials === 'admin'
+              isAdmin: user.credentials === "admin",
             },
             process.env.JWT_KEY!, // secret jwt key to sign and verify
             {
-              expiresIn: "15d"
+              expiresIn: "15d",
             }
           );
-        }
-        else {
+        } else {
           user = null;
         }
       } catch (error) {
-        throw new Error("wrong credentials")
+        throw new Error("wrong credentials");
       }
     }
+
+    console.log(user);
 
     return { user, token };
   }
