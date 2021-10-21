@@ -59,7 +59,7 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
               .sort((a, b) => {
                 return +new Date(a.date) - +new Date(b.date);
               })
-              .map((order, index) => {
+              .map((order) => {
                 return (
                   <div className="profileContainer__block--row" key={order.id}>
                     <div className="profileContainer__block--column">

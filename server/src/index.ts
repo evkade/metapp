@@ -1,17 +1,17 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import connectDB from './db'
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./db";
 
 import cookieSession from "cookie-session";
-import cookieParser from 'cookie-parser';
+import cookieParser from "cookie-parser";
 
-import { authRouter } from './routes/auth';
-import { apiBeerRouter } from './routes/apibeers';
-import { beerRouter } from './routes/beers';
-import { cocktailRouter } from './routes/cocktail';
-import { userRouter } from './routes/user'
-import { menuRouter } from './routes/menu'
+import { authRouter } from "./routes/auth";
+import { apiBeerRouter } from "./routes/apibeers";
+import { beerRouter } from "./routes/beers";
+import { cocktailRouter } from "./routes/cocktail";
+import { userRouter } from "./routes/user";
+import { menuRouter } from "./routes/menu";
 import { orderRouter } from "./routes/orders";
 
 const socket = require("socket.io");
@@ -75,8 +75,8 @@ app.use(bp.urlencoded({ extended: true }));
 
 app.use(userRouter);
 app.use(beerRouter);
-app.use(cocktailRouter)
-app.use(apiBeerRouter)
+app.use(cocktailRouter);
+app.use(apiBeerRouter);
 app.use(authRouter);
 app.use(orderRouter);
 app.use(menuRouter);
@@ -92,13 +92,23 @@ const server = app.listen(Port, () => {
   );
 });
 
-const io = socket(server, {
+export const io = socket(server, {
   cors: {
     origin: "http://localhost:8080",
     methods: ["GET", "POST"],
   },
 });
 
-io.on("connection", (s: any) => {
-  s.emit("test", "testing");
+io.on("connection", (socket: any) => {
+  socket.on("orderPlaced", (order: any) => {
+    io.sockets.emit("orderPlaced", order);
+  });
+
+  socket.on("made", (data: any) => {
+    io.sockets.emit("made", data);
+  });
+
+  socket.on("paid", (data: any) => {
+    io.sockets.emit("paid", data);
+  });
 });

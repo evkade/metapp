@@ -52,7 +52,10 @@ const OrderView = ({
           );
         })}
         {submittedOrder && (
-          <div style={{ color: "white" }}>Your order has been sent!</div>
+          <div style={{ color: "white" }}>
+            Your order has been sent, go to your profile to see when it's ready
+            to be picked up!
+          </div>
         )}
       </div>
       {order.length > 0 && !submittedOrder && (

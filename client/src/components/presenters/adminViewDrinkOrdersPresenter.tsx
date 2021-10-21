@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { addNewOrder } from "../../redux/actions/orders";
 import OrderModel from "../../model/orderModel";
 import { AdminViewDrinkOrder } from "../views/adminViewDrinkOrder";
 
@@ -11,19 +12,29 @@ const AdminViewDrinkOrdersPresenter = ({
   makeOrder,
   payForOrder,
   getOrders,
+  newOrder,
   menu,
 }) => {
   useEffect(() => {
     getOrders(menu.currentBar);
+
+    const addNewOrder = (order) => {
+      newOrder(order);
+    };
+
+    socket.on("orderPlaced", addNewOrder);
+
+    return () => {
+      socket.off("orderPlaced", addNewOrder);
+    };
   }, [menu.currentBar]);
 
   const pay = (id) => {
-    payForOrder(id);
+    payForOrder(id, socket);
   };
 
   const make = (id) => {
-    console.log(id);
-    makeOrder(id);
+    makeOrder(id, socket);
   };
 
   return (
@@ -44,9 +55,10 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeOrder: (id) => dispatch(ordermodel.makeOrder(id)),
-    payForOrder: (id) => dispatch(ordermodel.payForOrder(id)),
+    makeOrder: (id, socket) => dispatch(ordermodel.makeOrder(id, socket)),
+    payForOrder: (id, socket) => dispatch(ordermodel.payForOrder(id, socket)),
     getOrders: (currentBar) => dispatch(ordermodel.getOrders(currentBar)),
+    newOrder: (order) => dispatch(addNewOrder(order)),
   };
 };
 

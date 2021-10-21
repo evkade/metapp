@@ -21,7 +21,7 @@ const orderReducer = (state = initalState, action) => {
       const rest = state.orders.filter((o) => o.id !== action.payload.id);
       return {
         ...state,
-        orders: [...rest, orderMadeTmp],
+        orders: [orderMadeTmp, ...rest],
         loading: false,
       };
     case "ORDER_PAID":
@@ -33,7 +33,7 @@ const orderReducer = (state = initalState, action) => {
       const rest1 = state.orders.filter((o) => o.id !== action.payload.id);
       return {
         ...state,
-        orders: [...rest1, orderPaidTmp],
+        orders: [orderPaidTmp, ...rest1],
         loading: false,
       };
     case "SET_ORDERS":
@@ -41,6 +41,19 @@ const orderReducer = (state = initalState, action) => {
         ...state,
         loading: false,
         orders: action.payload.orders,
+      };
+    case "ADD_NEW_ORDER":
+      var tmp = action.payload;
+      tmp.id = action.payload._id;
+      tmp._id = null;
+      return {
+        ...state,
+        orders: [...state.orders, tmp],
+      };
+    case "SET_USER_ORDERS":
+      return {
+        ...state,
+        orders: action.payload,
       };
     default:
       return state;

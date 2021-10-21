@@ -111,8 +111,14 @@ const RoutingApp = ({ socket }) => {
             exact
             path="/profile"
             component={userProfilePresenter}
+            socket={socket}
           />
-          <PrivateRoute exact path="/order" component={orderPresenter} />
+          <PrivateRoute
+            exact
+            path="/order"
+            component={orderPresenter}
+            socket={socket}
+          />
           <PublicRoute
             exact
             path="/signIn"
