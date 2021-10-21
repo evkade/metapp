@@ -57,7 +57,7 @@ export default class DrinkModel {
   }
 
   getBeerBasedOnName(name: string) {
-    const beers = this.postFetch("http://localhost:5000/api/beers", {
+    const beers = this.postFetch("http://localhost:5000/api/apibeers", {
       name: name,
     }).then((data) => data);
     return beers;
