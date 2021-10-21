@@ -16,14 +16,13 @@ const orderReducer = (state = initalState, action) => {
       const orderMadeTmp = state.orders.filter(
         (o) => o._id === action.payload.id
       )[0];
-      console.log(orderMadeTmp);
       orderMadeTmp.made = true;
       orderMadeTmp.timeMade = action.payload.timeMade;
       const rest = state.orders.filter((o) => o._id !== action.payload.id);
       return {
+        ...state,
         orders: [...rest, orderMadeTmp],
         loading: false,
-        ...state,
       };
     case "ORDER_PAID":
       const orderPaidTmp = state.orders.filter(
@@ -33,12 +32,11 @@ const orderReducer = (state = initalState, action) => {
       orderPaidTmp.timePaid = action.payload.timePaid;
       const rest1 = state.orders.filter((o) => o._id !== action.payload.id);
       return {
-        orders: [orderPaidTmp, rest1],
-        loading: false,
         ...state,
+        orders: [...rest1, orderPaidTmp],
+        loading: false,
       };
     case "SET_ORDERS":
-      console.log(action.payload);
       return {
         ...state,
         loading: false,

@@ -7,10 +7,14 @@ export interface User extends mongoose.Document {
   email: String;
 }
 
-export interface Order extends mongoose.Document {
+export interface OrderDetail {
   beverage: String;
   quantity: Number;
-  user: String;
+}
+
+export interface Order extends mongoose.Document {
+  user: mongoose.Types.ObjectId | String;
+  order: Array<OrderDetail>;
   made: Boolean;
   paid: Boolean;
   timeMade: String;
@@ -20,20 +24,18 @@ export interface Order extends mongoose.Document {
 }
 
 export interface Beer extends mongoose.Document {
-    name: String;
-    active: Boolean;
-    price: Number;
-    percentage: Number;
-    description: String;
-
+  name: String;
+  active: Boolean;
+  price: Number;
+  percentage: Number;
+  description: String;
 }
 
 export interface Cocktail extends mongoose.Document {
-    name: String;
-    active: Boolean;
-    price: Number;
-    ingredients: String[];
-    description: String;
-    alcoholVolume: Number,
-
+  name: String;
+  active: Boolean;
+  price: Number;
+  ingredients: String[];
+  description: String;
+  alcoholVolume: Number;
 }

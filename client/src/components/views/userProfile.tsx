@@ -10,42 +10,51 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
     setFavoriteList(favorites);
   }, [favorites]);
 
+  console.log(orders);
+
   return (
     <div className="profileContainer">
       <div className="pageTitleNeon--big">{username}</div>
       <div className="profileContainer__block">
         <div className="profileContainer__block__title">Previous Orders</div>
         <div className="profileContainer__block__scrollContainer">
-          {orders.length > 0 ? (
-            orders.map((order, index) => {
-              return (
-                <div className="profileContainer__block--row" key={index}>
-                  <div className="profileContainer__block--column--flex">
-                    <b>OrderID: {order.id}</b>
+          {orders && orders.length > 0 ? (
+            orders
+              .sort((a, b) => {
+                return +new Date(a.date) - +new Date(b.date);
+              })
+              .map((order, index) => {
+                return (
+                  <div className="profileContainer__block--row" key={order._id}>
+                    <div className="profileContainer__block--column--flex">
+                      <b>Bar: {order.bar.toUpperCase()}</b>
+                    </div>
+                    <div className="profileContainer__block--column--flex">
+                      <b>Date: {order.date.split("T")[0]}</b>
+                    </div>
+                    <div className="profileContainer__block--column">
+                      {order.order.map((orderDetail, index) => {
+                        const length = order.order.length;
+                        if (index === length - 1) {
+                          return (
+                            <span key={index}>
+                              {" "}
+                              {orderDetail.quantity} {orderDetail.beverage}
+                            </span>
+                          );
+                        } else {
+                          return (
+                            <span key={index}>
+                              {" "}
+                              {orderDetail.quantity} {orderDetail.beverage},
+                            </span>
+                          );
+                        }
+                      })}
+                    </div>
                   </div>
-                  <div className="profileContainer__block--column">
-                    {order.order.map((orderDetail, index) => {
-                      const length = order.order.length;
-                      if (index == length - 1) {
-                        return (
-                          <span key={index}>
-                            {" "}
-                            {orderDetail.count} {orderDetail.name}
-                          </span>
-                        );
-                      } else {
-                        return (
-                          <span key={index}>
-                            {" "}
-                            {orderDetail.count} {orderDetail.name},
-                          </span>
-                        );
-                      }
-                    })}
-                  </div>
-                </div>
-              );
-            })
+                );
+              })
           ) : (
             <div className="profileContainer__block--row">
               <div className="profileContainer__block--column--flex">

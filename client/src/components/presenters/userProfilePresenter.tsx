@@ -3,14 +3,23 @@ import { connect } from "react-redux";
 import { orderPlaced } from "../../redux/actions/user";
 import UserProfile from "../views/userProfile";
 import { removeFavorite } from "../../redux/actions/user";
+import OrderModel from "../../model/orderModel";
+
+const ordermodel = new OrderModel();
 
 export const UserProfilePresenter = ({
   orders,
   user,
+  userId,
   orderPlaced,
   favorites,
   removeFavorite,
+  getOrders,
 }) => {
+  useEffect(() => {
+    getOrders(userId);
+  }, []);
+
   const removeFromFavorites = (name) => {
     removeFavorite(name);
   };
@@ -28,6 +37,7 @@ export const UserProfilePresenter = ({
 const mapStateToProps = (store) => {
   return {
     user: store.user.username,
+    userId: store.user.userId,
     orders: store.user.userOrders,
     favorites: store.user.favorites,
   };
@@ -37,6 +47,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     orderPlaced: (beverage) => dispatch(orderPlaced(beverage)),
     removeFavorite: (name) => dispatch(removeFavorite(name)),
+    getOrders: (userId) => dispatch(ordermodel.getUserOrders(userId)),
   };
 };
 

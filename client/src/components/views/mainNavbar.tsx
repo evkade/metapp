@@ -27,7 +27,8 @@ const MainNavbar = ({ user, signOut, switchCurrentBar }) => {
         "Content-Type": "application/json",
       },
       credentials: "include",
-    }).then(() => signOut(), history.push("/"));
+      // @ts-ignore
+    }).then(() => signOut(), (window.location.href = "/"));
   };
 
   return (

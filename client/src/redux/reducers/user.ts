@@ -1,5 +1,6 @@
 const initialState = {
   username: null,
+  userId: null,
   isAdmin: false,
   loggedIn: false,
   favorites: [],
@@ -10,11 +11,13 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SIGN_IN":
+      console.log(action.payload);
       return {
         ...state,
         loggedIn: true,
         username: action.payload.username,
         isAdmin: action.payload.isAdmin,
+        userId: action.payload._id,
       };
     case "SIGN_OUT":
       return {
@@ -22,6 +25,7 @@ const userReducer = (state = initialState, action) => {
         loggedIn: false,
         username: null,
         isAdmin: false,
+        userId: null,
       };
     case "ADD_FAVORITE":
       return {
@@ -50,6 +54,12 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         unfinishedOrder: newUnFinishedOrder,
+      };
+    case "SET_USER_ORDERS":
+      console.log(action.payload);
+      return {
+        ...state,
+        userOrders: action.payload,
       };
     default:
       return state;

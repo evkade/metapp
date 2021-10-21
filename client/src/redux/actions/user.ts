@@ -30,3 +30,8 @@ export const unfinishedOrderPlaced = (orderBeverage) => ({
     beverage: orderBeverage,
   },
 });
+
+export const setUserOrders = (orders) => ({
+  type: "SET_USER_ORDERS",
+  payload: orders,
+});
