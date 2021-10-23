@@ -14,6 +14,7 @@ const drinkModel = new DrinkModel();
 
 const menuReducer = (state = initialState, action) => {
   console.log(action);
+  console.log(action.payload);
   switch (action.type) {
     case "GET_BEER_HISTORY":
       return {
