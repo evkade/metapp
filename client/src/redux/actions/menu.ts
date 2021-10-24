@@ -1,15 +1,20 @@
 import { Beverage } from "../../constants/beverageObjects";
 
-export const getBeerHistory = (history) => ({
-  type: "GET_BEER_HISTORY",
-  payload: history,
+export const fetchRequest = () => ({
+  type: "FETCH_REQUEST",
 });
 
-export const getCocktailHistory = (history) => ({
-  type: "GET_COCKTAIL_HISTORY",
-  payload: history,
+export const setBeerHistory = (data) => ({
+  type: "SET_BEER_HISTORY",
+  payload: data,
 });
 
+export const setCocktailHistory = (data) => ({
+  type: "SET_COCKTAIL_HISTORY",
+  payload: data,
+});
+
+// should also add to history directly?
 export const addToMenu = (beverage: Beverage) => ({
   type: "ADD_TO_MENU",
   payload: beverage,

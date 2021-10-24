@@ -4,10 +4,10 @@ import { Beverage } from "../../constants/beverageObjects";
 import { BeverageCard } from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 import { baseBeer, baseCocktail } from "../../constants/beverageObjects";
+
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
-// todo: check that no two beers of same name are in menu - basically their name is their index
 
 export const SearchBeverage = ({
   setNewBeverage,
@@ -24,6 +24,7 @@ export const SearchBeverage = ({
 }) => {
   const [query, setQuery] = useState<string>("");
 
+  // todo: I think this should go into the presenter
   const openModal = (beverage: Beverage) => {
     setNewBeverage(beverage);
     setBeverageCardType(beverageCardTypes.ADMIN_SEARCH_RESULTS);
@@ -43,17 +44,20 @@ export const SearchBeverage = ({
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       ></input>
-      <select name="searchType" id="searchType">
+      <select
+        name="searchType"
+        id="searchType"
+        onChange={(e) => setCurrentSearchType(e.target.value)}
+      >
         <option
-          value="new"
-          selected
+          value={searchTypes.API}
           onClick={() => setCurrentSearchType(searchTypes.API)}
         >
           Search new
         </option>
         <option
-          value="history"
-          onClick={() => setCurrentSearchType(searchTypes.HISTORY)}
+          value={searchTypes.HISTORY}
+          onClick={() => setCurrentSearchType(searchTypes.HISTORY)} // setCurrentSearchType(searchTypes.HISTORY)}
         >
           Find in history
         </option>

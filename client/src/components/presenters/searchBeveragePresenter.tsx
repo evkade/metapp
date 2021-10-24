@@ -7,11 +7,10 @@ import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
 
 const drinkModel = new DrinkModel();
 
-// todo: is if in menu you should not be able to add it
-// todo: also special case if it is present in history
-
+// todo: rn, admin cannot 'ADD' beverage from API when it is in menu
+// however, if it is in database, user can ADD it, which will overwrite the database bev
 export const SearchBeveragePresenter = ({
-  setNewBeverage,
+  setModalBeverage,
   setShowModal,
   menu,
   history,
@@ -21,14 +20,18 @@ export const SearchBeveragePresenter = ({
   setCurrentSearchType,
   setBeverageCardType,
 }) => {
+  console.log();
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
   const [isLoading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
+  console.log("CURR SEARCH TYPE", currentSearchType);
+  console.log("searchResult", searchResults);
+
   const searchBeverage = (query: string) => {
-    setLoading(true);
     if (currentSearchType === searchTypes.API) {
+      setLoading(true);
       switch (customizedType) {
         case beverageTypes.BEER:
           setBeveragePromise(drinkModel.getBeerBasedOnName(query));
@@ -42,12 +45,12 @@ export const SearchBeveragePresenter = ({
       switch (customizedType) {
         case beverageTypes.BEER:
           setSearchResults(
-            history.beer.filter((beer) => beer.name.contains(query))
+            history.beer.filter((beer) => beer.name.includes(query))
           );
           break;
         case beverageTypes.COCKTAIL:
           setSearchResults(
-            history.cocktail.filter((cocktail) => cocktail.name.contains(query))
+            history.cocktail.filter((cocktail) => cocktail.name.includes(query))
           );
           break;
       }
@@ -94,13 +97,13 @@ export const SearchBeveragePresenter = ({
           break;
       }
     }
-  }, []);
+  }, [currentSearchType]);
 
   return (
     <>
       <SearchBeverage
         customizedType={customizedType}
-        setNewBeverage={setNewBeverage}
+        setNewBeverage={setModalBeverage}
         setShowModal={setShowModal}
         searchBeverage={searchBeverage}
         searchResult={searchResults}

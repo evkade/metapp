@@ -10,7 +10,6 @@ export const AdminMenuPresenter = ({
   customizedType,
   setBeverageCardType,
 }) => {
-  // todo: bara skicka delen av menyn som är customized (beer or cocktail)
   return (
     <AdminMenu
       setShowModal={setShowModal}
