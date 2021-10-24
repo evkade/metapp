@@ -3,117 +3,148 @@ import { beverageTypes } from "../../constants/searchTypes";
 import DrinkModel from "../../model/drinkModel";
 
 const initialState = {
-  menu: { beer: [], cocktail: [] },
-  history: { beer: [], cocktail: [] },
+  loading: false,
   currentBar: "dkm",
+  beerMenu: [],
+  cocktailMenu: [],
+  beerHistory: [],
+  cocktailHistory: [],
 };
 
 const drinkModel = new DrinkModel();
 
-// todo: the menu reducer and the history reducer should maybe be separated ? and also not sure that currentBar should be here
-
 const menuReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_BEER_HISTORY":
-      const databaseBeerHistory = drinkModel.getBeerHistory(state.currentBar);
-      console.log("databasebeerhistory", databaseBeerHistory);
+    case "FETCH_REQUEST":
       return {
         ...state,
-        history: { ...history, beer: databaseBeerHistory },
+        loading: true,
       };
 
-    case "GET_COCKTAIL_HISTORY":
-      const databaseCocktailHistory = drinkModel.getCocktailHistory(
-        state.currentBar
-      );
-      console.log("databasecockhistory", databaseCocktailHistory);
+    case "SET_BEER_HISTORY":
+      const beerHistory = action.payload.map((databaseBeer) => ({
+        name: databaseBeer.name,
+        type: databaseBeer.description,
+        volume: 0, // finns ej sparad i databasen
+        alcoholPercentage: databaseBeer.percentage,
+        price: databaseBeer.price,
+      }));
+      const beerMenu = action.payload
+        .filter((databaseBeer) => databaseBeer.active === "true")
+        .map((databaseBeer) => ({
+          name: databaseBeer.name,
+          type: databaseBeer.description,
+          volume: 0, // finns ej sparad i databasen
+          alcoholPercentage: databaseBeer.percentage,
+          price: databaseBeer.price,
+        }));
       return {
         ...state,
-        history: { ...history, cocktail: databaseCocktailHistory },
+        loading: false,
+        beerHistory: beerHistory,
+        beerMenu: beerMenu,
+      };
+
+    case "SET_COCKTAIL_HISTORY":
+      const cocktailHistory = action.payload
+        .map((databaseCocktail) => ({
+          name: databaseCocktail.name,
+          alcoholVolume: databaseCocktail.alcoholVolume,
+          // todo: ingredients, add description to beverageObject
+          price: databaseCocktail.price,
+          ingredientList: databaseCocktail.ingredients,
+        }))
+        .sort(drinkModel.compare);
+      const cocktailMenu = action.payload
+        // todo: active is a string in the database?
+        .filter((databaseCocktail) => databaseCocktail.active === "true")
+        .map((databaseCocktail) => ({
+          name: databaseCocktail.name,
+          alcoholVolume: databaseCocktail.alcoholVolume,
+          price: databaseCocktail.price,
+          ingredientList: databaseCocktail.ingredients,
+        }))
+        .sort(drinkModel.compare);
+      return {
+        ...state,
+        loading: false,
+        cocktailHistory: cocktailHistory,
+        cocktailMenu: cocktailMenu,
       };
 
     case "ADD_TO_MENU":
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
+        drinkModel.postBeerToDatabase(action.payload, state.currentBar, true);
         return {
           ...state,
-          menu: { ...state.menu, beer: [...state.menu.beer, action.payload] },
+          beerMenu: [...state.beerMenu, action.payload].sort(
+            drinkModel.compare
+          ),
         };
       } else
-        return {
-          ...state,
-          menu: {
-            ...state.menu,
-            cocktail: [...state.menu.cocktail, action.payload],
-          },
-        };
-
-    case "ADD_TO_HISTORY":
-      if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
-        return {
-          ...state,
-          history: {
-            ...state.history,
-            beer: [...state.history.beer, action.payload],
-          },
-        };
-      } else
-        return {
-          ...state,
-          history: {
-            ...state.history,
-            cocktail: [...state.history.cocktail, action.payload],
-          },
-        };
+        drinkModel.postCocktailToDatabase(
+          action.payload,
+          state.currentBar,
+          true
+        );
+      return {
+        ...state,
+        beerMenu: [...state.cocktailMenu, action.payload].sort(
+          drinkModel.compare
+        ),
+      };
 
     case "REMOVE_FROM_MENU":
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
+        drinkModel.postBeerToDatabase(action.payload, state.currentBar, false);
         return {
           ...state,
-          menu: {
-            ...state.menu,
-            beer: state.menu.beer.filter(
-              (beverage) => beverage.name !== action.payload.name
-            ),
-          },
+          beerMenu: state.beerMenu.filter(
+            (beverage) => beverage.name !== action.payload.name
+          ),
         };
-      } else
+      } else {
+        drinkModel.postCocktailToDatabase(
+          action.payload,
+          state.currentBar,
+          false
+        );
         return {
           ...state,
-          menu: {
-            ...state.menu,
-            cocktail: state.menu.cocktail.filter(
-              (beverage) => beverage.name !== action.payload.name
-            ),
-          },
+          cocktailMenu: state.cocktailMenu.filter(
+            (beverage) => beverage.name !== action.payload.name
+          ),
         };
+      }
 
     case "EDIT_IN_MENU":
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
+        drinkModel.postBeerToDatabase(action.payload, state.currentBar, true);
         return {
           ...state,
-          menu: {
-            ...state.menu,
-            beer: [
-              ...state.menu.beer.filter(
-                (beverage) => beverage.name !== action.payload.name
-              ),
-              action.payload,
-            ],
-          },
+          beerMenu: [
+            ...state.beerMenu.filter(
+              (beverage) => beverage.name !== action.payload.name
+            ),
+            action.payload,
+          ].sort(drinkModel.compare),
         };
-      } else
+      } else {
+        drinkModel.postCocktailToDatabase(
+          action.payload,
+          state.currentBar,
+          true
+        );
         return {
           ...state,
-          menu: {
-            ...state.menu,
-            cocktail: [
-              ...state.menu.cocktail.filter(
-                (beverage) => beverage.name !== action.payload.name
-              ),
-              action.payload,
-            ],
-          },
+          cocktailMenu: [
+            ...state.cocktailMenu.filter(
+              (beverage) => beverage.name !== action.payload.name
+            ),
+            action.payload,
+          ].sort(drinkModel.compare),
         };
+      }
 
     case "SWITCH_CURRENT_BAR":
       return {

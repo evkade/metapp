@@ -62,7 +62,6 @@ export const BeverageCard = ({
               onClick={() => openModal(beverage)}
               disabled={
                 menu.beer.some(
-                  // todo: this is a weird solution.
                   (menuItem: Beverage) => menuItem.name === beverage.name
                 ) ||
                 menu.cocktail.some(

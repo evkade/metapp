@@ -5,8 +5,6 @@ import {
   addToMenu,
   editInMenu,
   removeFromMenu,
-  getBeerHistory,
-  getCocktailHistory,
   addToHistory,
 } from "../../redux/actions/menu";
 import { searchTypes } from "../../constants/searchTypes";
@@ -22,9 +20,11 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 
 // props contain menu, addToMenu, removeFromMenu, editInMenu
 // todo: add props types to all props
+import DrinkModel from "../../model/drinkModel";
+
+const drinkModel = new DrinkModel();
 
 export const CustomizeMenuPresenter = (props) => {
-  console.log("PROPS", props);
   // Contains the information about which part of the menu we are customizing
   const [customizedType, setCustomizedType] = useState<string>(
     beverageTypes.BEER
@@ -42,65 +42,49 @@ export const CustomizeMenuPresenter = (props) => {
   );
 
   useEffect(() => {
-    getBeerHistory();
-    getCocktailHistory();
-  });
+    props.getBeerHistory(props.currentBar);
+    props.getCocktailHistory(props.currentBar);
+  }, [props.currentBar]);
 
   return (
-    <div className="admin-menu-container">
-      <div className="title-neon--small">Customize menu</div>
-      <div className="admin-menu-container__tabs">
-        <button
-          className="admin-menu-container__tab"
-          type="submit"
-          onClick={() => setCustomizedType(beverageTypes.BEER)}
-          disabled={customizedType === beverageTypes.BEER}
-        >
-          Beer
-        </button>
-        <button
-          className="admin-menu-container__tab"
-          type="submit"
-          onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
-          disabled={customizedType === beverageTypes.COCKTAIL}
-        >
-          Cocktail
-        </button>
-      </div>
-      <CustomizeMenu
-        showModal={showModal}
-        setShowModal={setShowModal}
-        modalBeverage={modalBeverage}
-        setModalBeverage={setModalBeverage}
-        menu={props.menu}
-        history={props.history}
-        addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
-        removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}
-        editInMenu={(beverage: Beverage) => props.editInMenu(beverage)}
-        customizedType={customizedType}
-        currentSearchType={currentSearchType}
-        setCurrentSearchType={setCurrentSearchType}
-        beverageCardType={beverageCardType}
-        setBeverageCardType={setBeverageCardType}
-      />
-    </div>
+    <CustomizeMenu
+      showModal={showModal}
+      setShowModal={setShowModal}
+      modalBeverage={modalBeverage}
+      setModalBeverage={setModalBeverage}
+      menu={props.menu}
+      history={props.history}
+      addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
+      removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}
+      editInMenu={(beverage: Beverage) => props.editInMenu(beverage)}
+      customizedType={customizedType}
+      setCustomizedType={setCustomizedType}
+      currentSearchType={currentSearchType}
+      setCurrentSearchType={setCurrentSearchType}
+      beverageCardType={beverageCardType}
+      setBeverageCardType={setBeverageCardType}
+    />
   );
 };
 
 const mapStateToProps = (store) => {
   console.log("STORE", store);
   return {
-    currentBar: store.currentBar,
-    menu: store.menu.menu,
-    history: store.menu.history,
+    currentBar: store.menu.currentBar,
+    menu: { beer: store.menu.beerMenu, cocktail: store.menu.cocktailMenu },
+    history: {
+      beer: store.menu.beerHistory,
+      cocktail: store.menu.cocktailHistory,
+    },
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getBeerHistory: () => dispatch(getBeerHistory()),
-    getCocktailHistory: () => dispatch(getCocktailHistory()),
-    // todo: add, remove, and edit should also do this in the database menus
+    getBeerHistory: (currentBar) =>
+      dispatch(drinkModel.getBeerHistory(currentBar)),
+    getCocktailHistory: (currentBar) =>
+      dispatch(drinkModel.getCocktailHistory(currentBar)),
     addToMenu: (beverage: Beverage) => dispatch(addToMenu(beverage)),
     addToHistory: (beverage: Beverage) => dispatch(addToHistory(beverage)),
     removeFromMenu: (beverage: Beverage) => dispatch(removeFromMenu(beverage)),

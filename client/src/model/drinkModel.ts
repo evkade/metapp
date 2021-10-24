@@ -1,69 +1,94 @@
 import { Beverage, Beer, Cocktail } from "../constants/beverageObjects";
+import {
+  fetchRequest,
+  setBeerHistory,
+  setCocktailHistory,
+} from "../redux/actions/menu";
 
 // todo maybe change name of this
 export default class DrinkModel {
-  // getCocktailsMenu(currentBar) {
-  //   const beers = fetch(
-  //     `http://localhost:5000/api/activecocktails?currentbar=${currentBar}`,
-  //     {
-  //       credentials: "include",
-  //     }
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => data)
-  //     .catch((err) => console.log(err));
-  //   return beers;
-  // }
-
-  // getBeersMenu(currentBar) {
-  //   const beers = fetch(
-  //     `http://localhost:5000/api/activebeers?currentbar=${currentBar}`,
-  //     {
-  //       credentials: "include",
-  //     }
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => data)
-  //     .catch((err) => console.log(err));
-  //   return beers;
-  // }
-
   getBeerHistory(currentBar) {
-    const beers = fetch(
-      `http://localhost:5000/api/beer?currentbar=${currentBar}`,
-      {
+    return (dispatch) => {
+      dispatch(fetchRequest());
+      fetch("http://localhost:5000/api/beer?currentbar=" + currentBar, {
         credentials: "include",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-    return beers;
+      })
+        .then((response) => response.json())
+        .then((data) => dispatch(setBeerHistory(data)))
+        .catch((err) => console.log(err));
+    };
   }
 
   getCocktailHistory(currentBar) {
-    const beers = fetch(
-      `http://localhost:5000/api/cocktail?currentbar=${currentBar}`,
+    return (dispatch) => {
+      dispatch(fetchRequest());
+      fetch("http://localhost:5000/api/cocktail?currentbar=" + currentBar)
+        .then((response) => response.json())
+        .then((data) => dispatch(setCocktailHistory(data)))
+        .catch((err) => console.log(err));
+    };
+  }
+
+  async postBeerToDatabase(beer: Beer, currentBar, active: boolean) {
+    const beerObjectForAPI = {
+      name: beer.name,
+      active: active,
+      price: beer.price,
+      percentage: beer.alcoholPercentage,
+      description: beer.type,
+    };
+
+    const response = await fetch(
+      "http://localhost:5000/api/beer?currentbar=" + currentBar,
       {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(beerObjectForAPI),
         credentials: "include",
       }
-    )
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-    return beers;
+    );
+    response.json().then((data) => {
+      console.log(data);
+    });
   }
 
-  addBeerInHistory(beer: Beer) {
-    // and menu
-    return;
+  // todo: harmonisera beverage objects med databasen
+  async postCocktailToDatabase(
+    cocktail: Cocktail,
+    currentBar,
+    active: boolean
+  ) {
+    const cocktailbjectForAPI = {
+      name: cocktail.name,
+      active: active,
+      price: cocktail.price,
+      ingredients: cocktail.ingredientList.map(
+        (ingredient, index) =>
+          ingredient + " " + cocktail.ingredientMeasuresList[index]
+      ),
+      alcoholVolume: cocktail.alcoholVolume,
+      description: "", // finns ej i cocktail object
+    };
+
+    const response = await fetch(
+      "http://localhost:5000/api/cocktail?currentbar=" + currentBar,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cocktailbjectForAPI),
+        credentials: "include",
+      }
+    );
+    response.json().then((data) => {
+      console.log(data);
+    });
   }
 
-  addCocktailInHistory(cokctail: Cocktail) {
-    // and menu
-    return;
-  }
-
+  // call to external API
   getCocktailBasedOnName(name: string): Promise<any> {
     const cocktails = this.getFetch(
       "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + name
@@ -71,17 +96,18 @@ export default class DrinkModel {
     return cocktails;
   }
 
-  async getFetch(url: string) {
-    return await fetch(url, {
-      method: "GET",
-    }).then((response) => response.json());
-  }
-
+  // call to external API
   getBeerBasedOnName(name: string) {
     const beers = this.postFetch("http://localhost:5000/api/apibeers", {
       name: name,
     }).then((data) => data);
     return beers;
+  }
+
+  async getFetch(url: string) {
+    return await fetch(url, {
+      method: "GET",
+    }).then((response) => response.json());
   }
 
   async postFetch(url: string, data) {
@@ -100,13 +126,12 @@ export default class DrinkModel {
       type: apiBeer.type,
       volume: apiBeer.volume_ml,
       alcoholPercentage: apiBeer.alcohol_vol,
-      price: +apiBeer.price_sek * 1.25,
+      price: Math.round(+apiBeer.price_sek * 1.25),
     };
     return beer;
   }
 
   setAPICocktailToObject(apiCocktail): Cocktail {
-    console.log(apiCocktail);
     var hashNumber: number = 1;
     var ingredientHash: string = "strIngredient" + hashNumber.toString();
     var measureHash: string = "strMeasure" + hashNumber.toString();
@@ -133,5 +158,15 @@ export default class DrinkModel {
     };
 
     return cocktail;
+  }
+
+  compare(a, b) {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
   }
 }
