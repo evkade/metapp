@@ -29,8 +29,6 @@ export default class DrinkModel {
     };
   }
 
-  // add === true: this is a whole new beer
-  // add === false: modify the existing beverage in the database
   async postBeerToDatabase(beer: Beer, currentBar, active: boolean) {
     const beerObjectForAPI = {
       name: beer.name,
