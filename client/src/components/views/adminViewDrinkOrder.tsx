@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Modal } from "react-bootstrap";
 
-export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
+export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
   const [drinkDetail, setDrinkDetail] = React.useState(null);
   const [showDrinkDetailModal, setShowDrinkDetailModal] = React.useState(false);
   const [collapseInfo, setCollapseInfo] = React.useState({
@@ -9,12 +9,19 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
     row2: "+",
   });
 
+  console.log(menu);
+
   const singleBeverageCard = (drink) => {
+    console.log(drink);
     return (
       <Card
         key={drink.id}
-        className={"drinkCard" + (drink.made ? " drinkCard--made" : "")}
-        id={"drinkCard#" + drink.id}
+        className={
+          "card-drink" +
+          (drink.made ? " card-drink--made" : "") +
+          (drink.paid ? " card-drink--finished" : "")
+        }
+        id={"card-drink#" + drink.id}
       >
         <p
           className="card-drink__text card-drink__text--title"
@@ -27,11 +34,17 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
         </p>
         <p className="card-drink__text">Ordered by: {drink.user}</p>{" "}
         {/** TODO get username */}
-        <p className="card-drink__text">Price per drink: {drink.price}</p>{" "}
-        {/** TODO get from menu */}
         <p className="card-drink__text">
-          Total price: {drink.price * drink.quantity}{" "}
-          {/** TODO get from menu */}
+          Price per drink:{" "}
+          {menu &&
+            menu.filter((beverage) => beverage.id === drink.order[0].id)[0]
+              .price}
+        </p>{" "}
+        <p className="card-drink__text">
+          Total price:{" "}
+          {menu &&
+            +menu.filter((beverage) => beverage.id === drink.order[0].id)[0]
+              .price * +drink.order[0].quantity}{" "}
         </p>
         <button
           className="card-drink__button"
@@ -72,12 +85,7 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
           Multiple beverages (click for details)
         </p>
         <p className="card-drink__text">Ordered by: {drink.user}</p>
-        <p className="card-drink__text">Price per drink: {drink.price}</p>{" "}
-        {/** TODO get from menu */}
-        <p className="card-drink__text">
-          Total price: {drink.price * drink.quantity}{" "}
-          {/** TODO get from menu */}
-        </p>
+        <p className="card-drink__text">Total price: {getTotalPrice(drink)} </p>
         <button
           className="card-drink__button"
           disabled={drink.made}
@@ -94,6 +102,16 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid }) => {
         </button>
       </Card>
     );
+  };
+
+  const getTotalPrice = (beverage) => {
+    var totPrice = 0;
+    beverage.order.forEach(
+      (order) =>
+        (totPrice +=
+          menu.filter((bev) => bev.id === order.id)[0].price * order.quantity)
+    );
+    return totPrice;
   };
 
   const finishedOrdersCard = (drink) => {

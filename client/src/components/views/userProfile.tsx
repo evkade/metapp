@@ -55,7 +55,7 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
             orders
               .filter((o) => o.made && o.paid)
               .sort((a, b) => {
-                return +new Date(a.date) - +new Date(b.date);
+                return +new Date(b.date) - +new Date(a.date);
               })
               .map((order) => {
                 return (

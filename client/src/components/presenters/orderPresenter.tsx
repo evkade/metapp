@@ -52,8 +52,8 @@ export const OrderPresenter = ({
     setTotalInfo(newTotalInfo);
   };
 
-  const addToOrder = (name, price) => {
-    setOrderItems([...orderItems, { name, price, count: 1 }]);
+  const addToOrder = (name, price, id) => {
+    setOrderItems([...orderItems, { name, price, id, count: 1 }]);
     addToTotalInfo(price);
   };
 
@@ -61,6 +61,7 @@ export const OrderPresenter = ({
     const modifiedOrderList = orderItems.map((item) => {
       if (item.name === name) {
         return {
+          id: item.id,
           name: item.name,
           price: item.price,
           count: item.count + 1,
@@ -73,12 +74,12 @@ export const OrderPresenter = ({
     addToTotalInfo(price);
   };
 
-  const addOrIncreaseOrder = (name, price) => {
+  const addOrIncreaseOrder = (name, price, id) => {
     const isItemPresent: boolean = orderItems.some((item) => item.name == name);
     if (isItemPresent) {
       increaseOrderCount(name, price);
     } else {
-      addToOrder(name, price);
+      addToOrder(name, price, id);
     }
   };
 
@@ -86,6 +87,7 @@ export const OrderPresenter = ({
     const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
         return {
+          id: item.id,
           name: item.name,
           count: item.count - 1,
         };
@@ -116,7 +118,7 @@ export const OrderPresenter = ({
       unfinishedOrder={unfinishedOrder}
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
-      addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
+      addToOrder={(name, price, id) => addOrIncreaseOrder(name, price, id)}
       removeFromOrder={(name) => removeFromOrder(name)}
       addToFavorites={(name) => addToFavorites(name)}
       removeFromFavorites={(name) => removeFromFavorites(name)}

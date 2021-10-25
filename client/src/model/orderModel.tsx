@@ -94,12 +94,13 @@ export default class OrderModel {
   placeOrder(order, userId, currentBar, socket) {
     const date = this.getDateStamp();
     const time = this.getTimeStamp();
+    console.log(order);
     const finalOrder = {
       user: userId,
       date: date,
       bar: currentBar,
       order: order.order.map((o) => {
-        return { beverage: o.name, quantity: o.count };
+        return { beverage: o.name, quantity: o.count, id: o.id };
       }),
     };
 
