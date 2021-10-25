@@ -46,8 +46,7 @@ router.post(
       req.session = {
         jwt: token,
       };
-      user.password = undefined
-      res.status(200).send(user);
+      res.status(200).send({ id: user._id, name: user.username, Credential: user.credentials });
     }
 
   }
