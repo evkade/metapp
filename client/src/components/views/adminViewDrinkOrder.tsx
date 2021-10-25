@@ -1,7 +1,13 @@
 import React from "react";
 import { Card, Modal } from "react-bootstrap";
 
-export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
+export const AdminViewDrinkOrder = ({
+  orders,
+  drinkMade,
+  drinkPaid,
+  menu,
+  cancel,
+}) => {
   const [drinkDetail, setDrinkDetail] = React.useState(null);
   const [showDrinkDetailModal, setShowDrinkDetailModal] = React.useState(false);
   const [collapseInfo, setCollapseInfo] = React.useState({
@@ -9,10 +15,7 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
     row2: "+",
   });
 
-  console.log(menu);
-
   const singleBeverageCard = (drink) => {
-    console.log(drink);
     return (
       <Card
         key={drink.id}
@@ -37,14 +40,16 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
         <p className="card-drink__text">
           Price per drink:{" "}
           {menu &&
-            menu.filter((beverage) => beverage.id === drink.order[0].id)[0]
-              .price}
+            menu.filter(
+              (beverage) => beverage.name === drink.order[0].beverage
+            )[0].price}
         </p>{" "}
         <p className="card-drink__text">
           Total price:{" "}
           {menu &&
-            +menu.filter((beverage) => beverage.id === drink.order[0].id)[0]
-              .price * +drink.order[0].quantity}{" "}
+            +menu.filter(
+              (beverage) => beverage.name === drink.order[0].beverage
+            )[0].price * +drink.order[0].quantity}{" "}
         </p>
         <button
           className="card-drink__button"
@@ -60,6 +65,9 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
         >
           Paid
         </button>
+        <button className="card-drink__button" onClick={() => cancel(drink.id)}>
+          Cancel order
+        </button>
       </Card>
     );
   };
@@ -67,7 +75,7 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
   const multipleBeveragesCard = (drink) => {
     return (
       <Card
-        key={drink._id}
+        key={drink.id}
         className={
           "card-drink" +
           (drink.made ? " card-drink--made" : "") +
@@ -100,6 +108,9 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
         >
           Paid
         </button>
+        <button className="card-drink__button" onClick={() => cancel(drink.id)}>
+          Cancel order
+        </button>
       </Card>
     );
   };
@@ -109,20 +120,34 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
     beverage.order.forEach(
       (order) =>
         (totPrice +=
-          menu.filter((bev) => bev.id === order.id)[0].price * order.quantity)
+          menu.filter((bev) => bev.name === order.beverage)[0].price *
+          order.quantity)
     );
     return totPrice;
   };
 
   const finishedOrdersCard = (drink) => {
     return (
-      <Card key={drink.id} className="card-drink card-drink--finished">
+      <Card
+        key={drink.id}
+        className={
+          "card-drink" +
+          (drink.cancelled ? " card-drink--cancelled" : "") +
+          (drink.paid ? " card-drink--finished" : "")
+        }
+      >
         <span key={drink.order.id} className="card-drink__text">
           {drink.order.map((b) => b.quantity + " " + b.beverage + ", ")}
         </span>
         <p className="card-drink__text">Ordered by: {drink.user}</p>
-        <p className="card-drink__text">Made at: {drink.timeMade}</p>
-        <p className="card-drink__text">Paid at: {drink.timePaid}</p>
+        {drink.cancelled ? (
+          <p className="card-drink__text">CANCELLED</p>
+        ) : (
+          <>
+            <p className="card-drink__text">Made at: {drink.timeMade}</p>
+            <p className="card-drink__text">Paid at: {drink.timePaid}</p>
+          </>
+        )}
       </Card>
     );
   };
@@ -194,7 +219,7 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
           <div id="collapsible1" className="admin-menu-container__collapsible">
             {orders &&
               orders
-                .filter((o) => !o.made || !o.paid)
+                .filter((o) => (!o.made || !o.paid) && !o.cancelled)
                 .map((b) =>
                   b.order.length === 1
                     ? singleBeverageCard(b)
@@ -214,7 +239,7 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
             <div>
               {orders &&
                 orders
-                  .filter((o) => o.made && o.paid)
+                  .filter((o) => (o.made && o.paid) || o.cancelled)
                   .map((d) => finishedOrdersCard(d))}
             </div>
           </div>

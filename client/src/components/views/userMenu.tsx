@@ -33,8 +33,8 @@ export const UserMenu = ({
                 item={item}
                 key={index}
                 index={index}
-                addToOrder={(name: string, price: string, id: string) =>
-                  addToOrder(name, price, id)
+                addToOrder={(name: string, price: string) =>
+                  addToOrder(name, price)
                 }
                 removeFromOrder={(name: string, price: string) =>
                   removeFromOrder(name, price)

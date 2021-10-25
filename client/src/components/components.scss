@@ -163,6 +163,9 @@ body {
     background-color: $light-neon-color-green;
     border: 1px solid $neon-color-green;
   }
+  &--cancelled {
+    background-color: #cccccc;
+  }
   &__text {
     cursor: pointer;
   }

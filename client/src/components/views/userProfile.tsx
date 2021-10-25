@@ -17,7 +17,7 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
         <div className="info-card-drink__title">Current orders</div>
         <div className="info-card-drink__container--scroll">
           {orders
-            .filter((o) => !o.paid)
+            .filter((o) => !o.paid && !o.cancelled)
             .map((order) => (
               <div className="info-card-drink__row" key={order.id}>
                 <div className="info-card-drink__column--flex">
@@ -53,7 +53,12 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
         <div className="info-card-drink__container--scroll">
           {orders && orders.length > 0 ? (
             orders
-              .filter((o) => o.made && o.paid)
+              .filter((o) => (o.made && o.paid) || o.cancelled)
+              .sort((a, b) => {
+                if (a.cancelled && b.cancelled) return 0;
+                else if (b.cancelled) return 1;
+                else return -1;
+              })
               .sort((a, b) => {
                 return +new Date(b.date) - +new Date(a.date);
               })
@@ -61,7 +66,9 @@ const UserProfile = ({ username, orders, favorites, removeFromFavorites }) => {
                 return (
                   <div className="info-card-drink__row" key={order.id}>
                     <div className="info-card-drink__column--flex">
-                      {order.bar === "dkm" ? (
+                      {order.cancelled ? (
+                        "CANCELLED"
+                      ) : order.bar === "dkm" ? (
                         <img src={dkmlogo} width="20px" />
                       ) : (
                         <img src={mkmlogo} width="20px" />

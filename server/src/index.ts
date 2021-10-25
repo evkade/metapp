@@ -13,7 +13,7 @@ import { cocktailRouter } from "./routes/cocktail";
 import { userRouter } from "./routes/user";
 import { menuRouter } from "./routes/menu";
 import { orderRouter } from "./routes/orders";
-import { errorHandler } from './services/error-handler/errorHandler';
+import { errorHandler } from "./services/error-handler/errorHandler";
 
 const socket = require("socket.io");
 const bp = require("body-parser");
@@ -87,7 +87,7 @@ app.get("/", (req, res) => {
   res.send("Express + TypeScript Server");
 });
 
-app.use(errorHandler)
+app.use(errorHandler);
 const server = app.listen(Port, () => {
   console.log(
     `⚡️[server]: Server is running in ${process.env.NODE_ENV} at https://localhost:${Port}`
@@ -112,5 +112,9 @@ io.on("connection", (socket: any) => {
 
   socket.on("paid", (data: any) => {
     io.sockets.emit("paid", data);
+  });
+
+  socket.on("cancelled", (id: String) => {
+    io.sockets.emit("cancelled", { id });
   });
 });

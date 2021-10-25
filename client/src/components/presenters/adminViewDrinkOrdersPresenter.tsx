@@ -13,6 +13,7 @@ const AdminViewDrinkOrdersPresenter = ({
   orders,
   makeOrder,
   payForOrder,
+  cancelOrder,
   getOrders,
   newOrder,
   menu,
@@ -28,7 +29,7 @@ const AdminViewDrinkOrdersPresenter = ({
     }
 
     const addNewOrder = (order) => {
-      newOrder(order);
+      if (order.bar === menu.currentBar) newOrder(order);
     };
 
     socket.on("orderPlaced", addNewOrder);
@@ -38,8 +39,6 @@ const AdminViewDrinkOrdersPresenter = ({
     };
   }, [menu.currentBar]);
 
-  console.log(orders, menu);
-
   const pay = (id) => {
     payForOrder(id, socket);
   };
@@ -48,12 +47,17 @@ const AdminViewDrinkOrdersPresenter = ({
     makeOrder(id, socket);
   };
 
+  const cancel = (id) => {
+    cancelOrder(id, socket);
+  };
+
   return (
     <AdminViewDrinkOrder
       orders={orders.orders}
       menu={[...menu.beerMenu, ...menu.cocktailMenu]}
       drinkMade={make}
       drinkPaid={pay}
+      cancel={cancel}
     />
   );
 };
@@ -69,6 +73,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     makeOrder: (id, socket) => dispatch(ordermodel.makeOrder(id, socket)),
     payForOrder: (id, socket) => dispatch(ordermodel.payForOrder(id, socket)),
+    cancelOrder: (id, socket) => dispatch(ordermodel.cancelOrder(id, socket)),
     getOrders: (currentBar) => dispatch(ordermodel.getOrders(currentBar)),
     newOrder: (order) => dispatch(addNewOrder(order)),
     getBeerHistory: (currentBar) =>

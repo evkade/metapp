@@ -38,6 +38,7 @@ export async function getOrders(bar: string | any): Promise<Order> {
       paid: order.paid,
       timePaid: order.timePaid,
       bar: order.bar,
+      cancelled: order.cancelled,
     };
   });
 }
@@ -78,6 +79,14 @@ export async function payForBeverage(
     .catch((err: Error) => console.log(err));
 }
 
+export async function cancelOrder(orderId: String): Promise<void> {
+  await OrderModel.findByIdAndUpdate(orderId, { cancelled: true }, (err) => {
+    if (err) throw new Error("");
+  }) //@ts-ignore
+    .clone()
+    .catch((err: Error) => console.log(err));
+}
+
 export async function getUserOrders(userId: String | any) {
   const data = await OrderModel.find({ user: userId }, (err, orders) => {
     if (err) throw new Error("Could not fetch from database");
@@ -98,6 +107,7 @@ export async function getUserOrders(userId: String | any) {
       paid: order.paid,
       timePaid: order.timePaid,
       bar: order.bar,
+      cancelled: order.cancelled,
     };
   });
 }

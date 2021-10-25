@@ -5,6 +5,7 @@ import {
   makeBeverage,
   payForBeverage,
   getUserOrders,
+  cancelOrder,
 } from "../controllers/orders";
 import { isSignedIn } from "../services/middleware";
 import { ErrorException } from "../services/error-handler/errorException";
@@ -67,6 +68,21 @@ router.post(
 
     console.log("payDrink ", req.body);
     await payForBeverage(req.body.id, req.body.timestamp);
+
+    res.sendStatus(200);
+  }
+);
+
+router.post(
+  "/api/orders/cancel",
+  isSignedIn,
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.currentUser || !req.currentUser.isAdmin) {
+      next(new ErrorException(ErrorCode.Unauthenticated));
+    }
+
+    console.log("cancelOrder ", req.body);
+    await cancelOrder(req.body.id);
 
     res.sendStatus(200);
   }

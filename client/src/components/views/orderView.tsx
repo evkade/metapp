@@ -41,7 +41,7 @@ const OrderView = ({
               key={index}
               item={item}
               index={index}
-              addToOrder={(name, cost, id) => addToOrder(name, cost, id)}
+              addToOrder={(name, cost) => addToOrder(name, cost)}
               removeFromOrder={(name) => removeFromOrder(name)}
               count={item.count}
               addFavorite={(name) => addToFavorites(name)}
