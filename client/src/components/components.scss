@@ -231,6 +231,9 @@ body {
     color: white;
     width: 30%;
   }
+  @at-root #{&}__column--black {
+    color: black;
+  }
   @at-root #{&}__column--flexed {
     flex: 1;
   }
@@ -310,6 +313,11 @@ body {
   color: white;
   border-radius: 6px;
   border: 1px solid white;
+}
+
+.general-button--black {
+  color: black;
+  border: 1px solid black;
 }
 
 .general-button--bw:disabled {
