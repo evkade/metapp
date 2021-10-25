@@ -8,6 +8,9 @@ import {
 } from "../../redux/actions/user";
 import { useHistory } from "react-router-dom";
 import { UserMenu } from "../views/userMenu";
+import DrinkModel from "../../model/drinkModel";
+
+const drinkModel = new DrinkModel();
 
 export const UserMenuPresenter = ({
   orders,
@@ -16,6 +19,11 @@ export const UserMenuPresenter = ({
   favorites,
   unfinishedOrderPlaced,
   unfinishedOrder,
+  cocktailMenu,
+  beerMenu,
+  currentBar,
+  getBeerHistory,
+  getCocktailHistory,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
@@ -42,96 +50,11 @@ export const UserMenuPresenter = ({
     } else {
       setOrderItems([]);
     }
-  }, []);
+    getBeerHistory(currentBar);
+    getCocktailHistory(currentBar);
+  }, [currentBar]);
 
   let history = useHistory();
-
-  const menuItems = [
-    {
-      id: 1,
-      name: "Beer",
-      description: "fruity",
-      price: 100,
-      alcoholPercentage: 4.4,
-    },
-    {
-      id: 2,
-      name: "Wine",
-      description: "DRY",
-      price: 20,
-      alcoholPercentage: 13,
-    },
-    {
-      id: 3,
-      name: "Cider",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider2",
-      description: "Boozy",
-      price: 5,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider3",
-      description: "Boozy",
-      price: 50,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider4",
-      description: "Boozy",
-      price: 40,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider5",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider6",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider7",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider8",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider9",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-    {
-      id: 3,
-      name: "Cider10",
-      description: "Boozy",
-      price: 10,
-      alcoholPercentage: 5,
-    },
-  ];
 
   const addOrRemoveTotalInfo = (cost, action) => {
     var newTotalCost = 0;
@@ -148,15 +71,18 @@ export const UserMenuPresenter = ({
     setTotalInfo(newTotalInfo);
   };
 
-  const addToOrder = (name, price) => {
-    setOrderItems([...orderItems, { name, price, count: 1 }]);
+  const addToOrder = (name, price, id) => {
+    setOrderItems([...orderItems, { name, price, id, count: 1 }]);
     addOrRemoveTotalInfo(price, "add");
   };
+
+  console.log(orderItems);
 
   const increaseOrderCount = (name, price) => {
     const modifiedOrderList = orderItems.map((item) => {
       if (item.name === name) {
         return {
+          id: item.id,
           name: item.name,
           price: item.price,
           count: item.count + 1,
@@ -169,12 +95,12 @@ export const UserMenuPresenter = ({
     addOrRemoveTotalInfo(price, "add");
   };
 
-  const addOrIncreaseOrder = (name, price) => {
+  const addOrIncreaseOrder = (name, price, id) => {
     const isItemPresent: boolean = orderItems.some((item) => item.name == name);
     if (isItemPresent) {
       increaseOrderCount(name, price);
     } else {
-      addToOrder(name, price);
+      addToOrder(name, price, id);
     }
   };
 
@@ -182,6 +108,7 @@ export const UserMenuPresenter = ({
     const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
         return {
+          id: item.id,
           name: item.name,
           count: item.count - 1,
         };
@@ -213,8 +140,8 @@ export const UserMenuPresenter = ({
     <UserMenu
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
-      menuItems={menuItems}
-      addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
+      menuItems={[...beerMenu, ...cocktailMenu]}
+      addToOrder={(name, price, id) => addOrIncreaseOrder(name, price, id)}
       removeFromOrder={(name, price) => removeFromOrder(name, price)}
       placeUnFinishedOrder={() => placeUnFinishedOrder()}
       addToFavorites={(name) => addToFavorites(name)}
@@ -230,6 +157,9 @@ const mapStateToProps = (store) => {
     orders: store.orders,
     favorites: store.user.favorites,
     unfinishedOrder: store.user.unfinishedOrder,
+    beerMenu: store.menu.beerMenu,
+    cocktailMenu: store.menu.cocktailMenu,
+    currentBar: store.menu.currentBar,
   };
 };
 
@@ -239,6 +169,10 @@ const mapDispatchToProps = (dispatch) => {
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     unfinishedOrderPlaced: (beverages) =>
       dispatch(unfinishedOrderPlaced(beverages)),
+    getBeerHistory: (currentBar) =>
+      dispatch(drinkModel.getBeerHistory(currentBar)),
+    getCocktailHistory: (currentBar) =>
+      dispatch(drinkModel.getCocktailHistory(currentBar)),
   };
 };
 

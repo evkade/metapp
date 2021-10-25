@@ -12,34 +12,42 @@ import { ErrorCode } from "../services/error-handler/errorCode";
 
 const router = express.Router();
 
-router.get("/api/orders", isSignedIn, async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.currentUser) {
-    next(new ErrorException(ErrorCode.Unauthenticated))
+router.get(
+  "/api/orders",
+  isSignedIn,
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.currentUser) {
+      next(new ErrorException(ErrorCode.Unauthenticated));
+    }
+
+    console.log(req.query.currentbar);
+    const orders = await getOrders(req.query.currentbar);
+
+    res.status(200).send({ orders: orders });
   }
+);
 
-  console.log(req.query.currentbar);
-  const orders = await getOrders(req.query.currentbar);
+router.post(
+  "/api/orders",
+  isSignedIn,
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.currentUser) {
+      next(new ErrorException(ErrorCode.Unauthenticated));
+    }
+    console.log("addOrder ", req.body);
 
-  res.status(200).send({ orders: orders });
-});
+    const order = await addOrder(req.body);
 
-router.post("/api/orders", isSignedIn, async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.currentUser) {
-    next(new ErrorException(ErrorCode.Unauthenticated))
+    res.status(200).send(order);
   }
-  console.log("addOrder ", req.body);
-
-  const order = await addOrder(req.body);
-
-  res.status(200).send(order);
-});
+);
 
 router.post(
   "/api/orders/make",
   isSignedIn,
   async (req: Request, res: Response, next: NextFunction) => {
     if (!req.currentUser) {
-      next(new ErrorException(ErrorCode.Unauthenticated))
+      next(new ErrorException(ErrorCode.Unauthenticated));
     }
 
     console.log("makeDink ", req.body);
@@ -54,7 +62,7 @@ router.post(
   isSignedIn,
   async (req: Request, res: Response, next: NextFunction) => {
     if (!req.currentUser) {
-      next(new ErrorException(ErrorCode.Unauthenticated))
+      next(new ErrorException(ErrorCode.Unauthenticated));
     }
 
     console.log("payDrink ", req.body);

@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import { addNewOrder } from "../../redux/actions/orders";
 import OrderModel from "../../model/orderModel";
 import { AdminViewDrinkOrder } from "../views/adminViewDrinkOrder";
+import DrinkModel from "../../model/drinkModel";
 
 const ordermodel = new OrderModel();
+const drinkModel = new DrinkModel();
 
 const AdminViewDrinkOrdersPresenter = ({
   socket,
@@ -14,9 +16,16 @@ const AdminViewDrinkOrdersPresenter = ({
   getOrders,
   newOrder,
   menu,
+  getBeerHistory,
+  getCocktailHistory,
 }) => {
   useEffect(() => {
     getOrders(menu.currentBar);
+
+    if (menu.beerMenu.length === 0 && menu.cocktailMenu.length === 0) {
+      getBeerHistory(menu.currentBar);
+      getCocktailHistory(menu.currentBar);
+    }
 
     const addNewOrder = (order) => {
       newOrder(order);
@@ -29,6 +38,8 @@ const AdminViewDrinkOrdersPresenter = ({
     };
   }, [menu.currentBar]);
 
+  console.log(orders, menu);
+
   const pay = (id) => {
     payForOrder(id, socket);
   };
@@ -40,6 +51,7 @@ const AdminViewDrinkOrdersPresenter = ({
   return (
     <AdminViewDrinkOrder
       orders={orders.orders}
+      menu={[...menu.beerMenu, ...menu.cocktailMenu]}
       drinkMade={make}
       drinkPaid={pay}
     />
@@ -59,6 +71,10 @@ const mapDispatchToProps = (dispatch) => {
     payForOrder: (id, socket) => dispatch(ordermodel.payForOrder(id, socket)),
     getOrders: (currentBar) => dispatch(ordermodel.getOrders(currentBar)),
     newOrder: (order) => dispatch(addNewOrder(order)),
+    getBeerHistory: (currentBar) =>
+      dispatch(drinkModel.getBeerHistory(currentBar)),
+    getCocktailHistory: (currentBar) =>
+      dispatch(drinkModel.getCocktailHistory(currentBar)),
   };
 };
 

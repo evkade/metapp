@@ -67,7 +67,7 @@ const Drink = ({
             {" "}
             <button
               className="general-button--bw"
-              onClick={() => addToOrder(item.name, item.price)}
+              onClick={() => addToOrder(item.name, item.price, item.id)}
             >
               +
             </button>
