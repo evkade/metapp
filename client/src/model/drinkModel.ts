@@ -64,12 +64,9 @@ export default class DrinkModel {
       name: cocktail.name,
       active: active,
       price: cocktail.price,
-      ingredients: cocktail.ingredientList.map(
-        (ingredient, index) =>
-          ingredient + " " + cocktail.ingredientMeasuresList[index]
-      ),
+      ingredients: "", // todo: temporary solution, modify structure of ingredients in object
       alcoholVolume: cocktail.alcoholVolume,
-      description: "", // finns ej i cocktail object
+      description: "", // todo: finns ej i cocktail object
     };
 
     const response = await fetch(

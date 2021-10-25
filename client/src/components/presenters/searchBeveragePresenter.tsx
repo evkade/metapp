@@ -83,6 +83,7 @@ export const SearchBeveragePresenter = ({
   }, [beverageData, beverageError]);
 
   useEffect(() => {
+    console.log("[HERE]");
     if (currentSearchType === searchTypes.HISTORY) {
       switch (customizedType) {
         case beverageTypes.BEER:
@@ -92,8 +93,8 @@ export const SearchBeveragePresenter = ({
           setSearchResults(history.cocktail);
           break;
       }
-    }
-  }, [currentSearchType]);
+    } else setSearchResults([]);
+  }, [customizedType, currentSearchType]);
 
   return (
     <>
