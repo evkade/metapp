@@ -41,12 +41,16 @@ export const SearchBeveragePresenter = ({
       switch (customizedType) {
         case beverageTypes.BEER:
           setSearchResults(
-            history.beer.filter((beer) => beer.name.includes(query))
+            history.beer.filter((beer) =>
+              beer.name.toLowerCase().includes(query.toLowerCase())
+            )
           );
           break;
         case beverageTypes.COCKTAIL:
           setSearchResults(
-            history.cocktail.filter((cocktail) => cocktail.name.includes(query))
+            history.cocktail.filter((cocktail) =>
+              cocktail.name.toLowerCase().includes(query.toLowerCase())
+            )
           );
           break;
       }
@@ -83,6 +87,7 @@ export const SearchBeveragePresenter = ({
   }, [beverageData, beverageError]);
 
   useEffect(() => {
+    console.log("[HERE]");
     if (currentSearchType === searchTypes.HISTORY) {
       switch (customizedType) {
         case beverageTypes.BEER:
@@ -92,8 +97,8 @@ export const SearchBeveragePresenter = ({
           setSearchResults(history.cocktail);
           break;
       }
-    }
-  }, [currentSearchType]);
+    } else setSearchResults([]);
+  }, [customizedType, currentSearchType]);
 
   return (
     <>

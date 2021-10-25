@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { searchTypes, beverageTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
 import { BeverageCard } from "./beverageCard";
@@ -23,6 +23,10 @@ export const SearchBeverage = ({
   customizedType,
 }) => {
   const [query, setQuery] = useState<string>("");
+
+  useEffect(() => {
+    setQuery("");
+  }, [customizedType, currentSearchType]);
 
   // todo: I think this should go into the presenter
   const openModal = (beverage: Beverage) => {
@@ -57,7 +61,7 @@ export const SearchBeverage = ({
         </option>
         <option
           value={searchTypes.HISTORY}
-          onClick={() => setCurrentSearchType(searchTypes.HISTORY)} // setCurrentSearchType(searchTypes.HISTORY)}
+          onClick={() => setCurrentSearchType(searchTypes.HISTORY)}
         >
           Find in history
         </option>
