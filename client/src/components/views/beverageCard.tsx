@@ -21,14 +21,14 @@ export const BeverageCard = ({
         return (
           <div>
             <button
-              className="general-button--bw"
+              className="general-button--bw general-button--black"
               onClick={() => addToOrder(beverage.name)}
             >
               +
             </button>
             <span> {count} </span>
             <button
-              className="general-button--bw"
+              className="general-button--bw general-button--black"
               onClick={() => removeFromOrder(beverage.name)}
             >
               -
@@ -39,14 +39,14 @@ export const BeverageCard = ({
         return (
           <div>
             <button
-              className="general-button--bw"
+              className="general-button--bw general-button--black"
               onClick={() => openModal(beverage)}
             >
               {" "}
               Edit{" "}
             </button>
             <button
-              className="general-button--bw"
+              className="general-button--bw general-button--black"
               onClick={() => removeFromMenu(beverage)}
             >
               {" "}
@@ -58,7 +58,7 @@ export const BeverageCard = ({
         return (
           <div>
             <button
-              className="general-button--bw"
+              className="general-button--bw general-button--black"
               onClick={() => openModal(beverage)}
               disabled={
                 menu.beer.some(
@@ -108,11 +108,13 @@ export const BeverageCard = ({
 
   return (
     <div key={index} className="drink-list__row">
-      <div className="drink-list__column">{beverage.name}</div>
-      <div className="drink-list__column drink-list__column--flexed">
+      <div className="drink-list__column drink-list__column--black">
+        {beverage.name}
+      </div>
+      <div className="drink-list__column drink-list__column--black drink-list__column--flexed">
         {information()}
       </div>
-      <div className="drink-list__column drink-list__column--flexed">
+      <div className="drink-list__column drink-list__column--black drink-list__column--flexed">
         {buttons()}
       </div>
     </div>

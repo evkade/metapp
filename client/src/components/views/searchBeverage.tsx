@@ -65,14 +65,14 @@ export const SearchBeverage = ({
       <button
         type="submit"
         onClick={() => searchBeverage(query)}
-        className="general-button--bw"
+        className="general-button--bw general-button--black"
       >
         Search
       </button>
       <button
         type="submit"
         onClick={() => openNewBeverageModal(query)}
-        className="admin-menu-container__button"
+        className="general-button--bw general-button--black"
       >
         Create
       </button>
