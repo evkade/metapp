@@ -89,7 +89,7 @@ const menuReducer = (state = initialState, action) => {
         );
       return {
         ...state,
-        beerMenu: [...state.cocktailMenu, action.payload].sort(
+        cocktailMenu: [...state.cocktailMenu, action.payload].sort(
           drinkModel.compare
         ),
       };
