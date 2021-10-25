@@ -41,12 +41,16 @@ export const SearchBeveragePresenter = ({
       switch (customizedType) {
         case beverageTypes.BEER:
           setSearchResults(
-            history.beer.filter((beer) => beer.name.includes(query))
+            history.beer.filter((beer) =>
+              beer.name.toLowerCase().includes(query.toLowerCase())
+            )
           );
           break;
         case beverageTypes.COCKTAIL:
           setSearchResults(
-            history.cocktail.filter((cocktail) => cocktail.name.includes(query))
+            history.cocktail.filter((cocktail) =>
+              cocktail.name.toLowerCase().includes(query.toLowerCase())
+            )
           );
           break;
       }
