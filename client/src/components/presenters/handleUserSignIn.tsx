@@ -35,8 +35,8 @@ const HandleUserSignIn = ({ user, signIn }) => {
       })
       .then((user) => {
         signIn({
-          _id: user._id,
-          username: user.username,
+          _id: user.id,
+          username: user.name,
           isAdmin: user.credentials === "admin",
         });
         if (user.credentials === "user") history.push("/menu");

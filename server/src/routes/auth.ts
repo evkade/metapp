@@ -7,15 +7,18 @@ import { User } from "../models/interfaces";
 import { ErrorException } from "../services/error-handler/errorException";
 import { ErrorCode } from "../services/error-handler/errorCode";
 
-
 const router = express.Router();
 
-router.get("/api/auth/currentuser", isSignedIn, (req: Request, res: Response, next: NextFunction) => {
-  if (!req.currentUser) {
-    next(new ErrorException(ErrorCode.Unauthenticated))
+router.get(
+  "/api/auth/currentuser",
+  isSignedIn,
+  (req: Request, res: Response, next: NextFunction) => {
+    if (!req.currentUser) {
+      next(new ErrorException(ErrorCode.Unauthenticated));
+    }
+    return res.status(200).send({ currentUser: req.currentUser });
   }
-  return res.status(200).send({ currentUser: req.currentUser });
-});
+);
 
 router.post(
   "/api/auth/signin",
@@ -32,23 +35,26 @@ router.post(
     const { user, token } = await AuthService.signIn(username, password).catch(
       (err) => {
         req.session = null;
-        next(err)
+        next(err);
       }
     );
 
+    console.log(user);
+
     if (user === undefined) {
-      next(new ErrorException(ErrorCode.WrongCredentials))
-    }
-    if (user === null) {
-      next(new ErrorException(ErrorCode.UserNotFound))
-    }
-    else {
+      next(new ErrorException(ErrorCode.WrongCredentials));
+    } else if (user === null) {
+      next(new ErrorException(ErrorCode.UserNotFound));
+    } else {
       req.session = {
         jwt: token,
       };
-      res.status(200).send({ id: user._id, name: user.username, Credential: user.credentials });
+      res.status(200).send({
+        id: user._id,
+        name: user.username,
+        credential: user.credentials,
+      });
     }
-
   }
 );
 
@@ -63,14 +69,19 @@ router.post(
   ],
   async (req: Request, res: Response, next: NextFunction) => {
     //@ts-ignore
-    const user: User | null = await addUser(req.body).catch((err) => { next(err) });
+    const user: User | null = await addUser(req.body).catch((err) => {
+      next(err);
+    });
     if (user === null) {
-      next(new ErrorException(ErrorCode.UserAlreadyExists))
+      next(new ErrorException(ErrorCode.UserAlreadyExists));
+    } else {
+      res.status(201).send({
+        id: user._id,
+        name: user.username,
+        Credential: user.credentials,
+        email: user.email,
+      });
     }
-    else {
-      res.status(201).send({ id: user._id, name: user.username, Credential: user.credentials, email: user.email });
-    }
-
   }
 );
 

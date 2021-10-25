@@ -6,6 +6,7 @@ export interface UserPayload {
   id: string;
   email: string;
   c: boolean;
+  isAdmin: boolean;
 }
 
 // currentUser to the req object
@@ -17,18 +18,13 @@ declare global {
   }
 }
 
-export const isSignedIn = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const isSignedIn = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const payload = jwt.verify(
-      req.session?.jwt,
-      process.env.JWT_KEY!
-    ) as any;
+    const payload = jwt.verify(req.session?.jwt, process.env.JWT_KEY!) as any;
     req.currentUser = payload;
-  } catch (err) { next(err) }
+  } catch (err) {
+    next(err);
+  }
 
   next();
 };
