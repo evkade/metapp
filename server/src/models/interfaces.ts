@@ -1,10 +1,31 @@
 import mongoose from "mongoose";
 
+
+const FavoriteBeverage = new mongoose.Schema({
+  beverage_id: String,
+  beverage_type: {
+    type: String,
+    enum: ['beer', 'cocktail'],
+    default: 'beer'
+  },
+  bar: {
+    type: String,
+    enum: ['dkm', 'mkm'],
+    default: 'dkm'
+  }
+})
+
+export interface FavoriteBeverage {
+  beverage_id: String,
+  beverage_type: String,
+  bar: String
+}
+
 export interface User extends mongoose.Document {
   username: String;
   password: String;
   credentials: String;
-  email: String;
+  favorites: FavoriteBeverage[];
 }
 
 export interface OrderDetail {

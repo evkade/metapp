@@ -23,7 +23,6 @@ router.get(
 router.post(
   "/api/auth/signin",
   [
-    body("email").isEmail().withMessage("Email must be valid"),
     body("password")
       .trim()
       .notEmpty()
@@ -74,14 +73,11 @@ router.post(
     });
     if (user === null) {
       next(new ErrorException(ErrorCode.UserAlreadyExists));
-    } else {
-      res.status(201).send({
-        id: user._id,
-        name: user.username,
-        Credential: user.credentials,
-        email: user.email,
-      });
     }
+    else {
+      res.status(201).send({ id: user._id, name: user.username, Credential: user.credentials });
+    }
+
   }
 );
 

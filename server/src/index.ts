@@ -13,6 +13,7 @@ import { cocktailRouter } from "./routes/cocktail";
 import { userRouter } from "./routes/user";
 import { menuRouter } from "./routes/menu";
 import { orderRouter } from "./routes/orders";
+import { favoriteRouter } from "./routes/favorites"
 import { errorHandler } from './services/error-handler/errorHandler';
 
 const socket = require("socket.io");
@@ -81,6 +82,7 @@ app.use(apiBeerRouter);
 app.use(authRouter);
 app.use(orderRouter);
 app.use(menuRouter);
+app.use(favoriteRouter);
 
 app.get("/", (req, res) => {
   console.log("received request");

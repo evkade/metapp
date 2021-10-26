@@ -2,6 +2,33 @@ import mongoose from "mongoose";
 import { User } from "./interfaces";
 import bcrypt from "bcrypt";
 
+enum Pubs {
+  dkm = 'dkm',
+  mkm = 'mkm'
+}
+
+enum Roles {
+  user = 'user',
+  admin = 'admin'
+}
+
+enum BeverageTypes {
+  Beer = "beer",
+  Cocktail = "cocktail"
+}
+
+const FavoriteBeverage = new mongoose.Schema({
+  beverage_id: String,
+  beverage_type: {
+    type: String,
+    enum: BeverageTypes
+  },
+  bar: {
+    type: String,
+    enum: Pubs
+  }
+})
+
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -15,10 +42,13 @@ const UserSchema = new mongoose.Schema({
     required: true,
     maxlength: 50,
   },
-  credentials: String,
-  email: {
+  credentials: {
     type: String,
-    match: [/^[^@\s]+@[^@\s]+\.[^@\s]+$/, "Please use a valid email"],
+    enum: Roles,
+    default: Roles.user
+  },
+  favorites: {
+    type: [FavoriteBeverage]
   },
 });
 
