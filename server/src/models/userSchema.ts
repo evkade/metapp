@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { User } from "./interfaces";
 import bcrypt from "bcrypt";
 
@@ -18,7 +18,11 @@ enum BeverageTypes {
 }
 
 const FavoriteBeverage = new mongoose.Schema({
-  beverage_id: String,
+  beverage_id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    refPath: 'onModel'
+  },
   beverage_type: {
     type: String,
     enum: BeverageTypes
@@ -26,6 +30,11 @@ const FavoriteBeverage = new mongoose.Schema({
   bar: {
     type: String,
     enum: Pubs
+  },
+  onModel: {
+    type: String,
+    required: true,
+    enum: ['CocktailModelDKM', 'CocktailModelMKM', 'BeerModelDKM', 'BeerModelDKM']
   }
 })
 
