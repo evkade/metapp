@@ -8,9 +8,9 @@ import {
 } from "../../redux/actions/user";
 import { useHistory } from "react-router-dom";
 import { UserMenu } from "../views/userMenu";
-import DrinkModel from "../../model/drinkModel";
+import MenuModel from "../../model/drinkModel";
 
-const drinkModel = new DrinkModel();
+const menuModel = new MenuModel();
 
 export const UserMenuPresenter = ({
   orders,
@@ -168,9 +168,9 @@ const mapDispatchToProps = (dispatch) => {
     unfinishedOrderPlaced: (beverages) =>
       dispatch(unfinishedOrderPlaced(beverages)),
     getBeerHistory: (currentBar) =>
-      dispatch(drinkModel.getBeerHistory(currentBar)),
+      dispatch(menuModel.getBeerHistory(currentBar)),
     getCocktailHistory: (currentBar) =>
-      dispatch(drinkModel.getCocktailHistory(currentBar)),
+      dispatch(menuModel.getCocktailHistory(currentBar)),
   };
 };
 
