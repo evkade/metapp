@@ -65,7 +65,6 @@ export async function addUser(user: User): Promise<User | null> {
                 credentials: "user",
                 favorites: []
             });
-            console.log(insertedUser)
             insertedUser.save();
             return insertedUser;
         } else {

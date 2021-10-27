@@ -38,8 +38,6 @@ router.post(
       }
     );
 
-    console.log(user);
-
     if (user === undefined) {
       next(new ErrorException(ErrorCode.WrongCredentials));
     } else if (user === null) {

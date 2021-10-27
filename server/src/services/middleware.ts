@@ -5,7 +5,7 @@ import { ErrorCode } from "./error-handler/errorCode";
 import { ErrorException } from "./error-handler/errorException";
 
 export interface UserPayload {
-  id: string;
+  _id: string;
   isAdmin: boolean;
 }
 

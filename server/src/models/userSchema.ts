@@ -2,41 +2,11 @@ import mongoose, { Schema } from "mongoose";
 import { User } from "./interfaces";
 import bcrypt from "bcrypt";
 
-enum Pubs {
-  dkm = 'dkm',
-  mkm = 'mkm'
-}
-
 enum Roles {
   user = 'user',
   admin = 'admin'
 }
 
-enum BeverageTypes {
-  Beer = "beer",
-  Cocktail = "cocktail"
-}
-
-const FavoriteBeverage = new mongoose.Schema({
-  beverage_id: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    refPath: 'onModel'
-  },
-  beverage_type: {
-    type: String,
-    enum: BeverageTypes
-  },
-  bar: {
-    type: String,
-    enum: Pubs
-  },
-  onModel: {
-    type: String,
-    required: true,
-    enum: ['CocktailModelDKM', 'CocktailModelMKM', 'BeerModelDKM', 'BeerModelDKM']
-  }
-})
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -56,9 +26,17 @@ const UserSchema = new mongoose.Schema({
     enum: Roles,
     default: Roles.user
   },
-  favorites: {
-    type: [FavoriteBeverage]
-  },
+  favorites: [{
+    logId: {
+      type: Schema.Types.ObjectId,
+      refPath: 'favorites.logType'
+    },
+    logType: {
+      type: String,
+      required: true,
+      enum: ['dkm_Cocktail', 'mkm_Cocktail', 'dkm_Beer', 'mkm_Beer']
+    }
+  }]
 });
 
 UserSchema.pre("save", function (next) {
