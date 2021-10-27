@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Navbar, NavDropdown, Nav } from "react-bootstrap";
 import mkmlogo from "../images/mkm_logo.png";
@@ -10,8 +10,16 @@ import { signOut } from "../../redux/actions/user";
 const MainNavbar = ({ user, signOut, switchCurrentBar, setPathName }) => {
   const history = useHistory();
 
-  const [currentLogo, setCurrentLogo] = React.useState(dkmlogo);
-  const [notCurrentLogo, setNotCurrentLogo] = React.useState(mkmlogo);
+  const checkAdminBar = () => {
+    if (user && user.username === "mkm") {
+      switchCurrentBar();
+      return mkmlogo;
+    } else return dkmlogo;
+  };
+
+  const [currentLogo, setCurrentLogo] = useState(checkAdminBar());
+  const [notCurrentLogo, setNotCurrentLogo] = useState(mkmlogo);
+  const [expanded, setExpanded] = useState(false);
 
   const switchLogos = () => {
     const tmp = currentLogo;
@@ -36,30 +44,52 @@ const MainNavbar = ({ user, signOut, switchCurrentBar, setPathName }) => {
   };
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar variant="dark" expand="lg" expanded={expanded}>
       <Navbar.Brand>
-        <NavDropdown id="test" title={<img src={currentLogo} height="50px" />}>
-          <NavDropdown.Item onClick={() => switchLogos()}>
-            <img src={notCurrentLogo} height="50px" />
-          </NavDropdown.Item>
-        </NavDropdown>
+        {user.isAdmin ? (
+          <img src={currentLogo} height="45px" />
+        ) : (
+          <NavDropdown
+            id="test"
+            title={<img src={currentLogo} height="45px" />}
+          >
+            <NavDropdown.Item onClick={() => switchLogos()}>
+              <img src={notCurrentLogo} height="45px" />
+            </NavDropdown.Item>
+          </NavDropdown>
+        )}
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="navbar" />
+      <Navbar.Toggle
+        aria-controls="navbar"
+        onClick={() => setExpanded(!expanded)}
+      />
       <Navbar.Collapse id="navbar">
-        <Nav>
+        <Nav className="mr-auto">
           {user.isAdmin ? (
-            <Nav.Link onClick={() => history.push("/customizeMenu")}>
-              Customize Menu{" "}
-            </Nav.Link>
+            <>
+              <Nav.Item onClick={() => setExpanded(!expanded)}>
+                <Nav.Link onClick={() => history.push("/customizeMenu")}>
+                  Customize Menu{" "}
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item onClick={() => setExpanded(!expanded)}>
+                <Nav.Link onClick={() => history.push("/vieworders")}>
+                  Orders
+                </Nav.Link>
+              </Nav.Item>
+            </>
           ) : (
-            <Nav.Link onClick={() => history.push("/menu")}>Menu</Nav.Link>
+            <>
+              <Nav.Item onClick={() => setExpanded(!expanded)}>
+                <Nav.Link onClick={() => history.push("/menu")}>Menu</Nav.Link>
+              </Nav.Item>
+              <Nav.Item onClick={() => setExpanded(!expanded)}>
+                <Nav.Link onClick={() => history.push("/profile")}>
+                  Profile
+                </Nav.Link>
+              </Nav.Item>
+            </>
           )}
-          <Nav.Link onClick={() => history.push("/profile")}>Profile</Nav.Link>
-          {user.isAdmin ? (
-            <Nav.Link onClick={() => history.push("/vieworders")}>
-              Orders
-            </Nav.Link>
-          ) : null}
           <Nav.Link
             onClick={() => {
               logout();

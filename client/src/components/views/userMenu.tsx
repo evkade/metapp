@@ -14,7 +14,6 @@ export const UserMenu = ({
   favoriteList,
   totalInfo,
 }) => {
-  console.log(menuItems);
   return (
     <div className="drink-list container--general">
       <div className="title-neon--big">Menu</div>

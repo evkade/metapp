@@ -76,8 +76,6 @@ export const UserMenuPresenter = ({
     addOrRemoveTotalInfo(price, "add");
   };
 
-  console.log(orderItems);
-
   const increaseOrderCount = (name, price) => {
     const modifiedOrderList = orderItems.map((item) => {
       if (item.name === name) {
