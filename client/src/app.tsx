@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { connect } from "react-redux";
-import { signIn } from "./redux/actions/user";
+import { logIn } from "./redux/actions/user";
 import { io } from "socket.io-client";
 
 import RoutingApp from "./routingApp";
@@ -33,7 +33,7 @@ const checkValidUser = async () => {
     credentials: "include",
   })
     .then((data) => data.json())
-    .then((user) => store.dispatch(signIn(user.currentUser)))
+    .then((user) => store.dispatch(logIn(user.currentUser)))
     .catch((err) => console.log("No signed in user"));
 };
 

@@ -15,7 +15,7 @@ const EntryView = () => {
       <div className="entry-view__neon-text">METAPP</div>
       <div>
         <button
-          onClick={() => history.push("/signIn")}
+          onClick={() => history.push("/logIn")}
           className="neon-button neon-button--yellow"
         >
           log in

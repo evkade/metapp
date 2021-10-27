@@ -15,11 +15,11 @@ import { RootState } from "redux/rootReducer";
 import EntryView from "./components/views/entryView";
 
 import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
-import HandleUserSignIn from "./components/presenters/handleUserSignIn";
+import HandleUserSignIn from "./components/presenters/handleUserLogIn";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
 import MainNavbar from "./components/views/mainNavbar";
-import { signIn, signOut } from "./redux/actions/user";
+import { logIn, signOut } from "./redux/actions/user";
 import userMenuPresenter from "./components/presenters/userMenuPresenter";
 import { useSelector } from "react-redux";
 import userProfilePresenter from "./components/presenters/userProfilePresenter";
@@ -118,7 +118,7 @@ const RoutingApp = ({ socket }) => {
           />
           <PublicRoute
             exact
-            path="/signIn"
+            path="/logIn"
             component={HandleUserSignIn}
             pathName={pathName}
           />

@@ -32,7 +32,7 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body;
     //@ts-ignore
-    const { user, token } = await AuthService.signIn(username, password).catch(
+    const { user, token } = await AuthService.logIn(username, password).catch(
       (err) => {
         req.session = null;
         next(err);

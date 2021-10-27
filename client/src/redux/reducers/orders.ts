@@ -68,7 +68,7 @@ const orderReducer = (state = initalState, action) => {
         ...state,
         orders: [orderCancelledTmp, ...restCancelled],
         loading: false,
-
+      }
     case "SIGN_OUT":
       return {
         ...state,

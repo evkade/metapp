@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
-const UserSignIn = ({ userAuth, signin, signInError }) => {
+const UserLogIn = ({ userAuth, logIn, logInError }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -10,7 +10,7 @@ const UserSignIn = ({ userAuth, signin, signInError }) => {
     <div
       className="container--general user-form"
       onKeyDown={(e) => {
-        if (e.key === "Enter") signin(username, pwd);
+        if (e.key === "Enter") logIn(username, pwd);
       }}
     >
       {!userAuth && (
@@ -42,7 +42,7 @@ const UserSignIn = ({ userAuth, signin, signInError }) => {
               <button
                 className="input-container__element"
                 onClick={() => {
-                  signin(username, pwd);
+                  logIn(username, pwd);
                 }}
               >
                 Log in
@@ -50,7 +50,7 @@ const UserSignIn = ({ userAuth, signin, signInError }) => {
             </div>
           </div>
           <div className="user-form__errElement">
-            {signInError && <>🚫 There is no user with these credentials.</>}
+            {logInError && <>🚫 There is no user with these credentials.</>}
           </div>
         </>
       )}
@@ -58,4 +58,4 @@ const UserSignIn = ({ userAuth, signin, signInError }) => {
   );
 };
 
-export default UserSignIn;
+export default UserLogIn;
