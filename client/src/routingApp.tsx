@@ -51,7 +51,7 @@ const AdminRoute = ({ component: Component, path, ...rest }) => (
   />
 );
 
-const PublicRoute = ({ component: Component, path, pathName, ...rest }) => (
+const PublicRoute = ({ component: Component, pathName, path, ...rest }) => (
   <Route
     path={path}
     render={(props) =>
@@ -88,7 +88,9 @@ const RoutingApp = ({ socket }) => {
   return (
     <Provider store={store}>
       <Router>
-        {user.loggedIn || user.isAdmin ? <MainNavbar /> : null}
+        {user.loggedIn || user.isAdmin ? (
+          <MainNavbar setPathName={(newPath) => setPathName(newPath)} />
+        ) : null}
         <Switch>
           <AdminRoute
             exact

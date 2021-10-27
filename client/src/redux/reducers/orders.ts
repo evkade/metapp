@@ -55,6 +55,7 @@ const orderReducer = (state = initalState, action) => {
         ...state,
         orders: action.payload,
       };
+
     case "ORDER_CANCELLED":
       const orderCancelledTmp = state.orders.filter(
         (o) => o.id === action.payload.id
@@ -67,6 +68,13 @@ const orderReducer = (state = initalState, action) => {
         ...state,
         orders: [orderCancelledTmp, ...restCancelled],
         loading: false,
+
+    case "SIGN_OUT":
+      return {
+        ...state,
+        loading: false,
+        orders: [],
+
       };
     default:
       return state;

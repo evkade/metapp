@@ -37,10 +37,12 @@ const HandleUserSignIn = ({ user, signIn }) => {
         signIn({
           _id: user.id,
           username: user.name,
-          isAdmin: user.credentials === "admin",
+          isAdmin: user.credential === "admin",
         });
-        if (user.credentials === "user") history.push("/menu");
-        if (user.credentials === "admin") history.push("/customizeMenu");
+        if (user.credential === "user") {
+          history.push("/menu");
+        }
+        if (user.credential === "admin") history.push("/customizeMenu");
       })
       .catch((err) => {
         console.log(err);

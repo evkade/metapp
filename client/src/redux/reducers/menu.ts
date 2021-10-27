@@ -20,6 +20,16 @@ const menuReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case "SIGN_OUT":
+      return {
+        ...state,
+        loading: false,
+        currentBar: "dkm",
+        beerMenu: [],
+        cocktailMenu: [],
+        beerHistory: [],
+        cocktailHistory: [],
+      };
 
     case "SET_BEER_HISTORY":
       const beerHistory = action.payload.map((databaseBeer) => ({

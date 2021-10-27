@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { switchCurrentBar } from "../../redux/actions/menu";
 import { signOut } from "../../redux/actions/user";
 
-const MainNavbar = ({ user, signOut, switchCurrentBar }) => {
+const MainNavbar = ({ user, signOut, switchCurrentBar, setPathName }) => {
   const history = useHistory();
 
   const [currentLogo, setCurrentLogo] = React.useState(dkmlogo);
@@ -28,7 +28,11 @@ const MainNavbar = ({ user, signOut, switchCurrentBar }) => {
       },
       credentials: "include",
       // @ts-ignore
-    }).then(() => signOut(), (window.location.href = "/"));
+    }).then(() => {
+      signOut();
+      setPathName("/");
+      history.push("/");
+    });
   };
 
   return (
