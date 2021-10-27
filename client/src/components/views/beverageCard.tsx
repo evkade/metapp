@@ -75,7 +75,7 @@ export const BeverageCard = ({
           </div>
         );
       default:
-        return null; // todo: remove when typing has been fixed
+        return null;
     }
   };
 
@@ -102,7 +102,7 @@ export const BeverageCard = ({
           ? beverage.price + " SEK | " + beverage.alcoholPercentage + "%"
           : null;
       default:
-        return null; // todo: remove when typing has been fixed
+        return null;
     }
   };
 

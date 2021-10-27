@@ -1,5 +1,8 @@
 import React from "react";
 import { AdminMenu } from "../views/adminMenu";
+import { beverageTypes } from "../../constants/searchTypes";
+import { Beverage } from "../../constants/beverageObjects";
+import { beverageCardTypes } from "../../constants/beverageCardType";
 
 export const AdminMenuPresenter = ({
   setModalBeverage,
@@ -10,16 +13,19 @@ export const AdminMenuPresenter = ({
   customizedType,
   setBeverageCardType,
 }) => {
-  // todo: bara skicka delen av menyn som är customized (beer or cocktail)
+  const openModal = (beverage: Beverage) => {
+    setModalBeverage(beverage);
+    // need this so that modal knows if it is editing or adding a beverage
+    setBeverageCardType(beverageCardTypes.ADMIN_MENU);
+    setShowModal(true);
+  };
+
   return (
     <AdminMenu
-      setShowModal={setShowModal}
-      setModalBeverage={setModalBeverage}
-      menu={menu}
+      menu={customizedType === beverageTypes.BEER ? menu.beer : menu.cocktail}
       removeFromMenu={removeFromMenu}
       editInMenu={editInMenu}
-      customizedType={customizedType}
-      setBeverageCardType={setBeverageCardType}
+      openModal={openModal}
     />
   );
 };
