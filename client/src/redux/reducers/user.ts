@@ -59,6 +59,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         unfinishedOrder: newUnFinishedOrder,
       };
+    case "ORDER_REMOVED":
+      return {
+        ...state,
+        unfinishedOrder: {},
+      };
     default:
       return state;
   }

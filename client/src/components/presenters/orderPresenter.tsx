@@ -1,7 +1,11 @@
 import OrderView from "../views/orderView";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { orderPlaced, unfinishedOrderPlaced } from "../../redux/actions/user";
+import {
+  orderPlaced,
+  removedOrder,
+  unfinishedOrderPlaced,
+} from "../../redux/actions/user";
 import { addFavorite } from "../../redux/actions/user";
 import { removeFavorite } from "../../redux/actions/user";
 import OrderModel from "../../model/orderModel";
@@ -19,6 +23,7 @@ export const OrderPresenter = ({
   removeFavorite,
   favorites,
   unfinishedOrderPlaced,
+  removedOrder,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
@@ -55,6 +60,10 @@ export const OrderPresenter = ({
   const addToOrder = (name, price, id) => {
     setOrderItems([...orderItems, { name, price, id, count: 1 }]);
     addToTotalInfo(price);
+  };
+
+  const removeOrder = () => {
+    removedOrder();
   };
 
   const increaseOrderCount = (name, price) => {
@@ -125,6 +134,7 @@ export const OrderPresenter = ({
       favoriteList={favoriteList}
       totalInfo={totalInfo}
       finalizeOrder={() => finalizeOrder()}
+      removeOrder={() => removeOrder()}
     />
   );
 };
@@ -145,6 +155,7 @@ const mapDispatchToProps = (dispatch) => {
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     unfinishedOrderPlaced: (beverages) =>
       dispatch(unfinishedOrderPlaced(beverages)),
+    removedOrder: () => dispatch(removedOrder()),
   };
 };
 

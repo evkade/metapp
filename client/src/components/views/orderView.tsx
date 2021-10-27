@@ -14,6 +14,7 @@ const OrderView = ({
   favoriteList,
   totalInfo,
   finalizeOrder,
+  removeOrder,
 }) => {
   const [order, setOrder] = useState([]);
   const [submittedOrder, setSubmittedOrder] = useState(false);
@@ -60,7 +61,15 @@ const OrderView = ({
       </div>
       {order.length > 0 && !submittedOrder && (
         <div>
-          <button className="general-button--bw">Cancel</button>
+          <button
+            className="general-button--bw"
+            onClick={() => {
+              removeOrder();
+              history.push("/menu");
+            }}
+          >
+            Cancel
+          </button>
           <button
             className="general-button--bw"
             onClick={() => history.push("/menu")}

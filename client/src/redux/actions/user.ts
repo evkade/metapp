@@ -32,3 +32,7 @@ export const unfinishedOrderPlaced = (orderBeverage) => ({
     beverage: orderBeverage,
   },
 });
+
+export const removedOrder = () => ({
+  type: "ORDER_REMOVED",
+});
