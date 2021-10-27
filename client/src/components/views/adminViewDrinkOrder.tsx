@@ -7,9 +7,9 @@ export const AdminViewDrinkOrder = ({
   drinkMade,
   drinkPaid,
   menu,
-  beerMenu,
-  cocktailMenu,
   cancel,
+  loading,
+  spinner,
 }) => {
   const [drinkDetail, setDrinkDetail] = React.useState(null);
   const [showDrinkDetailModal, setShowDrinkDetailModal] = React.useState(false);
@@ -74,65 +74,78 @@ export const AdminViewDrinkOrder = ({
   return (
     <>
       <div className="admin-menu-container">
-        <div className="title-neon--small">Tonight's orders</div>
-        <div className="height100">
-          <h3
-            className="admin-menu-container__subtitle"
-            onClick={() => toggleCollapsible("collapsible1", "collapsible2")}
-          >
-            Current orders {collapseInfo.row1}
-          </h3>
-          <div id="collapsible1" className="admin-menu-container__collapsible">
-            {orders &&
-              menu.length > 0 &&
-              orders
-                .filter((o) => (!o.made || !o.paid) && !o.cancelled)
-                .map((b, index) => {
-                  return (
-                    <OrderCard
-                      key={index}
-                      fullOrder={b}
-                      menu={menu}
-                      setDrinkDetail={setDrinkDetail}
-                      setShowModal={setShowDrinkDetailModal}
-                      made={drinkMade}
-                      paid={drinkPaid}
-                      cancel={cancel}
-                    />
-                  );
-                })}
-          </div>
-          <h3
-            className="admin-menu-container__subtitle"
-            onClick={() => toggleCollapsible("collapsible2", "collapsible1")}
-          >
-            Finished orders {collapseInfo.row2}
-          </h3>
-          <div
-            id="collapsible2"
-            className="admin-menu-container__collapsible--collapsed"
-          >
-            <div>
-              {orders &&
-                orders
-                  .filter((o) => (o.made && o.paid) || o.cancelled)
-                  .map((order, index) => {
-                    return (
-                      <OrderCard
-                        key={index}
-                        fullOrder={order}
-                        menu={menu}
-                        setDrinkDetail={setDrinkDetail}
-                        setShowModal={setShowDrinkDetailModal}
-                        made={drinkMade}
-                        paid={drinkPaid}
-                        cancel={cancel}
-                      />
-                    );
-                  })}
-            </div>
-          </div>
-        </div>
+        {loading ? (
+          spinner
+        ) : (
+          <>
+            <div className="title-neon--small">Tonight's orders</div>
+            <div className="height100">
+              <h3
+                className="admin-menu-container__subtitle"
+                onClick={() =>
+                  toggleCollapsible("collapsible1", "collapsible2")
+                }
+              >
+                Current orders {collapseInfo.row1}
+              </h3>
+              <div
+                id="collapsible1"
+                className="admin-menu-container__collapsible"
+              >
+                {orders &&
+                  menu.length > 0 &&
+                  orders
+                    .filter((o) => (!o.made || !o.paid) && !o.cancelled)
+                    .map((b, index) => {
+                      return (
+                        <OrderCard
+                          key={index}
+                          fullOrder={b}
+                          menu={menu}
+                          setDrinkDetail={setDrinkDetail}
+                          setShowModal={setShowDrinkDetailModal}
+                          made={drinkMade}
+                          paid={drinkPaid}
+                          cancel={cancel}
+                        />
+                      );
+                    })}
+              </div>
+              <h3
+                className="admin-menu-container__subtitle"
+                onClick={() =>
+                  toggleCollapsible("collapsible2", "collapsible1")
+                }
+              >
+                Finished orders {collapseInfo.row2}
+              </h3>
+              <div
+                id="collapsible2"
+                className="admin-menu-container__collapsible--collapsed"
+              >
+                <div>
+                  {orders &&
+                    orders
+                      .filter((o) => (o.made && o.paid) || o.cancelled)
+                      .map((order, index) => {
+                        return (
+                          <OrderCard
+                            key={index}
+                            fullOrder={order}
+                            menu={menu}
+                            setDrinkDetail={setDrinkDetail}
+                            setShowModal={setShowDrinkDetailModal}
+                            made={drinkMade}
+                            paid={drinkPaid}
+                            cancel={cancel}
+                          />
+                        );
+                      })}
+                </div>
+              </div>
+            </div>{" "}
+          </>
+        )}
       </div>
       {drinkDetail && drinkDetailModal()}
     </>

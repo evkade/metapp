@@ -106,6 +106,7 @@ export default class OrderModel {
     };
 
     return (dispatch) => {
+      dispatch(fetchRequest());
       fetch("http://localhost:5000/api/orders", {
         method: "POST",
         headers: {

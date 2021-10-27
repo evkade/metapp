@@ -9,6 +9,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { UserMenu } from "../views/userMenu";
 import MenuModel from "../../model/drinkModel";
+import { Spinner } from "../views/spinner";
 
 const menuModel = new MenuModel();
 

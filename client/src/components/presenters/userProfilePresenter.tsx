@@ -9,6 +9,7 @@ import {
   orderMade,
   orderPaid,
 } from "../../redux/actions/orders";
+import { Spinner } from "../views/spinner";
 
 const ordermodel = new OrderModel();
 
@@ -23,6 +24,8 @@ export const UserProfilePresenter = ({
   orderMade,
   orderPaid,
   orderCancelled,
+  loading,
+  currentBar,
 }) => {
   useEffect(() => {
     getOrders(userId);
@@ -60,6 +63,8 @@ export const UserProfilePresenter = ({
       orders={orders}
       favorites={favorites}
       removeFromFavorites={(name) => removeFromFavorites(name)}
+      loading={loading}
+      spinner={<Spinner bar={currentBar} />}
     />
   );
 };
@@ -70,6 +75,8 @@ const mapStateToProps = (store) => {
     userId: store.user.userId,
     orders: store.orders.orders,
     favorites: store.user.favorites,
+    loading: store.user.loading || store.orders.loading,
+    currentBar: store.menu.currentBar,
   };
 };
 

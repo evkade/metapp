@@ -1,7 +1,7 @@
 import { Beverage } from "../../constants/beverageObjects";
 
 export const fetchRequest = () => ({
-  type: "FETCH_REQUEST",
+  type: "FETCH_MENU_REQUEST",
 });
 
 export const setBeerHistory = (data) => ({

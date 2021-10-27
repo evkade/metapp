@@ -6,10 +6,16 @@ const initialState = {
   favorites: [],
   userOrders: [],
   unfinishedOrder: {},
+  loading: false,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "FETCH_USER_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
     case "LOG_IN":
       return {
         ...state,
@@ -17,6 +23,7 @@ const userReducer = (state = initialState, action) => {
         username: action.payload.username,
         isAdmin: action.payload.isAdmin,
         userId: action.payload._id,
+        loading: false,
       };
     case "SIGN_UP":
       return {
@@ -24,6 +31,7 @@ const userReducer = (state = initialState, action) => {
         loggedIn: false,
         username: action.payload.username,
         isAdmin: action.payload.isAdmin,
+        loading: false,
       };
     case "SIGN_OUT":
       return {
@@ -32,11 +40,13 @@ const userReducer = (state = initialState, action) => {
         username: null,
         isAdmin: false,
         userId: null,
+        loading: false,
       };
     case "ADD_FAVORITE":
       return {
         ...state,
         favorites: [...state.favorites, action.payload],
+        loading: false,
       };
     case "REMOVE_FAVORITE":
       const newFilterArray = state.favorites.filter(
@@ -45,11 +55,13 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         favorites: newFilterArray,
+        loading: false,
       };
     case "ORDER_PLACED":
       return {
         ...state,
         unfinishedOrder: {},
+        loading: false,
       };
     case "ORDER_QUEUED":
       const newUnFinishedOrder = {};
@@ -58,11 +70,13 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         unfinishedOrder: newUnFinishedOrder,
+        loading: false,
       };
     case "ORDER_REMOVED":
       return {
         ...state,
         unfinishedOrder: {},
+        loading: false,
       };
     default:
       return state;

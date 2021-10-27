@@ -1,5 +1,5 @@
 export const fetchRequest = () => ({
-  type: "FETCH_REQUEST",
+  type: "FETCH_ORDER_REQUEST",
 });
 
 export const orderMade = (orderID, timeMade) => ({
