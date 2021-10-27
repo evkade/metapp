@@ -54,6 +54,8 @@ const AdminViewDrinkOrdersPresenter = ({
   return (
     <AdminViewDrinkOrder
       orders={orders.orders}
+      beerMenu={menu.beerMenu}
+      cocktailMenu={menu.cockTailMenu}
       menu={[...menu.beerMenu, ...menu.cocktailMenu]}
       drinkMade={make}
       drinkPaid={pay}
