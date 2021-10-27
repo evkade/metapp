@@ -15,7 +15,7 @@ import { RootState } from "redux/rootReducer";
 import EntryView from "./components/views/entryView";
 
 import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
-import HandleUserSignIn from "./components/presenters/handleUserLogIn";
+import HandleUserLogIn from "./components/presenters/handleUserLogIn";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
 import MainNavbar from "./components/views/mainNavbar";
@@ -119,7 +119,7 @@ const RoutingApp = ({ socket }) => {
           <PublicRoute
             exact
             path="/logIn"
-            component={HandleUserSignIn}
+            component={HandleUserLogIn}
             pathName={pathName}
           />
           <PublicRoute
