@@ -55,6 +55,12 @@ const orderReducer = (state = initalState, action) => {
         ...state,
         orders: action.payload,
       };
+    case "SIGN_OUT":
+      return {
+        ...state,
+        loading: false,
+        orders: [],
+      };
     default:
       return state;
   }

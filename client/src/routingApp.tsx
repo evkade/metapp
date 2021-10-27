@@ -51,7 +51,7 @@ const AdminRoute = ({ component: Component, path, ...rest }) => (
   />
 );
 
-const PublicRoute = ({ component: Component, path, pathName, ...rest }) => (
+const PublicRoute = ({ component: Component, pathName, path, ...rest }) => (
   <Route
     path={path}
     render={(props) =>

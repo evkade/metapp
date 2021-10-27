@@ -28,7 +28,7 @@ const MainNavbar = ({ user, signOut, switchCurrentBar }) => {
       },
       credentials: "include",
       // @ts-ignore
-    }).then(() => signOut(), (window.location.href = "/"));
+    }).then(() => signOut(), history.push("/"));
   };
 
   return (
