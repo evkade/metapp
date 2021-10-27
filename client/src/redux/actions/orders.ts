@@ -32,3 +32,7 @@ export const setUserOrders = (orders) => ({
   type: "SET_USER_ORDERS",
   payload: orders,
 });
+
+export const signOut = () => ({
+  type: "SIGN_OUT",
+});
