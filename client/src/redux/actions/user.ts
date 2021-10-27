@@ -1,5 +1,5 @@
-export const signIn = (user) => ({
-  type: "SIGN_IN",
+export const logIn = (user) => ({
+  type: "LOG_IN",
   payload: user,
 });
 
@@ -31,4 +31,8 @@ export const unfinishedOrderPlaced = (orderBeverage) => ({
   payload: {
     beverage: orderBeverage,
   },
+});
+
+export const removedOrder = () => ({
+  type: "ORDER_REMOVED",
 });

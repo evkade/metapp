@@ -5,13 +5,13 @@ import { ErrorException } from "./error-handler/errorException";
 import { ErrorCode } from "./error-handler/errorCode";
 
 export default class AuthService {
-  public static async signIn(
+  public static async logIn(
     username: string,
     password: string
   ): Promise<{ user: User | null | undefined; token: string }> {
     //@ts-ignore
-    let user: User | null | undefined = await findUser(username)
-    let token = ""
+    let user: User | null | undefined = await findUser(username);
+    let token = "";
     if (user !== null && user !== undefined) {
       try {
         const bool = await verifyPassword(username, password);
@@ -28,12 +28,12 @@ export default class AuthService {
               expiresIn: "15d",
             }
           );
-        }
-        else {
+
+        } else {
           user = undefined;
         }
       } catch (error) {
-        Promise.reject(new ErrorException(ErrorCode.WrongCredentials))
+        Promise.reject(new ErrorException(ErrorCode.WrongCredentials));
       }
     }
 

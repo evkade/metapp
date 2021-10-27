@@ -12,7 +12,6 @@ export interface User extends mongoose.Document {
 export interface OrderDetail {
   beverage: String;
   quantity: Number;
-  id: String;
 }
 
 export interface Order extends mongoose.Document {
@@ -24,6 +23,7 @@ export interface Order extends mongoose.Document {
   timePaid: String;
   bar: String;
   date: String;
+  cancelled: Boolean;
 }
 
 export interface Beer extends mongoose.Document {

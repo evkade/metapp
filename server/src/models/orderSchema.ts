@@ -11,10 +11,6 @@ const OrderDetailSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  id: {
-    type: String,
-    required: true,
-  },
 });
 
 const OrderSchema = new mongoose.Schema({
@@ -39,6 +35,7 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  cancelled: Boolean,
 });
 
 export const OrderModel = mongoose.model<Order>("Order", OrderSchema);

@@ -38,3 +38,7 @@ export const editInMenu = (beverage: Beverage) => ({
 export const switchCurrentBar = () => ({
   type: "SWITCH_CURRENT_BAR",
 });
+
+export const signOut = () => ({
+  type: "SIGN_OUT",
+});

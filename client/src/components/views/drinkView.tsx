@@ -64,19 +64,18 @@ const Drink = ({
       <div className="drink-list__buttons">
         {menuDisplay ? (
           <>
-            {" "}
-            <button
-              className="general-button--bw"
-              onClick={() => addToOrder(item.name, item.price, item.id)}
-            >
-              +
-            </button>
-            <span> {count} </span>
             <button
               className="general-button--bw"
               onClick={() => removeFromOrder(item.name, item.price)}
             >
               -
+            </button>
+            <span> {count} </span>
+            <button
+              className="general-button--bw"
+              onClick={() => addToOrder(item.name, item.price, item.id)}
+            >
+              +
             </button>
           </>
         ) : (

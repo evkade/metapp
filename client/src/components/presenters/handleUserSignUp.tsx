@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserSignUp from "../views/userSignUp";
 
-import UserSignIn from "../views/userSignIn";
+import UserLogIn from "../views/userLogIn";
 import usePromise from "../../hooks/usePromise";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
@@ -42,7 +42,7 @@ export const HandleUserSignUp = (signUp) => {
         setSignUpButton("Successfully created account: " + username);
         setTimeout(() => {
           setSignUpButton("Create Account");
-          history.push("/signIn");
+          history.push("/logIn");
         }, 2000);
       })
       .catch((err) => {

@@ -1,131 +1,22 @@
 import React from "react";
-import { Card, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import OrderCard from "./adminOrderCard";
 
-export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
+export const AdminViewDrinkOrder = ({
+  orders,
+  drinkMade,
+  drinkPaid,
+  menu,
+  beerMenu,
+  cocktailMenu,
+  cancel,
+}) => {
   const [drinkDetail, setDrinkDetail] = React.useState(null);
   const [showDrinkDetailModal, setShowDrinkDetailModal] = React.useState(false);
   const [collapseInfo, setCollapseInfo] = React.useState({
     row1: "-",
     row2: "+",
   });
-
-  console.log(menu);
-
-  const singleBeverageCard = (drink) => {
-    console.log(drink);
-    return (
-      <Card
-        key={drink.id}
-        className={
-          "card-drink" +
-          (drink.made ? " card-drink--made" : "") +
-          (drink.paid ? " card-drink--finished" : "")
-        }
-        id={"card-drink#" + drink.id}
-      >
-        <p
-          className="card-drink__text card-drink__text--title"
-          onClick={() => {
-            setDrinkDetail(drink);
-            setShowDrinkDetailModal(true);
-          }}
-        >
-          {drink.order[0].quantity + " " + drink.order[0].beverage}
-        </p>
-        <p className="card-drink__text">Ordered by: {drink.user}</p>{" "}
-        {/** TODO get username */}
-        <p className="card-drink__text">
-          Price per drink:{" "}
-          {menu &&
-            menu.filter((beverage) => beverage.id === drink.order[0].id)[0]
-              .price}
-        </p>{" "}
-        <p className="card-drink__text">
-          Total price:{" "}
-          {menu &&
-            +menu.filter((beverage) => beverage.id === drink.order[0].id)[0]
-              .price * +drink.order[0].quantity}{" "}
-        </p>
-        <button
-          className="card-drink__button"
-          disabled={drink.made}
-          onClick={() => drinkMade(drink.id)}
-        >
-          Ready to serve
-        </button>
-        <button
-          className="card-drink__button"
-          disabled={!drink.made}
-          onClick={() => drinkPaid(drink.id)}
-        >
-          Paid
-        </button>
-      </Card>
-    );
-  };
-
-  const multipleBeveragesCard = (drink) => {
-    return (
-      <Card
-        key={drink._id}
-        className={
-          "card-drink" +
-          (drink.made ? " card-drink--made" : "") +
-          (drink.paid ? " card-drink--finished" : "")
-        }
-        id={"card-drink#" + drink.id}
-      >
-        <p
-          className="card-drink__text"
-          onClick={() => {
-            setDrinkDetail(drink);
-            setShowDrinkDetailModal(true);
-          }}
-        >
-          Multiple beverages (click for details)
-        </p>
-        <p className="card-drink__text">Ordered by: {drink.user}</p>
-        <p className="card-drink__text">Total price: {getTotalPrice(drink)} </p>
-        <button
-          className="card-drink__button"
-          disabled={drink.made}
-          onClick={() => drinkMade(drink.id)}
-        >
-          Ready to serve
-        </button>
-        <button
-          className="card-drink__button"
-          disabled={!drink.made}
-          onClick={() => drinkPaid(drink.id)}
-        >
-          Paid
-        </button>
-      </Card>
-    );
-  };
-
-  const getTotalPrice = (beverage) => {
-    var totPrice = 0;
-    beverage.order.forEach(
-      (order) =>
-        (totPrice +=
-          menu.filter((bev) => bev.id === order.id)[0].price * order.quantity)
-    );
-    return totPrice;
-  };
-
-  const finishedOrdersCard = (drink) => {
-    return (
-      <Card key={drink.id} className="card-drink card-drink--finished">
-        <span key={drink.order.id} className="card-drink__text">
-          {drink.order.map((b) => b.quantity + " " + b.beverage + ", ")}
-        </span>
-        <p className="card-drink__text">Ordered by: {drink.user}</p>
-        <p className="card-drink__text">Made at: {drink.timeMade}</p>
-        <p className="card-drink__text">Paid at: {drink.timePaid}</p>
-      </Card>
-    );
-  };
 
   const getBeverageDetail = (beverage) => {
     return (
@@ -193,13 +84,23 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
           </h3>
           <div id="collapsible1" className="admin-menu-container__collapsible">
             {orders &&
+              menu.length > 0 &&
               orders
-                .filter((o) => !o.made || !o.paid)
-                .map((b) =>
-                  b.order.length === 1
-                    ? singleBeverageCard(b)
-                    : multipleBeveragesCard(b)
-                )}
+                .filter((o) => (!o.made || !o.paid) && !o.cancelled)
+                .map((b, index) => {
+                  return (
+                    <OrderCard
+                      key={index}
+                      fullOrder={b}
+                      menu={menu}
+                      setDrinkDetail={setDrinkDetail}
+                      setShowModal={setShowDrinkDetailModal}
+                      made={drinkMade}
+                      paid={drinkPaid}
+                      cancel={cancel}
+                    />
+                  );
+                })}
           </div>
           <h3
             className="admin-menu-container__subtitle"
@@ -214,8 +115,21 @@ export const AdminViewDrinkOrder = ({ orders, drinkMade, drinkPaid, menu }) => {
             <div>
               {orders &&
                 orders
-                  .filter((o) => o.made && o.paid)
-                  .map((d) => finishedOrdersCard(d))}
+                  .filter((o) => (o.made && o.paid) || o.cancelled)
+                  .map((order, index) => {
+                    return (
+                      <OrderCard
+                        key={index}
+                        fullOrder={order}
+                        menu={menu}
+                        setDrinkDetail={setDrinkDetail}
+                        setShowModal={setShowDrinkDetailModal}
+                        made={drinkMade}
+                        paid={drinkPaid}
+                        cancel={cancel}
+                      />
+                    );
+                  })}
             </div>
           </div>
         </div>

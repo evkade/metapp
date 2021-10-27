@@ -4,7 +4,11 @@ import { orderPlaced } from "../../redux/actions/user";
 import UserProfile from "../views/userProfile";
 import { removeFavorite } from "../../redux/actions/user";
 import OrderModel from "../../model/orderModel";
-import { orderMade, orderPaid } from "../../redux/actions/orders";
+import {
+  orderCancelled,
+  orderMade,
+  orderPaid,
+} from "../../redux/actions/orders";
 
 const ordermodel = new OrderModel();
 
@@ -18,6 +22,7 @@ export const UserProfilePresenter = ({
   socket,
   orderMade,
   orderPaid,
+  orderCancelled,
 }) => {
   useEffect(() => {
     getOrders(userId);
@@ -30,12 +35,18 @@ export const UserProfilePresenter = ({
       orderPaid(data.id, data.timestamp);
     };
 
+    const orderBeenCancelled = (id) => {
+      orderCancelled(id);
+    };
+
     socket.on("made", orderBeenMade);
     socket.on("paid", orderBeenPaid);
+    socket.on("cancelled", orderBeenCancelled);
 
     return () => {
       socket.off("made", orderBeenMade);
       socket.off("paid", orderBeenPaid);
+      socket.off("cancelled", orderBeenCancelled);
     };
   }, []);
 
@@ -68,6 +79,7 @@ const mapDispatchToProps = (dispatch) => {
     getOrders: (userId) => dispatch(ordermodel.getUserOrders(userId)),
     orderMade: (id, time) => dispatch(orderMade(id, time)),
     orderPaid: (id, time) => dispatch(orderPaid(id, time)),
+    orderCancelled: (id) => dispatch(orderCancelled(id)),
   };
 };
 

@@ -80,10 +80,11 @@ export const SearchBeverage = ({
       >
         Create
       </button>
-      <div className="drink-list__container--grey">
+      <div className="drink-list__container--grey drink-list__container--grey-full">
         {!isLoading && searchResult ? (
           searchResult.map((beverage: Beverage, index: number) => (
             <BeverageCard
+              key={index}
               beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
               beverage={beverage}
               index={index}

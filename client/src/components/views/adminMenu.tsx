@@ -4,54 +4,25 @@ import { BeverageCard } from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 import { beverageTypes } from "../../constants/searchTypes";
 
-export const AdminMenu = ({
-  setModalBeverage,
-  setShowModal,
-  menu,
-  removeFromMenu,
-  editInMenu,
-  customizedType, // will be needed to only show beers / cocktails
-  setBeverageCardType,
-}) => {
-  const openModal = (beverage: Beverage) => {
-    setModalBeverage(beverage);
-    // need this so that modal knows if it is editing or adding a beverage
-    setBeverageCardType(beverageCardTypes.ADMIN_MENU);
-    setShowModal(true);
-  };
-
+export const AdminMenu = ({ menu, removeFromMenu, editInMenu, openModal }) => {
   return (
     <div className="container--centered">
       <div className="drink-list__container--grey drink-list__container--grey-full">
-        {customizedType === beverageTypes.BEER
-          ? menu.beer.map((beverage: Beverage, index: number) => (
-              <BeverageCard
-                menu={menu}
-                beverageCardType={beverageCardTypes.ADMIN_MENU}
-                beverage={beverage}
-                index={index}
-                addToOrder={null}
-                removeFromOrder={null}
-                count={null}
-                openModal={() => openModal(beverage)}
-                removeFromMenu={removeFromMenu}
-                editInMenu={editInMenu}
-              />
-            ))
-          : menu.cocktail.map((beverage: Beverage, index: number) => (
-              <BeverageCard
-                menu={menu}
-                beverageCardType={beverageCardTypes.ADMIN_MENU}
-                beverage={beverage}
-                index={index}
-                addToOrder={null}
-                removeFromOrder={null}
-                count={null}
-                openModal={() => openModal(beverage)}
-                removeFromMenu={removeFromMenu}
-                editInMenu={editInMenu}
-              />
-            ))}
+        {menu.map((beverage: Beverage, index: number) => (
+          <BeverageCard
+            key={index}
+            menu={menu}
+            beverageCardType={beverageCardTypes.ADMIN_MENU}
+            beverage={beverage}
+            index={index}
+            addToOrder={null}
+            removeFromOrder={null}
+            count={null}
+            openModal={() => openModal(beverage)}
+            removeFromMenu={removeFromMenu}
+            editInMenu={editInMenu}
+          />
+        ))}
       </div>
     </div>
   );

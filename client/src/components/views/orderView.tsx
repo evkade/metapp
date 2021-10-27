@@ -14,6 +14,7 @@ const OrderView = ({
   favoriteList,
   totalInfo,
   finalizeOrder,
+  removeOrder,
 }) => {
   const [order, setOrder] = useState([]);
   const [submittedOrder, setSubmittedOrder] = useState(false);
@@ -41,7 +42,7 @@ const OrderView = ({
               key={index}
               item={item}
               index={index}
-              addToOrder={(name, cost, id) => addToOrder(name, cost, id)}
+              addToOrder={(name, cost) => addToOrder(name, cost)}
               removeFromOrder={(name) => removeFromOrder(name)}
               count={item.count}
               addFavorite={(name) => addToFavorites(name)}
@@ -60,7 +61,15 @@ const OrderView = ({
       </div>
       {order.length > 0 && !submittedOrder && (
         <div>
-          <button className="general-button--bw">Cancel</button>
+          <button
+            className="general-button--bw"
+            onClick={() => {
+              removeOrder();
+              history.push("/menu");
+            }}
+          >
+            Cancel
+          </button>
           <button
             className="general-button--bw"
             onClick={() => history.push("/menu")}

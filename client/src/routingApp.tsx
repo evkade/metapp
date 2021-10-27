@@ -15,11 +15,11 @@ import { RootState } from "redux/rootReducer";
 import EntryView from "./components/views/entryView";
 
 import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
-import HandleUserSignIn from "./components/presenters/handleUserSignIn";
+import HandleUserLogIn from "./components/presenters/handleUserLogIn";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
 import MainNavbar from "./components/views/mainNavbar";
-import { signIn, signOut } from "./redux/actions/user";
+import { logIn, signOut } from "./redux/actions/user";
 import userMenuPresenter from "./components/presenters/userMenuPresenter";
 import { useSelector } from "react-redux";
 import userProfilePresenter from "./components/presenters/userProfilePresenter";
@@ -51,7 +51,7 @@ const AdminRoute = ({ component: Component, path, ...rest }) => (
   />
 );
 
-const PublicRoute = ({ component: Component, path, pathName, ...rest }) => (
+const PublicRoute = ({ component: Component, pathName, path, ...rest }) => (
   <Route
     path={path}
     render={(props) =>
@@ -88,7 +88,9 @@ const RoutingApp = ({ socket }) => {
   return (
     <Provider store={store}>
       <Router>
-        {user.loggedIn || user.isAdmin ? <MainNavbar /> : null}
+        {user.loggedIn || user.isAdmin ? (
+          <MainNavbar setPathName={(newPath) => setPathName(newPath)} />
+        ) : null}
         <Switch>
           <AdminRoute
             exact
@@ -116,8 +118,8 @@ const RoutingApp = ({ socket }) => {
           />
           <PublicRoute
             exact
-            path="/signIn"
-            component={HandleUserSignIn}
+            path="/logIn"
+            component={HandleUserLogIn}
             pathName={pathName}
           />
           <PublicRoute

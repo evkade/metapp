@@ -1,6 +1,6 @@
 import { getTypeOfBeverage } from "../../constants/searchTypes";
 import { beverageTypes } from "../../constants/searchTypes";
-import DrinkModel from "../../model/drinkModel";
+import MenuModel from "../../model/drinkModel";
 
 const initialState = {
   loading: false,
@@ -11,7 +11,7 @@ const initialState = {
   cocktailHistory: [],
 };
 
-const drinkModel = new DrinkModel();
+const menuModel = new MenuModel();
 
 const menuReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -19,6 +19,16 @@ const menuReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case "SIGN_OUT":
+      return {
+        ...state,
+        loading: false,
+        currentBar: "dkm",
+        beerMenu: [],
+        cocktailMenu: [],
+        beerHistory: [],
+        cocktailHistory: [],
       };
 
     case "SET_BEER_HISTORY":
@@ -28,7 +38,6 @@ const menuReducer = (state = initialState, action) => {
         volume: 0, // finns ej sparad i databasen
         alcoholPercentage: databaseBeer.percentage,
         price: databaseBeer.price,
-        id: databaseBeer._id,
       }));
       const beerMenu = action.payload
         .filter((databaseBeer) => databaseBeer.active === "true")
@@ -38,7 +47,6 @@ const menuReducer = (state = initialState, action) => {
           volume: 0, // finns ej sparad i databasen
           alcoholPercentage: databaseBeer.percentage,
           price: databaseBeer.price,
-          id: databaseBeer._id,
         }));
       return {
         ...state,
@@ -55,9 +63,8 @@ const menuReducer = (state = initialState, action) => {
           // todo: ingredients, add description to beverageObject
           price: databaseCocktail.price,
           ingredientList: databaseCocktail.ingredients,
-          id: databaseCocktail._id,
         }))
-        .sort(drinkModel.compare);
+        .sort(menuModel.compare);
       const cocktailMenu = action.payload
         // todo: active is a string in the database?
         .filter((databaseCocktail) => databaseCocktail.active === "true")
@@ -66,9 +73,8 @@ const menuReducer = (state = initialState, action) => {
           alcoholVolume: databaseCocktail.alcoholVolume,
           price: databaseCocktail.price,
           ingredientList: databaseCocktail.ingredients,
-          id: databaseCocktail._id,
         }))
-        .sort(drinkModel.compare);
+        .sort(menuModel.compare);
       return {
         ...state,
         loading: false,
@@ -78,15 +84,13 @@ const menuReducer = (state = initialState, action) => {
 
     case "ADD_TO_MENU":
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
-        drinkModel.postBeerToDatabase(action.payload, state.currentBar, true);
+        menuModel.postBeerToDatabase(action.payload, state.currentBar, true);
         return {
           ...state,
-          beerMenu: [...state.beerMenu, action.payload].sort(
-            drinkModel.compare
-          ),
+          beerMenu: [...state.beerMenu, action.payload].sort(menuModel.compare),
         };
       } else
-        drinkModel.postCocktailToDatabase(
+        menuModel.postCocktailToDatabase(
           action.payload,
           state.currentBar,
           true
@@ -94,13 +98,13 @@ const menuReducer = (state = initialState, action) => {
       return {
         ...state,
         cocktailMenu: [...state.cocktailMenu, action.payload].sort(
-          drinkModel.compare
+          menuModel.compare
         ),
       };
 
     case "REMOVE_FROM_MENU":
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
-        drinkModel.postBeerToDatabase(action.payload, state.currentBar, false);
+        menuModel.postBeerToDatabase(action.payload, state.currentBar, false);
         return {
           ...state,
           beerMenu: state.beerMenu.filter(
@@ -108,7 +112,7 @@ const menuReducer = (state = initialState, action) => {
           ),
         };
       } else {
-        drinkModel.postCocktailToDatabase(
+        menuModel.postCocktailToDatabase(
           action.payload,
           state.currentBar,
           false
@@ -123,7 +127,7 @@ const menuReducer = (state = initialState, action) => {
 
     case "EDIT_IN_MENU":
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
-        drinkModel.postBeerToDatabase(action.payload, state.currentBar, true);
+        menuModel.postBeerToDatabase(action.payload, state.currentBar, true);
         return {
           ...state,
           beerMenu: [
@@ -131,10 +135,10 @@ const menuReducer = (state = initialState, action) => {
               (beverage) => beverage.name !== action.payload.name
             ),
             action.payload,
-          ].sort(drinkModel.compare),
+          ].sort(menuModel.compare),
         };
       } else {
-        drinkModel.postCocktailToDatabase(
+        menuModel.postCocktailToDatabase(
           action.payload,
           state.currentBar,
           true
@@ -146,7 +150,7 @@ const menuReducer = (state = initialState, action) => {
               (beverage) => beverage.name !== action.payload.name
             ),
             action.payload,
-          ].sort(drinkModel.compare),
+          ].sort(menuModel.compare),
         };
       }
 
