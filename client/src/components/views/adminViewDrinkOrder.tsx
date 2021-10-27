@@ -87,9 +87,10 @@ export const AdminViewDrinkOrder = ({
               menu.length > 0 &&
               orders
                 .filter((o) => (!o.made || !o.paid) && !o.cancelled)
-                .map((b) => {
+                .map((b, index) => {
                   return (
                     <OrderCard
+                      key={index}
                       fullOrder={b}
                       menu={menu}
                       setDrinkDetail={setDrinkDetail}
@@ -115,9 +116,10 @@ export const AdminViewDrinkOrder = ({
               {orders &&
                 orders
                   .filter((o) => (o.made && o.paid) || o.cancelled)
-                  .map((order) => {
+                  .map((order, index) => {
                     return (
                       <OrderCard
+                        key={index}
                         fullOrder={order}
                         menu={menu}
                         setDrinkDetail={setDrinkDetail}
