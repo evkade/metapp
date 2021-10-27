@@ -2,10 +2,12 @@ import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PlaceholderImage from "../images/stockphoto_placeholder.jpg";
+import { beverageTypes } from "../../constants/searchTypes";
 
 const Drink = ({
   item,
   index,
+  itemType,
   addToOrder,
   removeFromOrder,
   count,
@@ -57,7 +59,9 @@ const Drink = ({
         {menuDisplay && (
           <>
             <br />
-            {item.alcoholPercentage} %
+            {itemType === beverageTypes.BEER
+              ? item.alcoholPercentage + "%"
+              : item.alcoholVolume + "cl"}
           </>
         )}
       </div>

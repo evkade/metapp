@@ -332,6 +332,13 @@ body {
   height: 100vh !important;
 }
 
+.beverage-type {
+  font-size: 7vh;
+  color: white;
+  padding: 1vh;
+  @include alignedGeneralFont();
+}
+
 .info-card-drink {
   background: black;
   color: white;
