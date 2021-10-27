@@ -6,7 +6,7 @@ import {
 } from "../redux/actions/menu";
 
 // todo maybe change name of this
-export default class DrinkModel {
+export default class MenuModel {
   getBeerHistory(currentBar) {
     return (dispatch) => {
       dispatch(fetchRequest());

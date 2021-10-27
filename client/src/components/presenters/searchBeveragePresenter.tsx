@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { SearchBeverage } from "../views/searchBeverage";
 import usePromise from "../../hooks/usePromise";
 import { beverageTypes, searchTypes } from "../../constants/searchTypes";
-import DrinkModel from "../../model/drinkModel";
+import MenuModel from "../../model/drinkModel";
 import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
 
-const drinkModel = new DrinkModel();
+const menuModel = new MenuModel();
 
 // todo: rn, admin cannot 'ADD' beverage from API when it is in menu
 // however, if it is in database, user can ADD it, which will overwrite the database bev
@@ -30,10 +30,10 @@ export const SearchBeveragePresenter = ({
       setLoading(true);
       switch (customizedType) {
         case beverageTypes.BEER:
-          setBeveragePromise(drinkModel.getBeerBasedOnName(query));
+          setBeveragePromise(menuModel.getBeerBasedOnName(query));
           break;
         case beverageTypes.COCKTAIL:
-          setBeveragePromise(drinkModel.getCocktailBasedOnName(query));
+          setBeveragePromise(menuModel.getCocktailBasedOnName(query));
           break;
       }
     } else {
@@ -64,14 +64,14 @@ export const SearchBeveragePresenter = ({
           case beverageTypes.BEER:
             setSearchResults(
               beverageData.items.map((beer) =>
-                drinkModel.setAPIBeerToObject(beer)
+                menuModel.setAPIBeerToObject(beer)
               )
             );
             break;
           case beverageTypes.COCKTAIL:
             setSearchResults(
               beverageData.drinks.map((cocktail) =>
-                drinkModel.setAPICocktailToObject(cocktail)
+                menuModel.setAPICocktailToObject(cocktail)
               )
             );
             break;

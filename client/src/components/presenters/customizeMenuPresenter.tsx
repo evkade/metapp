@@ -82,9 +82,9 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getBeerHistory: (currentBar) =>
-      dispatch(drinkModel.getBeerHistory(currentBar)),
+      dispatch(menuModel.getBeerHistory(currentBar)),
     getCocktailHistory: (currentBar) =>
-      dispatch(drinkModel.getCocktailHistory(currentBar)),
+      dispatch(menuModel.getCocktailHistory(currentBar)),
     addToMenu: (beverage: Beverage) => dispatch(addToMenu(beverage)),
     addToHistory: (beverage: Beverage) => dispatch(addToHistory(beverage)),
     removeFromMenu: (beverage: Beverage) => dispatch(removeFromMenu(beverage)),
