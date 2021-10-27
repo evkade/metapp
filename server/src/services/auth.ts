@@ -21,7 +21,6 @@ export default class AuthService {
             {
               _id: user._id,
               username: user.username,
-              email: user.email,
               isAdmin: user.credentials === "admin",
             },
             process.env.JWT_KEY!, // secret jwt key to sign and verify
@@ -29,8 +28,9 @@ export default class AuthService {
               expiresIn: "15d",
             }
           );
+
         } else {
-          user = undefined; //means undefined
+          user = undefined;
         }
       } catch (error) {
         Promise.reject(new ErrorException(ErrorCode.WrongCredentials));

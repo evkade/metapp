@@ -19,6 +19,9 @@ export class ErrorException extends Error {
             case ErrorCode.UserNotFound:
                 this.status = 400;
                 break;
+            case ErrorCode.BeverageAlreadyExists:
+                this.status = 400;
+                break;
             case ErrorCode.UserAlreadyExists:
                 this.status = 400;
                 break;
