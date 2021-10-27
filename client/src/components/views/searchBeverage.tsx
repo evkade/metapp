@@ -84,6 +84,7 @@ export const SearchBeverage = ({
         {!isLoading && searchResult ? (
           searchResult.map((beverage: Beverage, index: number) => (
             <BeverageCard
+              key={index}
               beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
               beverage={beverage}
               index={index}
