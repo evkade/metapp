@@ -138,7 +138,8 @@ export const UserMenuPresenter = ({
     <UserMenu
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
-      menuItems={[...beerMenu, ...cocktailMenu]}
+      beerMenu={beerMenu}
+      cocktailMenu={cocktailMenu}
       addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name, price) => removeFromOrder(name, price)}
       placeUnFinishedOrder={() => placeUnFinishedOrder()}

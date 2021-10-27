@@ -32,13 +32,15 @@ const menuReducer = (state = initialState, action) => {
       };
 
     case "SET_BEER_HISTORY":
-      const beerHistory = action.payload.map((databaseBeer) => ({
-        name: databaseBeer.name,
-        type: databaseBeer.description,
-        volume: 0, // finns ej sparad i databasen
-        alcoholPercentage: databaseBeer.percentage,
-        price: databaseBeer.price,
-      }));
+      const beerHistory = action.payload
+        .map((databaseBeer) => ({
+          name: databaseBeer.name,
+          type: databaseBeer.description,
+          volume: 0, // finns ej sparad i databasen
+          alcoholPercentage: databaseBeer.percentage,
+          price: databaseBeer.price,
+        }))
+        .sort(menuModel.compare);
       const beerMenu = action.payload
         .filter((databaseBeer) => databaseBeer.active === "true")
         .map((databaseBeer) => ({
@@ -47,7 +49,8 @@ const menuReducer = (state = initialState, action) => {
           volume: 0, // finns ej sparad i databasen
           alcoholPercentage: databaseBeer.percentage,
           price: databaseBeer.price,
-        }));
+        }))
+        .sort(menuModel.compare);
       return {
         ...state,
         loading: false,
