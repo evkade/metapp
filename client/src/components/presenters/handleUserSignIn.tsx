@@ -39,7 +39,6 @@ const HandleUserSignIn = ({ user, signIn }) => {
           username: user.name,
           isAdmin: user.credential === "admin",
         });
-        console.log(user);
         if (user.credential === "user") {
           history.push("/menu");
         }

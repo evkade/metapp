@@ -88,7 +88,9 @@ const RoutingApp = ({ socket }) => {
   return (
     <Provider store={store}>
       <Router>
-        {user.loggedIn || user.isAdmin ? <MainNavbar /> : null}
+        {user.loggedIn || user.isAdmin ? (
+          <MainNavbar setPathName={(newPath) => setPathName(newPath)} />
+        ) : null}
         <Switch>
           <AdminRoute
             exact
