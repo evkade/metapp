@@ -20,9 +20,9 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 
 // props contain menu, addToMenu, removeFromMenu, editInMenu
 // todo: add props types to all props
-import DrinkModel from "../../model/drinkModel";
+import MenuModel from "../../model/drinkModel";
 
-const drinkModel = new DrinkModel();
+const menuModel = new MenuModel();
 
 export const CustomizeMenuPresenter = (props) => {
   // Contains the information about which part of the menu we are customizing
