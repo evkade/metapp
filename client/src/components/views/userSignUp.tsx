@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
-const UserSignIn = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
+const UserSignUp = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -66,4 +66,4 @@ const UserSignIn = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
   );
 };
 
-export default UserSignIn;
+export default UserSignUp;

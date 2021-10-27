@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import UserSignIn from "../views/userSignIn";
+import UserLogIn from "../views/userLogIn";
 import usePromise from "../../hooks/usePromise";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { signIn } from "../../redux/actions/user";
+import { logIn } from "../../redux/actions/user";
 
-const HandleUserSignIn = ({ user, signIn }) => {
+const HandleUserLogIn = ({ user, logIn }) => {
   const [userAuth, setUserAuth] = useState(false);
-  const [signInError, setSignInError] = useState(false);
+  const [logInError, setLogInError] = useState(false);
 
   let history = useHistory();
 
@@ -16,11 +16,11 @@ const HandleUserSignIn = ({ user, signIn }) => {
   };
 
   const checkUserAuth = (username: string, password: string) => {
-    if (username && password) signinFunc(username, password);
-    else setSignInError(true);
+    if (username && password) loginFunc(username, password);
+    else setLogInError(true);
   };
 
-  const signinFunc = async (username, password) => {
+  const loginFunc = async (username, password) => {
     await fetch("http://localhost:5000/api/auth/signin", {
       method: "POST",
       headers: {
@@ -34,7 +34,7 @@ const HandleUserSignIn = ({ user, signIn }) => {
         else throw new Error("No user with these credentials");
       })
       .then((user) => {
-        signIn({
+        logIn({
           _id: user.id,
           username: user.name,
           isAdmin: user.credential === "admin",
@@ -46,15 +46,15 @@ const HandleUserSignIn = ({ user, signIn }) => {
       })
       .catch((err) => {
         console.log(err);
-        setSignInError(true);
+        setLogInError(true);
       });
   };
 
   return (
-    <UserSignIn
+    <UserLogIn
       userAuth={userAuth}
-      signin={checkUserAuth}
-      signInError={signInError}
+      logIn={checkUserAuth}
+      logInError={logInError}
     />
   );
 };
@@ -67,8 +67,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signIn: (user) => dispatch(signIn(user)),
+    logIn: (user) => dispatch(logIn(user)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HandleUserSignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(HandleUserLogIn);

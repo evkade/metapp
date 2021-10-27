@@ -10,7 +10,7 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SIGN_IN":
+    case "LOG_IN":
       return {
         ...state,
         loggedIn: true,
