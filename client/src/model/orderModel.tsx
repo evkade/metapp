@@ -4,6 +4,7 @@ import {
   orderMade,
   orderPaid,
   setUserOrders,
+  orderCancelled,
 } from "../redux/actions/orders";
 import { orderPlaced } from "../redux/actions/user";
 
@@ -91,16 +92,16 @@ export default class OrderModel {
     };
   }
 
-  placeOrder(order, userId, currentBar, socket) {
+  placeOrder(order, user, currentBar, socket) {
     const date = this.getDateStamp();
     const time = this.getTimeStamp();
     console.log(order);
     const finalOrder = {
-      user: userId,
+      user: user.userId,
       date: date,
       bar: currentBar,
       order: order.order.map((o) => {
-        return { beverage: o.name, quantity: o.count, id: o.id };
+        return { beverage: o.name, quantity: o.count };
       }),
     };
 
@@ -119,7 +120,7 @@ export default class OrderModel {
         })
         .then((result) => {
           dispatch(orderPlaced());
-          socket.emit("orderPlaced", result);
+          socket.emit("orderPlaced", { ...result, user: user.username });
         })
         .catch((err: Error) => console.log(err));
     };
@@ -133,6 +134,27 @@ export default class OrderModel {
       })
         .then((data) => data.json())
         .then((orders) => dispatch(setUserOrders(orders)))
+        .catch((err) => console.log(err));
+    };
+  }
+
+  cancelOrder(orderId, socket) {
+    return (dispatch) => {
+      dispatch(fetchRequest());
+      fetch("http://localhost:5000/api/orders/cancel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ id: orderId }),
+      })
+        .then((res) => {
+          if (res.ok) {
+            dispatch(orderCancelled({ id: orderId }));
+            socket.emit("cancelled", orderId);
+          } else throw new Error("Could not cancel order");
+        })
         .catch((err) => console.log(err));
     };
   }

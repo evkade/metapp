@@ -71,8 +71,8 @@ export const UserMenuPresenter = ({
     setTotalInfo(newTotalInfo);
   };
 
-  const addToOrder = (name, price, id) => {
-    setOrderItems([...orderItems, { name, price, id, count: 1 }]);
+  const addToOrder = (name, price) => {
+    setOrderItems([...orderItems, { name, price, count: 1 }]);
     addOrRemoveTotalInfo(price, "add");
   };
 
@@ -82,7 +82,6 @@ export const UserMenuPresenter = ({
     const modifiedOrderList = orderItems.map((item) => {
       if (item.name === name) {
         return {
-          id: item.id,
           name: item.name,
           price: item.price,
           count: item.count + 1,
@@ -95,12 +94,12 @@ export const UserMenuPresenter = ({
     addOrRemoveTotalInfo(price, "add");
   };
 
-  const addOrIncreaseOrder = (name, price, id) => {
+  const addOrIncreaseOrder = (name, price) => {
     const isItemPresent: boolean = orderItems.some((item) => item.name == name);
     if (isItemPresent) {
       increaseOrderCount(name, price);
     } else {
-      addToOrder(name, price, id);
+      addToOrder(name, price);
     }
   };
 
@@ -108,7 +107,6 @@ export const UserMenuPresenter = ({
     const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
         return {
-          id: item.id,
           name: item.name,
           count: item.count - 1,
         };
@@ -141,7 +139,7 @@ export const UserMenuPresenter = ({
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
       menuItems={[...beerMenu, ...cocktailMenu]}
-      addToOrder={(name, price, id) => addOrIncreaseOrder(name, price, id)}
+      addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name, price) => removeFromOrder(name, price)}
       placeUnFinishedOrder={() => placeUnFinishedOrder()}
       addToFavorites={(name) => addToFavorites(name)}

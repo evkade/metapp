@@ -148,7 +148,7 @@ body {
   }
 }
 
-.card-drink {
+.card-order {
   display: inline-block;
   border: 1px solid black;
   border-radius: 10%;
@@ -163,7 +163,10 @@ body {
     background-color: $light-neon-color-green;
     border: 1px solid $neon-color-green;
   }
-  &__text {
+  &--cancelled {
+    background-color: #cccccc;
+  }
+  &__text--title {
     cursor: pointer;
   }
   &__button {

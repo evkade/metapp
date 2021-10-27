@@ -33,6 +33,7 @@ export interface Order {
   timeMade?: String;
   timePaid?: String;
   date: String;
+  cancelled?: Boolean;
 }
 
 export interface OrderState {

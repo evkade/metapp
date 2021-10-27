@@ -30,10 +30,10 @@ const orderReducer = (state = initalState, action) => {
       )[0];
       orderPaidTmp.paid = true;
       orderPaidTmp.timePaid = action.payload.timePaid;
-      const rest1 = state.orders.filter((o) => o.id !== action.payload.id);
+      const restPaid = state.orders.filter((o) => o.id !== action.payload.id);
       return {
         ...state,
-        orders: [orderPaidTmp, ...rest1],
+        orders: [orderPaidTmp, ...restPaid],
         loading: false,
       };
     case "SET_ORDERS":
@@ -55,11 +55,26 @@ const orderReducer = (state = initalState, action) => {
         ...state,
         orders: action.payload,
       };
+
+    case "ORDER_CANCELLED":
+      const orderCancelledTmp = state.orders.filter(
+        (o) => o.id === action.payload.id
+      )[0];
+      orderCancelledTmp.cancelled = true;
+      const restCancelled = state.orders.filter(
+        (o) => o.id !== action.payload.id
+      );
+      return {
+        ...state,
+        orders: [orderCancelledTmp, ...restCancelled],
+        loading: false,
+
     case "SIGN_OUT":
       return {
         ...state,
         loading: false,
         orders: [],
+
       };
     default:
       return state;

@@ -15,7 +15,7 @@ const ordermodel = new OrderModel();
 export const OrderPresenter = ({
   socket,
   unfinishedOrder,
-  userId,
+  user,
   currentBar,
   orders,
   orderPlaced,
@@ -57,8 +57,8 @@ export const OrderPresenter = ({
     setTotalInfo(newTotalInfo);
   };
 
-  const addToOrder = (name, price, id) => {
-    setOrderItems([...orderItems, { name, price, id, count: 1 }]);
+  const addToOrder = (name, price) => {
+    setOrderItems([...orderItems, { name, price, count: 1 }]);
     addToTotalInfo(price);
   };
 
@@ -70,7 +70,6 @@ export const OrderPresenter = ({
     const modifiedOrderList = orderItems.map((item) => {
       if (item.name === name) {
         return {
-          id: item.id,
           name: item.name,
           price: item.price,
           count: item.count + 1,
@@ -83,12 +82,12 @@ export const OrderPresenter = ({
     addToTotalInfo(price);
   };
 
-  const addOrIncreaseOrder = (name, price, id) => {
+  const addOrIncreaseOrder = (name, price) => {
     const isItemPresent: boolean = orderItems.some((item) => item.name == name);
     if (isItemPresent) {
       increaseOrderCount(name, price);
     } else {
-      addToOrder(name, price, id);
+      addToOrder(name, price);
     }
   };
 
@@ -96,7 +95,6 @@ export const OrderPresenter = ({
     const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
         return {
-          id: item.id,
           name: item.name,
           count: item.count - 1,
         };
@@ -119,7 +117,7 @@ export const OrderPresenter = ({
   };
 
   const finalizeOrder = () => {
-    orderPlaced(unfinishedOrder, userId, currentBar, socket);
+    orderPlaced(unfinishedOrder, user, currentBar, socket);
   };
 
   return (
@@ -127,7 +125,7 @@ export const OrderPresenter = ({
       unfinishedOrder={unfinishedOrder}
       orderItems={orderItems}
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
-      addToOrder={(name, price, id) => addOrIncreaseOrder(name, price, id)}
+      addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name) => removeFromOrder(name)}
       addToFavorites={(name) => addToFavorites(name)}
       removeFromFavorites={(name) => removeFromFavorites(name)}
@@ -142,15 +140,15 @@ export const OrderPresenter = ({
 const mapStateToProps = (store) => {
   return {
     unfinishedOrder: store.user.unfinishedOrder,
-    userId: store.user.userId,
+    user: store.user,
     currentBar: store.menu.currentBar,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    orderPlaced: (order, userId, currentbar, socket) =>
-      dispatch(ordermodel.placeOrder(order, userId, currentbar, socket)),
+    orderPlaced: (order, user, currentbar, socket) =>
+      dispatch(ordermodel.placeOrder(order, user, currentbar, socket)),
     addFavorite: (name) => dispatch(addFavorite(name)),
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     unfinishedOrderPlaced: (beverages) =>

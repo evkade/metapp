@@ -38,7 +38,6 @@ const menuReducer = (state = initialState, action) => {
         volume: 0, // finns ej sparad i databasen
         alcoholPercentage: databaseBeer.percentage,
         price: databaseBeer.price,
-        id: databaseBeer._id,
       }));
       const beerMenu = action.payload
         .filter((databaseBeer) => databaseBeer.active === "true")
@@ -48,7 +47,6 @@ const menuReducer = (state = initialState, action) => {
           volume: 0, // finns ej sparad i databasen
           alcoholPercentage: databaseBeer.percentage,
           price: databaseBeer.price,
-          id: databaseBeer._id,
         }));
       return {
         ...state,
@@ -65,7 +63,6 @@ const menuReducer = (state = initialState, action) => {
           // todo: ingredients, add description to beverageObject
           price: databaseCocktail.price,
           ingredientList: databaseCocktail.ingredients,
-          id: databaseCocktail._id,
         }))
         .sort(drinkModel.compare);
       const cocktailMenu = action.payload
@@ -76,7 +73,6 @@ const menuReducer = (state = initialState, action) => {
           alcoholVolume: databaseCocktail.alcoholVolume,
           price: databaseCocktail.price,
           ingredientList: databaseCocktail.ingredients,
-          id: databaseCocktail._id,
         }))
         .sort(drinkModel.compare);
       return {

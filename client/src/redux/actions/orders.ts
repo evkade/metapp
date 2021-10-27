@@ -33,6 +33,12 @@ export const setUserOrders = (orders) => ({
   payload: orders,
 });
 
+
+export const orderCancelled = (orderId) => ({
+  type: "ORDER_CANCELLED",
+  payload: orderId,
+
 export const signOut = () => ({
   type: "SIGN_OUT",
+
 });
