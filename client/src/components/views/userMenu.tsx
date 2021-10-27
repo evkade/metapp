@@ -1,6 +1,7 @@
 import React from "react";
 import { Beverage } from "../../constants/beverageObjects";
 import Drink from "./drinkView";
+import { beverageTypes } from "../../constants/searchTypes";
 
 export const UserMenu = ({
   orderItems,
@@ -34,6 +35,7 @@ export const UserMenu = ({
                 item={item}
                 key={index}
                 index={index}
+                itemType={beverageTypes.BEER}
                 addToOrder={(name: string, price: string) =>
                   addToOrder(name, price)
                 }
@@ -63,6 +65,7 @@ export const UserMenu = ({
                 item={item}
                 key={index}
                 index={index}
+                itemType={beverageTypes.COCKTAIL}
                 addToOrder={(name: string, price: string) =>
                   addToOrder(name, price)
                 }

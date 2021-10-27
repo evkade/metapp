@@ -41,6 +41,7 @@ const OrderView = ({
             <Drink
               key={index}
               item={item}
+              itemType={null}
               index={index}
               addToOrder={(name, cost) => addToOrder(name, cost)}
               removeFromOrder={(name) => removeFromOrder(name)}
