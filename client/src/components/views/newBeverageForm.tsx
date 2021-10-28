@@ -80,11 +80,11 @@ export const NewBeverageForm = ({
             <input
               type="text"
               name="ingredients"
-              value={newBeverage.ingredients}
+              value={newBeverage.ingredients.join(", ")}
               onChange={(e) =>
                 setNewBeverage({
                   ...newBeverage,
-                  ingredientList: e.target.value.split(/\s*,\s*/),
+                  ingredients: e.target.value.split(/\s*,\s*/),
                 })
               }
             />
