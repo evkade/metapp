@@ -63,9 +63,8 @@ const menuReducer = (state = initialState, action) => {
         .map((databaseCocktail) => ({
           name: databaseCocktail.name,
           alcoholVolume: databaseCocktail.alcoholVolume,
-          // todo: ingredients, add description to beverageObject
           price: databaseCocktail.price,
-          ingredientList: databaseCocktail.ingredients,
+          ingredients: databaseCocktail.ingredients,
         }))
         .sort(menuModel.compare);
       const cocktailMenu = action.payload
@@ -75,7 +74,7 @@ const menuReducer = (state = initialState, action) => {
           name: databaseCocktail.name,
           alcoholVolume: databaseCocktail.alcoholVolume,
           price: databaseCocktail.price,
-          ingredientList: databaseCocktail.ingredients,
+          ingredients: databaseCocktail.ingredients,
         }))
         .sort(menuModel.compare);
       return {
