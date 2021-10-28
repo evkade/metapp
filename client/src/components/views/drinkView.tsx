@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PlaceholderImage from "../images/stockphoto_placeholder.jpg";
@@ -16,7 +16,15 @@ const Drink = ({
   favoriteList,
   menuDisplay,
 }) => {
+  const [shortName, setShortName] = useState("");
+
   useEffect(() => {
+    if (item.name.length > 30) {
+      const newShortName = item.name.slice(0, 30) + "...";
+      setShortName(newShortName);
+    } else {
+      setShortName(item.name);
+    }
     if (favoriteList.includes(item.name)) {
       activateStar(item.name, true);
     }
@@ -51,8 +59,8 @@ const Drink = ({
           <img src={PlaceholderImage} className="drink-list__image" />
         </>
       )}
-      <div className="drink-list__column drink-list__column--flexed">
-        {item.name}
+      <div className="drink-list__column drink-list__column--flexed drink-list__column--small">
+        {shortName}
       </div>
       <div className="drink-list__column drink-list__column--flexed">
         {item.price} SEK{" "}
@@ -74,7 +82,16 @@ const Drink = ({
             >
               -
             </button>
-            <span> {count} </span>
+            <span
+              className={
+                count > 0
+                  ? "drink-list__count drink-list__count--chosen"
+                  : "drink-list__count"
+              }
+            >
+              {" "}
+              {count}{" "}
+            </span>
             <button
               className="general-button--bw"
               onClick={() => addToOrder(item.name, item.price, item.id)}

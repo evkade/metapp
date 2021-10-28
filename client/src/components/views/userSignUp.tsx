@@ -41,7 +41,7 @@ const UserSignUp = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
                   onChange={(event) => setPwd(event.target.value)}
                 ></input>
                 <button
-                  className="input-container__element"
+                  className="input-container__element input-container__button"
                   onClick={() => {
                     checkUserAuth(username, pwd);
                   }}
