@@ -442,7 +442,7 @@ body {
     height: 50%;
     display: block;
     overflow-y: scroll;
-    //border-radius: 6px;
+    border-radius: 6px;
     margin-bottom: 10px;
   }
   @at-root #{&}__button--info {
