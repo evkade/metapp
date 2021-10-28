@@ -186,7 +186,7 @@ body {
     max-width: 800px;
     overflow-y: scroll;
     background-color: black;
-    border-radius: 6px;
+    border-radius: 7px;
     flex: 1;
     margin-bottom: 20px;
   }
@@ -195,11 +195,13 @@ body {
     height: 70%;
     max-height: 200px;
     overflow-y: scroll;
+    border-radius: 7px;
   }
   @at-root #{&}__container--grey-full {
     height: 100%;
     max-height: 100%;
     width: 100%;
+    border-radius: 7px;
   }
   @at-root #{&}__button {
     z-index: 1;
@@ -374,9 +376,6 @@ body {
     border-radius: 6px;
     border: 1px solid white;
   }
-  @at-root #{&}__button:hover {
-    background-color: grey;
-  }
   @at-root #{&}__tabs {
     margin-left: 6px;
   }
@@ -417,8 +416,8 @@ body {
     }
     input:hover,
     select:hover,
+    button:hover,
     input:focus {
-      border: 1.5px solid grey;
       background-color: grey;
     }
     select {
@@ -443,8 +442,24 @@ body {
     height: 50%;
     display: block;
     overflow-y: scroll;
-    border-radius: 6px;
+    //border-radius: 6px;
     margin-bottom: 10px;
+  }
+  @at-root #{&}__button--info {
+    position: fixed;
+    bottom: 60px;
+    right: 19px;
+    border-radius: 4px;
+  }
+  @at-root #{&}__pop-up {
+    position: fixed;
+    left: 59%;
+    top: 51%;
+    width: 36%;
+    padding: 5px;
+    border: 1px solid #011627;
+    border-radius: 20px;
+    background-color: #fcfeff;
   }
 }
 .height100 {
