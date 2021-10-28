@@ -87,8 +87,8 @@ export const UserMenu = ({
           onClick={() => placeUnFinishedOrder()}
         >
           Place order <br />
-          {totalInfo.totalCount} {totalInfo.totalCount == 1 ? "item" : "items"}{" "}
-          á {totalInfo.totalCost} SEK
+          {totalInfo.totalCount} {totalInfo.totalCount == 1 ? "item" : "items"},{" "}
+          {totalInfo.totalCost} SEK
         </button>
       )}
     </div>

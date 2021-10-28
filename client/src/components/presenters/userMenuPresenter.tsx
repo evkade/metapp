@@ -104,6 +104,7 @@ export const UserMenuPresenter = ({
   const removeFromOrder = (name, price) => {
     const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
+        addOrRemoveTotalInfo(price, "remove");
         return {
           name: item.name,
           count: item.count - 1,
@@ -116,7 +117,6 @@ export const UserMenuPresenter = ({
       (item) => item.count !== 0
     );
     setOrderItems(modifiedOrderListWithoutZeros);
-    addOrRemoveTotalInfo(price, "remove");
   };
 
   const placeUnFinishedOrder = () => {
