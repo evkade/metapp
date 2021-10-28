@@ -370,6 +370,10 @@ body {
 .general-button--black {
   color: black;
   border: 1px solid black;
+  &:hover {
+    color: white !important;
+    background: black !important;
+  }
 }
 
 .profile-view {
