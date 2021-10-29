@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { orderPlaced } from "../../redux/actions/user";
-import UserProfile from "../views/userProfile";
-import { removeFavorite } from "../../redux/actions/user";
-import OrderModel from "../../model/orderModel";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { orderPlaced } from '../../redux/actions/user';
+import UserProfile from '../views/userProfile';
+import { removeFavorite } from '../../redux/actions/user';
+import OrderModel from '../../model/orderModel';
 import {
   orderCancelled,
   orderMade,
   orderPaid,
-} from "../../redux/actions/orders";
+} from '../../redux/actions/orders';
+import FavoriteModel from '../../model/favoriteModel';
 
 const ordermodel = new OrderModel();
+const favoriteModel = new FavoriteModel();
 
 export const UserProfilePresenter = ({
   orders,
@@ -19,6 +21,7 @@ export const UserProfilePresenter = ({
   favorites,
   removeFavorite,
   getOrders,
+  getFavorites,
   socket,
   orderMade,
   orderPaid,
@@ -26,6 +29,7 @@ export const UserProfilePresenter = ({
 }) => {
   useEffect(() => {
     getOrders(userId);
+    getFavorites();
 
     const orderBeenMade = (data) => {
       orderMade(data.id, data.timestamp);
@@ -39,14 +43,14 @@ export const UserProfilePresenter = ({
       orderCancelled(id);
     };
 
-    socket.on("made", orderBeenMade);
-    socket.on("paid", orderBeenPaid);
-    socket.on("cancelled", orderBeenCancelled);
+    socket.on('made', orderBeenMade);
+    socket.on('paid', orderBeenPaid);
+    socket.on('cancelled', orderBeenCancelled);
 
     return () => {
-      socket.off("made", orderBeenMade);
-      socket.off("paid", orderBeenPaid);
-      socket.off("cancelled", orderBeenCancelled);
+      socket.off('made', orderBeenMade);
+      socket.off('paid', orderBeenPaid);
+      socket.off('cancelled', orderBeenCancelled);
     };
   }, []);
 
@@ -77,6 +81,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     getOrders: (userId) => dispatch(ordermodel.getUserOrders(userId)),
+    getFavorites: () => dispatch(favoriteModel.getFavorites()),
     orderMade: (id, time) => dispatch(orderMade(id, time)),
     orderPaid: (id, time) => dispatch(orderPaid(id, time)),
     orderCancelled: (id) => dispatch(orderCancelled(id)),

@@ -1,3 +1,5 @@
+import FavoriteModel from "../../model/favoriteModel";
+
 const initialState = {
   username: null,
   userId: null,
@@ -7,6 +9,8 @@ const initialState = {
   userOrders: [],
   unfinishedOrder: {},
 };
+
+const favoriteModel = new FavoriteModel();
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -31,20 +35,25 @@ const userReducer = (state = initialState, action) => {
         loggedIn: false,
         username: null,
         isAdmin: false,
+        favorites: [],
         userId: null,
       };
     case "ADD_FAVORITE":
+      favoriteModel.postBeverageToDatabase(action.payload);
       return {
         ...state,
-        favorites: [...state.favorites, action.payload],
+        favorites: state.favorites
+      };
+    case "SET_FAVORITES":
+      return {
+        ...state,
+        favorites: action.payload,
       };
     case "REMOVE_FAVORITE":
-      const newFilterArray = state.favorites.filter(
-        (favorite) => favorite !== action.payload
-      );
+      favoriteModel.removeBeveragefromDatabase(action.payload);
       return {
         ...state,
-        favorites: newFilterArray,
+        favorites: state.favorites
       };
     case "ORDER_PLACED":
       return {

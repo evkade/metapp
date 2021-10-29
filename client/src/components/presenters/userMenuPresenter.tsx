@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import {
   orderPlaced,
   unfinishedOrderPlaced,
   addFavorite,
   removeFavorite,
-} from "../../redux/actions/user";
-import { useHistory } from "react-router-dom";
-import { UserMenu } from "../views/userMenu";
-import MenuModel from "../../model/drinkModel";
+  setFavorites,
+} from '../../redux/actions/user';
+import { useHistory } from 'react-router-dom';
+import { UserMenu } from '../views/userMenu';
+import MenuModel from '../../model/drinkModel';
+import FavoriteModel from '../../model/favoriteModel';
 
 const menuModel = new MenuModel();
+const favoriteModel = new FavoriteModel();
 
 export const UserMenuPresenter = ({
   orders,
   addFavorite,
   removeFavorite,
   favorites,
+  getFavorites,
   unfinishedOrderPlaced,
   unfinishedOrder,
   cocktailMenu,
@@ -26,11 +30,10 @@ export const UserMenuPresenter = ({
   getCocktailHistory,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
-  const [favoriteList, setFavoriteList] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
 
   useEffect(() => {
-    setFavoriteList(favorites);
+    getFavorites();
 
     if (
       !(
@@ -52,18 +55,18 @@ export const UserMenuPresenter = ({
     }
     getBeerHistory(currentBar);
     getCocktailHistory(currentBar);
-  }, [currentBar]);
+  }, [currentBar, favorites]);
 
   let history = useHistory();
 
   const addOrRemoveTotalInfo = (cost, action) => {
     var newTotalCost = 0;
     var newTotalCount = 0;
-    if (action === "add") {
+    if (action === 'add') {
       newTotalCost = totalInfo.totalCost + cost;
       newTotalCount = totalInfo.totalCount + 1;
     }
-    if (action === "remove") {
+    if (action === 'remove') {
       newTotalCost = totalInfo.totalCost - cost;
       newTotalCount = totalInfo.totalCount - 1;
     }
@@ -73,7 +76,7 @@ export const UserMenuPresenter = ({
 
   const addToOrder = (name, price) => {
     setOrderItems([...orderItems, { name, price, count: 1 }]);
-    addOrRemoveTotalInfo(price, "add");
+    addOrRemoveTotalInfo(price, 'add');
   };
 
   const increaseOrderCount = (name, price) => {
@@ -89,7 +92,7 @@ export const UserMenuPresenter = ({
       }
     });
     setOrderItems(modifiedOrderList);
-    addOrRemoveTotalInfo(price, "add");
+    addOrRemoveTotalInfo(price, 'add');
   };
 
   const addOrIncreaseOrder = (name, price) => {
@@ -116,20 +119,31 @@ export const UserMenuPresenter = ({
       (item) => item.count !== 0
     );
     setOrderItems(modifiedOrderListWithoutZeros);
-    addOrRemoveTotalInfo(price, "remove");
+    addOrRemoveTotalInfo(price, 'remove');
   };
 
   const placeUnFinishedOrder = () => {
     unfinishedOrderPlaced(orderItems);
-    history.push("/order");
-  };
-
-  const addToFavorites = (name) => {
-    addFavorite(name);
+    history.push('/order');
   };
 
   const removeFromFavorites = (name) => {
-    removeFavorite(name);
+    removeFavorite(favoriteid(name), favoriteType(name), favoritebar(name));
+  };
+
+  const isfavorite = (name) => {
+    return favorites.some((elem) => elem.beverage.name === name);
+  };
+
+  const favoritebar = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).bar;
+  };
+
+  const favoriteid = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage._id;
+  };
+  const favoriteType = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage_type;
   };
 
   return (
@@ -141,9 +155,10 @@ export const UserMenuPresenter = ({
       addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name, price) => removeFromOrder(name, price)}
       placeUnFinishedOrder={() => placeUnFinishedOrder()}
-      addToFavorites={(name) => addToFavorites(name)}
+      addToFavorites={(name, type) => addFavorite(name, type, currentBar)}
       removeFromFavorites={(name) => removeFromFavorites(name)}
-      favoriteList={favoriteList}
+      isfavorite={(name) => isfavorite(name)}
+      favoriteList={favorites}
       totalInfo={totalInfo}
     />
   );
@@ -162,8 +177,12 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addFavorite: (name) => dispatch(addFavorite(name)),
-    removeFavorite: (name) => dispatch(removeFavorite(name)),
+    addFavorite: (beverage, type, bar) =>
+      dispatch(addFavorite({ beverage, type, bar })),
+    removeFavorite: (beverage_id, type, bar) =>
+      dispatch(removeFavorite({ beverage_id, type, bar })),
+    getFavorites: () => dispatch(favoriteModel.getFavorites()),
+
     unfinishedOrderPlaced: (beverages) =>
       dispatch(unfinishedOrderPlaced(beverages)),
     getBeerHistory: (currentBar) =>

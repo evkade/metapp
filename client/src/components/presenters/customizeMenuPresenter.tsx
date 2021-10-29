@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { CustomizeMenu } from "../views/customizeMenu";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { CustomizeMenu } from '../views/customizeMenu';
 import {
   addToMenu,
   editInMenu,
   removeFromMenu,
   addToHistory,
-} from "../../redux/actions/menu";
-import { searchTypes } from "../../constants/searchTypes";
-import { beverageTypes } from "../../constants/searchTypes";
+} from '../../redux/actions/menu';
+import { searchTypes } from '../../constants/searchTypes';
+import { beverageTypes } from '../../constants/searchTypes';
 import {
   Beverage,
   Beer,
   Cocktail,
   baseCocktail,
   baseBeer,
-} from "../../constants/beverageObjects";
-import { beverageCardTypes } from "../../constants/beverageCardType";
+} from '../../constants/beverageObjects';
+import { beverageCardTypes } from '../../constants/beverageCardType';
 
 // props contain menu, addToMenu, removeFromMenu, editInMenu
 // todo: add props types to all props
-import MenuModel from "../../model/drinkModel";
+import MenuModel from '../../model/drinkModel';
 
 const menuModel = new MenuModel();
 
@@ -68,7 +68,6 @@ export const CustomizeMenuPresenter = (props) => {
 };
 
 const mapStateToProps = (store) => {
-  console.log("STORE", store);
   return {
     currentBar: store.menu.currentBar,
     menu: { beer: store.menu.beerMenu, cocktail: store.menu.cocktailMenu },
