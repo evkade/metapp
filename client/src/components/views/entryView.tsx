@@ -46,7 +46,7 @@ const EntryView = () => {
                 to drink tonight, as well as order it from the bar without
                 leaving the fun conversation at your table. You can look at the
                 menu for as long as you like, without stress and having to wait
-                in a queue.
+                in a queue. You can switch between the MKM and DKM bar.
               </p>
               <p>
                 When you place an order, it is sent to the bar personell which
