@@ -15,8 +15,6 @@ export const SearchBeverage = ({
   menu,
   setCurrentSearchType,
   setBeverageCardType,
-  customizedType,
-  loading,
   spinner,
   query,
   setQuery,
@@ -64,23 +62,23 @@ export const SearchBeverage = ({
         Create
       </button>
       <div className="drink-list__container--grey drink-list__container--grey-full">
-        {!isLoading && searchResult ? (
-          searchResult.map((beverage: Beverage, index: number) => (
-            <BeverageCard
-              key={index}
-              beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
-              beverage={beverage}
-              index={index}
-              addToOrder={null}
-              removeFromOrder={null}
-              count={null}
-              openModal={() => openModal(beverage)}
-              menu={menu}
-              removeFromMenu={null}
-              editInMenu={null}
-            />
-          ))
-        ) : spinner}
+        {!isLoading && searchResult
+          ? searchResult.map((beverage: Beverage, index: number) => (
+              <BeverageCard
+                key={index}
+                beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
+                beverage={beverage}
+                index={index}
+                addToOrder={null}
+                removeFromOrder={null}
+                count={null}
+                openModal={() => openModal(beverage)}
+                menu={menu}
+                removeFromMenu={null}
+                editInMenu={null}
+              />
+            ))
+          : spinner}
         <button
           className="admin-menu-container__button--info"
           onMouseEnter={() => setShowInfoPopup(true)}
@@ -88,7 +86,6 @@ export const SearchBeverage = ({
         >
           ?
         </button>
-
       </div>
     </>
   );

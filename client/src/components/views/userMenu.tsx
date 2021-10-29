@@ -48,54 +48,57 @@ export const UserMenu = ({
                     removeFromOrder={(name: string, price: string) =>
                       removeFromOrder(name, price)
                     }
-                count={orderCount}
-                addFavorite={(name) => addToFavorites(name)}
-                removeFavorite={(name) => removeFromFavorites(name)}
-                favoriteList={favoriteList}
-                menuDisplay={true}
-              />
-            );
-          })}
-        <div className="beverage-type"> Cocktails </div>
-        {cocktailMenu &&
-          cocktailMenu.map((item: Beverage, index: number) => {
-            var orderCount: number = 0;
-            const filteredOutItem = orderItems.filter(
-              (orderItem) => orderItem.name == item.name
-            );
-            if (filteredOutItem.length == 1) {
-              orderCount = filteredOutItem[0].count;
-            }
-            return (
-              <Drink
-                item={item}
-                key={index}
-                index={index}
-                itemType={beverageTypes.COCKTAIL}
-                addToOrder={(name: string, price: string) =>
-                  addToOrder(name, price)
+                    count={orderCount}
+                    addFavorite={(name) => addToFavorites(name)}
+                    removeFavorite={(name) => removeFromFavorites(name)}
+                    favoriteList={favoriteList}
+                    menuDisplay={true}
+                  />
+                );
+              })}
+            <div className="beverage-type"> Cocktails </div>
+            {cocktailMenu &&
+              cocktailMenu.map((item: Beverage, index: number) => {
+                var orderCount: number = 0;
+                const filteredOutItem = orderItems.filter(
+                  (orderItem) => orderItem.name == item.name
+                );
+                if (filteredOutItem.length == 1) {
+                  orderCount = filteredOutItem[0].count;
                 }
-                removeFromOrder={(name: string, price: string) =>
-                  removeFromOrder(name, price)
-                }
-                count={orderCount}
-                addFavorite={(name) => addToFavorites(name)}
-                removeFavorite={(name) => removeFromFavorites(name)}
-                favoriteList={favoriteList}
-                menuDisplay={true}
-              />
-            );
-          })}
-      </div>
-      {orderItems.length > 0 && (
-        <button
-          className="drink-list__button"
-          onClick={() => placeUnFinishedOrder()}
-        >
-          Place order <br />
-          {totalInfo.totalCount} {totalInfo.totalCount == 1 ? "item" : "items"},{" "}
-          {totalInfo.totalCost} SEK
-        </button>
+                return (
+                  <Drink
+                    item={item}
+                    key={index}
+                    index={index}
+                    itemType={beverageTypes.COCKTAIL}
+                    addToOrder={(name: string, price: string) =>
+                      addToOrder(name, price)
+                    }
+                    removeFromOrder={(name: string, price: string) =>
+                      removeFromOrder(name, price)
+                    }
+                    count={orderCount}
+                    addFavorite={(name) => addToFavorites(name)}
+                    removeFavorite={(name) => removeFromFavorites(name)}
+                    favoriteList={favoriteList}
+                    menuDisplay={true}
+                  />
+                );
+              })}
+          </div>
+          {orderItems.length > 0 && (
+            <button
+              className="drink-list__button"
+              onClick={() => placeUnFinishedOrder()}
+            >
+              Place order <br />
+              {totalInfo.totalCount}{" "}
+              {totalInfo.totalCount == 1 ? "item" : "items"},{" "}
+              {totalInfo.totalCost} SEK
+            </button>
+          )}
+        </>
       )}
     </div>
   );

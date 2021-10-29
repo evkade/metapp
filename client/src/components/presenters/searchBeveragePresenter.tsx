@@ -131,7 +131,6 @@ export const SearchBeveragePresenter = ({
         menu={menu}
         setCurrentSearchType={setCurrentSearchType}
         setBeverageCardType={setBeverageCardType}
-        loading={loading}
         spinner={spinner}
         query={query}
         setQuery={setQuery}
