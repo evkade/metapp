@@ -422,6 +422,9 @@ body {
     text-align: left;
     flex: 1;
   }
+  @at-root #{&}__column--right {
+    text-align: right;
+  }
   @at-root #{&}__column--flex {
     flex: 1;
     @include centerVerticalHorizontal();
@@ -432,6 +435,9 @@ body {
   }
   @at-root #{&}__title {
     font-size: 20px;
+  }
+  @at-root #{&}__column--small {
+    font-size: 13px;
   }
 }
 

@@ -7,18 +7,17 @@ import { logIn } from "../../redux/actions/user";
 import { switchCurrentBar } from "../../redux/actions/menu";
 
 const HandleUserLogIn = ({ user, logIn, switchCurrentBar }) => {
-  const [userAuth, setUserAuth] = useState(false);
   const [logInError, setLogInError] = useState(false);
+  const [logInErrorMessage, setLogInErrorMessage] = useState(undefined);
 
   let history = useHistory();
 
-  const handleUserAuthDisplay = (param: boolean) => {
-    setUserAuth(param);
-  };
-
   const checkUserAuth = (username: string, password: string) => {
     if (username && password) loginFunc(username, password);
-    else setLogInError(true);
+    else {
+      setLogInError(true);
+      setLogInErrorMessage("You must provide a username and password");
+    }
   };
 
   const loginFunc = async (username, password) => {
@@ -32,7 +31,9 @@ const HandleUserLogIn = ({ user, logIn, switchCurrentBar }) => {
     })
       .then((data) => {
         if (data.ok) return data.json();
-        else throw new Error("No user with these credentials");
+        else {
+          throw new Error("There is no user with these credentials");
+        }
       })
       .then((user) => {
         logIn({
@@ -47,16 +48,16 @@ const HandleUserLogIn = ({ user, logIn, switchCurrentBar }) => {
         if (user.credential === "admin") history.push("/customizeMenu");
       })
       .catch((err) => {
-        console.log(err);
         setLogInError(true);
+        setLogInErrorMessage(`${err.message}`);
       });
   };
 
   return (
     <UserLogIn
-      userAuth={userAuth}
       logIn={checkUserAuth}
       logInError={logInError}
+      logInErrorMessage={logInErrorMessage}
     />
   );
 };
