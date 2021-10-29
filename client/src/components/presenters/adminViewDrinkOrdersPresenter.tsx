@@ -4,6 +4,7 @@ import { addNewOrder } from "../../redux/actions/orders";
 import OrderModel from "../../model/orderModel";
 import { AdminViewDrinkOrder } from "../views/adminViewDrinkOrder";
 import DrinkModel from "../../model/drinkModel";
+import { Spinner } from "../views/spinner";
 
 const ordermodel = new OrderModel();
 const drinkModel = new DrinkModel();
@@ -54,12 +55,12 @@ const AdminViewDrinkOrdersPresenter = ({
   return (
     <AdminViewDrinkOrder
       orders={orders.orders}
-      beerMenu={menu.beerMenu}
-      cocktailMenu={menu.cockTailMenu}
       menu={[...menu.beerMenu, ...menu.cocktailMenu]}
       drinkMade={make}
       drinkPaid={pay}
       cancel={cancel}
+      loading={menu.loading || orders.loading}
+      spinner={<Spinner bar={menu.currentBar} />}
     />
   );
 };

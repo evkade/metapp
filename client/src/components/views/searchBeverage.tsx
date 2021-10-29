@@ -14,6 +14,10 @@ export const SearchBeverage = ({
   isLoading,
   menu,
   setCurrentSearchType,
+  setBeverageCardType,
+  customizedType,
+  loading,
+  spinner,
   query,
   setQuery,
   openModal,
@@ -76,9 +80,7 @@ export const SearchBeverage = ({
               editInMenu={null}
             />
           ))
-        ) : (
-          <div> Loading </div>
-        )}
+        ) : spinner}
         <button
           className="admin-menu-container__button--info"
           onMouseEnter={() => setShowInfoPopup(true)}
@@ -86,6 +88,7 @@ export const SearchBeverage = ({
         >
           ?
         </button>
+
       </div>
     </>
   );

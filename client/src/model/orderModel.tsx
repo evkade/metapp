@@ -51,7 +51,6 @@ export default class OrderModel {
   makeOrder(orderId, socket) {
     const time = this.getTimeStamp();
     return (dispatch) => {
-      dispatch(fetchRequest());
       fetch("http://localhost:5000/api/orders/make", {
         method: "POST",
         headers: {
@@ -73,7 +72,6 @@ export default class OrderModel {
   payForOrder(orderId, socket) {
     const time = this.getTimeStamp();
     return (dispatch) => {
-      dispatch(fetchRequest());
       fetch("http://localhost:5000/api/orders/pay", {
         method: "POST",
         headers: {
@@ -106,6 +104,7 @@ export default class OrderModel {
     };
 
     return (dispatch) => {
+      dispatch(fetchRequest());
       fetch("http://localhost:5000/api/orders", {
         method: "POST",
         headers: {
@@ -140,7 +139,6 @@ export default class OrderModel {
 
   cancelOrder(orderId, socket) {
     return (dispatch) => {
-      dispatch(fetchRequest());
       fetch("http://localhost:5000/api/orders/cancel", {
         method: "POST",
         headers: {

@@ -7,7 +7,7 @@ const initalState: OrderState = {
 
 const orderReducer = (state = initalState, action) => {
   switch (action.type) {
-    case "FETCH_REQUEST":
+    case "FETCH_ORDER_REQUEST":
       return {
         ...state,
         loading: true,
@@ -49,11 +49,13 @@ const orderReducer = (state = initalState, action) => {
       return {
         ...state,
         orders: [...state.orders, tmp],
+        loading: false,
       };
     case "SET_USER_ORDERS":
       return {
         ...state,
         orders: action.payload,
+        loading: false,
       };
 
     case "ORDER_CANCELLED":

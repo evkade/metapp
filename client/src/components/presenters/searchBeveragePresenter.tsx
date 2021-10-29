@@ -20,6 +20,8 @@ export const SearchBeveragePresenter = ({
   currentSearchType,
   setCurrentSearchType,
   setBeverageCardType,
+  loading,
+  spinner,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
@@ -128,6 +130,9 @@ export const SearchBeveragePresenter = ({
         isLoading={isLoading}
         menu={menu}
         setCurrentSearchType={setCurrentSearchType}
+        setBeverageCardType={setBeverageCardType}
+        loading={loading}
+        spinner={spinner}
         query={query}
         setQuery={setQuery}
         openModal={openModal}

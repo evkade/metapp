@@ -526,6 +526,10 @@ body {
   background-color: black;
 }
 
+.navbar-brand {
+  margin-left: 0.5rem;
+}
+
 .dropdown-toggle::after {
   color: white;
 }
@@ -537,4 +541,25 @@ body {
 .dropdown-item:hover {
   background-color: black;
   opacity: 0.5;
+}
+
+@keyframes Spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner__img {
+  animation: Spinner infinite 2s linear;
+  width: 20%;
 }

@@ -9,6 +9,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { UserMenu } from "../views/userMenu";
 import MenuModel from "../../model/drinkModel";
+import { Spinner } from "../views/spinner";
 
 const menuModel = new MenuModel();
 
@@ -24,6 +25,7 @@ export const UserMenuPresenter = ({
   currentBar,
   getBeerHistory,
   getCocktailHistory,
+  loading,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
@@ -145,6 +147,8 @@ export const UserMenuPresenter = ({
       removeFromFavorites={(name) => removeFromFavorites(name)}
       favoriteList={favoriteList}
       totalInfo={totalInfo}
+      loading={loading}
+      spinner={<Spinner bar={currentBar} />}
     />
   );
 };
@@ -157,6 +161,7 @@ const mapStateToProps = (store) => {
     beerMenu: store.menu.beerMenu,
     cocktailMenu: store.menu.cocktailMenu,
     currentBar: store.menu.currentBar,
+    loading: store.menu.loading || store.user.loading || store.orders.loading,
   };
 };
 
