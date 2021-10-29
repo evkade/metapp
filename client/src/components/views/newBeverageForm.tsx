@@ -8,9 +8,10 @@ export const NewBeverageForm = ({
 }) => {
   return (
     <form className="beverage-form">
-      <label>
+      <div className="beverage-form__row">
         Name:
         <input
+          className="beverage-form__input"
           type="text"
           name="name"
           value={newBeverage.name}
@@ -18,11 +19,11 @@ export const NewBeverageForm = ({
             setNewBeverage({ ...newBeverage, name: e.target.value })
           }
         />
-      </label>
-      <br />
-      <label>
+      </div>
+      <div className="beverage-form__row">
         Price:
         <input
+          className="beverage-form__input"
           type="text"
           name="price"
           value={newBeverage.price}
@@ -30,13 +31,13 @@ export const NewBeverageForm = ({
             setNewBeverage({ ...newBeverage, price: e.target.value })
           }
         />
-      </label>
-      <br />
+      </div>
       {customizedType === beverageTypes.BEER ? (
         <div>
-          <label>
+          <div className="beverage-form__row">
             Type:
             <input
+              className="beverage-form__input"
               type="text"
               name="type"
               value={newBeverage.type}
@@ -44,11 +45,11 @@ export const NewBeverageForm = ({
                 setNewBeverage({ ...newBeverage, type: e.target.value })
               }
             />
-          </label>
-          <br />
-          <label>
+          </div>
+          <div className="beverage-form__row">
             Volume:
             <input
+              className="beverage-form__input"
               type="text"
               name="volume"
               value={newBeverage.volume}
@@ -56,11 +57,11 @@ export const NewBeverageForm = ({
                 setNewBeverage({ ...newBeverage, volume: e.target.value })
               }
             />
-          </label>
-          <br />
-          <label>
+          </div>
+          <div className="beverage-form__row">
             Alcohol percentage:
             <input
+              className="beverage-form__input"
               type="text"
               name="alcoholPercentage"
               value={newBeverage.alcoholPercentage}
@@ -71,13 +72,14 @@ export const NewBeverageForm = ({
                 })
               }
             />
-          </label>
+          </div>
         </div>
       ) : (
         <div>
-          <label>
+          <div className="beverage-form__row">
             Ingredients:
             <input
+              className="beverage-form__input"
               type="text"
               name="ingredients"
               value={newBeverage.ingredients.join(", ")}
@@ -88,11 +90,11 @@ export const NewBeverageForm = ({
                 })
               }
             />
-          </label>
-          <br />
-          <label>
+          </div>
+          <div className="beverage-form__row">
             Alcohol volume:
             <input
+              className="beverage-form__input"
               type="text"
               name="alcoholVolume"
               value={newBeverage.alcoholVolume}
@@ -103,7 +105,7 @@ export const NewBeverageForm = ({
                 })
               }
             />
-          </label>
+          </div>
         </div>
       )}
     </form>

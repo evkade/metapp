@@ -28,11 +28,14 @@ export const CreateBeverageForMenuModal = ({
           />
         </div>
         <div className="modal__headfoot">
-          <button className="button" onClick={() => onCancel()}>
+          <button
+            className="general-button--bw general-button--black"
+            onClick={() => onCancel()}
+          >
             Cancel
           </button>
           <button
-            className="button"
+            className="general-button--bw general-button--black"
             onClick={
               beverageCardType === beverageCardTypes.ADMIN_MENU
                 ? () => onEditInMenu(newBeverage)
