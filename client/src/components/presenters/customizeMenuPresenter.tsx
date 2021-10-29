@@ -25,6 +25,7 @@ import MenuModel from "../../model/drinkModel";
 
 const menuModel = new MenuModel();
 
+// props contain menu, addToMenu, removeFromMenu, editInMenu
 export const CustomizeMenuPresenter = (props) => {
   // Contains the information about which part of the menu we are customizing
   const [customizedType, setCustomizedType] = useState<string>(

@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
+import { FavoriteBeverage } from "./favoriteSchema";
+
 
 export interface User extends mongoose.Document {
   username: String;
   password: String;
   credentials: String;
-  email: String;
+  favorites: Array<typeof FavoriteBeverage>;
 }
 
 export interface OrderDetail {

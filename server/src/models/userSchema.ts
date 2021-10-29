@@ -1,6 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { User } from "./interfaces";
 import bcrypt from "bcrypt";
+
+enum Roles {
+  user = 'user',
+  admin = 'admin'
+}
+
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -15,11 +21,22 @@ const UserSchema = new mongoose.Schema({
     required: true,
     maxlength: 50,
   },
-  credentials: String,
-  email: {
+  credentials: {
     type: String,
-    match: [/^[^@\s]+@[^@\s]+\.[^@\s]+$/, "Please use a valid email"],
+    enum: Roles,
+    default: Roles.user
   },
+  favorites: [{
+    logId: {
+      type: Schema.Types.ObjectId,
+      refPath: 'favorites.logType'
+    },
+    logType: {
+      type: String,
+      required: true,
+      enum: ['dkm_Cocktail', 'mkm_Cocktail', 'dkm_Beer', 'mkm_Beer']
+    }
+  }]
 });
 
 UserSchema.pre("save", function (next) {

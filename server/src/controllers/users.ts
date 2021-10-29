@@ -59,14 +59,12 @@ export async function addUser(user: User): Promise<User | null> {
                 return err
             }
         );
-        console.log("AU", user)
         if (userPromise === null) {
             const insertedUser = await new UserModel({
                 ...user,
                 credentials: "user",
-                email: "test@gmail.com"
+                favorites: []
             });
-            console.log(insertedUser)
             insertedUser.save();
             return insertedUser;
         } else {

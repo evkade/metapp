@@ -6,8 +6,6 @@ export const NewBeverageForm = ({
   newBeverage,
   setNewBeverage,
 }) => {
-  // todo: fix the ingredients situation
-
   return (
     <form className="beverage-form">
       <label>
@@ -82,11 +80,11 @@ export const NewBeverageForm = ({
             <input
               type="text"
               name="ingredients"
-              value={newBeverage.ingredientList}
+              value={newBeverage.ingredients.join(", ")}
               onChange={(e) =>
                 setNewBeverage({
                   ...newBeverage,
-                  ingredientList: e.target.value,
+                  ingredients: e.target.value.split(/\s*,\s*/),
                 })
               }
             />

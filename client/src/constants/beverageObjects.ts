@@ -10,8 +10,7 @@ export interface Beer extends Beverage {
 }
 
 export interface Cocktail extends Beverage {
-  ingredientList: string[];
-  ingredientMeasuresList: string[];
+  ingredients: string[];
   alcoholVolume: number;
 }
 
@@ -52,6 +51,5 @@ export const baseCocktail: Cocktail = {
   name: "",
   price: 0,
   alcoholVolume: 0,
-  ingredientList: [],
-  ingredientMeasuresList: [],
+  ingredients: [],
 };
