@@ -118,7 +118,7 @@ body {
     @include pageTitleFont();
     font-size: 20vw;
     font-family: $barcode-font;
-    margin-bottom: 10vh;
+    margin-bottom: 5vh;
     max-height: 300px;
   }
   @at-root #{&}__logos img {
@@ -126,6 +126,15 @@ body {
     margin-bottom: 2vh;
     margin-left: 10px;
     margin-right: 10px;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .entry-view__neon-text {
+    font-size: 200px !important;
+  }
+  .neon-button {
+    font-size: 4vw !important;
+    width: 4em !important;
   }
 }
 
@@ -366,6 +375,11 @@ body {
   }
   &:active {
     top: 0.1em;
+  }
+  &--fixed {
+    position: absolute;
+    top: 5px;
+    right: 5px;
   }
 }
 
