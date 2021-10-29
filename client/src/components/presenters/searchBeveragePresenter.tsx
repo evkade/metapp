@@ -20,7 +20,6 @@ export const SearchBeveragePresenter = ({
   currentSearchType,
   setCurrentSearchType,
   setBeverageCardType,
-  loading,
   spinner,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
@@ -29,8 +28,6 @@ export const SearchBeveragePresenter = ({
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState<string>("");
   const [showInfoPopup, setShowInfoPopup] = useState<boolean>(false);
-
-  console.log(showInfoPopup);
 
   const searchBeverage = (query: string) => {
     if (currentSearchType === searchTypes.API) {

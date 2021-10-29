@@ -25,14 +25,6 @@ const userReducer = (state = initialState, action) => {
         userId: action.payload._id,
         loading: false,
       };
-    case "SIGN_UP":
-      return {
-        ...state,
-        loggedIn: false,
-        username: action.payload.username,
-        isAdmin: action.payload.isAdmin,
-        loading: false,
-      };
     case "SIGN_OUT":
       return {
         ...state,

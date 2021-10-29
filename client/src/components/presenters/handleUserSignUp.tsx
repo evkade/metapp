@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import UserSignUp from "../views/userSignUp";
-
-import UserLogIn from "../views/userLogIn";
-import usePromise from "../../hooks/usePromise";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { signUp } from "../../redux/actions/user";
+import UserModel from "../../model/userModel";
+
+const userModel = new UserModel();
 
 export const HandleUserSignUp = (signUp) => {
   const [userAuth, setUserAuth] = useState(false);
@@ -15,43 +14,20 @@ export const HandleUserSignUp = (signUp) => {
   const history = useHistory();
 
   const checkUserAuth = (username: string, password: string) => {
-    if (username && password) signUpFunc(username, password);
+    if (username && password)
+      userModel.signUpFunc(
+        username,
+        password,
+        setSignUpButton,
+        setSignUpError,
+        history
+      );
     else {
       setSignUpError(true);
       setTimeout(() => {
         setSignUpError(false);
       }, 3000);
     }
-  };
-
-  const signUpFunc = async (username, password) => {
-    await fetch("http://localhost:5000/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ username: username, password: password }),
-    })
-      .then((data) => {
-        if (data.ok) {
-          return data.json();
-        } else throw new Error("You couldn't sign up");
-      })
-      .then(() => {
-        setSignUpButton("Successfully created account: " + username);
-        setTimeout(() => {
-          setSignUpButton("Create Account");
-          history.push("/logIn");
-        }, 2000);
-      })
-      .catch((err) => {
-        console.log(err);
-        setSignUpError(true);
-        setTimeout(() => {
-          setSignUpError(false);
-        }, 3000);
-      });
   };
 
   return (
@@ -70,10 +46,8 @@ const mapStateToProps = (store) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    signUp: (user) => dispatch(signUp(user)),
-  };
+const mapDispatchToProps = () => {
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HandleUserSignUp);

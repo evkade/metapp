@@ -1,8 +1,6 @@
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./components/components.scss";
-import React, { Component, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
+import React, { useEffect, useState } from "react";
 import store from "./redux/store";
 import {
   Route,
@@ -19,11 +17,13 @@ import HandleUserLogIn from "./components/presenters/handleUserLogIn";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
 import MainNavbar from "./components/views/mainNavbar";
-import { logIn, signOut } from "./redux/actions/user";
 import userMenuPresenter from "./components/presenters/userMenuPresenter";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import userProfilePresenter from "./components/presenters/userProfilePresenter";
 import orderPresenter from "./components/presenters/orderPresenter";
+import UserModel from "./model/userModel";
+
+const userModel = new UserModel();
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => (
   <Route
@@ -58,18 +58,13 @@ const PublicRoute = ({ component: Component, pathName, path, ...rest }) => (
       store.getState().user.loggedIn ? (
         <Redirect to={pathName == null ? "/" : pathName} />
       ) : (
-        // TODO what is first page?
         <Component {...props} {...rest} />
       )
     }
   />
 );
 
-const RoutingApp = ({ socket }) => {
-  const user = useSelector((state: RootState) => {
-    return state.user;
-  });
-
+const RoutingApp = ({ socket, user, checkValidUser }) => {
   const [pathName, setPathName] = useState("/");
 
   window.onbeforeunload = () => {
@@ -77,6 +72,7 @@ const RoutingApp = ({ socket }) => {
   };
 
   useEffect(() => {
+    checkValidUser();
     window.onload = () => {
       const pathname = localStorage.getItem("pathname");
       if (pathname !== null) {
@@ -86,53 +82,63 @@ const RoutingApp = ({ socket }) => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <Router>
-        {user.loggedIn || user.isAdmin ? (
-          <MainNavbar setPathName={(newPath) => setPathName(newPath)} />
-        ) : null}
-        <Switch>
-          <AdminRoute
-            exact
-            path="/customizeMenu"
-            component={CustomizeMenuPresenter}
-          />
-          <AdminRoute
-            exact
-            path="/vieworders"
-            component={AdminViewDrinkOrdersPresenter}
-            socket={socket}
-          />
-          <PrivateRoute exact path="/menu" component={userMenuPresenter} />
-          <PrivateRoute
-            exact
-            path="/profile"
-            component={userProfilePresenter}
-            socket={socket}
-          />
-          <PrivateRoute
-            exact
-            path="/order"
-            component={orderPresenter}
-            socket={socket}
-          />
-          <PublicRoute
-            exact
-            path="/logIn"
-            component={HandleUserLogIn}
-            pathName={pathName}
-          />
-          <PublicRoute
-            exact
-            path="/signUp"
-            component={HandleUserSignUp}
-            pathName={pathName}
-          />
-          <PublicRoute path="/" component={EntryView} pathName={pathName} />
-        </Switch>
-      </Router>
-    </Provider>
+    <Router>
+      {user.loggedIn || user.isAdmin ? (
+        <MainNavbar setPathName={(newPath) => setPathName(newPath)} />
+      ) : null}
+      <Switch>
+        <AdminRoute
+          exact
+          path="/customizeMenu"
+          component={CustomizeMenuPresenter}
+        />
+        <AdminRoute
+          exact
+          path="/vieworders"
+          component={AdminViewDrinkOrdersPresenter}
+          socket={socket}
+        />
+        <PrivateRoute exact path="/menu" component={userMenuPresenter} />
+        <PrivateRoute
+          exact
+          path="/profile"
+          component={userProfilePresenter}
+          socket={socket}
+        />
+        <PrivateRoute
+          exact
+          path="/order"
+          component={orderPresenter}
+          socket={socket}
+        />
+        <PublicRoute
+          exact
+          path="/logIn"
+          component={HandleUserLogIn}
+          pathName={pathName}
+        />
+        <PublicRoute
+          exact
+          path="/signUp"
+          component={HandleUserSignUp}
+          pathName={pathName}
+        />
+        <PublicRoute path="/" component={EntryView} pathName={pathName} />
+      </Switch>
+    </Router>
   );
 };
 
-export default RoutingApp;
+const mapStateToProps = (store) => {
+  return {
+    user: store.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    checkValidUser: () => dispatch(userModel.checkValidUser()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoutingApp);

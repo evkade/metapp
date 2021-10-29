@@ -5,14 +5,16 @@ import mkmlogo from "../images/mkm_logo.png";
 import dkmlogo from "../images/dkm_logo.png";
 import { useHistory } from "react-router-dom";
 import { switchCurrentBar } from "../../redux/actions/menu";
-import { signOut } from "../../redux/actions/user";
+import UserModel from "../../model/userModel";
+
+const userModel = new UserModel();
 
 const MainNavbar = ({
   user,
-  signOut,
   switchCurrentBar,
   setPathName,
   currentBar,
+  signOut,
 }) => {
   useEffect(() => {
     setCurrentLogo(
@@ -25,33 +27,9 @@ const MainNavbar = ({
 
   const history = useHistory();
 
-  const [currentLogo, setCurrentLogo] = useState(
-    currentBar ? (currentBar === "dkm" ? dkmlogo : mkmlogo) : dkmlogo
-  );
+  const [currentLogo, setCurrentLogo] = useState(null);
   const [notCurrentLogo, setNotCurrentLogo] = useState(mkmlogo);
   const [expanded, setExpanded] = useState(false);
-
-  const switchLogos = () => {
-    const tmp = currentLogo;
-    setCurrentLogo(notCurrentLogo);
-    setNotCurrentLogo(tmp);
-    switchCurrentBar(currentBar === "dkm" ? "mkm" : "dkm");
-  };
-
-  const logout = async () => {
-    await fetch("http://localhost:5000/api/auth/signout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      // @ts-ignore
-    }).then(() => {
-      signOut();
-      setPathName("/");
-      history.push("/");
-    });
-  };
 
   return (
     <Navbar variant="dark" expand="lg" expanded={expanded}>
@@ -61,14 +39,14 @@ const MainNavbar = ({
         ) : (
           <NavDropdown
             id="test"
-            title={<img src={currentLogo} height="45px" />}
+            title={<img src={currentLogo} height="45px" alt="barLogo" />}
           >
             <NavDropdown.Item
               onClick={() =>
                 switchCurrentBar(currentBar === "dkm" ? "mkm" : "dkm")
               }
             >
-              <img src={notCurrentLogo} height="45px" />
+              <img src={notCurrentLogo} height="45px" alt="barLogo" />
             </NavDropdown.Item>
           </NavDropdown>
         )}
@@ -122,7 +100,7 @@ const MainNavbar = ({
           )}
           <Nav.Link
             onClick={() => {
-              logout();
+              signOut(setPathName, history);
             }}
           >
             Log out
@@ -143,7 +121,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     switchCurrentBar: (bar) => dispatch(switchCurrentBar(bar)),
-    signOut: () => dispatch(signOut()),
+    signOut: (setPathname, history) =>
+      dispatch(userModel.logOut(setPathname, history)),
   };
 };
 

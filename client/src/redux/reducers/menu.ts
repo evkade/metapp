@@ -163,6 +163,7 @@ const menuReducer = (state = initialState, action) => {
       return {
         ...state,
         currentBar: action.payload,
+        loading: false,
       };
 
     default:

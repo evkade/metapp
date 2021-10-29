@@ -53,16 +53,12 @@ export const UserProfilePresenter = ({
     };
   }, []);
 
-  const removeFromFavorites = (name) => {
-    removeFavorite(name);
-  };
-
   return (
     <UserProfile
       username={user}
       orders={orders}
       favorites={favorites}
-      removeFromFavorites={(name) => removeFromFavorites(name)}
+      removeFromFavorites={removeFavorite}
       loading={loading}
       spinner={<Spinner bar={currentBar} />}
     />

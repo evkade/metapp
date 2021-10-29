@@ -72,7 +72,6 @@ export const CustomizeMenu = ({
                 currentSearchType={currentSearchType}
                 setCurrentSearchType={setCurrentSearchType}
                 setBeverageCardType={setBeverageCardType}
-                loading={loading}
                 spinner={spinner}
               />
             </div>
