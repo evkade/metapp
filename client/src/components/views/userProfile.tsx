@@ -31,28 +31,28 @@ const UserProfile = ({
                 .filter((o) => !o.paid && !o.cancelled)
                 .map((order) => (
                   <div className="info-card-drink__row" key={order.id}>
-                    <div className="info-card-drink__column--flex">
+                    <div className="info-card-drink__column info-card-drink__column--small">
                       {/** TODO make modular */}
                       {order.order.map((orderDetail, index) => {
                         const length = order.order.length;
                         if (index === length - 1) {
                           return (
-                            <span key={index}>
+                            <div key={index}>
                               {" "}
                               {orderDetail.quantity} {orderDetail.beverage}
-                            </span>
+                            </div>
                           );
                         } else {
                           return (
-                            <span key={index}>
+                            <div key={index}>
                               {" "}
                               {orderDetail.quantity} {orderDetail.beverage},
-                            </span>
+                            </div>
                           );
                         }
                       })}
                     </div>
-                    <div className="info-card-drink__column--flex">
+                    <div className="info-card-drink__column info-card-drink__column--right">
                       {order.made ? "PICK UP!" : "NOT READY"}
                     </div>
                   </div>
@@ -88,22 +88,22 @@ const UserProfile = ({
                         <div className="info-card-drink__column--flex">
                           <b>{order.date}</b>
                         </div>
-                        <div className="info-card-drink__column--flex">
+                        <div className="info-card-drink__column info-card-drink__column--small">
                           {order.order.map((orderDetail, index) => {
                             const length = order.order.length;
                             if (index === length - 1) {
                               return (
-                                <span key={index}>
+                                <div key={index}>
                                   {" "}
                                   {orderDetail.quantity} {orderDetail.beverage}
-                                </span>
+                                </div>
                               );
                             } else {
                               return (
-                                <span key={index}>
+                                <div key={index}>
                                   {" "}
                                   {orderDetail.quantity} {orderDetail.beverage},
-                                </span>
+                                </div>
                               );
                             }
                           })}
