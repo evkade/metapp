@@ -2,7 +2,13 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
-const UserSignUp = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
+const UserSignUp = ({
+  userAuth,
+  checkUserAuth,
+  signUpError,
+  signUpButton,
+  signUpErrMessage,
+}) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -41,7 +47,7 @@ const UserSignUp = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
                   onChange={(event) => setPwd(event.target.value)}
                 ></input>
                 <button
-                  className="input-container__element"
+                  className="input-container__element input-container__button"
                   onClick={() => {
                     checkUserAuth(username, pwd);
                   }}
@@ -52,12 +58,7 @@ const UserSignUp = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
               </div>
             </div>
             <div className="user-form__errElement">
-              {signUpError && (
-                <>
-                  🚫 Something went wrong, there's already a user with these
-                  credentials
-                </>
-              )}
+              {signUpError && <>🚫 {signUpErrMessage}</>}
             </div>
           </>
         )}

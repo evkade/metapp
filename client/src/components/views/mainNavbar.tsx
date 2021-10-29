@@ -7,17 +7,27 @@ import { useHistory } from "react-router-dom";
 import { switchCurrentBar } from "../../redux/actions/menu";
 import { signOut } from "../../redux/actions/user";
 
-const MainNavbar = ({ user, signOut, switchCurrentBar, setPathName }) => {
+const MainNavbar = ({
+  user,
+  signOut,
+  switchCurrentBar,
+  setPathName,
+  currentBar,
+}) => {
+  useEffect(() => {
+    setCurrentLogo(
+      currentBar ? (currentBar === "dkm" ? dkmlogo : mkmlogo) : dkmlogo
+    );
+    setNotCurrentLogo(
+      currentBar ? (currentBar === "dkm" ? mkmlogo : dkmlogo) : mkmlogo
+    );
+  }, [currentBar]);
+
   const history = useHistory();
 
-  const checkAdminBar = () => {
-    if (user && user.username === "mkm") {
-      switchCurrentBar();
-      return mkmlogo;
-    } else return dkmlogo;
-  };
-
-  const [currentLogo, setCurrentLogo] = useState(checkAdminBar());
+  const [currentLogo, setCurrentLogo] = useState(
+    currentBar ? (currentBar === "dkm" ? dkmlogo : mkmlogo) : dkmlogo
+  );
   const [notCurrentLogo, setNotCurrentLogo] = useState(mkmlogo);
   const [expanded, setExpanded] = useState(false);
 
@@ -25,7 +35,7 @@ const MainNavbar = ({ user, signOut, switchCurrentBar, setPathName }) => {
     const tmp = currentLogo;
     setCurrentLogo(notCurrentLogo);
     setNotCurrentLogo(tmp);
-    switchCurrentBar();
+    switchCurrentBar(currentBar === "dkm" ? "mkm" : "dkm");
   };
 
   const logout = async () => {
@@ -53,7 +63,11 @@ const MainNavbar = ({ user, signOut, switchCurrentBar, setPathName }) => {
             id="test"
             title={<img src={currentLogo} height="45px" />}
           >
-            <NavDropdown.Item onClick={() => switchLogos()}>
+            <NavDropdown.Item
+              onClick={() =>
+                switchCurrentBar(currentBar === "dkm" ? "mkm" : "dkm")
+              }
+            >
               <img src={notCurrentLogo} height="45px" />
             </NavDropdown.Item>
           </NavDropdown>
@@ -67,12 +81,20 @@ const MainNavbar = ({ user, signOut, switchCurrentBar, setPathName }) => {
         <Nav className="mr-auto">
           {user.isAdmin ? (
             <>
-              <Nav.Item onClick={() => setExpanded(!expanded)}>
+              <Nav.Item
+                onClick={() => {
+                  if (expanded) setExpanded(!expanded);
+                }}
+              >
                 <Nav.Link onClick={() => history.push("/customizeMenu")}>
                   Customize Menu{" "}
                 </Nav.Link>
               </Nav.Item>
-              <Nav.Item onClick={() => setExpanded(!expanded)}>
+              <Nav.Item
+                onClick={() => {
+                  if (expanded) setExpanded(!expanded);
+                }}
+              >
                 <Nav.Link onClick={() => history.push("/vieworders")}>
                   Orders
                 </Nav.Link>
@@ -80,10 +102,18 @@ const MainNavbar = ({ user, signOut, switchCurrentBar, setPathName }) => {
             </>
           ) : (
             <>
-              <Nav.Item onClick={() => setExpanded(!expanded)}>
+              <Nav.Item
+                onClick={() => {
+                  if (expanded) setExpanded(!expanded);
+                }}
+              >
                 <Nav.Link onClick={() => history.push("/menu")}>Menu</Nav.Link>
               </Nav.Item>
-              <Nav.Item onClick={() => setExpanded(!expanded)}>
+              <Nav.Item
+                onClick={() => {
+                  if (expanded) setExpanded(!expanded);
+                }}
+              >
                 <Nav.Link onClick={() => history.push("/profile")}>
                   Profile
                 </Nav.Link>
@@ -106,12 +136,13 @@ const MainNavbar = ({ user, signOut, switchCurrentBar, setPathName }) => {
 const mapStateToProps = (store) => {
   return {
     user: store.user,
+    currentBar: store.menu.currentBar,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    switchCurrentBar: () => dispatch(switchCurrentBar()),
+    switchCurrentBar: (bar) => dispatch(switchCurrentBar(bar)),
     signOut: () => dispatch(signOut()),
   };
 };

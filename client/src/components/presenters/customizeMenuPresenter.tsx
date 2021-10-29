@@ -15,8 +15,10 @@ import {
   Cocktail,
   baseCocktail,
   baseBeer,
-} from '../../constants/beverageObjects';
-import { beverageCardTypes } from '../../constants/beverageCardType';
+
+} from "../../constants/beverageObjects";
+import { beverageCardTypes } from "../../constants/beverageCardType";
+import { Spinner } from "../views/spinner";
 
 // props contain menu, addToMenu, removeFromMenu, editInMenu
 // todo: add props types to all props
@@ -24,6 +26,7 @@ import MenuModel from '../../model/drinkModel';
 
 const menuModel = new MenuModel();
 
+// props contain menu, addToMenu, removeFromMenu, editInMenu
 export const CustomizeMenuPresenter = (props) => {
   // Contains the information about which part of the menu we are customizing
   const [customizedType, setCustomizedType] = useState<string>(
@@ -63,6 +66,8 @@ export const CustomizeMenuPresenter = (props) => {
       setCurrentSearchType={setCurrentSearchType}
       beverageCardType={beverageCardType}
       setBeverageCardType={setBeverageCardType}
+      loading={props.loading}
+      spinner={<Spinner bar={props.currentBar} />}
     />
   );
 };
@@ -75,6 +80,7 @@ const mapStateToProps = (store) => {
       beer: store.menu.beerHistory,
       cocktail: store.menu.cocktailHistory,
     },
+    loading: store.menu.loading,
   };
 };
 

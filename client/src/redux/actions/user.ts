@@ -1,3 +1,7 @@
+export const fetchRequest = () => ({
+  type: "FETCH_USER_REQUEST",
+});
+
 export const logIn = (user) => ({
   type: "LOG_IN",
   payload: user,

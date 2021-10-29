@@ -64,7 +64,7 @@ export default class MenuModel {
       name: cocktail.name,
       active: active,
       price: cocktail.price,
-      ingredients: "", // todo: temporary solution, modify structure of ingredients in object
+      ingredients: cocktail.ingredients,
       alcoholVolume: cocktail.alcoholVolume,
       description: "", // todo: finns ej i cocktail object
     };
@@ -133,14 +133,15 @@ export default class MenuModel {
     var ingredientHash: string = "strIngredient" + hashNumber.toString();
     var measureHash: string = "strMeasure" + hashNumber.toString();
     var ingredientList: string[] = [];
-    var ingredientMeasuresList: string[] = [];
 
     while (
       apiCocktail[ingredientHash] !== null &&
       apiCocktail[measureHash] !== null
     ) {
-      ingredientList = [...ingredientList, apiCocktail[ingredientHash]];
-      ingredientMeasuresList = [...ingredientList, apiCocktail[measureHash]];
+      ingredientList = [
+        ...ingredientList,
+        apiCocktail[ingredientHash] + " " + apiCocktail[measureHash],
+      ];
       hashNumber++;
       var ingredientHash: string = "strIngredient" + hashNumber.toString();
       var measureHash: string = "strMeasure" + hashNumber.toString();
@@ -150,8 +151,7 @@ export default class MenuModel {
       name: apiCocktail.strDrink,
       price: 0,
       alcoholVolume: 0,
-      ingredientList: ingredientList,
-      ingredientMeasuresList: ingredientMeasuresList,
+      ingredients: ingredientList,
     };
 
     return cocktail;

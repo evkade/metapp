@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { connect } from "react-redux";
 import { logIn } from "./redux/actions/user";
+import { switchCurrentBar } from "./redux/actions/menu";
 import { io } from "socket.io-client";
 
 import RoutingApp from "./routingApp";
@@ -33,7 +34,14 @@ const checkValidUser = async () => {
     credentials: "include",
   })
     .then((data) => data.json())
-    .then((user) => store.dispatch(logIn(user.currentUser)))
+    .then((user) => {
+      store.dispatch(logIn(user.currentUser));
+      store.dispatch(
+        switchCurrentBar(
+          user.currentUser.isAdmin ? user.currentUser.username : "dkm"
+        )
+      );
+    })
     .catch((err) => console.log("No signed in user"));
 };
 

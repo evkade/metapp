@@ -5,12 +5,13 @@ import {
   unfinishedOrderPlaced,
   addFavorite,
   removeFavorite,
-  setFavorites,
-} from '../../redux/actions/user';
-import { useHistory } from 'react-router-dom';
-import { UserMenu } from '../views/userMenu';
-import MenuModel from '../../model/drinkModel';
+} from "../../redux/actions/user";
+import { useHistory } from "react-router-dom";
+import { UserMenu } from "../views/userMenu";
+import MenuModel from "../../model/drinkModel";
+import { Spinner } from "../views/spinner";
 import FavoriteModel from '../../model/favoriteModel';
+
 
 const menuModel = new MenuModel();
 const favoriteModel = new FavoriteModel();
@@ -28,6 +29,7 @@ export const UserMenuPresenter = ({
   currentBar,
   getBeerHistory,
   getCocktailHistory,
+  loading,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
@@ -107,6 +109,7 @@ export const UserMenuPresenter = ({
   const removeFromOrder = (name, price) => {
     const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
+        addOrRemoveTotalInfo(price, "remove");
         return {
           name: item.name,
           count: item.count - 1,
@@ -119,7 +122,6 @@ export const UserMenuPresenter = ({
       (item) => item.count !== 0
     );
     setOrderItems(modifiedOrderListWithoutZeros);
-    addOrRemoveTotalInfo(price, 'remove');
   };
 
   const placeUnFinishedOrder = () => {
@@ -160,6 +162,8 @@ export const UserMenuPresenter = ({
       isfavorite={(name) => isfavorite(name)}
       favoriteList={favorites}
       totalInfo={totalInfo}
+      loading={loading}
+      spinner={<Spinner bar={currentBar} />}
     />
   );
 };
@@ -172,6 +176,7 @@ const mapStateToProps = (store) => {
     beerMenu: store.menu.beerMenu,
     cocktailMenu: store.menu.cocktailMenu,
     currentBar: store.menu.currentBar,
+    loading: store.menu.loading || store.user.loading || store.orders.loading,
   };
 };
 

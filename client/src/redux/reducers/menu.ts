@@ -4,7 +4,7 @@ import MenuModel from "../../model/drinkModel";
 
 const initialState = {
   loading: false,
-  currentBar: "dkm",
+  currentBar: "",
   beerMenu: [],
   cocktailMenu: [],
   beerHistory: [],
@@ -15,7 +15,7 @@ const menuModel = new MenuModel();
 
 const menuReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "FETCH_REQUEST":
+    case "FETCH_MENU_REQUEST":
       return {
         ...state,
         loading: true,
@@ -24,7 +24,6 @@ const menuReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        currentBar: "dkm",
         beerMenu: [],
         cocktailMenu: [],
         beerHistory: [],
@@ -63,9 +62,8 @@ const menuReducer = (state = initialState, action) => {
         .map((databaseCocktail) => ({
           name: databaseCocktail.name,
           alcoholVolume: databaseCocktail.alcoholVolume,
-          // todo: ingredients, add description to beverageObject
           price: databaseCocktail.price,
-          ingredientList: databaseCocktail.ingredients,
+          ingredients: databaseCocktail.ingredients,
         }))
         .sort(menuModel.compare);
       const cocktailMenu = action.payload
@@ -75,7 +73,7 @@ const menuReducer = (state = initialState, action) => {
           name: databaseCocktail.name,
           alcoholVolume: databaseCocktail.alcoholVolume,
           price: databaseCocktail.price,
-          ingredientList: databaseCocktail.ingredients,
+          ingredients: databaseCocktail.ingredients,
         }))
         .sort(menuModel.compare);
       return {
@@ -103,6 +101,7 @@ const menuReducer = (state = initialState, action) => {
         cocktailMenu: [...state.cocktailMenu, action.payload].sort(
           menuModel.compare
         ),
+        loading: false,
       };
 
     case "REMOVE_FROM_MENU":
@@ -125,6 +124,7 @@ const menuReducer = (state = initialState, action) => {
           cocktailMenu: state.cocktailMenu.filter(
             (beverage) => beverage.name !== action.payload.name
           ),
+          loading: false,
         };
       }
 
@@ -139,6 +139,7 @@ const menuReducer = (state = initialState, action) => {
             ),
             action.payload,
           ].sort(menuModel.compare),
+          loading: false,
         };
       } else {
         menuModel.postCocktailToDatabase(
@@ -154,13 +155,14 @@ const menuReducer = (state = initialState, action) => {
             ),
             action.payload,
           ].sort(menuModel.compare),
+          loading: false,
         };
       }
 
     case "SWITCH_CURRENT_BAR":
       return {
         ...state,
-        currentBar: state.currentBar === "dkm" ? "mkm" : "dkm",
+        currentBar: action.payload,
       };
 
     default:

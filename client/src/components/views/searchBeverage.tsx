@@ -3,44 +3,25 @@ import { searchTypes, beverageTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
 import { BeverageCard } from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
-import { baseBeer, baseCocktail } from "../../constants/beverageObjects";
 
 // todo: lägga till en bättre loading
 // todo: lägga till finns grej när searchResults är tom
 // todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
 
 export const SearchBeverage = ({
-  setNewBeverage,
-  setShowModal,
   searchBeverage,
   searchResult,
   isLoading,
   menu,
-  addToMenu,
-  currentSearchType,
   setCurrentSearchType,
   setBeverageCardType,
-  customizedType,
+  spinner,
+  query,
+  setQuery,
+  openModal,
+  openNewBeverageModal,
+  setShowInfoPopup,
 }) => {
-  const [query, setQuery] = useState<string>("");
-
-  useEffect(() => {
-    setQuery("");
-  }, [customizedType, currentSearchType]);
-
-  // todo: I think this should go into the presenter
-  const openModal = (beverage: Beverage) => {
-    setNewBeverage(beverage);
-    setBeverageCardType(beverageCardTypes.ADMIN_SEARCH_RESULTS);
-    setShowModal(true);
-  };
-
-  const openNewBeverageModal = (name: string) => {
-    customizedType === beverageTypes.BEER
-      ? openModal({ ...baseBeer, name: name })
-      : openModal({ ...baseCocktail, name: name });
-  };
-
   return (
     <>
       <input
@@ -81,25 +62,30 @@ export const SearchBeverage = ({
         Create
       </button>
       <div className="drink-list__container--grey drink-list__container--grey-full">
-        {!isLoading && searchResult ? (
-          searchResult.map((beverage: Beverage, index: number) => (
-            <BeverageCard
-              key={index}
-              beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
-              beverage={beverage}
-              index={index}
-              addToOrder={null}
-              removeFromOrder={null}
-              count={null}
-              openModal={() => openModal(beverage)}
-              menu={menu}
-              removeFromMenu={null}
-              editInMenu={null}
-            />
-          ))
-        ) : (
-          <div> Loading </div>
-        )}
+        {!isLoading && searchResult
+          ? searchResult.map((beverage: Beverage, index: number) => (
+              <BeverageCard
+                key={index}
+                beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
+                beverage={beverage}
+                index={index}
+                addToOrder={null}
+                removeFromOrder={null}
+                count={null}
+                openModal={() => openModal(beverage)}
+                menu={menu}
+                removeFromMenu={null}
+                editInMenu={null}
+              />
+            ))
+          : spinner}
+        <button
+          className="admin-menu-container__button--info"
+          onMouseEnter={() => setShowInfoPopup(true)}
+          onMouseLeave={() => setShowInfoPopup(false)}
+        >
+          ?
+        </button>
       </div>
     </>
   );

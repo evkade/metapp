@@ -95,6 +95,17 @@ body {
     margin: 4px;
     padding: 10px;
   }
+  @at-root #{&}__button {
+    position: relative;
+  }
+  @at-root #{&}__button:active {
+    top: 0.1em;
+    box-shadow: inset 1px 1px white;
+  }
+  @at-root #{&}__button:hover {
+    background-color: black;
+    color: white;
+  }
 }
 
 .container--general {
@@ -126,6 +137,14 @@ body {
   width: 5em;
   padding: 2vh;
   border-radius: 25px;
+  transition: transform 1s ease;
+  position: relative;
+  &:hover {
+    transform: scale(1.05);
+  }
+  &:active {
+    top: 0.1em;
+  }
   @at-root {
     .neon-button--green {
       color: $neon-color-green;
@@ -186,31 +205,40 @@ body {
     max-width: 800px;
     overflow-y: scroll;
     background-color: black;
-    border-radius: 6px;
+    border-radius: 7px;
     flex: 1;
     margin-bottom: 20px;
+    padding-bottom: 80px;
   }
   @at-root #{&}__container--grey {
     background-color: lightgrey;
     height: 70%;
     max-height: 200px;
     overflow-y: scroll;
+    border-radius: 7px;
   }
   @at-root #{&}__container--grey-full {
     height: 100%;
     max-height: 100%;
     width: 100%;
+    border-radius: 7px;
   }
   @at-root #{&}__button {
     z-index: 1;
-    position: absolute;
-    bottom: 30px;
     border-radius: 6px;
     font-family: "Pacifico", cursive;
     font-size: 3vmax;
     width: 70%;
     border: 1px solid black;
     background: rgb(240, 200, 48);
+    position: absolute;
+    bottom: 20px;
+  }
+  @at-root #{&}__button:hover {
+    background: rgb(177, 147, 28);
+  }
+  @at-root #{&}__button:active {
+    bottom: 18px;
   }
   @at-root #{&}__row {
     display: flex;
@@ -233,6 +261,10 @@ body {
   @at-root #{&}__column {
     color: white;
     width: 30%;
+    padding: 5px;
+  }
+  @at-root #{&}__column--small {
+    font-size: 13px;
   }
   @at-root #{&}__column--black {
     color: black;
@@ -255,6 +287,13 @@ body {
   }
   @at-root #{&}__star--active {
     color: rgb(240, 200, 48);
+  }
+  @at-root #{&}__count {
+    width: 12px;
+  }
+  @at-root #{&}__count--chosen {
+    color: rgb(240, 200, 48);
+    text-decoration: underline;
   }
 }
 
@@ -316,20 +355,32 @@ body {
   color: white;
   border-radius: 6px;
   border: 1px solid white;
+  position: relative;
+  &:hover {
+    color: black;
+    background: white;
+  }
+  &:disabled {
+    color: grey;
+    border: 1px solid grey;
+  }
+  &:active {
+    top: 0.1em;
+  }
 }
 
 .general-button--black {
   color: black;
   border: 1px solid black;
-}
-
-.general-button--bw:disabled {
-  color: grey;
-  border: 1px solid grey;
+  &:hover {
+    color: white !important;
+    background: black !important;
+  }
 }
 
 .profile-view {
   height: 100vh !important;
+  overflow: scroll;
 }
 
 .beverage-type {
@@ -357,6 +408,9 @@ body {
     text-align: left;
     flex: 1;
   }
+  @at-root #{&}__column--right {
+    text-align: right;
+  }
   @at-root #{&}__column--flex {
     flex: 1;
     @include centerVerticalHorizontal();
@@ -367,6 +421,9 @@ body {
   }
   @at-root #{&}__title {
     font-size: 20px;
+  }
+  @at-root #{&}__column--small {
+    font-size: 13px;
   }
 }
 
@@ -380,9 +437,6 @@ body {
     color: white;
     border-radius: 6px;
     border: 1px solid white;
-  }
-  @at-root #{&}__button:hover {
-    background-color: grey;
   }
   @at-root #{&}__tabs {
     margin-left: 6px;
@@ -424,8 +478,8 @@ body {
     }
     input:hover,
     select:hover,
+    button:hover,
     input:focus {
-      border: 1.5px solid grey;
       background-color: grey;
     }
     select {
@@ -453,6 +507,22 @@ body {
     border-radius: 6px;
     margin-bottom: 10px;
   }
+  @at-root #{&}__button--info {
+    position: fixed;
+    bottom: 60px;
+    right: 19px;
+    border-radius: 4px;
+  }
+  @at-root #{&}__pop-up {
+    position: fixed;
+    left: 59%;
+    top: 51%;
+    width: 36%;
+    padding: 5px;
+    border: 1px solid #011627;
+    border-radius: 20px;
+    background-color: #fcfeff;
+  }
 }
 .height100 {
   height: 100%;
@@ -460,6 +530,10 @@ body {
 
 .navbar {
   background-color: black;
+}
+
+.navbar-brand {
+  margin-left: 0.5rem;
 }
 
 .dropdown-toggle::after {
@@ -473,4 +547,25 @@ body {
 .dropdown-item:hover {
   background-color: black;
   opacity: 0.5;
+}
+
+@keyframes Spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner__img {
+  animation: Spinner infinite 2s linear;
+  width: 20%;
 }

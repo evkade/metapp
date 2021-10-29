@@ -21,67 +21,77 @@ export const CustomizeMenu = ({
   setCurrentSearchType,
   beverageCardType,
   setBeverageCardType,
+  loading,
+  spinner,
 }) => {
   return (
     <div className="admin-menu-container">
-      <div className="title-neon--small">Customize menu</div>
-      <div className="admin-menu-container__tabs">
-        <button
-          className="admin-menu-container__tab"
-          type="submit"
-          onClick={() => setCustomizedType(beverageTypes.BEER)}
-          disabled={customizedType === beverageTypes.BEER}
-        >
-          Beer
-        </button>
-        <button
-          className="admin-menu-container__tab"
-          type="submit"
-          onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
-          disabled={customizedType === beverageTypes.COCKTAIL}
-        >
-          Cocktail
-        </button>
-      </div>
-      <div className="admin-menu-container__row">
-        <div className="admin-menu-container__column admin-menu-container__column--flex">
-          <AdminMenuPresenter
-            setShowModal={setShowModal}
-            setModalBeverage={setModalBeverage}
-            menu={menu}
-            removeFromMenu={removeFromMenu}
-            editInMenu={editInMenu}
-            customizedType={customizedType}
-            setBeverageCardType={setBeverageCardType}
-          />
-        </div>
-        <div className="admin-menu-container__column">
-          <SearchBeveragePresenter
-            setShowModal={setShowModal}
-            setModalBeverage={setModalBeverage}
-            menu={menu}
-            history={history}
-            addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-            customizedType={customizedType}
-            currentSearchType={currentSearchType}
-            setCurrentSearchType={setCurrentSearchType}
-            setBeverageCardType={setBeverageCardType}
-          />
-        </div>
-        <CreateBeverageForMenuModalPresenter
-          showModal={showModal}
-          setShowModal={setShowModal}
-          modalBeverage={modalBeverage}
-          setModalBeverage={setModalBeverage}
-          menu={menu}
-          addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-          editInMenu={(beverage: Beverage) => editInMenu(beverage)}
-          customizedType={customizedType}
-          currentSearchType={currentSearchType}
-          setCurrentSearchType={setCurrentSearchType}
-          beverageCardType={beverageCardType}
-        />
-      </div>
+      {loading ? (
+        spinner
+      ) : (
+        <>
+          <div className="title-neon--small">Customize menu</div>
+          <div className="admin-menu-container__tabs">
+            <button
+              className="admin-menu-container__tab"
+              type="submit"
+              onClick={() => setCustomizedType(beverageTypes.BEER)}
+              disabled={customizedType === beverageTypes.BEER}
+            >
+              Beer
+            </button>
+            <button
+              className="admin-menu-container__tab"
+              type="submit"
+              onClick={() => setCustomizedType(beverageTypes.COCKTAIL)}
+              disabled={customizedType === beverageTypes.COCKTAIL}
+            >
+              Cocktail
+            </button>
+          </div>
+          <div className="admin-menu-container__row">
+            <div className="admin-menu-container__column admin-menu-container__column--flex">
+              <AdminMenuPresenter
+                setShowModal={setShowModal}
+                setModalBeverage={setModalBeverage}
+                menu={menu}
+                removeFromMenu={removeFromMenu}
+                editInMenu={editInMenu}
+                customizedType={customizedType}
+                setBeverageCardType={setBeverageCardType}
+              />
+            </div>
+            <div className="admin-menu-container__column">
+              <SearchBeveragePresenter
+                setShowModal={setShowModal}
+                setModalBeverage={setModalBeverage}
+                menu={menu}
+                history={history}
+                addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+                customizedType={customizedType}
+                currentSearchType={currentSearchType}
+                setCurrentSearchType={setCurrentSearchType}
+                setBeverageCardType={setBeverageCardType}
+                loading={loading}
+                spinner={spinner}
+              />
+            </div>
+            <CreateBeverageForMenuModalPresenter
+              showModal={showModal}
+              setShowModal={setShowModal}
+              modalBeverage={modalBeverage}
+              setModalBeverage={setModalBeverage}
+              menu={menu}
+              addToMenu={(beverage: Beverage) => addToMenu(beverage)}
+              editInMenu={(beverage: Beverage) => editInMenu(beverage)}
+              customizedType={customizedType}
+              currentSearchType={currentSearchType}
+              setCurrentSearchType={setCurrentSearchType}
+              beverageCardType={beverageCardType}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

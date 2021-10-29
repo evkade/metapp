@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import UserSignUp from "../views/userSignUp";
-
-import UserLogIn from "../views/userLogIn";
-import usePromise from "../../hooks/usePromise";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUp } from "../../redux/actions/user";
@@ -11,6 +8,7 @@ export const HandleUserSignUp = (signUp) => {
   const [userAuth, setUserAuth] = useState(false);
   const [signUpError, setSignUpError] = useState(false);
   const [signUpButton, setSignUpButton] = useState("Create Account");
+  const [signUpErrMessage, setSignUpErrMessage] = useState(undefined);
 
   const history = useHistory();
 
@@ -18,6 +16,7 @@ export const HandleUserSignUp = (signUp) => {
     if (username && password) signUpFunc(username, password);
     else {
       setSignUpError(true);
+      setSignUpErrMessage("You must provide a username and password");
       setTimeout(() => {
         setSignUpError(false);
       }, 3000);
@@ -46,8 +45,8 @@ export const HandleUserSignUp = (signUp) => {
         }, 2000);
       })
       .catch((err) => {
-        console.log(err);
         setSignUpError(true);
+        setSignUpErrMessage(err);
         setTimeout(() => {
           setSignUpError(false);
         }, 3000);
@@ -60,6 +59,7 @@ export const HandleUserSignUp = (signUp) => {
       checkUserAuth={(username, password) => checkUserAuth(username, password)}
       signUpError={signUpError}
       signUpButton={signUpButton}
+      signUpErrMessage={signUpErrMessage}
     />
   );
 };
