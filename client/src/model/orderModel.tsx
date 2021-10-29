@@ -7,33 +7,11 @@ import {
   orderCancelled,
 } from "../redux/actions/orders";
 import { orderPlaced } from "../redux/actions/user";
+import moment from "moment";
 
 export default class OrderModel {
   getTimeStamp() {
-    const today = new Date();
-    const hour = today.getHours();
-    const minute = today.getMinutes();
-
-    return (
-      (hour < 10 ? "0" + hour : hour) +
-      ":" +
-      (minute < 10 ? "0" + minute : minute)
-    );
-  }
-
-  getDateStamp() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-
-    return (
-      year +
-      "-" +
-      (month < 10 ? "0" + month : month) +
-      "-" +
-      (day < 10 ? "0" + day : day)
-    );
+    return moment().format("HH:mm");
   }
 
   getOrders(currentBar) {
@@ -91,9 +69,8 @@ export default class OrderModel {
   }
 
   placeOrder(order, user, currentBar, socket) {
-    const date = this.getDateStamp();
+    const date = moment().format("YYYY-MM-DD");
     const time = this.getTimeStamp();
-    console.log(order);
     const finalOrder = {
       user: user.userId,
       date: date,
