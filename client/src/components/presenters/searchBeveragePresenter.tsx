@@ -19,6 +19,8 @@ export const SearchBeveragePresenter = ({
   currentSearchType,
   setCurrentSearchType,
   setBeverageCardType,
+  loading,
+  spinner,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
   const [beverageData, beverageError] = usePromise(beveragePromise);
@@ -87,7 +89,6 @@ export const SearchBeveragePresenter = ({
   }, [beverageData, beverageError]);
 
   useEffect(() => {
-    console.log("[HERE]");
     if (currentSearchType === searchTypes.HISTORY) {
       switch (customizedType) {
         case beverageTypes.BEER:
@@ -114,6 +115,8 @@ export const SearchBeveragePresenter = ({
         currentSearchType={currentSearchType}
         setCurrentSearchType={setCurrentSearchType}
         setBeverageCardType={setBeverageCardType}
+        loading={loading}
+        spinner={spinner}
       />
     </>
   );

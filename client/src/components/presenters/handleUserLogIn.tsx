@@ -4,8 +4,9 @@ import usePromise from "../../hooks/usePromise";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { logIn } from "../../redux/actions/user";
+import { switchCurrentBar } from "../../redux/actions/menu";
 
-const HandleUserLogIn = ({ user, logIn }) => {
+const HandleUserLogIn = ({ user, logIn, switchCurrentBar }) => {
   const [userAuth, setUserAuth] = useState(false);
   const [logInError, setLogInError] = useState(false);
 
@@ -39,6 +40,7 @@ const HandleUserLogIn = ({ user, logIn }) => {
           username: user.name,
           isAdmin: user.credential === "admin",
         });
+        switchCurrentBar(user.credential === "admin" ? user.name : "dkm");
         if (user.credential === "user") {
           history.push("/menu");
         }
@@ -68,6 +70,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logIn: (user) => dispatch(logIn(user)),
+    switchCurrentBar: (bar) => dispatch(switchCurrentBar(bar)),
   };
 };
 

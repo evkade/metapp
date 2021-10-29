@@ -21,6 +21,8 @@ export const SearchBeverage = ({
   setCurrentSearchType,
   setBeverageCardType,
   customizedType,
+  loading,
+  spinner,
 }) => {
   const [query, setQuery] = useState<string>("");
 
@@ -81,25 +83,23 @@ export const SearchBeverage = ({
         Create
       </button>
       <div className="drink-list__container--grey drink-list__container--grey-full">
-        {!isLoading && searchResult ? (
-          searchResult.map((beverage: Beverage, index: number) => (
-            <BeverageCard
-              key={index}
-              beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
-              beverage={beverage}
-              index={index}
-              addToOrder={null}
-              removeFromOrder={null}
-              count={null}
-              openModal={() => openModal(beverage)}
-              menu={menu}
-              removeFromMenu={null}
-              editInMenu={null}
-            />
-          ))
-        ) : (
-          <div> Loading </div>
-        )}
+        {!isLoading && searchResult
+          ? searchResult.map((beverage: Beverage, index: number) => (
+              <BeverageCard
+                key={index}
+                beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
+                beverage={beverage}
+                index={index}
+                addToOrder={null}
+                removeFromOrder={null}
+                count={null}
+                openModal={() => openModal(beverage)}
+                menu={menu}
+                removeFromMenu={null}
+                editInMenu={null}
+              />
+            ))
+          : spinner}
       </div>
     </>
   );

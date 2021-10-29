@@ -4,7 +4,7 @@ import MenuModel from "../../model/drinkModel";
 
 const initialState = {
   loading: false,
-  currentBar: "dkm",
+  currentBar: "",
   beerMenu: [],
   cocktailMenu: [],
   beerHistory: [],
@@ -24,7 +24,6 @@ const menuReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        currentBar: "dkm",
         beerMenu: [],
         cocktailMenu: [],
         beerHistory: [],
@@ -164,7 +163,7 @@ const menuReducer = (state = initialState, action) => {
     case "SWITCH_CURRENT_BAR":
       return {
         ...state,
-        currentBar: state.currentBar === "dkm" ? "mkm" : "dkm",
+        currentBar: action.payload,
       };
 
     default:

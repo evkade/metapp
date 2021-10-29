@@ -17,6 +17,7 @@ import {
   baseBeer,
 } from "../../constants/beverageObjects";
 import { beverageCardTypes } from "../../constants/beverageCardType";
+import { Spinner } from "../views/spinner";
 
 // props contain menu, addToMenu, removeFromMenu, editInMenu
 // todo: add props types to all props
@@ -63,12 +64,13 @@ export const CustomizeMenuPresenter = (props) => {
       setCurrentSearchType={setCurrentSearchType}
       beverageCardType={beverageCardType}
       setBeverageCardType={setBeverageCardType}
+      loading={props.loading}
+      spinner={<Spinner bar={props.currentBar} />}
     />
   );
 };
 
 const mapStateToProps = (store) => {
-  console.log("STORE", store);
   return {
     currentBar: store.menu.currentBar,
     menu: { beer: store.menu.beerMenu, cocktail: store.menu.cocktailMenu },
@@ -76,6 +78,7 @@ const mapStateToProps = (store) => {
       beer: store.menu.beerHistory,
       cocktail: store.menu.cocktailHistory,
     },
+    loading: store.menu.loading,
   };
 };
 

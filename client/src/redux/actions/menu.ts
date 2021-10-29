@@ -35,8 +35,9 @@ export const editInMenu = (beverage: Beverage) => ({
   payload: beverage,
 });
 
-export const switchCurrentBar = () => ({
+export const switchCurrentBar = (bar: String) => ({
   type: "SWITCH_CURRENT_BAR",
+  payload: bar,
 });
 
 export const signOut = () => ({
