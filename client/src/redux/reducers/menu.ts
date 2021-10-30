@@ -34,18 +34,18 @@ const menuReducer = (state = initialState, action) => {
       const beerHistory = action.payload
         .map((databaseBeer) => ({
           name: databaseBeer.name,
-          type: databaseBeer.description,
-          volume: 0, // finns ej sparad i databasen
+          type: databaseBeer.beerType,
+          volume: databaseBeer.volume,
           alcoholPercentage: databaseBeer.percentage,
           price: databaseBeer.price,
         }))
         .sort(menuModel.compare);
       const beerMenu = action.payload
-        .filter((databaseBeer) => databaseBeer.active === "true")
+        .filter((databaseBeer) => databaseBeer.active)
         .map((databaseBeer) => ({
           name: databaseBeer.name,
-          type: databaseBeer.description,
-          volume: 0, // finns ej sparad i databasen
+          type: databaseBeer.beerType,
+          volume: databaseBeer.volume,
           alcoholPercentage: databaseBeer.percentage,
           price: databaseBeer.price,
         }))
@@ -67,8 +67,7 @@ const menuReducer = (state = initialState, action) => {
         }))
         .sort(menuModel.compare);
       const cocktailMenu = action.payload
-        // todo: active is a string in the database?
-        .filter((databaseCocktail) => databaseCocktail.active === "true")
+        .filter((databaseCocktail) => databaseCocktail.active)
         .map((databaseCocktail) => ({
           name: databaseCocktail.name,
           alcoholVolume: databaseCocktail.alcoholVolume,

@@ -31,7 +31,8 @@ export interface Beer extends mongoose.Document {
   active: Boolean;
   price: Number;
   percentage: Number;
-  description: String;
+  volume: Number;
+  beerType: String;
 }
 
 export interface Cocktail extends mongoose.Document {

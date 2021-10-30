@@ -45,7 +45,8 @@ export default class MenuModel {
       active: active,
       price: beer.price,
       percentage: beer.alcoholPercentage,
-      description: beer.type,
+      beerType: beer.type,
+      volume: beer.volume
     };
 
     const response = await fetch(

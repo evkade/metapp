@@ -9,10 +9,11 @@ const BeerSchema = new mongoose.Schema({
         maxlength: [50, "Name can not more than 50 characters"],
     },
     active: {
-        type: String,
+        type: Boolean,
         required: [true, "Please enter whether the beer is active"],
     },
-
+    volume: Number,
+    beerType: String,
     price: {
         type: Number,
         required: [true, "Please enter a price"],
@@ -20,10 +21,6 @@ const BeerSchema = new mongoose.Schema({
     percentage: {
         type: Number,
         required: [true, "Please enter a percentage"],
-    },
-    description: {
-        type: String,
-        required: false
     }
 
 });
