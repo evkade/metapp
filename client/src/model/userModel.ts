@@ -14,7 +14,10 @@ export default class UserModel {
       fetch("http://localhost:5000/api/auth/currentuser", {
         credentials: "include",
       })
-        .then((data) => data.json())
+        .then((data) => {
+          if (data.ok) return data.json();
+          else throw new Error("No signed in user");
+        })
         .then((user) => {
           dispatch(logIn(user.currentUser));
           dispatch(
@@ -23,7 +26,8 @@ export default class UserModel {
             )
           );
         })
-        .catch((err) => console.log("No signed in user"));
+        // TODO do we want to do anything?
+        .catch((err) => err);
     };
   }
 
@@ -58,8 +62,8 @@ export default class UserModel {
           }
           if (user.credential === "admin") history.push("/customizeMenu");
         })
+        // TODO show error message to user
         .catch((err) => {
-          console.log(err);
           setLogInError(true);
         });
     };
@@ -86,8 +90,8 @@ export default class UserModel {
           history.push("/logIn");
         }, 2000);
       })
+      // Todo adapt user messages on server message
       .catch((err) => {
-        console.log(err);
         setSignUpError(true);
         setTimeout(() => {
           setSignUpError(false);
@@ -103,7 +107,6 @@ export default class UserModel {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        // @ts-ignore
       }).then(() => {
         dispatch(signOut());
         setPathName("/");

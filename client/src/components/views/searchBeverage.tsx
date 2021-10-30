@@ -14,7 +14,6 @@ export const SearchBeverage = ({
   isLoading,
   menu,
   setCurrentSearchType,
-  setBeverageCardType,
   spinner,
   query,
   setQuery,

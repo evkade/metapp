@@ -6,7 +6,7 @@ import UserModel from "../../model/userModel";
 
 const userModel = new UserModel();
 
-export const HandleUserSignUp = (signUp) => {
+const HandleUserSignUp = (signUp) => {
   const [userAuth, setUserAuth] = useState(false);
   const [signUpError, setSignUpError] = useState(false);
   const [signUpButton, setSignUpButton] = useState("Create Account");

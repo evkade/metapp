@@ -11,9 +11,9 @@ import {
 } from "../../redux/actions/orders";
 import { Spinner } from "../views/spinner";
 
-const ordermodel = new OrderModel();
+const orderModel = new OrderModel();
 
-export const UserProfilePresenter = ({
+const UserProfilePresenter = ({
   orders,
   user,
   userId,
@@ -79,7 +79,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeFavorite: (name) => dispatch(removeFavorite(name)),
-    getOrders: (userId) => dispatch(ordermodel.getUserOrders(userId)),
+    getOrders: (userId) => dispatch(orderModel.getUserOrders(userId)),
     orderMade: (id, time) => dispatch(orderMade(id, time)),
     orderPaid: (id, time) => dispatch(orderPaid(id, time)),
     orderCancelled: (id) => dispatch(orderCancelled(id)),

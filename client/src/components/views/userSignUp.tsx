@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
 const UserSignUp = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
+  // TODO kan vi ha kvar?
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 

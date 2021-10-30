@@ -2,7 +2,6 @@ import React from "react";
 import { Beverage } from "../../constants/beverageObjects";
 import { BeverageCard } from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
-import { beverageTypes } from "../../constants/searchTypes";
 
 export const AdminMenu = ({ menu, removeFromMenu, editInMenu, openModal }) => {
   return (

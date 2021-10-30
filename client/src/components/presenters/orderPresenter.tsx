@@ -1,6 +1,7 @@
 import OrderView from "../views/orderView";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   orderPlaced,
   removedOrder,
@@ -10,24 +11,26 @@ import { addFavorite } from "../../redux/actions/user";
 import { removeFavorite } from "../../redux/actions/user";
 import OrderModel from "../../model/orderModel";
 
-const ordermodel = new OrderModel();
+const orderModel = new OrderModel();
 
-export const OrderPresenter = ({
+const OrderPresenter = ({
   socket,
   unfinishedOrder,
   user,
   currentBar,
-  orders,
   orderPlaced,
   addFavorite,
   removeFavorite,
-  favorites,
-  unfinishedOrderPlaced,
   removedOrder,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
+  const [order, setOrder] = useState([]);
+  const [submittedOrder, setSubmittedOrder] = useState(false);
+  // TODO varför??
+  const unfinishedOrderObj = unfinishedOrder;
+  let history = useHistory();
 
   useEffect(() => {
     if (
@@ -47,6 +50,16 @@ export const OrderPresenter = ({
       setTotalInfo(newTotalObj);
     } else {
       setOrderItems([]);
+    }
+
+    // TODO From view, behövs det??
+    if (
+      !(
+        Object.keys(unfinishedOrderObj).length === 0 &&
+        unfinishedOrderObj.constructor === Object
+      )
+    ) {
+      setOrder(unfinishedOrderObj.order);
     }
   }, []);
 
@@ -108,6 +121,8 @@ export const OrderPresenter = ({
     setOrderItems(modifiedOrderListWithoutZeros);
   };
 
+  // TODO varför har vi de här funktionerna??
+
   const addToFavorites = (name) => {
     addFavorite(name);
   };
@@ -122,17 +137,17 @@ export const OrderPresenter = ({
 
   return (
     <OrderView
-      unfinishedOrder={unfinishedOrder}
-      orderItems={orderItems}
-      setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
+      order={order}
+      submittedOrder={submittedOrder}
+      setSubmittedOrder={setSubmittedOrder}
       addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name) => removeFromOrder(name)}
       addToFavorites={(name) => addToFavorites(name)}
       removeFromFavorites={(name) => removeFromFavorites(name)}
       favoriteList={favoriteList}
-      totalInfo={totalInfo}
       finalizeOrder={() => finalizeOrder()}
       removeOrder={() => removeOrder()}
+      history={history}
     />
   );
 };
@@ -148,7 +163,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     orderPlaced: (order, user, currentbar, socket) =>
-      dispatch(ordermodel.placeOrder(order, user, currentbar, socket)),
+      dispatch(orderModel.placeOrder(order, user, currentbar, socket)),
     addFavorite: (name) => dispatch(addFavorite(name)),
     removeFavorite: (name) => dispatch(removeFavorite(name)),
     unfinishedOrderPlaced: (beverages) =>

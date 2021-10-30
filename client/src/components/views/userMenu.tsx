@@ -1,11 +1,10 @@
 import React from "react";
 import { Beverage } from "../../constants/beverageObjects";
-import Drink from "./drinkView";
+import DrinkPresenter from "../presenters/drinkPresenter";
 import { beverageTypes } from "../../constants/searchTypes";
 
 export const UserMenu = ({
   orderItems,
-  setOrderItems,
   beerMenu,
   cocktailMenu,
   addToOrder,
@@ -37,7 +36,7 @@ export const UserMenu = ({
                   orderCount = filteredOutItem[0].count;
                 }
                 return (
-                  <Drink
+                  <DrinkPresenter
                     item={item}
                     key={index}
                     index={index}
@@ -67,7 +66,7 @@ export const UserMenu = ({
                   orderCount = filteredOutItem[0].count;
                 }
                 return (
-                  <Drink
+                  <DrinkPresenter
                     item={item}
                     key={index}
                     index={index}

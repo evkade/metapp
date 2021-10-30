@@ -11,6 +11,7 @@ export const AdminViewDrinkOrder = ({
   loading,
   spinner,
 }) => {
+  // TODO move this to presenter? TODO import useState
   const [drinkDetail, setDrinkDetail] = React.useState(null);
   const [showDrinkDetailModal, setShowDrinkDetailModal] = React.useState(false);
   const [collapseInfo, setCollapseInfo] = React.useState({

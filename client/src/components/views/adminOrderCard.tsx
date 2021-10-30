@@ -9,6 +9,7 @@ const OrderCard = ({
   paid,
   cancel,
 }) => {
+  // TODO should this not be in view?
   const getTotalPrice = (order) => {
     var totPrice = 0;
     order.order.forEach(
@@ -18,20 +19,6 @@ const OrderCard = ({
           order.quantity)
     );
     return totPrice;
-  };
-
-  const getFullOrderString = (order) => {
-    var st = "";
-    if (order.length > 3) {
-      for (var i = 0; i < 3; i++) {
-        st += order[i].quantity + " " + order[i].beverage + ", ";
-      }
-      st += "...";
-    } else {
-      order.forEach((o) => (st += o.quantity + " " + o.beverage + ", "));
-      st.substring(0, st.length - 2);
-    }
-    return st;
   };
 
   return (

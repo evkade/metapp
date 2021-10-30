@@ -1,11 +1,8 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import mkmlogo from "../images/mkm_logo.png";
 import dkmlogo from "../images/dkm_logo.png";
 
-const EntryView = () => {
-  let history = useHistory();
-
+const EntryView = ({ history }) => {
   return (
     <div className="container--general entry-view">
       <div className="entry-view__logos">
@@ -31,4 +28,5 @@ const EntryView = () => {
   );
 };
 
+// TODO ibland default på views, ibland inte
 export default EntryView;

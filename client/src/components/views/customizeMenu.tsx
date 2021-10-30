@@ -67,7 +67,6 @@ export const CustomizeMenu = ({
                 setModalBeverage={setModalBeverage}
                 menu={menu}
                 history={history}
-                addToMenu={(beverage: Beverage) => addToMenu(beverage)}
                 customizedType={customizedType}
                 currentSearchType={currentSearchType}
                 setCurrentSearchType={setCurrentSearchType}
@@ -81,8 +80,8 @@ export const CustomizeMenu = ({
               modalBeverage={modalBeverage}
               setModalBeverage={setModalBeverage}
               menu={menu}
-              addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-              editInMenu={(beverage: Beverage) => editInMenu(beverage)}
+              addToMenu={addToMenu}
+              editInMenu={editInMenu}
               customizedType={customizedType}
               currentSearchType={currentSearchType}
               setCurrentSearchType={setCurrentSearchType}

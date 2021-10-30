@@ -15,7 +15,6 @@ export const SearchBeveragePresenter = ({
   setShowModal,
   menu,
   history,
-  addToMenu,
   customizedType,
   currentSearchType,
   setCurrentSearchType,
@@ -127,7 +126,6 @@ export const SearchBeveragePresenter = ({
         isLoading={isLoading}
         menu={menu}
         setCurrentSearchType={setCurrentSearchType}
-        setBeverageCardType={setBeverageCardType}
         spinner={spinner}
         query={query}
         setQuery={setQuery}

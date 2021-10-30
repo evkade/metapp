@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import GeneralFavoriteCard from "./generalFavoriteCard";
 import mkmlogo from "../images/mkm_logo.png";
 import dkmlogo from "../images/dkm_logo.png";
@@ -11,12 +11,6 @@ const UserProfile = ({
   loading,
   spinner,
 }) => {
-  const [favoriteList, setFavoriteList] = useState([]);
-
-  useEffect(() => {
-    setFavoriteList(favorites);
-  }, [favorites]);
-
   return (
     <div className="profile-view container--general">
       {loading ? (
@@ -123,12 +117,12 @@ const UserProfile = ({
           <GeneralFavoriteCard
             title={"Favorite beverages"}
             favoriteObject={favorites}
-            removeFromFavorites={(name) => removeFromFavorites(name)}
+            removeFromFavorites={removeFromFavorites}
           />
           <GeneralFavoriteCard
             title={"Favorite drinks"}
             favoriteObject={favorites}
-            removeFromFavorites={(name) => removeFromFavorites(name)}
+            removeFromFavorites={removeFromFavorites}
           />
         </>
       )}

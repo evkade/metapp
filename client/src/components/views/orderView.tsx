@@ -1,44 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "../components.scss";
-import Drink from "./drinkView";
-import { useHistory } from "react-router-dom";
+import DrinkPresenter from "../presenters/drinkPresenter";
 
 const OrderView = ({
-  unfinishedOrder,
-  orderItems,
-  setOrderItems,
+  order,
+  submittedOrder,
+  setSubmittedOrder,
   addToOrder,
   removeFromOrder,
   addToFavorites,
   removeFromFavorites,
   favoriteList,
-  totalInfo,
   finalizeOrder,
   removeOrder,
+  history,
 }) => {
-  const [order, setOrder] = useState([]);
-  const [submittedOrder, setSubmittedOrder] = useState(false);
-  const unfinishedOrderObj = unfinishedOrder;
-  let history = useHistory();
-
-  useEffect(() => {
-    if (
-      !(
-        Object.keys(unfinishedOrderObj).length === 0 &&
-        unfinishedOrderObj.constructor === Object
-      )
-    ) {
-      setOrder(unfinishedOrderObj.order);
-    }
-  }, []);
-
   return (
     <div className="drink-list container--general">
       <div className="title-neon--big">Finish order</div>
       <div className="drink-list__container">
         {order.map((item, index) => {
           return (
-            <Drink
+            <DrinkPresenter
               key={index}
               item={item}
               itemType={null}
