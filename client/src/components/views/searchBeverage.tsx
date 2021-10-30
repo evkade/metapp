@@ -80,7 +80,7 @@ export const SearchBeverage = ({
             ))
           : spinner}
         <button
-          className="admin-menu-container__button--info"
+          className="admin-menu-container__button--info general-button--bw general-button--black"
           onMouseEnter={() => setShowInfoPopup(true)}
           onMouseLeave={() => setShowInfoPopup(false)}
         >

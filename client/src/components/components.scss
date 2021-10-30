@@ -77,6 +77,26 @@ body {
 .beverage-form {
   display: flex;
   flex-direction: column;
+  &__row {
+    margin: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+  }
+  &__input {
+    width: 60%;
+    height: 25px;
+    margin: 5px;
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+  }
+  &__input:hover {
+    background-color: lightgrey;
+  }
 }
 
 .container--centered {
@@ -177,12 +197,21 @@ body {
 }
 
 .card-order {
+  min-height: 250px;
+  width: 30%;
   display: inline-block;
   border: 1px solid black;
-  border-radius: 10%;
+  border-radius: 7px;
   margin: 10px;
   padding: 10px;
   background-color: $light-neon-color-pink;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    height: 100%;
+    justify-content: space-evenly;
+  }
   &--made {
     background-color: $light-neon-color-yellow !important;
     border: 1px solid $neon-color-yellow !important;
@@ -196,11 +225,28 @@ body {
   }
   &__text--title {
     cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    height: 50px;
   }
   &__button {
     border-radius: 10px;
+    border: solid black 1px;
     padding: 5px;
     margin: 3px;
+    background-color: white;
+    position: relative;
+  }
+  &__button:hover {
+    color: white;
+    background-color: black;
+  }
+  &__button:active {
+    top: 0.1em;
+  }
+  &__button:disabled {
+    color: rgba(16, 16, 16, 0.3) !important;
     background-color: white;
   }
 }
@@ -328,25 +374,13 @@ body {
   @include centerVerticalHorizontal();
   @at-root #{&}__content {
     width: 500px;
+    border-radius: 7px;
     background-color: #fff;
-    label {
-      margin: 5px;
-    }
-    input {
-      height: 25px;
-      margin: 5px;
-      padding: 3px 5px;
-      border-radius: 5px;
-    }
-    input:hover {
-      background-color: lightgrey;
-    }
-    button {
-      border-radius: 5px;
-    }
   }
   @at-root #{&}__headfoot {
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
   }
   @at-root #{&}__title {
     margin: 0;
@@ -444,7 +478,6 @@ body {
 .admin-menu-container {
   background-color: black;
   height: 100%;
-  padding: 10px;
   @at-root #{&}__button {
     background: none;
     margin: 5px;
@@ -509,23 +542,65 @@ body {
     margin-right: 3px;
   }
   @at-root #{&}__subtitle {
-    color: white;
+    color: black;
+    background-color: white;
+    margin: 0px;
+    padding: 10px;
   }
   @at-root #{&}__collapsible--collapsed {
     display: none !important;
   }
   @at-root #{&}__collapsible {
     height: 50%;
-    display: block;
+    display: flex;
     overflow-y: scroll;
     border-radius: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  @at-root #{&}__collapsible::before {
+    background-image: linear-gradient(
+      top,
+      rgba(255, 255, 255, 0) 70%,
+      black 100%
+    );
+    background-image: -moz-linear-gradient(
+      top,
+      rgba(255, 255, 255, 0) 70%,
+      black 100%
+    );
+    background-image: -ms-linear-gradient(
+      top,
+      rgba(255, 255, 255, 0) 70%,
+      black 100%
+    );
+    background-image: -o-linear-gradient(
+      top,
+      rgba(255, 255, 255, 0) 70%,
+      black 100%
+    );
+    background-image: -webkit-linear-gradient(
+      top,
+      rgba(255, 255, 255, 0) 70%,
+      black 100%
+    );
+    content: "\00a0";
+    height: inherit;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
   }
   @at-root #{&}__button--info {
     position: fixed;
     bottom: 60px;
     right: 19px;
-    border-radius: 4px;
+    border-radius: 7px;
+  }
+  @at-root #{&}__button--info:active {
+    bottom: 58px !important;
+    top: unset !important;
   }
   @at-root #{&}__pop-up {
     position: fixed;
