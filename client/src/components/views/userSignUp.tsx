@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
 const UserSignUp = ({
@@ -7,11 +6,12 @@ const UserSignUp = ({
   checkUserAuth,
   signUpError,
   signUpButton,
+  username,
+  setUsername,
+  pwd,
+  setPwd,
   signUpErrMessage,
 }) => {
-  const [username, setUsername] = useState("");
-  const [pwd, setPwd] = useState("");
-
   return (
     <>
       <div

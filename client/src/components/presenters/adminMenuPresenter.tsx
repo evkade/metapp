@@ -1,10 +1,10 @@
 import React from "react";
-import { AdminMenu } from "../views/adminMenu";
+import AdminMenu from "../views/adminMenu";
 import { beverageTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 
-export const AdminMenuPresenter = ({
+const AdminMenuPresenter = ({
   setModalBeverage,
   setShowModal,
   menu,
@@ -29,3 +29,5 @@ export const AdminMenuPresenter = ({
     />
   );
 };
+
+export default AdminMenuPresenter;

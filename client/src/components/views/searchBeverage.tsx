@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { searchTypes, beverageTypes } from "../../constants/searchTypes";
+import React from "react";
+import { searchTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
-import { BeverageCard } from "./beverageCard";
+import BeverageCard from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 
 // todo: lägga till en bättre loading
@@ -14,7 +14,6 @@ export const SearchBeverage = ({
   isLoading,
   menu,
   setCurrentSearchType,
-  setBeverageCardType,
   spinner,
   query,
   setQuery,

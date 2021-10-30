@@ -1,11 +1,10 @@
-import React from 'react';
-import { Beverage } from '../../constants/beverageObjects';
-import Drink from './drinkView';
-import { beverageTypes } from '../../constants/searchTypes';
+import React from "react";
+import { Beverage } from "../../constants/beverageObjects";
+import Drink from "./drinkView";
+import { beverageTypes } from "../../constants/searchTypes";
 
-export const UserMenu = ({
+const UserMenu = ({
   orderItems,
-  setOrderItems,
   beerMenu,
   cocktailMenu,
   addToOrder,
@@ -14,20 +13,19 @@ export const UserMenu = ({
   isfavorite,
   addToFavorites,
   removeFromFavorites,
-  favoriteList,
   totalInfo,
   loading,
   spinner,
 }) => {
   return (
-    <div className='drink-list container--general'>
+    <div className="drink-list container--general">
       {loading ? (
         spinner
       ) : (
         <>
-          <div className='title-neon--big'>Menu</div>
-          <div className='drink-list__container'>
-            <div className='beverage-type'> Beers </div>
+          <div className="title-neon--big">Menu</div>
+          <div className="drink-list__container">
+            <div className="beverage-type"> Beers </div>
             {beerMenu &&
               beerMenu.map((item: Beverage, index: number) => {
                 var orderCount: number = 0;
@@ -61,7 +59,7 @@ export const UserMenu = ({
                 );
               })}
 
-            <div className='beverage-type'> Cocktails </div>
+            <div className="beverage-type"> Cocktails </div>
             {cocktailMenu &&
               cocktailMenu.map((item: Beverage, index: number) => {
                 var orderCount: number = 0;
@@ -97,12 +95,12 @@ export const UserMenu = ({
           </div>
           {orderItems.length > 0 && (
             <button
-              className='drink-list__button'
+              className="drink-list__button"
               onClick={() => placeUnFinishedOrder()}
             >
               Place order <br />
-              {totalInfo.totalCount}{' '}
-              {totalInfo.totalCount == 1 ? 'item' : 'items'} á{' '}
+              {totalInfo.totalCount}{" "}
+              {totalInfo.totalCount == 1 ? "item" : "items"} á{" "}
               {totalInfo.totalCost} SEK
             </button>
           )}
@@ -111,3 +109,5 @@ export const UserMenu = ({
     </div>
   );
 };
+
+export default UserMenu;

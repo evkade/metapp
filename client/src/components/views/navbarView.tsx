@@ -1,74 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React from "react";
 import { Navbar, NavDropdown, Nav } from "react-bootstrap";
-import mkmlogo from "../images/mkm_logo.png";
-import dkmlogo from "../images/dkm_logo.png";
-import { useHistory } from "react-router-dom";
-import { switchCurrentBar } from "../../redux/actions/menu";
-import { signOut } from "../../redux/actions/user";
 
-const MainNavbar = ({
-  user,
-  signOut,
+const NavbarView = ({
+  isAdmin,
   switchCurrentBar,
   setPathName,
   currentBar,
+  currentLogo,
+  notCurrentLogo,
+  expanded,
+  setExpanded,
+  signOut,
+  history,
 }) => {
-  useEffect(() => {
-    setCurrentLogo(
-      currentBar ? (currentBar === "dkm" ? dkmlogo : mkmlogo) : dkmlogo
-    );
-    setNotCurrentLogo(
-      currentBar ? (currentBar === "dkm" ? mkmlogo : dkmlogo) : mkmlogo
-    );
-  }, [currentBar]);
-
-  const history = useHistory();
-
-  const [currentLogo, setCurrentLogo] = useState(
-    currentBar ? (currentBar === "dkm" ? dkmlogo : mkmlogo) : dkmlogo
-  );
-  const [notCurrentLogo, setNotCurrentLogo] = useState(mkmlogo);
-  const [expanded, setExpanded] = useState(false);
-
-  const switchLogos = () => {
-    const tmp = currentLogo;
-    setCurrentLogo(notCurrentLogo);
-    setNotCurrentLogo(tmp);
-    switchCurrentBar(currentBar === "dkm" ? "mkm" : "dkm");
-  };
-
-  const logout = async () => {
-    await fetch("http://localhost:5000/api/auth/signout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      // @ts-ignore
-    }).then(() => {
-      signOut();
-      setPathName("/");
-      history.push("/");
-    });
-  };
-
   return (
     <Navbar variant="dark" expand="lg" expanded={expanded}>
       <Navbar.Brand>
-        {user.isAdmin ? (
+        {isAdmin ? (
           <img src={currentLogo} height="45px" />
         ) : (
           <NavDropdown
             id="test"
-            title={<img src={currentLogo} height="45px" />}
+            title={<img src={currentLogo} height="45px" alt="barLogo" />}
           >
             <NavDropdown.Item
               onClick={() =>
                 switchCurrentBar(currentBar === "dkm" ? "mkm" : "dkm")
               }
             >
-              <img src={notCurrentLogo} height="45px" />
+              <img src={notCurrentLogo} height="45px" alt="barLogo" />
             </NavDropdown.Item>
           </NavDropdown>
         )}
@@ -79,7 +39,7 @@ const MainNavbar = ({
       />
       <Navbar.Collapse id="navbar">
         <Nav className="mr-auto">
-          {user.isAdmin ? (
+          {isAdmin ? (
             <>
               <Nav.Item
                 onClick={() => {
@@ -122,7 +82,7 @@ const MainNavbar = ({
           )}
           <Nav.Link
             onClick={() => {
-              logout();
+              signOut(setPathName, history);
             }}
           >
             Log out
@@ -133,18 +93,4 @@ const MainNavbar = ({
   );
 };
 
-const mapStateToProps = (store) => {
-  return {
-    user: store.user,
-    currentBar: store.menu.currentBar,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    switchCurrentBar: (bar) => dispatch(switchCurrentBar(bar)),
-    signOut: () => dispatch(signOut()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainNavbar);
+export default NavbarView;

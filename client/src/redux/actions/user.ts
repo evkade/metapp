@@ -7,11 +7,6 @@ export const logIn = (user) => ({
   payload: user,
 });
 
-export const signUp = (user) => ({
-  type: "SIGN_UP",
-  payload: user,
-});
-
 export const signOut = () => ({
   type: "SIGN_OUT",
 });

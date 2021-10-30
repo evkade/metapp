@@ -20,20 +20,6 @@ const OrderCard = ({
     return totPrice;
   };
 
-  const getFullOrderString = (order) => {
-    var st = "";
-    if (order.length > 3) {
-      for (var i = 0; i < 3; i++) {
-        st += order[i].quantity + " " + order[i].beverage + ", ";
-      }
-      st += "...";
-    } else {
-      order.forEach((o) => (st += o.quantity + " " + o.beverage + ", "));
-      st.substring(0, st.length - 2);
-    }
-    return st;
-  };
-
   return (
     <div
       key={fullOrder.id}

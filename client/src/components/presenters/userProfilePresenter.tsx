@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { orderPlaced } from '../../redux/actions/user';
-import UserProfile from '../views/userProfile';
-import { removeFavorite } from '../../redux/actions/user';
-import OrderModel from '../../model/orderModel';
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { orderPlaced } from "../../redux/actions/user";
+import UserProfile from "../views/userProfile";
+import { removeFavorite } from "../../redux/actions/user";
+import OrderModel from "../../model/orderModel";
 import {
   orderCancelled,
   orderMade,
   orderPaid,
-} from '../../redux/actions/orders';
-import FavoriteModel from '../../model/favoriteModel';
-import { Spinner } from '../views/spinner';
+} from "../../redux/actions/orders";
+import FavoriteModel from "../../model/favoriteModel";
+import { Spinner } from "../views/spinner";
 
-const ordermodel = new OrderModel();
+const orderModel = new OrderModel();
 const favoriteModel = new FavoriteModel();
 
-export const UserProfilePresenter = ({
+const UserProfilePresenter = ({
   orders,
   user,
   userId,
@@ -30,7 +30,6 @@ export const UserProfilePresenter = ({
   loading,
   currentBar,
 }) => {
-  //const [getfavorites, setfavorites] = useState(getFavorites());
   useEffect(() => {
     getFavorites();
     getOrders(userId);
@@ -46,14 +45,14 @@ export const UserProfilePresenter = ({
       orderCancelled(id);
     };
 
-    socket.on('made', orderBeenMade);
-    socket.on('paid', orderBeenPaid);
-    socket.on('cancelled', orderBeenCancelled);
+    socket.on("made", orderBeenMade);
+    socket.on("paid", orderBeenPaid);
+    socket.on("cancelled", orderBeenCancelled);
 
     return () => {
-      socket.off('made', orderBeenMade);
-      socket.off('paid', orderBeenPaid);
-      socket.off('cancelled', orderBeenCancelled);
+      socket.off("made", orderBeenMade);
+      socket.off("paid", orderBeenPaid);
+      socket.off("cancelled", orderBeenCancelled);
     };
   }, []);
 
@@ -76,7 +75,7 @@ export const UserProfilePresenter = ({
       username={user}
       orders={orders}
       favorites={favorites}
-      removeFromFavorites={(name) => removeFromFavorites(name)}
+      removeFromFavorites={removeFromFavorites}
       loading={loading}
       spinner={<Spinner bar={currentBar} />}
     />
@@ -98,7 +97,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     removeFavorite: (beverage_id, type, bar) =>
       dispatch(removeFavorite({ beverage_id, type, bar })),
-    getOrders: (userId) => dispatch(ordermodel.getUserOrders(userId)),
+    getOrders: (userId) => dispatch(orderModel.getUserOrders(userId)),
     getFavorites: () => dispatch(favoriteModel.getFavorites()),
     orderMade: (id, time) => dispatch(orderMade(id, time)),
     orderPaid: (id, time) => dispatch(orderPaid(id, time)),

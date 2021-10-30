@@ -1,33 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { CustomizeMenu } from '../views/customizeMenu';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import CustomizeMenu from "../views/customizeMenu";
 import {
   addToMenu,
   editInMenu,
   removeFromMenu,
   addToHistory,
-} from '../../redux/actions/menu';
-import { searchTypes } from '../../constants/searchTypes';
-import { beverageTypes } from '../../constants/searchTypes';
+} from "../../redux/actions/menu";
+import { searchTypes } from "../../constants/searchTypes";
+import { beverageTypes } from "../../constants/searchTypes";
 import {
   Beverage,
-  Beer,
-  Cocktail,
   baseCocktail,
   baseBeer,
-
 } from "../../constants/beverageObjects";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 import { Spinner } from "../views/spinner";
 
-// props contain menu, addToMenu, removeFromMenu, editInMenu
 // todo: add props types to all props
-import MenuModel from '../../model/drinkModel';
+import MenuModel from "../../model/drinkModel";
 
 const menuModel = new MenuModel();
 
-// props contain menu, addToMenu, removeFromMenu, editInMenu
-export const CustomizeMenuPresenter = (props) => {
+const CustomizeMenuPresenter = ({
+  menu,
+  addToMenu,
+  removeFromMenu,
+  editInMenu,
+  currentBar,
+  getBeerHistory,
+  getCocktailHistory,
+  history,
+  loading,
+}) => {
   // Contains the information about which part of the menu we are customizing
   const [customizedType, setCustomizedType] = useState<string>(
     beverageTypes.BEER
@@ -45,9 +50,9 @@ export const CustomizeMenuPresenter = (props) => {
   );
 
   useEffect(() => {
-    props.getBeerHistory(props.currentBar);
-    props.getCocktailHistory(props.currentBar);
-  }, [props.currentBar]);
+    getBeerHistory(currentBar);
+    getCocktailHistory(currentBar);
+  }, [currentBar]);
 
   return (
     <CustomizeMenu
@@ -55,19 +60,19 @@ export const CustomizeMenuPresenter = (props) => {
       setShowModal={setShowModal}
       modalBeverage={modalBeverage}
       setModalBeverage={setModalBeverage}
-      menu={props.menu}
-      history={props.history}
-      addToMenu={(beverage: Beverage) => props.addToMenu(beverage)}
-      removeFromMenu={(beverage: Beverage) => props.removeFromMenu(beverage)}
-      editInMenu={(beverage: Beverage) => props.editInMenu(beverage)}
+      menu={menu}
+      history={history}
+      addToMenu={addToMenu}
+      removeFromMenu={removeFromMenu}
+      editInMenu={editInMenu}
       customizedType={customizedType}
       setCustomizedType={setCustomizedType}
       currentSearchType={currentSearchType}
       setCurrentSearchType={setCurrentSearchType}
       beverageCardType={beverageCardType}
       setBeverageCardType={setBeverageCardType}
-      loading={props.loading}
-      spinner={<Spinner bar={props.currentBar} />}
+      loading={loading}
+      spinner={<Spinner bar={currentBar} />}
     />
   );
 };

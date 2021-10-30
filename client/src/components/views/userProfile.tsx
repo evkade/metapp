@@ -1,4 +1,6 @@
+
 import React, { useEffect, useState } from "react";
+
 import GeneralFavoriteCard from "./generalFavoriteCard";
 import mkmlogo from "../images/mkm_logo.png";
 import dkmlogo from "../images/dkm_logo.png";
@@ -26,19 +28,23 @@ const UserProfile = ({
                 .map((order) => (
                   <div className="info-card-drink__row" key={order.id}>
                     <div className="info-card-drink__column info-card-drink__column--small">
+
                       {/** TODO make modular */}
                       {order.order.map((orderDetail, index) => {
                         const length = order.order.length;
                         if (index === length - 1) {
                           return (
                             <div key={index}>
+
                               {" "}
                               {orderDetail.quantity} {orderDetail.beverage}
                             </div>
                           );
                         } else {
                           return (
-                            <div key={index}>
+
+                           <div key={index}>
+
                               {" "}
                               {orderDetail.quantity} {orderDetail.beverage},
                             </div>
@@ -47,6 +53,7 @@ const UserProfile = ({
                       })}
                     </div>
                     <div className="info-card-drink__column info-card-drink__column--right">
+
                       {order.made ? "PICK UP!" : "NOT READY"}
                     </div>
                   </div>
@@ -119,7 +126,7 @@ const UserProfile = ({
             favoriteObject={favorites.filter(
               (data) => data.beverage_type === "beer"
             )}
-            removeFromFavorites={(name) => removeFromFavorites(name)}
+            removeFromFavorites={removeFromFavorites}
             dkmlogo={dkmlogo}
             mkmlogo={mkmlogo}
           />
@@ -128,7 +135,7 @@ const UserProfile = ({
             favoriteObject={favorites.filter(
               (data) => data.beverage_type === "cocktail"
             )}
-            removeFromFavorites={(name) => removeFromFavorites(name)}
+            removeFromFavorites={removeFromFavorites}
             dkmlogo={dkmlogo}
             mkmlogo={mkmlogo}
           />

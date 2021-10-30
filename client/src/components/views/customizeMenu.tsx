@@ -1,11 +1,11 @@
 import React from "react";
-import { AdminMenuPresenter } from "../presenters/adminMenuPresenter";
-import { CreateBeverageForMenuModalPresenter } from "../presenters/createBeverageForMenuModalPresenter";
+import AdminMenuPresenter from "../presenters/adminMenuPresenter";
+import CreateBeverageForMenuModalPresenter from "../presenters/createBeverageForMenuModalPresenter";
 import { Beverage } from "../../constants/beverageObjects";
 import { beverageTypes } from "../../constants/searchTypes";
-import { SearchBeveragePresenter } from "../presenters/searchBeveragePresenter";
+import SearchBeveragePresenter from "../presenters/searchBeveragePresenter";
 
-export const CustomizeMenu = ({
+const CustomizeMenu = ({
   showModal,
   setShowModal,
   modalBeverage,
@@ -67,12 +67,10 @@ export const CustomizeMenu = ({
                 setModalBeverage={setModalBeverage}
                 menu={menu}
                 history={history}
-                addToMenu={(beverage: Beverage) => addToMenu(beverage)}
                 customizedType={customizedType}
                 currentSearchType={currentSearchType}
                 setCurrentSearchType={setCurrentSearchType}
                 setBeverageCardType={setBeverageCardType}
-                loading={loading}
                 spinner={spinner}
               />
             </div>
@@ -82,8 +80,8 @@ export const CustomizeMenu = ({
               modalBeverage={modalBeverage}
               setModalBeverage={setModalBeverage}
               menu={menu}
-              addToMenu={(beverage: Beverage) => addToMenu(beverage)}
-              editInMenu={(beverage: Beverage) => editInMenu(beverage)}
+              addToMenu={addToMenu}
+              editInMenu={editInMenu}
               customizedType={customizedType}
               currentSearchType={currentSearchType}
               setCurrentSearchType={setCurrentSearchType}
@@ -95,3 +93,5 @@ export const CustomizeMenu = ({
     </div>
   );
 };
+
+export default CustomizeMenu;

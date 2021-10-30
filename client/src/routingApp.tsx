@@ -1,35 +1,41 @@
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./components/components.scss";
-import React, { Component, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import store from "./redux/store";
+import React, { useEffect, useState } from "react";
 import {
   Route,
   BrowserRouter as Router,
   Switch,
   Redirect,
 } from "react-router-dom";
-import { RootState } from "redux/rootReducer";
+import { connect } from "react-redux";
 
-import EntryView from "./components/views/entryView";
-
+import EntryPresenter from "./components/presenters/entryPresenter";
 import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
 import HandleUserLogIn from "./components/presenters/handleUserLogIn";
 import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
-import { HandleUserSignUp } from "./components/presenters/handleUserSignUp";
-import MainNavbar from "./components/views/mainNavbar";
-import { logIn, signOut } from "./redux/actions/user";
+import HandleUserSignUp from "./components/presenters/handleUserSignUp";
+import NavbarPresenter from "./components/presenters/navbarPresenter";
 import userMenuPresenter from "./components/presenters/userMenuPresenter";
-import { useSelector } from "react-redux";
 import userProfilePresenter from "./components/presenters/userProfilePresenter";
 import orderPresenter from "./components/presenters/orderPresenter";
+import UserModel from "./model/userModel";
 
-const PrivateRoute = ({ component: Component, path, ...rest }) => (
+const userModel = new UserModel();
+
+const PrivateRoute = ({ component: Component, path, user, ...rest }) => (
   <Route
     path={path}
     render={(props) =>
-      store.getState().user.loggedIn ? (
+      user.loggedIn ? <Component {...props} {...rest} /> : <Redirect to="/" />
+    }
+  />
+);
+
+const AdminRoute = ({ component: Component, path, user, ...rest }) => (
+  <Route
+    path={path}
+    render={(props) =>
+      user.loggedIn && user.isAdmin ? (
         <Component {...props} {...rest} />
       ) : (
         <Redirect to="/" />
@@ -38,38 +44,26 @@ const PrivateRoute = ({ component: Component, path, ...rest }) => (
   />
 );
 
-const AdminRoute = ({ component: Component, path, ...rest }) => (
+const PublicRoute = ({
+  component: Component,
+  pathName,
+  path,
+  user,
+  ...rest
+}) => (
   <Route
     path={path}
     render={(props) =>
-      store.getState().user.loggedIn && store.getState().user.isAdmin ? (
-        <Component {...props} {...rest} />
-      ) : (
-        <Redirect to="/" />
-      )
-    }
-  />
-);
-
-const PublicRoute = ({ component: Component, pathName, path, ...rest }) => (
-  <Route
-    path={path}
-    render={(props) =>
-      store.getState().user.loggedIn ? (
+      user.loggedIn ? (
         <Redirect to={pathName == null ? "/" : pathName} />
       ) : (
-        // TODO what is first page?
         <Component {...props} {...rest} />
       )
     }
   />
 );
 
-const RoutingApp = ({ socket }) => {
-  const user = useSelector((state: RootState) => {
-    return state.user;
-  });
-
+const RoutingApp = ({ socket, user, checkValidUser }) => {
   const [pathName, setPathName] = useState("/");
 
   window.onbeforeunload = () => {
@@ -77,6 +71,7 @@ const RoutingApp = ({ socket }) => {
   };
 
   useEffect(() => {
+    checkValidUser();
     window.onload = () => {
       const pathname = localStorage.getItem("pathname");
       if (pathname !== null) {
@@ -86,53 +81,79 @@ const RoutingApp = ({ socket }) => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <Router>
-        {user.loggedIn || user.isAdmin ? (
-          <MainNavbar setPathName={(newPath) => setPathName(newPath)} />
-        ) : null}
-        <Switch>
-          <AdminRoute
-            exact
-            path="/customizeMenu"
-            component={CustomizeMenuPresenter}
-          />
-          <AdminRoute
-            exact
-            path="/vieworders"
-            component={AdminViewDrinkOrdersPresenter}
-            socket={socket}
-          />
-          <PrivateRoute exact path="/menu" component={userMenuPresenter} />
-          <PrivateRoute
-            exact
-            path="/profile"
-            component={userProfilePresenter}
-            socket={socket}
-          />
-          <PrivateRoute
-            exact
-            path="/order"
-            component={orderPresenter}
-            socket={socket}
-          />
-          <PublicRoute
-            exact
-            path="/logIn"
-            component={HandleUserLogIn}
-            pathName={pathName}
-          />
-          <PublicRoute
-            exact
-            path="/signUp"
-            component={HandleUserSignUp}
-            pathName={pathName}
-          />
-          <PublicRoute path="/" component={EntryView} pathName={pathName} />
-        </Switch>
-      </Router>
-    </Provider>
+    <Router>
+      {user.loggedIn || user.isAdmin ? (
+        <NavbarPresenter setPathName={setPathName} />
+      ) : null}
+      <Switch>
+        <AdminRoute
+          exact
+          path="/customizeMenu"
+          component={CustomizeMenuPresenter}
+          user={user}
+        />
+        <AdminRoute
+          exact
+          path="/vieworders"
+          component={AdminViewDrinkOrdersPresenter}
+          socket={socket}
+          user={user}
+        />
+        <PrivateRoute
+          exact
+          path="/menu"
+          component={userMenuPresenter}
+          user={user}
+        />
+        <PrivateRoute
+          exact
+          path="/profile"
+          component={userProfilePresenter}
+          socket={socket}
+          user={user}
+        />
+        <PrivateRoute
+          exact
+          path="/order"
+          component={orderPresenter}
+          socket={socket}
+          user={user}
+        />
+        <PublicRoute
+          exact
+          path="/logIn"
+          component={HandleUserLogIn}
+          pathName={pathName}
+          user={user}
+        />
+        <PublicRoute
+          exact
+          path="/signUp"
+          component={HandleUserSignUp}
+          pathName={pathName}
+          user={user}
+        />
+        <PublicRoute
+          path="/"
+          component={EntryPresenter}
+          pathName={pathName}
+          user={user}
+        />
+      </Switch>
+    </Router>
   );
 };
 
-export default RoutingApp;
+const mapStateToProps = (store) => {
+  return {
+    user: store.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    checkValidUser: () => dispatch(userModel.checkValidUser()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoutingApp);

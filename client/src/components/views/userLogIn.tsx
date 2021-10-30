@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
-const UserLogIn = ({ logIn, logInError, logInErrorMessage }) => {
-  const [username, setUsername] = useState("");
-  const [pwd, setPwd] = useState("");
-
+const UserLogIn = ({
+  logIn,
+  logInError,
+  logInErrorMessage,
+  username,
+  setUsername,
+  pwd,
+  setPwd,
+}) => {
   return (
     <div
       className="container--general user-form"

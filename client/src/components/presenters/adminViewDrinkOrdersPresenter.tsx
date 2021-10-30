@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { addNewOrder } from "../../redux/actions/orders";
 import OrderModel from "../../model/orderModel";
-import { AdminViewDrinkOrder } from "../views/adminViewDrinkOrder";
-import DrinkModel from "../../model/drinkModel";
+import AdminViewDrinkOrder from "../views/adminViewDrinkOrder";
+import MenuModel from "../../model/drinkModel";
 import { Spinner } from "../views/spinner";
 
-const ordermodel = new OrderModel();
-const drinkModel = new DrinkModel();
+const orderModel = new OrderModel();
+const menuModel = new MenuModel();
 
 const AdminViewDrinkOrdersPresenter = ({
   socket,
@@ -21,6 +21,13 @@ const AdminViewDrinkOrdersPresenter = ({
   getBeerHistory,
   getCocktailHistory,
 }) => {
+  const [drinkDetail, setDrinkDetail] = useState(null);
+  const [showDrinkDetailModal, setShowDrinkDetailModal] = useState(false);
+  const [collapseInfo, setCollapseInfo] = useState({
+    row1: "-",
+    row2: "+",
+  });
+
   useEffect(() => {
     getOrders(menu.currentBar);
 
@@ -61,6 +68,12 @@ const AdminViewDrinkOrdersPresenter = ({
       cancel={cancel}
       loading={menu.loading || orders.loading}
       spinner={<Spinner bar={menu.currentBar} />}
+      drinkDetail={drinkDetail}
+      setDrinkDetail={setDrinkDetail}
+      showDrinkDetailModal={showDrinkDetailModal}
+      setShowDrinkDetailModal={setShowDrinkDetailModal}
+      collapseInfo={collapseInfo}
+      setCollapseInfo={setCollapseInfo}
     />
   );
 };
@@ -74,15 +87,15 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeOrder: (id, socket) => dispatch(ordermodel.makeOrder(id, socket)),
-    payForOrder: (id, socket) => dispatch(ordermodel.payForOrder(id, socket)),
-    cancelOrder: (id, socket) => dispatch(ordermodel.cancelOrder(id, socket)),
-    getOrders: (currentBar) => dispatch(ordermodel.getOrders(currentBar)),
+    makeOrder: (id, socket) => dispatch(orderModel.makeOrder(id, socket)),
+    payForOrder: (id, socket) => dispatch(orderModel.payForOrder(id, socket)),
+    cancelOrder: (id, socket) => dispatch(orderModel.cancelOrder(id, socket)),
+    getOrders: (currentBar) => dispatch(orderModel.getOrders(currentBar)),
     newOrder: (order) => dispatch(addNewOrder(order)),
     getBeerHistory: (currentBar) =>
-      dispatch(drinkModel.getBeerHistory(currentBar)),
+      dispatch(menuModel.getBeerHistory(currentBar)),
     getCocktailHistory: (currentBar) =>
-      dispatch(drinkModel.getCocktailHistory(currentBar)),
+      dispatch(menuModel.getCocktailHistory(currentBar)),
   };
 };
 

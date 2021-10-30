@@ -13,8 +13,12 @@ export default class MenuModel {
       fetch("http://localhost:5000/api/beer?currentbar=" + currentBar, {
         credentials: "include",
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) return response.json();
+          else throw new Error("Could not get beers");
+        })
         .then((data) => dispatch(setBeerHistory(data)))
+        // TODO show to user, not in console
         .catch((err) => console.log(err));
     };
   }
@@ -23,8 +27,12 @@ export default class MenuModel {
     return (dispatch) => {
       dispatch(fetchRequest());
       fetch("http://localhost:5000/api/cocktail?currentbar=" + currentBar)
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) return response.json();
+          else throw new Error("Could not get cocktails");
+        })
         .then((data) => dispatch(setCocktailHistory(data)))
+        // TODO show to user, not in console
         .catch((err) => console.log(err));
     };
   }
@@ -51,6 +59,7 @@ export default class MenuModel {
         credentials: "include",
       }
     );
+    // TODO what should be done here? Anything?
     response.json().then((data) => {
       console.log(data);
     });
@@ -82,6 +91,7 @@ export default class MenuModel {
         credentials: "include",
       }
     );
+    // TODO what should be done here? Anything?
     response.json().then((data) => {
       console.log(data);
     });
@@ -91,7 +101,10 @@ export default class MenuModel {
   getCocktailBasedOnName(name: string): Promise<any> {
     const cocktails = this.getFetch(
       "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + name
-    ).then((data) => data);
+    )
+      .then((data) => data)
+      // TODO show to user, not in console
+      .catch((err) => console.log(err));
     return cocktails;
   }
 
@@ -99,14 +112,20 @@ export default class MenuModel {
   getBeerBasedOnName(name: string) {
     const beers = this.postFetch("http://localhost:5000/api/apibeers", {
       name: name,
-    }).then((data) => data);
+    })
+      .then((data) => data)
+      // TODO show to user, not in console
+      .catch((err) => console.log(err));
     return beers;
   }
 
   async getFetch(url: string) {
     return await fetch(url, {
       method: "GET",
-    }).then((response) => response.json());
+    }).then((response) => {
+      if (response.ok) return response.json();
+      else throw new Error("Could not GET");
+    });
   }
 
   async postFetch(url: string, data) {
@@ -116,7 +135,10 @@ export default class MenuModel {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((response) => response.json());
+    }).then((response) => {
+      if (response.ok) return response.json();
+      else throw new Error("Could not POST");
+    });
   }
 
   setAPIBeerToObject(apiBeer): Beer {
