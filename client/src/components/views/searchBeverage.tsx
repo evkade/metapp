@@ -20,6 +20,7 @@ export const SearchBeverage = ({
   openModal,
   openNewBeverageModal,
   setShowInfoPopup,
+  messageEmptyResults,
 }) => {
   return (
     <>
@@ -61,25 +62,31 @@ export const SearchBeverage = ({
         Create
       </button>
       <div className="drink-list__container--grey drink-list__container--grey-full">
-        {!isLoading && searchResult
-          ? searchResult.map((beverage: Beverage, index: number) => (
-              <BeverageCard
-                key={index}
-                beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
-                beverage={beverage}
-                index={index}
-                addToOrder={null}
-                removeFromOrder={null}
-                count={null}
-                openModal={() => openModal(beverage)}
-                menu={menu}
-                removeFromMenu={null}
-                editInMenu={null}
-              />
-            ))
-          : spinner}
+        {!isLoading && searchResult.length > 0 ? (
+          searchResult.map((beverage: Beverage, index: number) => (
+            <BeverageCard
+              key={index}
+              beverageCardType={beverageCardTypes.ADMIN_SEARCH_RESULTS}
+              beverage={beverage}
+              index={index}
+              addToOrder={null}
+              removeFromOrder={null}
+              count={null}
+              openModal={() => openModal(beverage)}
+              menu={menu}
+              removeFromMenu={null}
+              editInMenu={null}
+            />
+          ))
+        ) : isLoading ? (
+          spinner
+        ) : (
+          <h2 className="admin-menu-container__empty-message">
+            {messageEmptyResults}
+          </h2>
+        )}
         <button
-          className="admin-menu-container__button--info"
+          className="admin-menu-container__button--info general-button--bw general-button--black"
           onMouseEnter={() => setShowInfoPopup(true)}
           onMouseLeave={() => setShowInfoPopup(false)}
         >

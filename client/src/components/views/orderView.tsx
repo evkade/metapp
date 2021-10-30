@@ -1,6 +1,6 @@
 import React from "react";
 import "../components.scss";
-import DrinkPresenter from "../presenters/drinkPresenter";
+import Drink from "./drinkView";
 
 const OrderView = ({
   order,
@@ -11,6 +11,8 @@ const OrderView = ({
   addToFavorites,
   removeFromFavorites,
   favoriteList,
+  isfavorite,
+  totalInfo,
   finalizeOrder,
   removeOrder,
   history,
@@ -21,7 +23,7 @@ const OrderView = ({
       <div className="drink-list__container">
         {order.map((item, index) => {
           return (
-            <DrinkPresenter
+            <Drink
               key={index}
               item={item}
               itemType={null}
@@ -29,13 +31,18 @@ const OrderView = ({
               addToOrder={(name, cost) => addToOrder(name, cost)}
               removeFromOrder={(name) => removeFromOrder(name)}
               count={item.count}
+              isfavorite={isfavorite}
               addFavorite={(name) => addToFavorites(name)}
               removeFavorite={(name) => removeFromFavorites(name)}
-              favoriteList={favoriteList}
               menuDisplay={false}
             />
           );
         })}
+        {order.length == 0 && (
+          <div className="drink-list__row--white">
+            You haven't placed any orders.
+          </div>
+        )}
         {submittedOrder && (
           <div className="drink-list__row--white">
             Your order has been sent, go to your profile to see when it's ready

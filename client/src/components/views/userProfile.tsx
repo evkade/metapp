@@ -8,8 +8,8 @@ const UserProfile = ({
   orders,
   favorites,
   removeFromFavorites,
-  loading,
   spinner,
+  loading,
 }) => {
   return (
     <div className="profile-view container--general">
@@ -82,22 +82,22 @@ const UserProfile = ({
                         <div className="info-card-drink__column--flex">
                           <b>{order.date}</b>
                         </div>
-                        <div className="info-card-drink__column--flex">
+                        <div className="info-card-drink__column info-card-drink__column--small">
                           {order.order.map((orderDetail, index) => {
                             const length = order.order.length;
                             if (index === length - 1) {
                               return (
-                                <span key={index}>
+                                <div key={index}>
                                   {" "}
                                   {orderDetail.quantity} {orderDetail.beverage}
-                                </span>
+                                </div>
                               );
                             } else {
                               return (
-                                <span key={index}>
+                                <div key={index}>
                                   {" "}
                                   {orderDetail.quantity} {orderDetail.beverage},
-                                </span>
+                                </div>
                               );
                             }
                           })}
@@ -115,14 +115,22 @@ const UserProfile = ({
             </div>
           </div>
           <GeneralFavoriteCard
-            title={"Favorite beverages"}
-            favoriteObject={favorites}
+            title={"Favorite Beers"}
+            favoriteObject={favorites.filter(
+              (data) => data.beverage_type === "beer"
+            )}
             removeFromFavorites={removeFromFavorites}
+            dkmlogo={dkmlogo}
+            mkmlogo={mkmlogo}
           />
           <GeneralFavoriteCard
-            title={"Favorite drinks"}
-            favoriteObject={favorites}
+            title={"Favorite Cocktails"}
+            favoriteObject={favorites.filter(
+              (data) => data.beverage_type === "cocktail"
+            )}
             removeFromFavorites={removeFromFavorites}
+            dkmlogo={dkmlogo}
+            mkmlogo={mkmlogo}
           />
         </>
       )}

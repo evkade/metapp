@@ -12,6 +12,7 @@ const HandleUserSignUp = (signUp) => {
   const [signUpButton, setSignUpButton] = useState("Create Account");
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
+  const [signUpErrMessage, setSignUpErrMessage] = useState(undefined);
 
   const history = useHistory();
 
@@ -22,10 +23,12 @@ const HandleUserSignUp = (signUp) => {
         password,
         setSignUpButton,
         setSignUpError,
-        history
+        history,
+        setSignUpErrMessage
       );
     else {
       setSignUpError(true);
+      setSignUpErrMessage("You must provide a username and password");
       setTimeout(() => {
         setSignUpError(false);
       }, 3000);
@@ -42,6 +45,7 @@ const HandleUserSignUp = (signUp) => {
       setUsername={setUsername}
       pwd={pwd}
       setPwd={setPwd}
+      signUpErrMessage={signUpErrMessage}
     />
   );
 };

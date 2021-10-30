@@ -11,8 +11,6 @@ import { searchTypes } from "../../constants/searchTypes";
 import { beverageTypes } from "../../constants/searchTypes";
 import {
   Beverage,
-  Beer,
-  Cocktail,
   baseCocktail,
   baseBeer,
 } from "../../constants/beverageObjects";

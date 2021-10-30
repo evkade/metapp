@@ -7,31 +7,31 @@ import UserModel from "../../model/userModel";
 const userModel = new UserModel();
 
 const HandleUserLogIn = ({ user, login }) => {
-  const [userAuth, setUserAuth] = useState(false);
   const [logInError, setLogInError] = useState(false);
+  const [logInErrorMessage, setLogInErrorMessage] = useState(undefined);
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
   let history = useHistory();
 
-  const handleUserAuthDisplay = (param: boolean) => {
-    setUserAuth(param);
-  };
-
   const checkUserAuth = (username: string, password: string) => {
-    if (username && password) login(username, password, history, setLogInError);
-    else setLogInError(true);
+    if (username && password)
+      login(username, password, history, setLogInError, setLogInErrorMessage);
+    else {
+      setLogInError(true);
+      setLogInErrorMessage("You must provide a username and password");
+    }
   };
 
   return (
     <UserLogIn
-      userAuth={userAuth}
       logIn={checkUserAuth}
       logInError={logInError}
       username={username}
       setUsername={setUsername}
       pwd={pwd}
       setPwd={setPwd}
+      logInErrorMessage={logInErrorMessage}
     />
   );
 };
@@ -44,8 +44,16 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (username, password, history, setLogInError) =>
-      dispatch(userModel.loginFunc(username, password, history, setLogInError)),
+    login: (username, password, history, setLogInError, setLogInErrorMessage) =>
+      dispatch(
+        userModel.loginFunc(
+          username,
+          password,
+          history,
+          setLogInError,
+          setLogInErrorMessage
+        )
+      ),
   };
 };
 

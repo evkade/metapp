@@ -31,7 +31,7 @@ export default class UserModel {
     };
   }
 
-  loginFunc(username, password, history, setLogInError) {
+  loginFunc(username, password, history, setLogInError, setLogInErrorMessage) {
     return (dispatch) => {
       dispatch(fetchRequest());
       fetch("http://localhost:5000/api/auth/signin", {
@@ -44,7 +44,7 @@ export default class UserModel {
       })
         .then((data) => {
           if (data.ok) return data.json();
-          else throw new Error("No user with these credentials");
+          else throw new Error("There is no user with these credentials");
         })
         .then((user) => {
           dispatch(
@@ -62,14 +62,21 @@ export default class UserModel {
           }
           if (user.credential === "admin") history.push("/customizeMenu");
         })
-        // TODO show error message to user
         .catch((err) => {
           setLogInError(true);
+          setLogInErrorMessage(err.message);
         });
     };
   }
 
-  signUpFunc(username, password, setSignUpButton, setSignUpError, history) {
+  signUpFunc(
+    username,
+    password,
+    setSignUpButton,
+    setSignUpError,
+    history,
+    setSignUpErrMessage
+  ) {
     fetch("http://localhost:5000/api/auth/signup", {
       method: "POST",
       headers: {
@@ -90,9 +97,9 @@ export default class UserModel {
           history.push("/logIn");
         }, 2000);
       })
-      // Todo adapt user messages on server message
       .catch((err) => {
         setSignUpError(true);
+        setSignUpErrMessage(err);
         setTimeout(() => {
           setSignUpError(false);
         }, 3000);

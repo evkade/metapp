@@ -11,14 +11,19 @@ export const signOut = () => ({
   type: "SIGN_OUT",
 });
 
-export const addFavorite = (name) => ({
+export const addFavorite = (favorite) => ({
   type: "ADD_FAVORITE",
-  payload: name,
+  payload: favorite,
 });
 
-export const removeFavorite = (name) => ({
+export const setFavorites = (favorites) => ({
+  type: "SET_FAVORITES",
+  payload: favorites,
+});
+
+export const removeFavorite = (favorite) => ({
   type: "REMOVE_FAVORITE",
-  payload: name,
+  payload: favorite,
 });
 
 export const orderPlaced = () => ({

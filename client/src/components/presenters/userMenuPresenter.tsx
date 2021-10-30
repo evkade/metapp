@@ -9,13 +9,16 @@ import { useHistory } from "react-router-dom";
 import UserMenu from "../views/userMenu";
 import MenuModel from "../../model/drinkModel";
 import { Spinner } from "../views/spinner";
+import FavoriteModel from "../../model/favoriteModel";
 
 const menuModel = new MenuModel();
+const favoriteModel = new FavoriteModel();
 
 const UserMenuPresenter = ({
   addFavorite,
   removeFavorite,
   favorites,
+  getFavorites,
   unfinishedOrderPlaced,
   unfinishedOrder,
   cocktailMenu,
@@ -26,12 +29,10 @@ const UserMenuPresenter = ({
   loading,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
-  const [favoriteList, setFavoriteList] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
 
   useEffect(() => {
-    setFavoriteList(favorites);
-
+    getFavorites();
     if (
       !(
         Object.keys(unfinishedOrder).length === 0 &&
@@ -124,12 +125,23 @@ const UserMenuPresenter = ({
     history.push("/order");
   };
 
-  const addToFavorites = (name) => {
-    addFavorite(name);
+  const removeFromFavorites = (name) => {
+    removeFavorite(favoriteid(name), favoriteType(name), favoritebar(name));
   };
 
-  const removeFromFavorites = (name) => {
-    removeFavorite(name);
+  const isfavorite = (name) => {
+    return favorites.some((elem) => elem.beverage.name === name);
+  };
+
+  const favoritebar = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).bar;
+  };
+
+  const favoriteid = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage._id;
+  };
+  const favoriteType = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage_type;
   };
 
   return (
@@ -140,15 +152,24 @@ const UserMenuPresenter = ({
       addToOrder={addOrIncreaseOrder}
       removeFromOrder={removeFromOrder}
       placeUnFinishedOrder={placeUnFinishedOrder}
-      addToFavorites={addToFavorites}
+      addToFavorites={(name, type) => addFavorite(name, type, currentBar)}
       removeFromFavorites={removeFromFavorites}
-      favoriteList={favoriteList}
       totalInfo={totalInfo}
       loading={loading}
       spinner={<Spinner bar={currentBar} />}
+      isfavorite={isfavorite}
     />
   );
 };
+
+async function addToFavorites(beverage, type, bar, dispatch) {
+  const beverageObject = await favoriteModel
+    .postBeverageToDatabase({ beverage, type, bar })
+    .then((data) => data);
+  dispatch(
+    addFavorite({ beverage: beverageObject, beverage_type: type, bar: bar })
+  );
+}
 
 const mapStateToProps = (store) => {
   return {
@@ -164,8 +185,12 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addFavorite: (name) => dispatch(addFavorite(name)),
-    removeFavorite: (name) => dispatch(removeFavorite(name)),
+    addFavorite: (beverage, type, bar) =>
+      addToFavorites(beverage, type, bar, dispatch),
+    removeFavorite: (beverage_id, type, bar) =>
+      dispatch(removeFavorite({ beverage_id, type, bar })),
+    getFavorites: () => dispatch(favoriteModel.getFavorites()),
+
     unfinishedOrderPlaced: (beverages) =>
       dispatch(unfinishedOrderPlaced(beverages)),
     getBeerHistory: (currentBar) =>

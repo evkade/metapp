@@ -1,6 +1,6 @@
 import React from "react";
 import { Beverage } from "../../constants/beverageObjects";
-import DrinkPresenter from "../presenters/drinkPresenter";
+import Drink from "./drinkView";
 import { beverageTypes } from "../../constants/searchTypes";
 
 const UserMenu = ({
@@ -10,9 +10,9 @@ const UserMenu = ({
   addToOrder,
   removeFromOrder,
   placeUnFinishedOrder,
+  isfavorite,
   addToFavorites,
   removeFromFavorites,
-  favoriteList,
   totalInfo,
   loading,
   spinner,
@@ -35,8 +35,9 @@ const UserMenu = ({
                 if (filteredOutItem.length == 1) {
                   orderCount = filteredOutItem[0].count;
                 }
+                const favoriteBool: Boolean = isfavorite(item.name);
                 return (
-                  <DrinkPresenter
+                  <Drink
                     item={item}
                     key={index}
                     index={index}
@@ -47,14 +48,17 @@ const UserMenu = ({
                     removeFromOrder={(name: string, price: string) =>
                       removeFromOrder(name, price)
                     }
+                    isfavorite={favoriteBool}
                     count={orderCount}
-                    addFavorite={(name) => addToFavorites(name)}
+                    addFavorite={(name) =>
+                      addToFavorites(name, beverageTypes.BEER)
+                    }
                     removeFavorite={(name) => removeFromFavorites(name)}
-                    favoriteList={favoriteList}
                     menuDisplay={true}
                   />
                 );
               })}
+
             <div className="beverage-type"> Cocktails </div>
             {cocktailMenu &&
               cocktailMenu.map((item: Beverage, index: number) => {
@@ -65,8 +69,9 @@ const UserMenu = ({
                 if (filteredOutItem.length == 1) {
                   orderCount = filteredOutItem[0].count;
                 }
+                const favoriteBool: Boolean = isfavorite(item.name);
                 return (
-                  <DrinkPresenter
+                  <Drink
                     item={item}
                     key={index}
                     index={index}
@@ -78,9 +83,11 @@ const UserMenu = ({
                       removeFromOrder(name, price)
                     }
                     count={orderCount}
-                    addFavorite={(name) => addToFavorites(name)}
+                    addFavorite={(name) =>
+                      addToFavorites(name, beverageTypes.COCKTAIL)
+                    }
                     removeFavorite={(name) => removeFromFavorites(name)}
-                    favoriteList={favoriteList}
+                    isfavorite={favoriteBool}
                     menuDisplay={true}
                   />
                 );
@@ -93,7 +100,7 @@ const UserMenu = ({
             >
               Place order <br />
               {totalInfo.totalCount}{" "}
-              {totalInfo.totalCount == 1 ? "item" : "items"},{" "}
+              {totalInfo.totalCount == 1 ? "item" : "items"} á{" "}
               {totalInfo.totalCost} SEK
             </button>
           )}

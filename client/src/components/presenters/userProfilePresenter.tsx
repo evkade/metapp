@@ -9,9 +9,11 @@ import {
   orderMade,
   orderPaid,
 } from "../../redux/actions/orders";
+import FavoriteModel from "../../model/favoriteModel";
 import { Spinner } from "../views/spinner";
 
 const orderModel = new OrderModel();
+const favoriteModel = new FavoriteModel();
 
 const UserProfilePresenter = ({
   orders,
@@ -20,6 +22,7 @@ const UserProfilePresenter = ({
   favorites,
   removeFavorite,
   getOrders,
+  getFavorites,
   socket,
   orderMade,
   orderPaid,
@@ -28,8 +31,8 @@ const UserProfilePresenter = ({
   currentBar,
 }) => {
   useEffect(() => {
+    getFavorites();
     getOrders(userId);
-
     const orderBeenMade = (data) => {
       orderMade(data.id, data.timestamp);
     };
@@ -53,12 +56,26 @@ const UserProfilePresenter = ({
     };
   }, []);
 
+  const removeFromFavorites = (name) => {
+    removeFavorite(favoriteid(name), favoriteType(name), favoritebar(name));
+  };
+  const favoritebar = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).bar;
+  };
+
+  const favoriteid = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage._id;
+  };
+  const favoriteType = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage_type;
+  };
+
   return (
     <UserProfile
       username={user}
       orders={orders}
       favorites={favorites}
-      removeFromFavorites={removeFavorite}
+      removeFromFavorites={removeFromFavorites}
       loading={loading}
       spinner={<Spinner bar={currentBar} />}
     />
@@ -78,8 +95,10 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeFavorite: (name) => dispatch(removeFavorite(name)),
+    removeFavorite: (beverage_id, type, bar) =>
+      dispatch(removeFavorite({ beverage_id, type, bar })),
     getOrders: (userId) => dispatch(orderModel.getUserOrders(userId)),
+    getFavorites: () => dispatch(favoriteModel.getFavorites()),
     orderMade: (id, time) => dispatch(orderMade(id, time)),
     orderPaid: (id, time) => dispatch(orderPaid(id, time)),
     orderCancelled: (id) => dispatch(orderCancelled(id)),

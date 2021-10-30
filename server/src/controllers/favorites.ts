@@ -22,11 +22,8 @@ export async function getfavorites(userid: String) {
                 "beverage_type": element.logType.substring(4, element.logType.length).toLowerCase(),
             })
         })
-        const returnValue = {
-            beer: elem.filter(data => data.beverage_type === "beer"),
-            cocktail: elem.filter(data => data.beverage_type === "cocktail")
-        }
-        return returnValue
+
+        return elem
     }
     else {
         return null;
@@ -52,8 +49,8 @@ export async function getfavoritesByPub(userid: String, pub: String) {
     }
 }
 
-export async function addFavoriteById(userid: String, object: { logId: Schema.Types.ObjectId, beverage_type: String, bar: String }) {
-
+export async function addFavoriteById(userid: String, object: { name: String, beverage_type: String, bar: String }) {
+    let db = ""
     let modela = ""
     if (object.beverage_type === "beer") {
         modela = (object.bar === "dkm") ? "dkm_Beer" : "mkm_Beer";
@@ -62,22 +59,35 @@ export async function addFavoriteById(userid: String, object: { logId: Schema.Ty
         modela = (object.bar === "dkm") ? "dkm_Cocktail" : "mkm_Cocktail";
     }
 
-    if (!(await checkInDB(object.logId, object.bar, object.beverage_type))) {
+    const model = await checkInDB(object.bar, object.beverage_type)
+
+
+
+    // @ts-ignore
+    const logId: Beer = await model.findOne(
+        { name: object.name },
+        (err: Error, beverageDoc: any) => {
+            if (err) console.log(err);
+            else return beverageDoc;
+        } //@ts-ignore
+    ).clone();
+
+    if (!(model.findById(logId._id).count().exec())) {
         return undefined
     }
-    else if (await checkExist(userid, object.logId)) {
+    else if (await checkExist(userid, logId._id)) {
         return null
     }
     else {
 
         const insertFavorite = {
-            logId: object.logId,
+            logId: logId._id,
             logType: modela
         }
         let userDoc = await UserModel.findOneAndUpdate({ _id: userid }, { $addToSet: { 'favorites': insertFavorite } }, { new: true })
             .catch(err => { throw err });
 
-        return userDoc;
+        return logId;
     }
 
 }
@@ -94,7 +104,7 @@ export async function checkExist(userid: String, beverage_id: Schema.Types.Objec
     return bool
 }
 
-export async function checkInDB(beverage_id: Schema.Types.ObjectId, bar: String, type: String) {
+export async function checkInDB(bar: String, type: String) {
     let model: typeof CocktailModelDKM | typeof CocktailModelMKM | typeof BeerModelDKM | typeof BeerModelMKM
     switch (type) {
         case "cocktail":
@@ -104,12 +114,12 @@ export async function checkInDB(beverage_id: Schema.Types.ObjectId, bar: String,
             model = (bar === "dkm") ? BeerModelDKM : BeerModelMKM;
             break;
     }
-    const bool = await model.findById(beverage_id).count().exec();
-    return bool;
+
+    return model;
 }
 
 
-export async function deleteFavoriteById(userid: String, object: { logId: Schema.Types.ObjectId, beverage_type: String, bar: String }) {
+export async function deleteFavoriteById(userid: String, object: { beverage_id: Schema.Types.ObjectId, beverage_type: String, bar: String }) {
     let beverageModel: String = ""
     if (object.beverage_type === "beer") {
         beverageModel = (object.bar === "dkm") ? "dkm_Beer" : "mkm_Beer";
@@ -118,11 +128,11 @@ export async function deleteFavoriteById(userid: String, object: { logId: Schema
         beverageModel = (object.bar === "dkm") ? "dkm_Cocktail" : "mkm_Cocktail";
     }
 
-    if (!(await checkExist(userid, object.logId))) {
+    if (!(await checkExist(userid, object.beverage_id))) {
         return null
     }
     const deleteFavorite = {
-        logId: object.logId,
+        logId: object.beverage_id,
         logType: beverageModel
     }
     let userDoc = UserModel.findOneAndUpdate({ _id: userid }, { $pull: { 'favorites': deleteFavorite } }, { new: true });

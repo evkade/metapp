@@ -1,3 +1,6 @@
+import { beverageCardTypes } from "constants/beverageCardType";
+import FavoriteModel from "../../model/favoriteModel";
+
 const initialState = {
   username: null,
   userId: null,
@@ -8,6 +11,8 @@ const initialState = {
   unfinishedOrder: {},
   loading: false,
 };
+
+const favoriteModel = new FavoriteModel();
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -31,22 +36,27 @@ const userReducer = (state = initialState, action) => {
         loggedIn: false,
         username: null,
         isAdmin: false,
+        favorites: [],
         userId: null,
         loading: false,
       };
     case "ADD_FAVORITE":
+      console.log(action.payload)
       return {
         ...state,
-        favorites: [...state.favorites, action.payload],
+        favorites: [...state.favorites, action.payload]
+      };
+    case "SET_FAVORITES":
+      return {
+        ...state,
+        favorites: action.payload,
         loading: false,
       };
     case "REMOVE_FAVORITE":
-      const newFilterArray = state.favorites.filter(
-        (favorite) => favorite !== action.payload
-      );
+      favoriteModel.removeBeveragefromDatabase(action.payload);
       return {
         ...state,
-        favorites: newFilterArray,
+        favorites: state.favorites.filter(elem => elem.beverage._id !== action.payload.beverage_id),
         loading: false,
       };
     case "ORDER_PLACED":

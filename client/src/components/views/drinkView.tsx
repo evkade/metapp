@@ -8,12 +8,13 @@ const Drink = ({
   item,
   index,
   itemType,
+  isfavorite,
   addToOrder,
   removeFromOrder,
   count,
+  addFavorite,
+  removeFavorite,
   menuDisplay,
-  activateStar,
-  shortName,
 }) => {
   return (
     <div key={index} className="drink-list__row drink-list__row--constrained">
@@ -21,17 +22,21 @@ const Drink = ({
         <>
           <div className="drink-list__star">
             <FontAwesomeIcon
-              id={`starIcon${index}`}
+              id={`starIcon${item.name}`}
               icon={faStar}
-              className="fa-2x"
-              onClick={() => activateStar(item.name, false)}
+              className={`fa-2x ${
+                isfavorite ? "drink-list__star--active" : ""
+              }`}
+              onClick={() =>
+                isfavorite ? removeFavorite(item.name) : addFavorite(item.name)
+              }
             />
           </div>
           <img src={PlaceholderImage} className="drink-list__image" />
         </>
       )}
-      <div className="drink-list__column drink-list__column--flexed drink-list__column--small">
-        {shortName}
+      <div className="drink-list__column drink-list__column--flexed">
+        {item.name}
       </div>
       <div className="drink-list__column drink-list__column--flexed">
         {item.price} SEK{" "}

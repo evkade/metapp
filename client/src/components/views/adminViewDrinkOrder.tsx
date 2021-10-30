@@ -42,9 +42,9 @@ const AdminViewDrinkOrder = ({
     );
   };
 
-  const toggleCollapsible = (id1, id2) => {
-    const collapsible1 = document.getElementById(id1);
-    const collapsible2 = document.getElementById(id2);
+  const toggleCollapsible = () => {
+    const collapsible1 = document.getElementById("collapsible1");
+    const collapsible2 = document.getElementById("collapsible2");
     const isCollaps1Open = collapsible1.classList.contains(
       "admin-menu-container__collapsible"
     );
@@ -81,9 +81,7 @@ const AdminViewDrinkOrder = ({
             <div className="height100">
               <h3
                 className="admin-menu-container__subtitle"
-                onClick={() =>
-                  toggleCollapsible("collapsible1", "collapsible2")
-                }
+                onClick={() => toggleCollapsible()}
               >
                 Current orders {collapseInfo.row1}
               </h3>
@@ -112,9 +110,7 @@ const AdminViewDrinkOrder = ({
               </div>
               <h3
                 className="admin-menu-container__subtitle"
-                onClick={() =>
-                  toggleCollapsible("collapsible2", "collapsible1")
-                }
+                onClick={() => toggleCollapsible()}
               >
                 Finished orders {collapseInfo.row2}
               </h3>
@@ -122,25 +118,23 @@ const AdminViewDrinkOrder = ({
                 id="collapsible2"
                 className="admin-menu-container__collapsible--collapsed"
               >
-                <div>
-                  {orders &&
-                    orders
-                      .filter((o) => (o.made && o.paid) || o.cancelled)
-                      .map((order, index) => {
-                        return (
-                          <OrderCard
-                            key={index}
-                            fullOrder={order}
-                            menu={menu}
-                            setDrinkDetail={setDrinkDetail}
-                            setShowModal={setShowDrinkDetailModal}
-                            made={drinkMade}
-                            paid={drinkPaid}
-                            cancel={cancel}
-                          />
-                        );
-                      })}
-                </div>
+                {orders &&
+                  orders
+                    .filter((o) => (o.made && o.paid) || o.cancelled)
+                    .map((order, index) => {
+                      return (
+                        <OrderCard
+                          key={index}
+                          fullOrder={order}
+                          menu={menu}
+                          setDrinkDetail={setDrinkDetail}
+                          setShowModal={setShowDrinkDetailModal}
+                          made={drinkMade}
+                          paid={drinkPaid}
+                          cancel={cancel}
+                        />
+                      );
+                    })}
               </div>
             </div>{" "}
           </>

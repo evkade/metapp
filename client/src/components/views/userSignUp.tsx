@@ -10,6 +10,7 @@ const UserSignUp = ({
   setUsername,
   pwd,
   setPwd,
+  signUpErrMessage,
 }) => {
   return (
     <>
@@ -57,12 +58,7 @@ const UserSignUp = ({
               </div>
             </div>
             <div className="user-form__errElement">
-              {signUpError && (
-                <>
-                  🚫 Something went wrong, there's already a user with these
-                  credentials
-                </>
-              )}
+              {signUpError && <>🚫 {signUpErrMessage}</>}
             </div>
           </>
         )}
