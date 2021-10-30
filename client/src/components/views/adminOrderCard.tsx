@@ -9,7 +9,6 @@ const OrderCard = ({
   paid,
   cancel,
 }) => {
-  // TODO should this not be in view?
   const getTotalPrice = (order) => {
     var totPrice = 0;
     order.order.forEach(

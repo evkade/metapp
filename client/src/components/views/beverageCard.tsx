@@ -3,7 +3,7 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 import { beverageTypes, getTypeOfBeverage } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
 
-export const BeverageCard = ({
+const BeverageCard = ({
   beverageCardType,
   beverage,
   index,
@@ -120,3 +120,5 @@ export const BeverageCard = ({
     </div>
   );
 };
+
+export default BeverageCard;

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
-  orderPlaced,
   unfinishedOrderPlaced,
   addFavorite,
   removeFavorite,
 } from "../../redux/actions/user";
 import { useHistory } from "react-router-dom";
-import { UserMenu } from "../views/userMenu";
+import UserMenu from "../views/userMenu";
 import MenuModel from "../../model/drinkModel";
 import { Spinner } from "../views/spinner";
 

@@ -5,6 +5,7 @@ import {
   orderPaid,
   setUserOrders,
   orderCancelled,
+  addNewOrder,
 } from "../redux/actions/orders";
 import { orderPlaced } from "../redux/actions/user";
 
@@ -124,6 +125,7 @@ export default class OrderModel {
         })
         .then((result) => {
           dispatch(orderPlaced());
+          dispatch(addNewOrder({ ...result, user: user.username }));
           socket.emit("orderPlaced", { ...result, user: user.username });
         })
         // TODO show to user, not in console

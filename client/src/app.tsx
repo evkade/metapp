@@ -1,6 +1,6 @@
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./components/components.scss";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -9,7 +9,7 @@ import { io } from "socket.io-client";
 import RoutingApp from "./routingApp";
 
 const App = () => {
-  const [socket, setSocket] = React.useState(null);
+  const [socket, setSocket] = useState(null);
 
   // @ts-ignore
   useEffect(() => {

@@ -9,6 +9,8 @@ const userModel = new UserModel();
 const HandleUserLogIn = ({ user, login }) => {
   const [userAuth, setUserAuth] = useState(false);
   const [logInError, setLogInError] = useState(false);
+  const [username, setUsername] = useState("");
+  const [pwd, setPwd] = useState("");
 
   let history = useHistory();
 
@@ -26,6 +28,10 @@ const HandleUserLogIn = ({ user, login }) => {
       userAuth={userAuth}
       logIn={checkUserAuth}
       logInError={logInError}
+      username={username}
+      setUsername={setUsername}
+      pwd={pwd}
+      setPwd={setPwd}
     />
   );
 };

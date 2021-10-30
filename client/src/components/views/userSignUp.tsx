@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
-const UserSignUp = ({ userAuth, checkUserAuth, signUpError, signUpButton }) => {
-  // TODO kan vi ha kvar?
-  const [username, setUsername] = useState("");
-  const [pwd, setPwd] = useState("");
-
+const UserSignUp = ({
+  userAuth,
+  checkUserAuth,
+  signUpError,
+  signUpButton,
+  username,
+  setUsername,
+  pwd,
+  setPwd,
+}) => {
   return (
     <>
       <div

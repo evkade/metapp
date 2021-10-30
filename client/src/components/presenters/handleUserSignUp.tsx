@@ -10,6 +10,8 @@ const HandleUserSignUp = (signUp) => {
   const [userAuth, setUserAuth] = useState(false);
   const [signUpError, setSignUpError] = useState(false);
   const [signUpButton, setSignUpButton] = useState("Create Account");
+  const [username, setUsername] = useState("");
+  const [pwd, setPwd] = useState("");
 
   const history = useHistory();
 
@@ -36,6 +38,10 @@ const HandleUserSignUp = (signUp) => {
       checkUserAuth={(username, password) => checkUserAuth(username, password)}
       signUpError={signUpError}
       signUpButton={signUpButton}
+      username={username}
+      setUsername={setUsername}
+      pwd={pwd}
+      setPwd={setPwd}
     />
   );
 };

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Fingerprint from "../images/fingerprint.png";
 
-const UserLogIn = ({ userAuth, logIn, logInError }) => {
-  // Får vi ha sånt här i en view??
-  const [username, setUsername] = useState("");
-  const [pwd, setPwd] = useState("");
-
+const UserLogIn = ({
+  userAuth,
+  logIn,
+  logInError,
+  username,
+  setUsername,
+  pwd,
+  setPwd,
+}) => {
   return (
     <div
       className="container--general user-form"

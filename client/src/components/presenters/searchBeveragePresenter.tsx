@@ -10,7 +10,7 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 
 const menuModel = new MenuModel();
 
-export const SearchBeveragePresenter = ({
+const SearchBeveragePresenter = ({
   setModalBeverage,
   setShowModal,
   menu,
@@ -137,3 +137,5 @@ export const SearchBeveragePresenter = ({
     </>
   );
 };
+
+export default SearchBeveragePresenter;

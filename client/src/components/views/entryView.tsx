@@ -28,5 +28,4 @@ const EntryView = ({ history }) => {
   );
 };
 
-// TODO ibland default på views, ibland inte
 export default EntryView;

@@ -1,9 +1,9 @@
 import React from "react";
 import { Beverage } from "../../constants/beverageObjects";
-import { BeverageCard } from "./beverageCard";
+import BeverageCard from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 
-export const AdminMenu = ({ menu, removeFromMenu, editInMenu, openModal }) => {
+const AdminMenu = ({ menu, removeFromMenu, editInMenu, openModal }) => {
   return (
     <div className="container--centered">
       <div className="drink-list__container--grey drink-list__container--grey-full">
@@ -26,3 +26,5 @@ export const AdminMenu = ({ menu, removeFromMenu, editInMenu, openModal }) => {
     </div>
   );
 };
+
+export default AdminMenu;

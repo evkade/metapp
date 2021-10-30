@@ -28,7 +28,6 @@ const OrderPresenter = ({
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
   const [order, setOrder] = useState([]);
   const [submittedOrder, setSubmittedOrder] = useState(false);
-  // TODO varför??
   const unfinishedOrderObj = unfinishedOrder;
   let history = useHistory();
 
@@ -120,8 +119,6 @@ const OrderPresenter = ({
     );
     setOrderItems(modifiedOrderListWithoutZeros);
   };
-
-  // TODO varför har vi de här funktionerna??
 
   const addToFavorites = (name) => {
     addFavorite(name);

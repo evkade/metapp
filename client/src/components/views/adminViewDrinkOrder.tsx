@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import OrderCard from "./adminOrderCard";
 
-export const AdminViewDrinkOrder = ({
+const AdminViewDrinkOrder = ({
   orders,
   drinkMade,
   drinkPaid,
@@ -10,15 +10,13 @@ export const AdminViewDrinkOrder = ({
   cancel,
   loading,
   spinner,
+  drinkDetail,
+  setDrinkDetail,
+  showDrinkDetailModal,
+  setShowDrinkDetailModal,
+  collapseInfo,
+  setCollapseInfo,
 }) => {
-  // TODO move this to presenter? TODO import useState
-  const [drinkDetail, setDrinkDetail] = React.useState(null);
-  const [showDrinkDetailModal, setShowDrinkDetailModal] = React.useState(false);
-  const [collapseInfo, setCollapseInfo] = React.useState({
-    row1: "-",
-    row2: "+",
-  });
-
   const getBeverageDetail = (beverage) => {
     return (
       <div key={beverage.id}>
@@ -152,3 +150,5 @@ export const AdminViewDrinkOrder = ({
     </>
   );
 };
+
+export default AdminViewDrinkOrder;

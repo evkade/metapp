@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { CustomizeMenu } from "../views/customizeMenu";
+import CustomizeMenu from "../views/customizeMenu";
 import {
   addToMenu,
   editInMenu,

@@ -3,7 +3,7 @@ import { Beverage } from "../../constants/beverageObjects";
 import DrinkPresenter from "../presenters/drinkPresenter";
 import { beverageTypes } from "../../constants/searchTypes";
 
-export const UserMenu = ({
+const UserMenu = ({
   orderItems,
   beerMenu,
   cocktailMenu,
@@ -102,3 +102,5 @@ export const UserMenu = ({
     </div>
   );
 };
+
+export default UserMenu;

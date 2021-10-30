@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { addNewOrder } from "../../redux/actions/orders";
 import OrderModel from "../../model/orderModel";
-import { AdminViewDrinkOrder } from "../views/adminViewDrinkOrder";
+import AdminViewDrinkOrder from "../views/adminViewDrinkOrder";
 import MenuModel from "../../model/drinkModel";
 import { Spinner } from "../views/spinner";
 
@@ -21,6 +21,13 @@ const AdminViewDrinkOrdersPresenter = ({
   getBeerHistory,
   getCocktailHistory,
 }) => {
+  const [drinkDetail, setDrinkDetail] = useState(null);
+  const [showDrinkDetailModal, setShowDrinkDetailModal] = useState(false);
+  const [collapseInfo, setCollapseInfo] = useState({
+    row1: "-",
+    row2: "+",
+  });
+
   useEffect(() => {
     getOrders(menu.currentBar);
 
@@ -61,6 +68,12 @@ const AdminViewDrinkOrdersPresenter = ({
       cancel={cancel}
       loading={menu.loading || orders.loading}
       spinner={<Spinner bar={menu.currentBar} />}
+      drinkDetail={drinkDetail}
+      setDrinkDetail={setDrinkDetail}
+      showDrinkDetailModal={showDrinkDetailModal}
+      setShowDrinkDetailModal={setShowDrinkDetailModal}
+      collapseInfo={collapseInfo}
+      setCollapseInfo={setCollapseInfo}
     />
   );
 };
