@@ -613,6 +613,10 @@ body {
     border-radius: 20px;
     background-color: #fcfeff;
   }
+  @at-root #{&}__empty-message {
+    padding: 20px;
+    margin: auto;
+  }
 }
 .height100 {
   height: 100%;
