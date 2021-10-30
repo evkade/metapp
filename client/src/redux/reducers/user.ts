@@ -1,3 +1,4 @@
+import { beverageCardTypes } from "constants/beverageCardType";
 import FavoriteModel from "../../model/favoriteModel";
 
 const initialState = {
@@ -48,10 +49,10 @@ const userReducer = (state = initialState, action) => {
         loading: false,
       };
     case "ADD_FAVORITE":
-      favoriteModel.postBeverageToDatabase(action.payload);
+      console.log(action.payload)
       return {
         ...state,
-        favorites: state.favorites
+        favorites: [...state.favorites, action.payload]
       };
     case "SET_FAVORITES":
       return {
@@ -63,7 +64,7 @@ const userReducer = (state = initialState, action) => {
       favoriteModel.removeBeveragefromDatabase(action.payload);
       return {
         ...state,
-        favorites: state.favorites,
+        favorites: state.favorites.filter(elem => elem.beverage._id !== action.payload.beverage_id),
         loading: false,
       };
     case "ORDER_PLACED":

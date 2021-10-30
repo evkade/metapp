@@ -34,6 +34,7 @@ export const UserMenuPresenter = ({
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
 
   useEffect(() => {
+    getFavorites();
     if (
       !(
         Object.keys(unfinishedOrder).length === 0 &&
@@ -55,10 +56,6 @@ export const UserMenuPresenter = ({
     getBeerHistory(currentBar);
     getCocktailHistory(currentBar);
   }, [currentBar]);
-
-  useEffect(() => {
-    getFavorites();
-  }, [favorites]);
 
   let history = useHistory();
 
@@ -160,7 +157,7 @@ export const UserMenuPresenter = ({
       placeUnFinishedOrder={() => placeUnFinishedOrder()}
       addToFavorites={(name, type) => addFavorite(name, type, currentBar)}
       removeFromFavorites={(name) => removeFromFavorites(name)}
-      isfavorite={(name) => isfavorite(name)}
+      isfavorite={isfavorite}
       favoriteList={favorites}
       totalInfo={totalInfo}
       loading={loading}
@@ -168,6 +165,15 @@ export const UserMenuPresenter = ({
     />
   );
 };
+
+async function addToFavorites(beverage, type, bar, dispatch) {
+  const beverageObject = await favoriteModel
+    .postBeverageToDatabase({ beverage, type, bar })
+    .then((data) => data);
+  dispatch(
+    addFavorite({ beverage: beverageObject, beverage_type: type, bar: bar })
+  );
+}
 
 const mapStateToProps = (store) => {
   return {
@@ -184,7 +190,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addFavorite: (beverage, type, bar) =>
-      dispatch(addFavorite({ beverage, type, bar })),
+      addToFavorites(beverage, type, bar, dispatch),
     removeFavorite: (beverage_id, type, bar) =>
       dispatch(removeFavorite({ beverage_id, type, bar })),
     getFavorites: () => dispatch(favoriteModel.getFavorites()),

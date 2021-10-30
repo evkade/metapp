@@ -38,7 +38,6 @@ router.post("/api/favorite", isSignedIn, async (req: Request, res: Response, nex
         next(new ErrorException(ErrorCode.Unauthenticated))
     }
     else {
-        console.log(req.body)
         const body = await addFavoriteById(req.currentUser!._id, req.body).then(data => data).catch(err => next(new ErrorException(ErrorCode.badRequest, err)));
         if (body) return res.status(200).send(body);
         else if (body === null) return next(new ErrorException(ErrorCode.BeverageAlreadyExists))

@@ -29,6 +29,8 @@ export default class MenuModel {
     };
   }
 
+
+
   async postBeerToDatabase(beer: Beer, currentBar, active: boolean) {
     const beerObjectForAPI = {
       name: beer.name,

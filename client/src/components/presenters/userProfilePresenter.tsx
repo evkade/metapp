@@ -8,10 +8,9 @@ import {
   orderCancelled,
   orderMade,
   orderPaid,
-} from "../../redux/actions/orders";
+} from '../../redux/actions/orders';
 import FavoriteModel from '../../model/favoriteModel';
-import { Spinner } from "../views/spinner";
-
+import { Spinner } from '../views/spinner';
 
 const ordermodel = new OrderModel();
 const favoriteModel = new FavoriteModel();
@@ -31,10 +30,10 @@ export const UserProfilePresenter = ({
   loading,
   currentBar,
 }) => {
+  //const [getfavorites, setfavorites] = useState(getFavorites());
   useEffect(() => {
-    getOrders(userId);
     getFavorites();
-
+    getOrders(userId);
     const orderBeenMade = (data) => {
       orderMade(data.id, data.timestamp);
     };
@@ -59,7 +58,17 @@ export const UserProfilePresenter = ({
   }, []);
 
   const removeFromFavorites = (name) => {
-    removeFavorite(name);
+    removeFavorite(favoriteid(name), favoriteType(name), favoritebar(name));
+  };
+  const favoritebar = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).bar;
+  };
+
+  const favoriteid = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage._id;
+  };
+  const favoriteType = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage_type;
   };
 
   return (
@@ -87,7 +96,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeFavorite: (name) => dispatch(removeFavorite(name)),
+    removeFavorite: (beverage_id, type, bar) =>
+      dispatch(removeFavorite({ beverage_id, type, bar })),
     getOrders: (userId) => dispatch(ordermodel.getUserOrders(userId)),
     getFavorites: () => dispatch(favoriteModel.getFavorites()),
     orderMade: (id, time) => dispatch(orderMade(id, time)),

@@ -93,8 +93,6 @@ router.get(
   isSignedIn,
   async (req: Request, res: Response) => {
     if (!req.currentUser) return res.send(400);
-
-    console.log(req.query.id);
     const orders = await getUserOrders(req.query.id);
 
     res.status(200).send(orders);

@@ -30,8 +30,8 @@ export default class FavoriteModel {
                 credentials: "include",
             }
         )
-        response.json().then((data) => {
-            return data.favorites
+        return response.json().then((data) => {
+            return data
         }).catch(err => console.error(err));
 
     }
@@ -63,6 +63,9 @@ export default class FavoriteModel {
 
 
     }
+
+
+
 
 
 }
