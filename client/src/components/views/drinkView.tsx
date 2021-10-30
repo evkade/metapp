@@ -4,7 +4,6 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PlaceholderImage from "../images/stockphoto_placeholder.jpg";
 import { beverageTypes } from "../../constants/searchTypes";
 
-
 const Drink = ({
   item,
   index,
@@ -17,47 +16,44 @@ const Drink = ({
   removeFavorite,
   menuDisplay,
 }) => {
-
-
   return (
-    <div key={index} className='drink-list__row drink-list__row--constrained'>
+    <div key={index} className="drink-list__row drink-list__row--constrained">
       {menuDisplay && (
         <>
-          <div className='drink-list__star'>
+          <div className="drink-list__star">
             <FontAwesomeIcon
               id={`starIcon${item.name}`}
               icon={faStar}
               className={`fa-2x ${
-                isfavorite ? 'drink-list__star--active' : ''
+                isfavorite ? "drink-list__star--active" : ""
               }`}
               onClick={() =>
                 isfavorite ? removeFavorite(item.name) : addFavorite(item.name)
               }
             />
           </div>
-          <img src={PlaceholderImage} className='drink-list__image' />
+          <img src={PlaceholderImage} className="drink-list__image" />
         </>
       )}
-      <div className='drink-list__column drink-list__column--flexed'>
+      <div className="drink-list__column drink-list__column--flexed drink-list__column--small">
         {item.name}
-
       </div>
-      <div className='drink-list__column drink-list__column--flexed'>
-        {item.price} SEK{' '}
+      <div className="drink-list__column drink-list__column--flexed">
+        {item.price} SEK{" "}
         {menuDisplay && (
           <>
             <br />
             {itemType === beverageTypes.BEER
-              ? item.alcoholPercentage + '%'
-              : item.alcoholVolume + 'cl'}
+              ? item.alcoholPercentage + "%"
+              : item.alcoholVolume + "cl"}
           </>
         )}
       </div>
-      <div className='drink-list__buttons'>
+      <div className="drink-list__buttons">
         {menuDisplay ? (
           <>
             <button
-              className='general-button--bw'
+              className="general-button--bw"
               onClick={() => removeFromOrder(item.name, item.price)}
             >
               -
@@ -73,7 +69,7 @@ const Drink = ({
               {count}{" "}
             </span>
             <button
-              className='general-button--bw'
+              className="general-button--bw"
               onClick={() => addToOrder(item.name, item.price, item.id)}
             >
               +

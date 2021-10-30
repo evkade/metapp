@@ -556,12 +556,11 @@ body {
     display: flex;
     overflow-y: scroll;
     border-radius: 6px;
-    margin-bottom: 30px;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  @at-root #{&}__collapsible::before {
+  @at-root #{&}__fade::before {
     background-image: linear-gradient(
       top,
       rgba(255, 255, 255, 0) 70%,
@@ -588,7 +587,8 @@ body {
       black 100%
     );
     content: "\00a0";
-    height: inherit;
+    height: 120px;
+    margin-top: -120px;
     position: absolute;
     width: 100%;
     z-index: 1;
