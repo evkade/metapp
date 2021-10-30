@@ -43,7 +43,7 @@ export default class MenuModel {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/jsoncharset=UTF-8",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(beerObjectForAPI),
         credentials: "include",
