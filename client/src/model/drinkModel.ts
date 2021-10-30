@@ -119,7 +119,7 @@ export default class MenuModel {
 
   setAPIBeerToObject(apiBeer): Beer {
     const beer: Beer = {
-      name: apiBeer.name,
+      name: apiBeer.name.replace("&#39;", "'"),
       type: apiBeer.type,
       volume: apiBeer.volume_ml,
       alcoholPercentage: apiBeer.alcohol_vol,

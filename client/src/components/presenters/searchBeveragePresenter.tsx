@@ -29,10 +29,14 @@ export const SearchBeveragePresenter = ({
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState<string>("");
   const [showInfoPopup, setShowInfoPopup] = useState<boolean>(false);
+  const [messageEmptyResults, setMessageEmptyResults] = useState<string>(
+    "Search for a beverage to add to your menu!"
+  );
 
-  console.log(showInfoPopup);
+  console.log(searchResults);
 
   const searchBeverage = (query: string) => {
+    setMessageEmptyResults("No results");
     if (currentSearchType === searchTypes.API) {
       setLoading(true);
       switch (customizedType) {
@@ -137,6 +141,7 @@ export const SearchBeveragePresenter = ({
         openModal={openModal}
         openNewBeverageModal={openNewBeverageModal}
         setShowInfoPopup={setShowInfoPopup}
+        messageEmptyResults={messageEmptyResults}
       />
       {showInfoPopup && <InformationPopUp />}
     </>
