@@ -1,7 +1,7 @@
-import React from "react";
-import { Beverage } from "../../constants/beverageObjects";
-import Drink from "./drinkView";
-import { beverageTypes } from "../../constants/searchTypes";
+import React from 'react';
+import { Beverage } from '../../constants/beverageObjects';
+import Drink from './drinkView';
+import { beverageTypes } from '../../constants/searchTypes';
 
 export const UserMenu = ({
   orderItems,
@@ -11,6 +11,7 @@ export const UserMenu = ({
   addToOrder,
   removeFromOrder,
   placeUnFinishedOrder,
+  isfavorite,
   addToFavorites,
   removeFromFavorites,
   favoriteList,
@@ -19,14 +20,14 @@ export const UserMenu = ({
   spinner,
 }) => {
   return (
-    <div className="drink-list container--general">
+    <div className='drink-list container--general'>
       {loading ? (
         spinner
       ) : (
         <>
-          <div className="title-neon--big">Menu</div>
-          <div className="drink-list__container">
-            <div className="beverage-type"> Beers </div>
+          <div className='title-neon--big'>Menu</div>
+          <div className='drink-list__container'>
+            <div className='beverage-type'> Beers </div>
             {beerMenu &&
               beerMenu.map((item: Beverage, index: number) => {
                 var orderCount: number = 0;
@@ -36,6 +37,7 @@ export const UserMenu = ({
                 if (filteredOutItem.length == 1) {
                   orderCount = filteredOutItem[0].count;
                 }
+                const favoriteBool: Boolean = isfavorite(item.name);
                 return (
                   <Drink
                     item={item}
@@ -48,15 +50,18 @@ export const UserMenu = ({
                     removeFromOrder={(name: string, price: string) =>
                       removeFromOrder(name, price)
                     }
+                    isfavorite={favoriteBool}
                     count={orderCount}
-                    addFavorite={(name) => addToFavorites(name)}
+                    addFavorite={(name) =>
+                      addToFavorites(name, beverageTypes.BEER)
+                    }
                     removeFavorite={(name) => removeFromFavorites(name)}
-                    favoriteList={favoriteList}
                     menuDisplay={true}
                   />
                 );
               })}
-            <div className="beverage-type"> Cocktails </div>
+
+            <div className='beverage-type'> Cocktails </div>
             {cocktailMenu &&
               cocktailMenu.map((item: Beverage, index: number) => {
                 var orderCount: number = 0;
@@ -66,6 +71,7 @@ export const UserMenu = ({
                 if (filteredOutItem.length == 1) {
                   orderCount = filteredOutItem[0].count;
                 }
+                const favoriteBool: Boolean = isfavorite(item.name);
                 return (
                   <Drink
                     item={item}
@@ -79,9 +85,11 @@ export const UserMenu = ({
                       removeFromOrder(name, price)
                     }
                     count={orderCount}
-                    addFavorite={(name) => addToFavorites(name)}
+                    addFavorite={(name) =>
+                      addToFavorites(name, beverageTypes.COCKTAIL)
+                    }
                     removeFavorite={(name) => removeFromFavorites(name)}
-                    favoriteList={favoriteList}
+                    isfavorite={favoriteBool}
                     menuDisplay={true}
                   />
                 );
@@ -89,12 +97,12 @@ export const UserMenu = ({
           </div>
           {orderItems.length > 0 && (
             <button
-              className="drink-list__button"
+              className='drink-list__button'
               onClick={() => placeUnFinishedOrder()}
             >
               Place order <br />
-              {totalInfo.totalCount}{" "}
-              {totalInfo.totalCount == 1 ? "item" : "items"},{" "}
+              {totalInfo.totalCount}{' '}
+              {totalInfo.totalCount == 1 ? 'item' : 'items'} á{' '}
               {totalInfo.totalCost} SEK
             </button>
           )}

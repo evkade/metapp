@@ -1,67 +1,61 @@
-import React, { useEffect, useState } from "react";
-import GeneralFavoriteCard from "./generalFavoriteCard";
-import mkmlogo from "../images/mkm_logo.png";
-import dkmlogo from "../images/dkm_logo.png";
+import React, { useEffect, useState } from 'react';
+import GeneralFavoriteCard from './generalFavoriteCard';
+import mkmlogo from '../images/mkm_logo.png';
+import dkmlogo from '../images/dkm_logo.png';
 
 const UserProfile = ({
   username,
   orders,
   favorites,
   removeFromFavorites,
-  loading,
   spinner,
+  loading,
 }) => {
-  const [favoriteList, setFavoriteList] = useState([]);
-
-  useEffect(() => {
-    setFavoriteList(favorites);
-  }, [favorites]);
-
   return (
-    <div className="profile-view container--general">
+    <div className='profile-view container--general'>
       {loading ? (
         spinner
       ) : (
         <>
-          <div className="title-neon--big">{username}</div>
-          <div className="info-card-drink">
-            <div className="info-card-drink__title">Current orders</div>
-            <div className="info-card-drink__container--scroll">
+          <div className='title-neon--big'>{username}</div>
+          <div className='info-card-drink'>
+            <div className='info-card-drink__title'>Current orders</div>
+            <div className='info-card-drink__container--scroll'>
               {orders
                 .filter((o) => !o.paid && !o.cancelled)
                 .map((order) => (
-                  <div className="info-card-drink__row" key={order.id}>
-                    <div className="info-card-drink__column info-card-drink__column--small">
+                  <div className='info-card-drink__row' key={order.id}>
+                    <div className='info-card-drink__column--flex'>
                       {/** TODO make modular */}
                       {order.order.map((orderDetail, index) => {
                         const length = order.order.length;
                         if (index === length - 1) {
                           return (
-                            <div key={index}>
-                              {" "}
+                            <span key={index}>
+                              {' '}
                               {orderDetail.quantity} {orderDetail.beverage}
-                            </div>
+                            </span>
                           );
                         } else {
                           return (
-                            <div key={index}>
-                              {" "}
+                            <span key={index}>
+                              {' '}
                               {orderDetail.quantity} {orderDetail.beverage},
-                            </div>
+                            </span>
                           );
                         }
                       })}
                     </div>
-                    <div className="info-card-drink__column info-card-drink__column--right">
-                      {order.made ? "PICK UP!" : "NOT READY"}
+                    <div className='info-card-drink__column--flex'>
+                      {order.made ? 'PICK UP!' : 'NOT READY'}
                     </div>
                   </div>
                 ))}
             </div>
           </div>
-          <div className="info-card-drink">
-            <div className="info-card-drink__title">Previous Orders</div>
-            <div className="info-card-drink__container--scroll">
+          <div className='info-card-drink'>
+            <div className='info-card-drink__title'>Previous Orders</div>
+            <div className='info-card-drink__container--scroll'>
               {orders && orders.length > 0 ? (
                 orders
                   .filter((o) => (o.made && o.paid) || o.cancelled)
@@ -75,33 +69,33 @@ const UserProfile = ({
                   })
                   .map((order) => {
                     return (
-                      <div className="info-card-drink__row" key={order.id}>
-                        <div className="info-card-drink__column--flex">
+                      <div className='info-card-drink__row' key={order.id}>
+                        <div className='info-card-drink__column--flex'>
                           {order.cancelled ? (
-                            "CANCELLED"
-                          ) : order.bar === "dkm" ? (
-                            <img src={dkmlogo} width="20px" />
+                            'CANCELLED'
+                          ) : order.bar === 'dkm' ? (
+                            <img src={dkmlogo} width='20px' />
                           ) : (
-                            <img src={mkmlogo} width="20px" />
+                            <img src={mkmlogo} width='20px' />
                           )}
                         </div>
-                        <div className="info-card-drink__column--flex">
+                        <div className='info-card-drink__column--flex'>
                           <b>{order.date}</b>
                         </div>
-                        <div className="info-card-drink__column info-card-drink__column--small">
+                        <div className='info-card-drink__column info-card-drink__column--small'>
                           {order.order.map((orderDetail, index) => {
                             const length = order.order.length;
                             if (index === length - 1) {
                               return (
                                 <div key={index}>
-                                  {" "}
+                                  {' '}
                                   {orderDetail.quantity} {orderDetail.beverage}
                                 </div>
                               );
                             } else {
                               return (
                                 <div key={index}>
-                                  {" "}
+                                  {' '}
                                   {orderDetail.quantity} {orderDetail.beverage},
                                 </div>
                               );
@@ -112,8 +106,8 @@ const UserProfile = ({
                     );
                   })
               ) : (
-                <div className="info-card-drink__row">
-                  <div className="info-card-drink__column--flex">
+                <div className='info-card-drink__row'>
+                  <div className='info-card-drink__column--flex'>
                     You haven't placed any orders.
                   </div>
                 </div>
@@ -121,14 +115,22 @@ const UserProfile = ({
             </div>
           </div>
           <GeneralFavoriteCard
-            title={"Favorite beverages"}
-            favoriteObject={favorites}
+            title={'Favorite Beers'}
+            favoriteObject={favorites.filter(
+              (data) => data.beverage_type === 'beer'
+            )}
             removeFromFavorites={(name) => removeFromFavorites(name)}
+            dkmlogo={dkmlogo}
+            mkmlogo={mkmlogo}
           />
           <GeneralFavoriteCard
-            title={"Favorite drinks"}
-            favoriteObject={favorites}
+            title={'Favorite Cocktails'}
+            favoriteObject={favorites.filter(
+              (data) => data.beverage_type === 'cocktail'
+            )}
             removeFromFavorites={(name) => removeFromFavorites(name)}
+            dkmlogo={dkmlogo}
+            mkmlogo={mkmlogo}
           />
         </>
       )}

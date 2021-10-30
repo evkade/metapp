@@ -1,16 +1,18 @@
-import OrderView from "../views/orderView";
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import OrderView from '../views/orderView';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import {
   orderPlaced,
   removedOrder,
   unfinishedOrderPlaced,
-} from "../../redux/actions/user";
-import { addFavorite } from "../../redux/actions/user";
-import { removeFavorite } from "../../redux/actions/user";
-import OrderModel from "../../model/orderModel";
+} from '../../redux/actions/user';
+import { addFavorite } from '../../redux/actions/user';
+import { removeFavorite } from '../../redux/actions/user';
+import OrderModel from '../../model/orderModel';
+import FavoriteModel from '../../model/favoriteModel';
 
 const ordermodel = new OrderModel();
+const favoriteModel = new FavoriteModel();
 
 export const OrderPresenter = ({
   socket,
@@ -26,7 +28,6 @@ export const OrderPresenter = ({
   removedOrder,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
-  const [favoriteList, setFavoriteList] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
 
   useEffect(() => {
@@ -108,16 +109,27 @@ export const OrderPresenter = ({
     setOrderItems(modifiedOrderListWithoutZeros);
   };
 
-  const addToFavorites = (name) => {
-    addFavorite(name);
-  };
-
   const removeFromFavorites = (name) => {
-    removeFavorite(name);
+    removeFavorite(favoriteid(name), favoriteType(name), favoritebar(name));
   };
 
   const finalizeOrder = () => {
     orderPlaced(unfinishedOrder, user, currentBar, socket);
+  };
+
+  const isfavorite = (name) => {
+    return favorites.some((elem) => elem.beverage.name === name);
+  };
+
+  const favoritebar = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).bar;
+  };
+
+  const favoriteid = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage._id;
+  };
+  const favoriteType = (name) => {
+    return favorites.find((elem) => elem.beverage.name === name).beverage_type;
   };
 
   return (
@@ -127,10 +139,11 @@ export const OrderPresenter = ({
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
       addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name) => removeFromOrder(name)}
-      addToFavorites={(name) => addToFavorites(name)}
+      addToFavorites={(name, type) => addFavorite(name, type, currentBar)}
       removeFromFavorites={(name) => removeFromFavorites(name)}
-      favoriteList={favoriteList}
+      favoriteList={favorites}
       totalInfo={totalInfo}
+      isfavorite={isfavorite}
       finalizeOrder={() => finalizeOrder()}
       removeOrder={() => removeOrder()}
     />
@@ -142,6 +155,7 @@ const mapStateToProps = (store) => {
     unfinishedOrder: store.user.unfinishedOrder,
     user: store.user,
     currentBar: store.menu.currentBar,
+    favorites: store.user.favorites,
   };
 };
 
@@ -149,8 +163,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     orderPlaced: (order, user, currentbar, socket) =>
       dispatch(ordermodel.placeOrder(order, user, currentbar, socket)),
-    addFavorite: (name) => dispatch(addFavorite(name)),
-    removeFavorite: (name) => dispatch(removeFavorite(name)),
+    addFavorite: (beverage, type, bar) =>
+      dispatch(addFavorite({ beverage, type, bar })),
+    removeFavorite: (beverage, type, bar) =>
+      dispatch(removeFavorite({ beverage, type, bar })),
     unfinishedOrderPlaced: (beverages) =>
       dispatch(unfinishedOrderPlaced(beverages)),
     removedOrder: () => dispatch(removedOrder()),

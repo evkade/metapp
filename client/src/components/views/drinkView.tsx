@@ -4,80 +4,60 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PlaceholderImage from "../images/stockphoto_placeholder.jpg";
 import { beverageTypes } from "../../constants/searchTypes";
 
+
 const Drink = ({
   item,
   index,
   itemType,
+  isfavorite,
   addToOrder,
   removeFromOrder,
   count,
   addFavorite,
   removeFavorite,
-  favoriteList,
   menuDisplay,
 }) => {
-  const [shortName, setShortName] = useState("");
 
-  useEffect(() => {
-    if (item.name.length > 30) {
-      const newShortName = item.name.slice(0, 30) + "...";
-      setShortName(newShortName);
-    } else {
-      setShortName(item.name);
-    }
-    if (favoriteList.includes(item.name)) {
-      activateStar(item.name, true);
-    }
-  }, [favoriteList]);
-
-  const activateStar = (name, isAlreadyInList) => {
-    const star = document.getElementById(`starIcon${index}`);
-    const isStarActive = star.classList.contains("drink-list__star--active");
-    if (!isStarActive && !isAlreadyInList) {
-      star.classList.add("drink-list__star--active");
-      addFavorite(name);
-    } else if (!isStarActive && isAlreadyInList) {
-      star.classList.add("drink-list__star--active");
-    } else {
-      star.classList.remove("drink-list__star--active");
-      removeFavorite(name);
-    }
-  };
 
   return (
-    <div key={index} className="drink-list__row drink-list__row--constrained">
+    <div key={index} className='drink-list__row drink-list__row--constrained'>
       {menuDisplay && (
         <>
-          <div className="drink-list__star">
+          <div className='drink-list__star'>
             <FontAwesomeIcon
-              id={`starIcon${index}`}
+              id={`starIcon${item.name}`}
               icon={faStar}
-              className="fa-2x"
-              onClick={() => activateStar(item.name, false)}
+              className={`fa-2x ${
+                isfavorite ? 'drink-list__star--active' : ''
+              }`}
+              onClick={() =>
+                isfavorite ? removeFavorite(item.name) : addFavorite(item.name)
+              }
             />
           </div>
-          <img src={PlaceholderImage} className="drink-list__image" />
+          <img src={PlaceholderImage} className='drink-list__image' />
         </>
       )}
-      <div className="drink-list__column drink-list__column--flexed drink-list__column--small">
-        {shortName}
+      <div className='drink-list__column drink-list__column--flexed'>
+        {item.name}
+
       </div>
-      <div className="drink-list__column drink-list__column--flexed">
-        {item.price} SEK{" "}
+      <div className='drink-list__column drink-list__column--flexed'>
+        {item.price} SEK{' '}
         {menuDisplay && (
           <>
             <br />
             {itemType === beverageTypes.BEER
-              ? item.alcoholPercentage + "%"
-              : item.alcoholVolume + "cl"}
+              ? item.alcoholPercentage + '%'
+              : item.alcoholVolume + 'cl'}
           </>
         )}
       </div>
-      <div className="drink-list__buttons">
+      <div className='drink-list__buttons'>
         {menuDisplay ? (
           <>
             <button
-              className="general-button--bw"
+              className='general-button--bw'
               onClick={() => removeFromOrder(item.name, item.price)}
             >
               -
@@ -93,7 +73,7 @@ const Drink = ({
               {count}{" "}
             </span>
             <button
-              className="general-button--bw"
+              className='general-button--bw'
               onClick={() => addToOrder(item.name, item.price, item.id)}
             >
               +
