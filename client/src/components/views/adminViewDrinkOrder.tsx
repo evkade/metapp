@@ -108,6 +108,7 @@ const AdminViewDrinkOrder = ({
                       );
                     })}
               </div>
+              <div className="admin-menu-container__fade"></div>
               <h3
                 className="admin-menu-container__subtitle"
                 onClick={() => toggleCollapsible()}

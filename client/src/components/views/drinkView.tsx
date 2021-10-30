@@ -35,7 +35,7 @@ const Drink = ({
           <img src={PlaceholderImage} className="drink-list__image" />
         </>
       )}
-      <div className="drink-list__column drink-list__column--flexed">
+      <div className="drink-list__column drink-list__column--flexed drink-list__column--small">
         {item.name}
       </div>
       <div className="drink-list__column drink-list__column--flexed">
