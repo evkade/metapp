@@ -10,17 +10,15 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 
 const menuModel = new MenuModel();
 
-export const SearchBeveragePresenter = ({
+const SearchBeveragePresenter = ({
   setModalBeverage,
   setShowModal,
   menu,
   history,
-  addToMenu,
   customizedType,
   currentSearchType,
   setCurrentSearchType,
   setBeverageCardType,
-  loading,
   spinner,
 }) => {
   const [beveragePromise, setBeveragePromise] = useState(undefined);
@@ -32,8 +30,6 @@ export const SearchBeveragePresenter = ({
   const [messageEmptyResults, setMessageEmptyResults] = useState<string>(
     "Search for a beverage to add to your menu!"
   );
-
-  console.log(searchResults);
 
   const searchBeverage = (query: string) => {
     setMessageEmptyResults("No results");
@@ -134,7 +130,6 @@ export const SearchBeveragePresenter = ({
         isLoading={isLoading}
         menu={menu}
         setCurrentSearchType={setCurrentSearchType}
-        setBeverageCardType={setBeverageCardType}
         spinner={spinner}
         query={query}
         setQuery={setQuery}
@@ -147,3 +142,5 @@ export const SearchBeveragePresenter = ({
     </>
   );
 };
+
+export default SearchBeveragePresenter;

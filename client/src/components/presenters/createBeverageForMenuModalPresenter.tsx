@@ -1,12 +1,12 @@
 import React from "react";
-import { CreateBeverageForMenuModal } from "../views/createBeverageForMenuModal";
+import CreateBeverageForMenuModal from "../views/createBeverageForMenuModal";
 import { beverageTypes, searchTypes } from "../../constants/searchTypes";
 import { Beverage } from "../../constants/beverageObjects";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 import { baseBeer, baseCocktail } from "../../constants/beverageObjects";
 // todo: all beverages should be added to history when being added to menu
 
-export const CreateBeverageForMenuModalPresenter = ({
+const CreateBeverageForMenuModalPresenter = ({
   showModal,
   setShowModal,
   menu,
@@ -68,3 +68,5 @@ export const CreateBeverageForMenuModalPresenter = ({
 
   return modal;
 };
+
+export default CreateBeverageForMenuModalPresenter;

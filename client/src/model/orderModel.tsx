@@ -5,6 +5,7 @@ import {
   orderPaid,
   setUserOrders,
   orderCancelled,
+  addNewOrder,
 } from "../redux/actions/orders";
 import { orderPlaced } from "../redux/actions/user";
 import moment from "moment";
@@ -20,13 +21,18 @@ export default class OrderModel {
       fetch(`http://localhost:5000/api/orders?currentbar=${currentBar}`, {
         credentials: "include",
       })
-        .then((data) => data.json())
+        .then((data) => {
+          if (data.ok) return data.json();
+          else throw new Error("Could not fetch orders");
+        })
         .then((orders) => dispatch(setOrders(orders)))
+        // TODO show to user, not in console
         .catch((err) => console.log(err));
     };
   }
 
   makeOrder(orderId, socket) {
+    console.log(orderId);
     const time = this.getTimeStamp();
     return (dispatch) => {
       fetch("http://localhost:5000/api/orders/make", {
@@ -41,8 +47,9 @@ export default class OrderModel {
           if (res.ok) {
             dispatch(orderMade(orderId, time));
             socket.emit("made", { id: orderId, timestamp: time });
-          } else throw new Error("Something went wrong");
+          } else throw new Error("Could not make order");
         })
+        // TODO show to user, not in console
         .catch((err) => console.log(err));
     };
   }
@@ -62,8 +69,9 @@ export default class OrderModel {
           if (res.ok) {
             dispatch(orderPaid(orderId, time));
             socket.emit("paid", { id: orderId, timestamp: time });
-          } else throw new Error("Something went wrong");
+          } else throw new Error("Could not pay for order");
         })
+        // TODO show to user, not in console
         .catch((err) => console.log(err));
     };
   }
@@ -96,8 +104,10 @@ export default class OrderModel {
         })
         .then((result) => {
           dispatch(orderPlaced());
+          dispatch(addNewOrder({ ...result, user: user.username }));
           socket.emit("orderPlaced", { ...result, user: user.username });
         })
+        // TODO show to user, not in console
         .catch((err: Error) => console.log(err));
     };
   }
@@ -108,8 +118,12 @@ export default class OrderModel {
       fetch(`http://localhost:5000/api/orders/user?id=${userId}`, {
         credentials: "include",
       })
-        .then((data) => data.json())
+        .then((data) => {
+          if (data.ok) return data.json();
+          else throw new Error("Could not get user's orders");
+        })
         .then((orders) => dispatch(setUserOrders(orders)))
+        // TODO show to user, not in console
         .catch((err) => console.log(err));
     };
   }
@@ -130,6 +144,7 @@ export default class OrderModel {
             socket.emit("cancelled", orderId);
           } else throw new Error("Could not cancel order");
         })
+        // TODO show to user, not in console
         .catch((err) => console.log(err));
     };
   }

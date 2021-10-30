@@ -1,12 +1,8 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import mkmlogo from "../images/mkm_logo.png";
 import dkmlogo from "../images/dkm_logo.png";
 
-const EntryView = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  let history = useHistory();
-
+const EntryView = ({ history, modalOpen, setModalOpen }) => {
   return (
     <div className="container--general entry-view">
       <button

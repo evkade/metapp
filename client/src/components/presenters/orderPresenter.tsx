@@ -1,34 +1,33 @@
-import OrderView from '../views/orderView';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import {
-  orderPlaced,
-  removedOrder,
-  unfinishedOrderPlaced,
-} from '../../redux/actions/user';
-import { addFavorite } from '../../redux/actions/user';
-import { removeFavorite } from '../../redux/actions/user';
-import OrderModel from '../../model/orderModel';
-import FavoriteModel from '../../model/favoriteModel';
+import OrderView from "../views/orderView";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { removedOrder, unfinishedOrderPlaced } from "../../redux/actions/user";
+import { addFavorite } from "../../redux/actions/user";
+import { removeFavorite } from "../../redux/actions/user";
+import OrderModel from "../../model/orderModel";
+import FavoriteModel from "../../model/favoriteModel";
 
-const ordermodel = new OrderModel();
+const orderModel = new OrderModel();
 const favoriteModel = new FavoriteModel();
 
-export const OrderPresenter = ({
+const OrderPresenter = ({
   socket,
   unfinishedOrder,
   user,
+  favorites,
   currentBar,
-  orders,
   orderPlaced,
   addFavorite,
   removeFavorite,
-  favorites,
-  unfinishedOrderPlaced,
   removedOrder,
 }) => {
   const [orderItems, setOrderItems] = useState([]);
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
+  const [order, setOrder] = useState([]);
+  const [submittedOrder, setSubmittedOrder] = useState(false);
+  const unfinishedOrderObj = unfinishedOrder;
+  let history = useHistory();
 
   useEffect(() => {
     if (
@@ -48,6 +47,16 @@ export const OrderPresenter = ({
       setTotalInfo(newTotalObj);
     } else {
       setOrderItems([]);
+    }
+
+    // TODO From view, behövs det??
+    if (
+      !(
+        Object.keys(unfinishedOrderObj).length === 0 &&
+        unfinishedOrderObj.constructor === Object
+      )
+    ) {
+      setOrder(unfinishedOrderObj.order);
     }
   }, []);
 
@@ -134,9 +143,9 @@ export const OrderPresenter = ({
 
   return (
     <OrderView
-      unfinishedOrder={unfinishedOrder}
-      orderItems={orderItems}
-      setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
+      order={order}
+      submittedOrder={submittedOrder}
+      setSubmittedOrder={setSubmittedOrder}
       addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name) => removeFromOrder(name)}
       addToFavorites={(name, type) => addFavorite(name, type, currentBar)}
@@ -146,6 +155,7 @@ export const OrderPresenter = ({
       isfavorite={isfavorite}
       finalizeOrder={() => finalizeOrder()}
       removeOrder={() => removeOrder()}
+      history={history}
     />
   );
 };
@@ -162,7 +172,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     orderPlaced: (order, user, currentbar, socket) =>
-      dispatch(ordermodel.placeOrder(order, user, currentbar, socket)),
+      dispatch(orderModel.placeOrder(order, user, currentbar, socket)),
     addFavorite: (beverage, type, bar) =>
       dispatch(addFavorite({ beverage, type, bar })),
     removeFavorite: (beverage, type, bar) =>

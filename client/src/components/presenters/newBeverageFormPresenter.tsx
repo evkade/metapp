@@ -1,7 +1,7 @@
 import React from "react";
 import { NewBeverageForm } from "../views/newBeverageForm";
 
-export const NewBeverageFormPresenter = ({
+const NewBeverageFormPresenter = ({
   customizedType,
   newBeverage,
   setNewBeverage,
@@ -14,3 +14,5 @@ export const NewBeverageFormPresenter = ({
     />
   );
 };
+
+export default NewBeverageFormPresenter;

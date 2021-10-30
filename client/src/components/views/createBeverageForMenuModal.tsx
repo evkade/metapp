@@ -1,10 +1,10 @@
 import React from "react";
 import { beverageCardTypes } from "../../constants/beverageCardType";
-import { NewBeverageFormPresenter } from "../presenters/newBeverageFormPresenter";
+import NewBeverageFormPresenter from "../presenters/newBeverageFormPresenter";
 
 // modal code inspired by https://medium.com/tinyso/how-to-create-a-modal-component-in-react-from-basic-to-advanced-a3357a2a716a
 
-export const CreateBeverageForMenuModal = ({
+const CreateBeverageForMenuModal = ({
   beverageType,
   onAddToMenu,
   onEditInMenu,
@@ -49,3 +49,5 @@ export const CreateBeverageForMenuModal = ({
     </div>
   );
 };
+
+export default CreateBeverageForMenuModal;
