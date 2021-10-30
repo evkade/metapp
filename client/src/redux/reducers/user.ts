@@ -63,7 +63,7 @@ const userReducer = (state = initialState, action) => {
       favoriteModel.removeBeveragefromDatabase(action.payload);
       return {
         ...state,
-        favorites: state.favorites
+        favorites: state.favorites,
         loading: false,
       };
     case "ORDER_PLACED":

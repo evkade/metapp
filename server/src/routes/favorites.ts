@@ -17,7 +17,6 @@ router.get("/api/favorite", isSignedIn, async (req: Request, res: Response, next
     else {
         if (req.query && req.query.currentbar) {
             const currentbar = (req.query as any).currentbar;
-            console.log(currentbar)
             if (currentbar === "dkm" || currentbar === "mkm") {
                 const data = await getfavoritesByPub(req.currentUser._id, currentbar).catch(err => { next(new ErrorException(ErrorCode.badRequest, err)) })
                 return res.status(200).send(data);

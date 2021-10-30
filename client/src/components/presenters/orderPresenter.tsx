@@ -109,10 +109,6 @@ export const OrderPresenter = ({
     setOrderItems(modifiedOrderListWithoutZeros);
   };
 
-  const addToFavorites = (name, type, bar) => {
-    addFavorite(name, type, bar);
-  };
-
   const removeFromFavorites = (name) => {
     removeFavorite(favoriteid(name), favoriteType(name), favoritebar(name));
   };
@@ -143,7 +139,7 @@ export const OrderPresenter = ({
       setOrderItems={(newOrderItems) => setOrderItems(newOrderItems)}
       addToOrder={(name, price) => addOrIncreaseOrder(name, price)}
       removeFromOrder={(name) => removeFromOrder(name)}
-      addToFavorites={(name, type) => addToFavorites(name, type, currentBar)}
+      addToFavorites={(name, type) => addFavorite(name, type, currentBar)}
       removeFromFavorites={(name) => removeFromFavorites(name)}
       favoriteList={favorites}
       totalInfo={totalInfo}

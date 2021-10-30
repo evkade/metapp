@@ -5,13 +5,12 @@ import {
   unfinishedOrderPlaced,
   addFavorite,
   removeFavorite,
-} from "../../redux/actions/user";
-import { useHistory } from "react-router-dom";
-import { UserMenu } from "../views/userMenu";
-import MenuModel from "../../model/drinkModel";
-import { Spinner } from "../views/spinner";
+} from '../../redux/actions/user';
+import { useHistory } from 'react-router-dom';
+import { UserMenu } from '../views/userMenu';
+import MenuModel from '../../model/drinkModel';
+import { Spinner } from '../views/spinner';
 import FavoriteModel from '../../model/favoriteModel';
-
 
 const menuModel = new MenuModel();
 const favoriteModel = new FavoriteModel();
@@ -35,8 +34,6 @@ export const UserMenuPresenter = ({
   const [totalInfo, setTotalInfo] = useState({ totalCost: 0, totalCount: 0 });
 
   useEffect(() => {
-    getFavorites();
-
     if (
       !(
         Object.keys(unfinishedOrder).length === 0 &&
@@ -57,7 +54,11 @@ export const UserMenuPresenter = ({
     }
     getBeerHistory(currentBar);
     getCocktailHistory(currentBar);
-  }, [currentBar, favorites]);
+  }, [currentBar]);
+
+  useEffect(() => {
+    getFavorites();
+  }, [favorites]);
 
   let history = useHistory();
 
@@ -109,7 +110,7 @@ export const UserMenuPresenter = ({
   const removeFromOrder = (name, price) => {
     const modifiedOrderList = orderItems.map((item, index) => {
       if (item.name === name && item.count !== 0) {
-        addOrRemoveTotalInfo(price, "remove");
+        addOrRemoveTotalInfo(price, 'remove');
         return {
           name: item.name,
           count: item.count - 1,
