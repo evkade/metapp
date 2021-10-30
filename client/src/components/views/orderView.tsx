@@ -53,6 +53,11 @@ const OrderView = ({
             />
           );
         })}
+        {order.length == 0 && (
+          <div className="drink-list__row--white">
+            You haven't placed any orders.
+          </div>
+        )}
         {submittedOrder && (
           <div className="drink-list__row--white">
             Your order has been sent, go to your profile to see when it's ready
