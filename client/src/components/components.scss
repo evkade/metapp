@@ -560,39 +560,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  @at-root #{&}__fade::before {
-    background-image: linear-gradient(
-      top,
-      rgba(255, 255, 255, 0) 70%,
-      black 100%
-    );
-    background-image: -moz-linear-gradient(
-      top,
-      rgba(255, 255, 255, 0) 70%,
-      black 100%
-    );
-    background-image: -ms-linear-gradient(
-      top,
-      rgba(255, 255, 255, 0) 70%,
-      black 100%
-    );
-    background-image: -o-linear-gradient(
-      top,
-      rgba(255, 255, 255, 0) 70%,
-      black 100%
-    );
-    background-image: -webkit-linear-gradient(
-      top,
-      rgba(255, 255, 255, 0) 70%,
-      black 100%
-    );
-    content: "\00a0";
-    height: 120px;
-    margin-top: -120px;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-  }
+
   @at-root #{&}__button--info {
     position: fixed;
     bottom: 60px;
