@@ -108,6 +108,7 @@ const SearchBeveragePresenter = ({
 
   useEffect(() => {
     setQuery("");
+    setMessageEmptyResults("Search for a beverage to add to your menu!");
   }, [customizedType, currentSearchType]);
 
   const openModal = (beverage: Beverage) => {
