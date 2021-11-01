@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import UserSignUp from "../views/userSignUp";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import UserModel from "../../model/userModel";
+import GeneralUserForm from "../views/generalUserForm";
 
 const userModel = new UserModel();
 
@@ -48,16 +48,18 @@ const HandleUserSignUp = (signUp) => {
   };
 
   return (
-    <UserSignUp
-      userAuth={userAuth}
-      checkUserAuth={(username, password) => checkUserAuth(username, password)}
-      signUpError={signUpError}
-      signUpButton={signUpButton}
+    <GeneralUserForm
+      handleUserAction={(username, password) =>
+        checkUserAuth(username, password)
+      }
+      authError={signUpError}
+      buttonText={signUpButton}
       username={username}
       setUsername={setUsername}
       pwd={pwd}
       setPwd={setPwd}
-      signUpErrMessage={signUpErrMessage}
+      errMessage={signUpErrMessage}
+      title="Sign up"
     />
   );
 };
