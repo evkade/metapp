@@ -8,7 +8,6 @@ export const NewBeverageForm = ({
   newBeverage,
   setNewBeverage,
 }) => {
-  console.log(newBeverage);
   return (
     <form className="beverage-form">
       <div className="beverage-form__row">
