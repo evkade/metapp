@@ -17,9 +17,9 @@ export const AdminViewOrder = ({
   collapseInfo,
   setCollapseInfo,
 }) => {
-  const getBeverageDetail = (beverage) => {
+  const getBeverageDetail = (beverage, index) => {
     return (
-      <div key={beverage.id}>
+      <div key={index}>
         <h4>{beverage.quantity + " " + beverage.beverage}</h4>
       </div>
     );
@@ -36,7 +36,7 @@ export const AdminViewOrder = ({
           <Modal.Title>Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {beverageDetail.order.map((b) => getBeverageDetail(b))}
+          {beverageDetail.order.map((b, index) => getBeverageDetail(b, index))}
         </Modal.Body>
       </Modal>
     );
