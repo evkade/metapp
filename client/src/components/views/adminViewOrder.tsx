@@ -18,9 +18,27 @@ export const AdminViewOrder = ({
   setCollapseInfo,
 }) => {
   const getBeverageDetail = (beverage) => {
+    const menuItem = menu.find((bev) => bev.name === beverage.beverage);
     return (
-      <div key={beverage.id}>
-        <h4>{beverage.quantity + " " + beverage.beverage}</h4>
+      <div key={beverage.beverage} className="order-modal__beverage">
+        <p>
+          {beverage.quantity +
+            " " +
+            beverage.beverage +
+            " - " +
+            (menuItem.alcoholPercentage
+              ? menuItem.alcoholPercentage + "% - "
+              : menuItem.alcoholVolume + "cl - ") +
+            menuItem.price +
+            "kr"}
+        </p>
+        {menuItem.ingredients ? (
+          <ul>
+            {menuItem.ingredients.map((ingredient, index) => (
+              <li key={index + ingredient}>{ingredient}</li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     );
   };
@@ -31,11 +49,12 @@ export const AdminViewOrder = ({
         show={showBeverageDetailModal}
         onHide={() => setShowBeverageDetailModal(false)}
         centered
+        className="order-modal"
       >
         <Modal.Header>
-          <Modal.Title>Details</Modal.Title>
+          <Modal.Title>Order details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="order-modal__body">
           {beverageDetail.order.map((b) => getBeverageDetail(b))}
         </Modal.Body>
       </Modal>

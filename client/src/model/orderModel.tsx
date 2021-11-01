@@ -32,7 +32,6 @@ export default class OrderModel {
   }
 
   makeOrder(orderId, socket) {
-    console.log(orderId);
     const time = this.getTimeStamp();
     return (dispatch) => {
       fetch("http://localhost:5000/api/orders/make", {
