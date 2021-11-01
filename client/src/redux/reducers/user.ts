@@ -41,10 +41,9 @@ const userReducer = (state = initialState, action) => {
         loading: false,
       };
     case "ADD_FAVORITE":
-      console.log(action.payload)
       return {
         ...state,
-        favorites: [...state.favorites, action.payload]
+        favorites: [...state.favorites, action.payload],
       };
     case "SET_FAVORITES":
       return {
@@ -56,7 +55,9 @@ const userReducer = (state = initialState, action) => {
       favoriteModel.removeBeveragefromDatabase(action.payload);
       return {
         ...state,
-        favorites: state.favorites.filter(elem => elem.beverage._id !== action.payload.beverage_id),
+        favorites: state.favorites.filter(
+          (elem) => elem.beverage._id !== action.payload.beverage_id
+        ),
         loading: false,
       };
     case "ORDER_PLACED":
