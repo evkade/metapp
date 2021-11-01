@@ -20,6 +20,8 @@ import userProfilePresenter from "./components/presenters/userProfilePresenter";
 import orderPresenter from "./components/presenters/orderPresenter";
 import UserModel from "./model/userModel";
 
+import { useLocalStorage } from "./hooks/localStorageHook";
+
 const userModel = new UserModel();
 
 const PrivateRoute = ({ component: Component, path, user, ...rest }) => (
@@ -63,21 +65,15 @@ const PublicRoute = ({
   />
 );
 
-const RoutingApp = ({ socket, user, checkValidUser }) => {
-  const [pathName, setPathName] = useState("/");
-
-  window.onbeforeunload = () => {
-    localStorage.setItem("pathname", window.location.pathname);
-  };
-
+const RoutingApp = ({
+  socket,
+  user,
+  checkValidUser,
+  pathName,
+  setPathName,
+}) => {
   useEffect(() => {
     checkValidUser();
-    window.onload = () => {
-      const pathname = localStorage.getItem("pathname");
-      if (pathname !== null) {
-        setPathName(pathname);
-      }
-    };
   }, []);
 
   return (

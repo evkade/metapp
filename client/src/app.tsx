@@ -5,11 +5,14 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { io } from "socket.io-client";
+import { useLocalStorage } from "./hooks/localStorageHook";
 
 import RoutingApp from "./routingApp";
 
 const App = () => {
   const [socket, setSocket] = useState(null);
+  const [path, setPath] = useLocalStorage("pathname", "/");
+  // console.log(path);
 
   // @ts-ignore
   useEffect(() => {
@@ -20,7 +23,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <RoutingApp socket={socket} />
+      <RoutingApp socket={socket} pathName={path} setPathName={setPath} />
     </Provider>
   );
 };
