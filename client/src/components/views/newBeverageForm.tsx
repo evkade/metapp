@@ -81,11 +81,11 @@ export const NewBeverageForm = ({
             <textarea
               className="beverage-form__input beverage-form__textarea"
               name="ingredients"
-              value={newBeverage.ingredients.join(", ")}
+              value={newBeverage.ingredients.join("\r\n")}
               onChange={(e) =>
                 setNewBeverage({
                   ...newBeverage,
-                  ingredients: e.target.value.split(/\s*,\s*/),
+                  ingredients: e.target.value.split("\r\n"),
                 })
               }
             />
