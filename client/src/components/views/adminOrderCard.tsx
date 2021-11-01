@@ -1,4 +1,5 @@
 import React from "react";
+import { getTypeOfBeverage, beverageTypes } from "../../constants/searchTypes";
 
 const OrderCard = ({
   fullOrder,
@@ -14,10 +15,27 @@ const OrderCard = ({
     order.order.forEach(
       (order) =>
         (totPrice +=
-          menu.filter((bev) => bev.name === order.beverage)[0]?.price *
+          menu.find((bev) => bev.name === order.beverage)?.price *
           order.quantity)
     );
     return totPrice;
+  };
+
+  const getTypeOfOrder = (order) => {
+    const beer = order.some(
+      (beverage) =>
+        getTypeOfBeverage(
+          menu.find((item) => item.name === beverage.beverage)
+        ) === beverageTypes.BEER
+    );
+    const cocktail = order.some(
+      (beverage) =>
+        getTypeOfBeverage(
+          menu.find((item) => item.name === beverage.beverage)
+        ) === beverageTypes.COCKTAIL
+    );
+
+    return beer && cocktail ? "Beer and cocktail" : beer ? "Beer" : "Cocktail";
   };
 
   return (
@@ -46,6 +64,9 @@ const OrderCard = ({
           {fullOrder.order.length > 1
             ? "Multiple beverages (click for details)"
             : fullOrder.order[0].quantity + " " + fullOrder.order[0].beverage}
+        </p>
+        <p className="card-order__text">
+          Type: {getTypeOfOrder(fullOrder.order)}
         </p>
         <p className="card-order__text">Ordered by: {fullOrder.user}</p>
         <p className="card-order__text">

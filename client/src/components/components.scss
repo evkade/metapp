@@ -634,3 +634,8 @@ body {
   animation: Spinner infinite 2s linear;
   width: 20%;
 }
+
+.order-modal__body {
+  max-height: 60vh;
+  overflow-x: auto;
+}

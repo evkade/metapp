@@ -62,7 +62,7 @@ const AdminViewOrdersPresenter = ({
   return (
     <AdminViewOrder
       orders={orders.orders}
-      menu={[...menu.beerMenu, ...menu.cocktailMenu]}
+      menu={[...menu.beerHistory, ...menu.cocktailHistory]}
       beverageMade={make}
       beveragePaid={pay}
       cancel={cancel}
