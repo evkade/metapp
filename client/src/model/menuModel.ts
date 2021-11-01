@@ -130,8 +130,8 @@ export default class MenuModel {
 
   setAPIBeerToObject(apiBeer): Beer {
     const beer: Beer = {
-      name: apiBeer.name.replace("&#39;", "'"),
-      type: apiBeer.type,
+      name: apiBeer.name.replace("&#39;", "'").replace("&amp;", "&"),
+      type: apiBeer.type.replace("&#39;", "'").replace("&amp;", "&"),
       volume: apiBeer.volume_ml,
       alcoholPercentage: apiBeer.alcohol_vol,
       price: Math.round(+apiBeer.price_sek * 1.25),
