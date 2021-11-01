@@ -8,6 +8,7 @@ export const NewBeverageForm = ({
   newBeverage,
   setNewBeverage,
 }) => {
+  console.log(newBeverage);
   return (
     <form className="beverage-form">
       <div className="beverage-form__row">
@@ -86,11 +87,12 @@ export const NewBeverageForm = ({
             <textarea
               className="beverage-form__input beverage-form__textarea"
               name="ingredients"
-              value={newBeverage.ingredients.join("\r\n")}
+              placeholder="The ingredients of your drink. They should each be written on an own line"
+              value={newBeverage.ingredients.join("\n")}
               onChange={(e) =>
                 setNewBeverage({
                   ...newBeverage,
-                  ingredients: e.target.value.split("\r\n"),
+                  ingredients: e.target.value.split(/\r?\n/),
                 })
               }
             />
