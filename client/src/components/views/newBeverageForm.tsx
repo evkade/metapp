@@ -1,8 +1,10 @@
 import React from "react";
 import { beverageTypes } from "../../constants/searchTypes";
+import { beverageCardTypes } from "../../constants/beverageCardType";
 
 export const NewBeverageForm = ({
   customizedType,
+  beverageCardType,
   newBeverage,
   setNewBeverage,
 }) => {
@@ -15,6 +17,7 @@ export const NewBeverageForm = ({
           type="text"
           name="name"
           value={newBeverage.name}
+          disabled={beverageCardType === beverageCardTypes.ADMIN_MENU}
           onChange={(e) =>
             setNewBeverage({ ...newBeverage, name: e.target.value })
           }
@@ -24,7 +27,7 @@ export const NewBeverageForm = ({
         Price:
         <input
           className="beverage-form__input"
-          type="text"
+          type="number"
           name="price"
           value={newBeverage.price}
           onChange={(e) =>
@@ -50,7 +53,7 @@ export const NewBeverageForm = ({
             Volume:
             <input
               className="beverage-form__input"
-              type="text"
+              type="number"
               name="volume"
               value={newBeverage.volume}
               onChange={(e) =>
@@ -62,7 +65,9 @@ export const NewBeverageForm = ({
             Alcohol percentage:
             <input
               className="beverage-form__input"
-              type="text"
+              type="number"
+              min="0"
+              max="100"
               name="alcoholPercentage"
               value={newBeverage.alcoholPercentage}
               onChange={(e) =>
@@ -95,7 +100,7 @@ export const NewBeverageForm = ({
             Alcohol volume:
             <input
               className="beverage-form__input"
-              type="text"
+              type="number"
               name="alcoholVolume"
               value={newBeverage.alcoholVolume}
               onChange={(e) =>

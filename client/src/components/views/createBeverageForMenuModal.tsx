@@ -23,6 +23,7 @@ const CreateBeverageForMenuModal = ({
         <div className="modal__body">
           <NewBeverageFormPresenter
             customizedType={beverageType}
+            beverageCardType={beverageCardType}
             newBeverage={newBeverage}
             setNewBeverage={setNewBeverage}
           />
