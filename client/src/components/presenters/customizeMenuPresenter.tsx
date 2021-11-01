@@ -18,7 +18,7 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 import { Spinner } from "../views/spinner";
 
 // todo: add props types to all props
-import MenuModel from "../../model/drinkModel";
+import MenuModel from "../../model/menuModel";
 
 const menuModel = new MenuModel();
 

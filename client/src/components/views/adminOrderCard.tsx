@@ -3,7 +3,7 @@ import React from "react";
 const OrderCard = ({
   fullOrder,
   menu,
-  setDrinkDetail,
+  setBeverageDetail,
   setShowModal,
   made,
   paid,
@@ -39,7 +39,7 @@ const OrderCard = ({
         <p
           className="card-order__text card-order__text--title"
           onClick={() => {
-            setDrinkDetail(fullOrder);
+            setBeverageDetail(fullOrder);
             setShowModal(fullOrder);
           }}
         >

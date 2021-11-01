@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { addNewOrder } from "../../redux/actions/orders";
 import OrderModel from "../../model/orderModel";
-import AdminViewDrinkOrder from "../views/adminViewDrinkOrder";
-import MenuModel from "../../model/drinkModel";
+import { AdminViewOrder } from "../views/adminViewOrder";
+import MenuModel from "../../model/menuModel";
 import { Spinner } from "../views/spinner";
 
 const orderModel = new OrderModel();
 const menuModel = new MenuModel();
 
-const AdminViewDrinkOrdersPresenter = ({
+const AdminViewOrdersPresenter = ({
   socket,
   orders,
   makeOrder,
@@ -60,11 +60,11 @@ const AdminViewDrinkOrdersPresenter = ({
   };
 
   return (
-    <AdminViewDrinkOrder
+    <AdminViewOrder
       orders={orders.orders}
       menu={[...menu.beerMenu, ...menu.cocktailMenu]}
-      drinkMade={make}
-      drinkPaid={pay}
+      beverageMade={make}
+      beveragePaid={pay}
       cancel={cancel}
       loading={menu.loading || orders.loading}
       spinner={<Spinner bar={menu.currentBar} />}
@@ -102,4 +102,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminViewDrinkOrdersPresenter);
+)(AdminViewOrdersPresenter);

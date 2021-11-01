@@ -1,6 +1,6 @@
 import React from "react";
 import "../components.scss";
-import Drink from "./drinkView";
+import Beverage from "./beverageView";
 
 const OrderView = ({
   order,
@@ -18,12 +18,12 @@ const OrderView = ({
   history,
 }) => {
   return (
-    <div className="drink-list container--general">
+    <div className="beverage-list container--general">
       <div className="title-neon--big">Finish order</div>
-      <div className="drink-list__container">
+      <div className="beverage-list__container">
         {order.map((item, index) => {
           return (
-            <Drink
+            <Beverage
               key={index}
               item={item}
               itemType={null}
@@ -39,12 +39,12 @@ const OrderView = ({
           );
         })}
         {order.length == 0 && (
-          <div className="drink-list__row--white">
+          <div className="beverage-list__row--white">
             You haven't placed any orders.
           </div>
         )}
         {submittedOrder && (
-          <div className="drink-list__row--white">
+          <div className="beverage-list__row--white">
             Your order has been sent, go to your profile to see when it's ready
             to be picked up!
           </div>

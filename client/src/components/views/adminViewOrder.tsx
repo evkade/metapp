@@ -2,18 +2,18 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import OrderCard from "./adminOrderCard";
 
-const AdminViewDrinkOrder = ({
+export const AdminViewOrder = ({
   orders,
-  drinkMade,
-  drinkPaid,
+  beverageMade,
+  beveragePaid,
   menu,
   cancel,
   loading,
   spinner,
-  drinkDetail,
-  setDrinkDetail,
-  showDrinkDetailModal,
-  setShowDrinkDetailModal,
+  beverageDetail,
+  setBeverageDetail,
+  showBeverageDetailModal,
+  setShowBeverageDetailModal,
   collapseInfo,
   setCollapseInfo,
 }) => {
@@ -25,18 +25,18 @@ const AdminViewDrinkOrder = ({
     );
   };
 
-  const drinkDetailModal = () => {
+  const BeverageDetailModal = () => {
     return (
       <Modal
-        show={showDrinkDetailModal}
-        onHide={() => setShowDrinkDetailModal(false)}
+        show={showBeverageDetailModal}
+        onHide={() => setShowBeverageDetailModal(false)}
         centered
       >
         <Modal.Header>
           <Modal.Title>Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {drinkDetail.order.map((b) => getBeverageDetail(b))}
+          {beverageDetail.order.map((b) => getBeverageDetail(b))}
         </Modal.Body>
       </Modal>
     );
@@ -99,10 +99,10 @@ const AdminViewDrinkOrder = ({
                           key={index}
                           fullOrder={b}
                           menu={menu}
-                          setDrinkDetail={setDrinkDetail}
-                          setShowModal={setShowDrinkDetailModal}
-                          made={drinkMade}
-                          paid={drinkPaid}
+                          setBeverageDetail={setBeverageDetail}
+                          setShowModal={setShowBeverageDetailModal}
+                          made={beverageMade}
+                          paid={beveragePaid}
                           cancel={cancel}
                         />
                       );
@@ -128,10 +128,10 @@ const AdminViewDrinkOrder = ({
                           key={index}
                           fullOrder={order}
                           menu={menu}
-                          setDrinkDetail={setDrinkDetail}
-                          setShowModal={setShowDrinkDetailModal}
-                          made={drinkMade}
-                          paid={drinkPaid}
+                          setBeverageDetail={setBeverageDetail}
+                          setShowModal={setShowBeverageDetailModal}
+                          made={beverageMade}
+                          paid={beveragePaid}
                           cancel={cancel}
                         />
                       );
@@ -141,9 +141,9 @@ const AdminViewDrinkOrder = ({
           </>
         )}
       </div>
-      {drinkDetail && drinkDetailModal()}
+      {beverageDetail && BeverageDetailModal()}
     </>
   );
 };
 
-export default AdminViewDrinkOrder;
+export default AdminViewOrder;

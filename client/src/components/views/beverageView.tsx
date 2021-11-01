@@ -4,7 +4,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PlaceholderImage from "../images/stockphoto_placeholder.jpg";
 import { beverageTypes } from "../../constants/searchTypes";
 
-const Drink = ({
+const BeverageView = ({
   item,
   index,
   itemType,
@@ -17,10 +17,13 @@ const Drink = ({
   menuDisplay,
 }) => {
   return (
-    <div key={index} className="drink-list__row drink-list__row--constrained">
+    <div
+      key={index}
+      className="beverage-list__row beverage-list__row--constrained"
+    >
       {menuDisplay && (
         <>
-          <div className="drink-list__star">
+          <div className="beverage-list__star">
             <FontAwesomeIcon
               id={`starIcon${item.name}`}
               icon={faStar}
@@ -32,13 +35,13 @@ const Drink = ({
               }
             />
           </div>
-          <img src={PlaceholderImage} className="drink-list__image" />
+          <img src={PlaceholderImage} className="beverage-list__image" />
         </>
       )}
-      <div className="drink-list__column drink-list__column--flexed drink-list__column--small">
+      <div className="beverage-list__column beverage-list__column--flexed beverage-list__column--small">
         {item.name}
       </div>
-      <div className="drink-list__column drink-list__column--flexed">
+      <div className="beverage-list__column beverage-list__column--flexed">
         {item.price} SEK{" "}
         {menuDisplay && (
           <>
@@ -49,7 +52,7 @@ const Drink = ({
           </>
         )}
       </div>
-      <div className="drink-list__buttons">
+      <div className="beverage-list__buttons">
         {menuDisplay ? (
           <>
             <button
@@ -61,8 +64,8 @@ const Drink = ({
             <span
               className={
                 count > 0
-                  ? "drink-list__count drink-list__count--chosen"
-                  : "drink-list__count"
+                  ? "beverage-list__count beverage-list__count--chosen"
+                  : "beverage-list__count"
               }
             >
               {" "}
@@ -83,4 +86,4 @@ const Drink = ({
   );
 };
 
-export default Drink;
+export default BeverageView;

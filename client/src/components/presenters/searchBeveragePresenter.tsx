@@ -3,7 +3,7 @@ import { SearchBeverage } from "../views/searchBeverage";
 import { InformationPopUp } from "../views/informationPopUp";
 import usePromise from "../../hooks/usePromise";
 import { beverageTypes, searchTypes } from "../../constants/searchTypes";
-import MenuModel from "../../model/drinkModel";
+import MenuModel from "../../model/menuModel";
 import { Beverage, Beer, Cocktail } from "../../constants/beverageObjects";
 import { baseBeer, baseCocktail } from "../../constants/beverageObjects";
 import { beverageCardTypes } from "../../constants/beverageCardType";

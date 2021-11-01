@@ -47,8 +47,8 @@ const EntryView = ({ history, modalOpen, setModalOpen }) => {
               <p>
                 When you place an order, it is sent to the bar personell which
                 will handle your order and mark it as ready for pick up. It
-                couldn't be easier! If you like the drinks you ordered, you can
-                mark them as favorites for future bar nights.
+                couldn't be easier! If you like the beverages you ordered, you
+                can mark them as favorites for future bar nights.
               </p>
               <p>
                 METAPP is a project made by George Basillious, Eva Despinoy,

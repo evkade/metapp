@@ -12,9 +12,9 @@ import { connect } from "react-redux";
 import EntryPresenter from "./components/presenters/entryPresenter";
 import CustomizeMenuPresenter from "./components/presenters/customizeMenuPresenter";
 import HandleUserLogIn from "./components/presenters/handleUserLogIn";
-import AdminViewDrinkOrdersPresenter from "./components/presenters/adminViewDrinkOrdersPresenter";
 import HandleUserSignUp from "./components/presenters/handleUserSignUp";
 import NavbarPresenter from "./components/presenters/navbarPresenter";
+import AdminViewOrdersPresenter from "./components/presenters/adminViewOrdersPresenter";
 import userMenuPresenter from "./components/presenters/userMenuPresenter";
 import userProfilePresenter from "./components/presenters/userProfilePresenter";
 import orderPresenter from "./components/presenters/orderPresenter";
@@ -95,7 +95,7 @@ const RoutingApp = ({ socket, user, checkValidUser }) => {
         <AdminRoute
           exact
           path="/vieworders"
-          component={AdminViewDrinkOrdersPresenter}
+          component={AdminViewOrdersPresenter}
           socket={socket}
           user={user}
         />
