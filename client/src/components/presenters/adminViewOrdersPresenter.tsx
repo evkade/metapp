@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { addNewOrder } from "../../redux/actions/orders";
 import OrderModel from "../../model/orderModel";
-import AdminViewDrinkOrder from "../views/adminViewDrinkOrder";
-import MenuModel from "../../model/drinkModel";
+import { AdminViewOrder } from "../views/adminViewOrder";
+import MenuModel from "../../model/menuModel";
 import { Spinner } from "../views/spinner";
 
 const orderModel = new OrderModel();
 const menuModel = new MenuModel();
 
-const AdminViewDrinkOrdersPresenter = ({
+const AdminViewOrdersPresenter = ({
   socket,
   orders,
   makeOrder,
@@ -21,8 +21,8 @@ const AdminViewDrinkOrdersPresenter = ({
   getBeerHistory,
   getCocktailHistory,
 }) => {
-  const [drinkDetail, setDrinkDetail] = useState(null);
-  const [showDrinkDetailModal, setShowDrinkDetailModal] = useState(false);
+  const [beverageDetail, setBeverageDetail] = useState(null);
+  const [showBeverageDetailModal, setShowBeverageDetailModal] = useState(false);
   const [collapseInfo, setCollapseInfo] = useState({
     row1: "-",
     row2: "+",
@@ -60,18 +60,18 @@ const AdminViewDrinkOrdersPresenter = ({
   };
 
   return (
-    <AdminViewDrinkOrder
+    <AdminViewOrder
       orders={orders.orders}
       menu={[...menu.beerMenu, ...menu.cocktailMenu]}
-      drinkMade={make}
-      drinkPaid={pay}
+      beverageMade={make}
+      beveragePaid={pay}
       cancel={cancel}
       loading={menu.loading || orders.loading}
       spinner={<Spinner bar={menu.currentBar} />}
-      drinkDetail={drinkDetail}
-      setDrinkDetail={setDrinkDetail}
-      showDrinkDetailModal={showDrinkDetailModal}
-      setShowDrinkDetailModal={setShowDrinkDetailModal}
+      beverageDetail={beverageDetail}
+      setBeverageDetail={setBeverageDetail}
+      showBeverageDetailModal={showBeverageDetailModal}
+      setShowBeverageDetailModal={setShowBeverageDetailModal}
       collapseInfo={collapseInfo}
       setCollapseInfo={setCollapseInfo}
     />
@@ -102,4 +102,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminViewDrinkOrdersPresenter);
+)(AdminViewOrdersPresenter);

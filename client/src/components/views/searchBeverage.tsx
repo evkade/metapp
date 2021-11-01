@@ -4,10 +4,6 @@ import { Beverage } from "../../constants/beverageObjects";
 import BeverageCard from "./beverageCard";
 import { beverageCardTypes } from "../../constants/beverageCardType";
 
-// todo: lägga till en bättre loading
-// todo: lägga till finns grej när searchResults är tom
-// todo: fixa beer strängarna då man får konstiga tecknen tex: Abbaye D&#39;aulne Christmas Triple Ale
-
 export const SearchBeverage = ({
   searchBeverage,
   searchResult,
@@ -61,7 +57,7 @@ export const SearchBeverage = ({
       >
         Create
       </button>
-      <div className="drink-list__container--grey drink-list__container--grey-full">
+      <div className="beverage-list__container--grey beverage-list__container--grey-full">
         {!isLoading && searchResult.length > 0 ? (
           searchResult.map((beverage: Beverage, index: number) => (
             <BeverageCard

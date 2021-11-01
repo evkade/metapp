@@ -107,14 +107,14 @@ const BeverageCard = ({
   };
 
   return (
-    <div key={index} className="drink-list__row">
-      <div className="drink-list__column drink-list__column--black">
+    <div key={index} className="beverage-list__row">
+      <div className="beverage-list__column beverage-list__column--black">
         {beverage.name}
       </div>
-      <div className="drink-list__column drink-list__column--black drink-list__column--flexed">
+      <div className="beverage-list__column beverage-list__column--black beverage-list__column--flexed">
         {information()}
       </div>
-      <div className="drink-list__column drink-list__column--black drink-list__column--flexed">
+      <div className="beverage-list__column beverage-list__column--black beverage-list__column--flexed">
         {buttons()}
       </div>
     </div>

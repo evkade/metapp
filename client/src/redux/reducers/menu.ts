@@ -1,6 +1,6 @@
 import { getTypeOfBeverage } from "../../constants/searchTypes";
 import { beverageTypes } from "../../constants/searchTypes";
-import MenuModel from "../../model/drinkModel";
+import MenuModel from "../../model/menuModel";
 
 const initialState = {
   loading: false,

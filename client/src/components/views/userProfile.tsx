@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 
 import GeneralFavoriteCard from "./generalFavoriteCard";
@@ -20,31 +19,27 @@ const UserProfile = ({
       ) : (
         <>
           <div className="title-neon--big">{username}</div>
-          <div className="info-card-drink">
-            <div className="info-card-drink__title">Current orders</div>
-            <div className="info-card-drink__container--scroll">
+          <div className="info-card-beverage">
+            <div className="info-card-beverage__title">Current orders</div>
+            <div className="info-card-beverage__container--scroll">
               {orders
                 .filter((o) => !o.paid && !o.cancelled)
                 .map((order) => (
-                  <div className="info-card-drink__row" key={order.id}>
-                    <div className="info-card-drink__column info-card-drink__column--small">
-
+                  <div className="info-card-beverage__row" key={order.id}>
+                    <div className="info-card-beverage__column info-card-beverage__column--small">
                       {/** TODO make modular */}
                       {order.order.map((orderDetail, index) => {
                         const length = order.order.length;
                         if (index === length - 1) {
                           return (
                             <div key={index}>
-
                               {" "}
                               {orderDetail.quantity} {orderDetail.beverage}
                             </div>
                           );
                         } else {
                           return (
-
-                           <div key={index}>
-
+                            <div key={index}>
                               {" "}
                               {orderDetail.quantity} {orderDetail.beverage},
                             </div>
@@ -52,17 +47,16 @@ const UserProfile = ({
                         }
                       })}
                     </div>
-                    <div className="info-card-drink__column info-card-drink__column--right">
-
+                    <div className="info-card-beverage__column info-card-beverage__column--right">
                       {order.made ? "PICK UP!" : "NOT READY"}
                     </div>
                   </div>
                 ))}
             </div>
           </div>
-          <div className="info-card-drink">
-            <div className="info-card-drink__title">Previous Orders</div>
-            <div className="info-card-drink__container--scroll">
+          <div className="info-card-beverage">
+            <div className="info-card-beverage__title">Previous Orders</div>
+            <div className="info-card-beverage__container--scroll">
               {orders && orders.length > 0 ? (
                 orders
                   .filter((o) => (o.made && o.paid) || o.cancelled)
@@ -76,8 +70,8 @@ const UserProfile = ({
                   })
                   .map((order) => {
                     return (
-                      <div className="info-card-drink__row" key={order.id}>
-                        <div className="info-card-drink__column--flex">
+                      <div className="info-card-beverage__row" key={order.id}>
+                        <div className="info-card-beverage__column--flex">
                           {order.cancelled ? (
                             "CANCELLED"
                           ) : order.bar === "dkm" ? (
@@ -86,10 +80,10 @@ const UserProfile = ({
                             <img src={mkmlogo} width="20px" />
                           )}
                         </div>
-                        <div className="info-card-drink__column--flex">
+                        <div className="info-card-beverage__column--flex">
                           <b>{order.date}</b>
                         </div>
-                        <div className="info-card-drink__column info-card-drink__column--small">
+                        <div className="info-card-beverage__column info-card-beverage__column--small">
                           {order.order.map((orderDetail, index) => {
                             const length = order.order.length;
                             if (index === length - 1) {
@@ -113,8 +107,8 @@ const UserProfile = ({
                     );
                   })
               ) : (
-                <div className="info-card-drink__row">
-                  <div className="info-card-drink__column--flex">
+                <div className="info-card-beverage__row">
+                  <div className="info-card-beverage__column--flex">
                     You haven't placed any orders.
                   </div>
                 </div>

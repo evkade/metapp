@@ -1,6 +1,6 @@
 import React from "react";
 import { Beverage } from "../../constants/beverageObjects";
-import Drink from "./drinkView";
+import BeverageView from "./beverageView";
 import { beverageTypes } from "../../constants/searchTypes";
 
 const UserMenu = ({
@@ -18,13 +18,13 @@ const UserMenu = ({
   spinner,
 }) => {
   return (
-    <div className="drink-list container--general">
+    <div className="beverage-list container--general">
       {loading ? (
         spinner
       ) : (
         <>
           <div className="title-neon--big">Menu</div>
-          <div className="drink-list__container">
+          <div className="beverage-list__container">
             <div className="beverage-type"> Beers </div>
             {beerMenu &&
               beerMenu.map((item: Beverage, index: number) => {
@@ -37,7 +37,7 @@ const UserMenu = ({
                 }
                 const favoriteBool: Boolean = isfavorite(item.name);
                 return (
-                  <Drink
+                  <BeverageView
                     item={item}
                     key={index}
                     index={index}
@@ -71,7 +71,7 @@ const UserMenu = ({
                 }
                 const favoriteBool: Boolean = isfavorite(item.name);
                 return (
-                  <Drink
+                  <BeverageView
                     item={item}
                     key={index}
                     index={index}
@@ -95,7 +95,7 @@ const UserMenu = ({
           </div>
           {orderItems.length > 0 && (
             <button
-              className="drink-list__button"
+              className="beverage-list__button"
               onClick={() => placeUnFinishedOrder()}
             >
               Place order <br />

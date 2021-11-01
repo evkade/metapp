@@ -7,7 +7,7 @@ import {
 } from "../../redux/actions/user";
 import { useHistory } from "react-router-dom";
 import UserMenu from "../views/userMenu";
-import MenuModel from "../../model/drinkModel";
+import MenuModel from "../../model/menuModel";
 import { Spinner } from "../views/spinner";
 import FavoriteModel from "../../model/favoriteModel";
 

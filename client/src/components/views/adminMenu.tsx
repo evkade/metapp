@@ -6,7 +6,7 @@ import { beverageCardTypes } from "../../constants/beverageCardType";
 const AdminMenu = ({ menu, removeFromMenu, editInMenu, openModal }) => {
   return (
     <div className="container--centered">
-      <div className="drink-list__container--grey drink-list__container--grey-full">
+      <div className="beverage-list__container--grey beverage-list__container--grey-full">
         {menu.map((beverage: Beverage, index: number) => (
           <BeverageCard
             key={index}
