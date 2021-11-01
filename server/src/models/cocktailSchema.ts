@@ -9,7 +9,7 @@ const CocktailSchema = new mongoose.Schema({
         maxlength: [50, "Cocktail name can not more than 50 characters"],
     },
     active: {
-        type: String,
+        type: Boolean,
         required: [true, "Please enter whether the cocktail is active"],
     },
     price: {
