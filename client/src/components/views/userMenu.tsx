@@ -18,13 +18,13 @@ const UserMenu = ({
   spinner,
 }) => {
   return (
-    <div className="-list container--general">
+    <div className="beverage-list container--general">
       {loading ? (
         spinner
       ) : (
         <>
           <div className="title-neon--big">Menu</div>
-          <div className="-list__container">
+          <div className="beverage-list__container">
             <div className="beverage-type"> Beers </div>
             {beerMenu &&
               beerMenu.map((item: Beverage, index: number) => {
@@ -95,7 +95,7 @@ const UserMenu = ({
           </div>
           {orderItems.length > 0 && (
             <button
-              className="-list__button"
+              className="beverage-list__button"
               onClick={() => placeUnFinishedOrder()}
             >
               Place order <br />
