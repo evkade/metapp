@@ -1,11 +1,10 @@
-import { Beverage, Beer, Cocktail } from "../constants/beverageObjects";
+import { Beer, Cocktail } from "../constants/beverageObjects";
 import {
   fetchRequest,
   setBeerHistory,
   setCocktailHistory,
 } from "../redux/actions/menu";
 
-// todo maybe change name of this
 export default class MenuModel {
   getBeerHistory(currentBar) {
     return (dispatch) => {
@@ -37,8 +36,6 @@ export default class MenuModel {
     };
   }
 
-
-
   async postBeerToDatabase(beer: Beer, currentBar, active: boolean) {
     const beerObjectForAPI = {
       name: beer.name,
@@ -46,7 +43,7 @@ export default class MenuModel {
       price: beer.price,
       percentage: beer.alcoholPercentage,
       beerType: beer.type,
-      volume: beer.volume
+      volume: beer.volume,
     };
 
     const response = await fetch(
@@ -66,7 +63,6 @@ export default class MenuModel {
     });
   }
 
-  // todo: harmonisera beverage objects med databasen
   async postCocktailToDatabase(
     cocktail: Cocktail,
     currentBar,
@@ -78,7 +74,7 @@ export default class MenuModel {
       price: cocktail.price,
       ingredients: cocktail.ingredients,
       alcoholVolume: cocktail.alcoholVolume,
-      description: "", // todo: finns ej i cocktail object
+      description: cocktail.description,
     };
 
     const response = await fetch(
@@ -177,6 +173,7 @@ export default class MenuModel {
       price: 0,
       alcoholVolume: 0,
       ingredients: ingredientList,
+      description: "",
     };
 
     return cocktail;

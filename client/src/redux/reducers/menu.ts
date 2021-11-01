@@ -64,6 +64,7 @@ const menuReducer = (state = initialState, action) => {
           alcoholVolume: databaseCocktail.alcoholVolume,
           price: databaseCocktail.price,
           ingredients: databaseCocktail.ingredients,
+          description: databaseCocktail.description,
         }))
         .sort(menuModel.compare);
       const cocktailMenu = action.payload
@@ -73,6 +74,7 @@ const menuReducer = (state = initialState, action) => {
           alcoholVolume: databaseCocktail.alcoholVolume,
           price: databaseCocktail.price,
           ingredients: databaseCocktail.ingredients,
+          description: databaseCocktail.description,
         }))
         .sort(menuModel.compare);
       return {

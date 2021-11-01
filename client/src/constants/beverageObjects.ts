@@ -12,6 +12,7 @@ export interface Beer extends Beverage {
 export interface Cocktail extends Beverage {
   ingredients: string[];
   alcoholVolume: number;
+  description: string;
 }
 
 export interface Menu {
@@ -52,4 +53,5 @@ export const baseCocktail: Cocktail = {
   price: 0,
   alcoholVolume: 0,
   ingredients: [],
+  description: "",
 };

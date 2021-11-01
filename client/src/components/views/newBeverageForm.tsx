@@ -6,6 +6,7 @@ export const NewBeverageForm = ({
   newBeverage,
   setNewBeverage,
 }) => {
+  console.log(newBeverage);
   return (
     <form className="beverage-form">
       <div className="beverage-form__row">
@@ -21,7 +22,7 @@ export const NewBeverageForm = ({
         />
       </div>
       <div className="beverage-form__row">
-        Price:
+        Price (SEK):
         <input
           className="beverage-form__input"
           type="text"
@@ -47,7 +48,7 @@ export const NewBeverageForm = ({
             />
           </div>
           <div className="beverage-form__row">
-            Volume:
+            Volume (ml):
             <input
               className="beverage-form__input"
               type="text"
@@ -92,7 +93,7 @@ export const NewBeverageForm = ({
             />
           </div>
           <div className="beverage-form__row">
-            Alcohol volume:
+            Alcohol volume (cl):
             <input
               className="beverage-form__input"
               type="text"
@@ -102,6 +103,21 @@ export const NewBeverageForm = ({
                 setNewBeverage({
                   ...newBeverage,
                   alcoholVolume: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="beverage-form__row">
+            Description:
+            <input
+              className="beverage-form__input"
+              type="text"
+              name="description"
+              value={newBeverage.description}
+              onChange={(e) =>
+                setNewBeverage({
+                  ...newBeverage,
+                  description: e.target.value,
                 })
               }
             />
