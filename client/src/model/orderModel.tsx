@@ -26,8 +26,7 @@ export default class OrderModel {
           else throw new Error("Could not fetch orders");
         })
         .then((orders) => dispatch(setOrders(orders)))
-        // TODO show to user, not in console
-        .catch((err) => console.log(err));
+        .catch((err) => window.alert(err.message));
     };
   }
 
@@ -48,8 +47,7 @@ export default class OrderModel {
             socket.emit("made", { id: orderId, timestamp: time });
           } else throw new Error("Could not make order");
         })
-        // TODO show to user, not in console
-        .catch((err) => console.log(err));
+        .catch((err) => window.alert(err.message));
     };
   }
 
@@ -70,8 +68,7 @@ export default class OrderModel {
             socket.emit("paid", { id: orderId, timestamp: time });
           } else throw new Error("Could not pay for order");
         })
-        // TODO show to user, not in console
-        .catch((err) => console.log(err));
+        .catch((err) => window.alert(err.message));
     };
   }
 
@@ -106,8 +103,7 @@ export default class OrderModel {
           dispatch(addNewOrder({ ...result, user: user.username }));
           socket.emit("orderPlaced", { ...result, user: user.username });
         })
-        // TODO show to user, not in console
-        .catch((err: Error) => console.log(err));
+        .catch((err: Error) => window.alert(err.message));
     };
   }
 
@@ -122,8 +118,7 @@ export default class OrderModel {
           else throw new Error("Could not get user's orders");
         })
         .then((orders) => dispatch(setUserOrders(orders)))
-        // TODO show to user, not in console
-        .catch((err) => console.log(err));
+        .catch((err) => window.alert(err.message));
     };
   }
 
@@ -143,8 +138,7 @@ export default class OrderModel {
             socket.emit("cancelled", orderId);
           } else throw new Error("Could not cancel order");
         })
-        // TODO show to user, not in console
-        .catch((err) => console.log(err));
+        .catch((err) => window.alert(err.message));
     };
   }
 }

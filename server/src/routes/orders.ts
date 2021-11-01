@@ -21,7 +21,6 @@ router.get(
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
 
-    console.log(req.query.currentbar);
     const orders = await getOrders(req.query.currentbar);
 
     res.status(200).send({ orders: orders });
@@ -35,7 +34,6 @@ router.post(
     if (!req.currentUser) {
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
-    console.log("addOrder ", req.body);
 
     const order = await addOrder(req.body);
 
@@ -51,7 +49,6 @@ router.post(
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
 
-    console.log("makeDink ", req.body);
     await makeBeverage(req.body.id, req.body.timestamp);
 
     res.sendStatus(200);
@@ -66,7 +63,6 @@ router.post(
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
 
-    console.log("payDrink ", req.body);
     await payForBeverage(req.body.id, req.body.timestamp);
 
     res.sendStatus(200);
@@ -81,7 +77,6 @@ router.post(
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
 
-    console.log("cancelOrder ", req.body);
     await cancelOrder(req.body.id);
 
     res.sendStatus(200);

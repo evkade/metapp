@@ -13,8 +13,8 @@ import { cocktailRouter } from "./routes/cocktail";
 import { userRouter } from "./routes/user";
 import { menuRouter } from "./routes/menu";
 import { orderRouter } from "./routes/orders";
-import { favoriteRouter } from "./routes/favorites"
-import { errorHandler } from './services/error-handler/errorHandler';
+import { favoriteRouter } from "./routes/favorites";
+import { errorHandler } from "./services/error-handler/errorHandler";
 
 const socket = require("socket.io");
 const bp = require("body-parser");
@@ -85,7 +85,6 @@ app.use(menuRouter);
 app.use(favoriteRouter);
 
 app.get("/", (req, res) => {
-  console.log("received request");
   res.send("Express + TypeScript Server");
 });
 
