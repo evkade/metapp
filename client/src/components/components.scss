@@ -97,6 +97,9 @@ body {
   &__input:hover {
     background-color: lightgrey;
   }
+  &__textarea {
+    height: 50px;
+  }
 }
 
 .container--centered {
