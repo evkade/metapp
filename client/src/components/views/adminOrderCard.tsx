@@ -40,7 +40,7 @@ const OrderCard = ({
           className="card-order__text card-order__text--title"
           onClick={() => {
             setBeverageDetail(fullOrder);
-            setShowModal(fullOrder);
+            setShowModal(true);
           }}
         >
           {fullOrder.order.length > 1
