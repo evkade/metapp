@@ -21,8 +21,8 @@ const AdminViewOrdersPresenter = ({
   getBeerHistory,
   getCocktailHistory,
 }) => {
-  const [drinkDetail, setDrinkDetail] = useState(null);
-  const [showDrinkDetailModal, setShowDrinkDetailModal] = useState(false);
+  const [beverageDetail, setBeverageDetail] = useState(null);
+  const [showBeverageDetailModal, setShowBeverageDetailModal] = useState(false);
   const [collapseInfo, setCollapseInfo] = useState({
     row1: "-",
     row2: "+",
@@ -68,10 +68,10 @@ const AdminViewOrdersPresenter = ({
       cancel={cancel}
       loading={menu.loading || orders.loading}
       spinner={<Spinner bar={menu.currentBar} />}
-      drinkDetail={drinkDetail}
-      setDrinkDetail={setDrinkDetail}
-      showDrinkDetailModal={showDrinkDetailModal}
-      setShowDrinkDetailModal={setShowDrinkDetailModal}
+      beverageDetail={beverageDetail}
+      setBeverageDetail={setBeverageDetail}
+      showBeverageDetailModal={showBeverageDetailModal}
+      setShowBeverageDetailModal={setShowBeverageDetailModal}
       collapseInfo={collapseInfo}
       setCollapseInfo={setCollapseInfo}
     />
