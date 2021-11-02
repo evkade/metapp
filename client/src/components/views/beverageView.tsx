@@ -28,7 +28,7 @@ const BeverageView = ({
               id={`starIcon${item.name}`}
               icon={faStar}
               className={`fa-2x ${
-                isfavorite ? "drink-list__star--active" : ""
+                isfavorite ? "beverage-list__star--active" : ""
               }`}
               onClick={() =>
                 isfavorite ? removeFavorite(item.name) : addFavorite(item.name)
