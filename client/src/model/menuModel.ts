@@ -17,8 +17,7 @@ export default class MenuModel {
           else throw new Error("Could not get beers");
         })
         .then((data) => dispatch(setBeerHistory(data)))
-        // TODO show to user, not in console
-        .catch((err) => console.log(err));
+        .catch((err) => window.alert(err.message));
     };
   }
 
@@ -31,8 +30,7 @@ export default class MenuModel {
           else throw new Error("Could not get cocktails");
         })
         .then((data) => dispatch(setCocktailHistory(data)))
-        // TODO show to user, not in console
-        .catch((err) => console.log(err));
+        .catch((err) => window.alert(err.message));
     };
   }
 
@@ -46,21 +44,19 @@ export default class MenuModel {
       volume: beer.volume,
     };
 
-    const response = await fetch(
-      "http://localhost:5000/api/beer?currentbar=" + currentBar,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(beerObjectForAPI),
-        credentials: "include",
-      }
-    );
-    // TODO what should be done here? Anything?
-    response.json().then((data) => {
-      //console.log(data);
-    });
+
+    await fetch("http://localhost:5000/api/beer?currentbar=" + currentBar, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(beerObjectForAPI),
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Could not save beer");
+      })
+      .catch((err) => window.alert(err.message));
   }
 
   async postCocktailToDatabase(
@@ -77,21 +73,19 @@ export default class MenuModel {
       description: cocktail.description,
     };
 
-    const response = await fetch(
-      "http://localhost:5000/api/cocktail?currentbar=" + currentBar,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(cocktailbjectForAPI),
-        credentials: "include",
-      }
-    );
-    // TODO what should be done here? Anything?
-    response.json().then((data) => {
-      //console.log(data);
-    });
+
+    await fetch("http://localhost:5000/api/cocktail?currentbar=" + currentBar, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cocktailbjectForAPI),
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Could not save cocktail");
+      })
+      .catch((err) => window.alert(err.message));
   }
 
   // call to external API
@@ -100,8 +94,7 @@ export default class MenuModel {
       "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + name
     )
       .then((data) => data)
-      // TODO show to user, not in console
-      .catch((err) => console.log(err));
+      .catch((err) => window.alert(err.message));
     return cocktails;
   }
 
@@ -111,8 +104,7 @@ export default class MenuModel {
       name: name,
     })
       .then((data) => data)
-      // TODO show to user, not in console
-      .catch((err) => console.log(err));
+      .catch((err) => window.alert(err.message));
     return beers;
   }
 
@@ -121,7 +113,7 @@ export default class MenuModel {
       method: "GET",
     }).then((response) => {
       if (response.ok) return response.json();
-      else throw new Error("Could not GET");
+      else throw new Error("Something went wrong.");
     });
   }
 
@@ -134,14 +126,14 @@ export default class MenuModel {
       body: JSON.stringify(data),
     }).then((response) => {
       if (response.ok) return response.json();
-      else throw new Error("Could not POST");
+      else throw new Error("Something went wrong");
     });
   }
 
   setAPIBeerToObject(apiBeer): Beer {
     const beer: Beer = {
-      name: apiBeer.name.replace("&#39;", "'"),
-      type: apiBeer.type,
+      name: apiBeer.name.replace("&#39;", "'").replace("&amp;", "&"),
+      type: apiBeer.type.replace("&#39;", "'").replace("&amp;", "&"),
       volume: apiBeer.volume_ml,
       alcoholPercentage: apiBeer.alcohol_vol,
       price: Math.round(+apiBeer.price_sek * 1.25),

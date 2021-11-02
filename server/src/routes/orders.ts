@@ -27,6 +27,7 @@ router.get(
     } catch (error) {
       next(new ErrorException(ErrorCode.badRequest))
     }
+
   }
 );
 
@@ -37,8 +38,10 @@ router.post(
     if (!req.currentUser) {
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
+
     try {
       const order = await addOrder(req.body);
+
 
       res.status(201).send(order);
     }
@@ -62,6 +65,7 @@ router.post(
     catch (error) {
       next(new ErrorException(ErrorCode.badRequest))
     }
+
   }
 );
 
@@ -74,12 +78,12 @@ router.post(
     }
     try {
       await payForBeverage(req.body.id, req.body.timestamp);
-
       res.sendStatus(200);
     }
     catch (error) {
       next(new ErrorException(ErrorCode.badRequest))
     }
+
   }
 );
 
@@ -92,7 +96,6 @@ router.post(
     }
     try {
       await cancelOrder(req.body.id);
-
       res.sendStatus(200);
 
     } catch (error) {

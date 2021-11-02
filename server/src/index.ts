@@ -13,8 +13,8 @@ import { cocktailRouter } from "./routes/cocktail";
 import { userRouter } from "./routes/user";
 import { menuRouter } from "./routes/menu";
 import { orderRouter } from "./routes/orders";
-import { favoriteRouter } from "./routes/favorites"
-import { errorHandler } from './services/error-handler/errorHandler';
+import { favoriteRouter } from "./routes/favorites";
+import { errorHandler } from "./services/error-handler/errorHandler";
 
 const socket = require("socket.io");
 const bp = require("body-parser");

@@ -387,6 +387,7 @@ body {
     justify-content: space-between;
   }
   @at-root #{&}__title {
+    font-size: 18px;
     margin: 0;
   }
   @at-root #{&}__body {
@@ -565,8 +566,9 @@ body {
   }
 
   @at-root #{&}__button--info {
+    background: white;
     position: fixed;
-    bottom: 60px;
+    bottom: 10px;
     right: 19px;
     border-radius: 7px;
   }
