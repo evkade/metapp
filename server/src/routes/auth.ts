@@ -30,30 +30,38 @@ router.post(
   ],
   async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body;
-    //@ts-ignore
-    const { user, token } = await AuthService.logIn(username, password).catch(
-      (err) => {
-        req.session = null;
-        next(err);
-      }
-    );
 
-    if (user === undefined) {
-      next(new ErrorException(ErrorCode.WrongCredentials));
-    } else if (user === null) {
-      next(new ErrorException(ErrorCode.UserNotFound));
-    } else {
-      req.session = {
-        jwt: token,
-      };
-      res.status(200).send({
-        id: user._id,
-        name: user.username,
-        credential: user.credentials,
-      });
+    try {
+      //@ts-ignore
+      const { user, token } = await AuthService.logIn(username, password).catch(
+        (err) => {
+          req.session = null;
+          next(new ErrorException(ErrorCode.WrongCredentials));
+        }
+      );
+
+
+      if (user === undefined) {
+        next(new ErrorException(ErrorCode.WrongCredentials));
+      } else if (user === null) {
+        next(new ErrorException(ErrorCode.UserNotFound));
+      } else {
+        req.session = {
+          jwt: token,
+        };
+        res.status(200).send({
+          id: user._id,
+          name: user.username,
+          credential: user.credentials,
+        });
+      }
     }
-  }
-);
+
+    catch (error) {
+      next(new ErrorException(ErrorCode.WrongCredentials));
+    }
+
+  });
 
 router.post(
   "/api/auth/signup",
@@ -81,7 +89,7 @@ router.post(
 
 router.post("/api/auth/signout", (req, res) => {
   req.session = null;
-  res.sendStatus(200);
+  res.sendStatus(204);
 });
 
 export { router as authRouter };

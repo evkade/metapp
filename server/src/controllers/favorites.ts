@@ -13,8 +13,15 @@ interface elementType {
 }
 
 export async function getfavorites(userid: String) {
-    let person = await UserModel.findOne({ _id: userid }).populate({ path: 'favorites.logId', select: '-__v ' });
-    if (person !== null) {
+    try {
+        let person = await UserModel.findOne({ _id: userid })
+            .populate({ path: 'favorites.logId', select: '-__v ' })
+            .catch(err => { throw err });
+
+        if (person === null) {
+            return null;
+        }
+
         const elem: Array<elementType> = person.favorites.map((element: any) => {
             return ({
                 "beverage": element.logId,
@@ -22,13 +29,13 @@ export async function getfavorites(userid: String) {
                 "beverage_type": element.logType.substring(4, element.logType.length).toLowerCase(),
             })
         })
-
         return elem
-    }
-    else {
-        return null;
+
+    } catch (error) {
+        throw (error)
     }
 }
+
 
 export async function getfavoritesByPub(userid: String, pub: String) {
     let person = await UserModel.findOne({ _id: userid }).populate({ path: 'favorites.logId', select: '-__v -_id' });
@@ -62,33 +69,32 @@ export async function addFavoriteById(userid: String, object: { name: String, be
     const model = await checkInDB(object.bar, object.beverage_type)
 
 
+    try {
+        // @ts-ignore
+        const logId: Beer | Cocktail = await model.findOne(
+            { name: object.name }).exec().catch(err => { throw err })
 
-    // @ts-ignore
-    const logId: Beer = await model.findOne(
-        { name: object.name },
-        (err: Error, beverageDoc: any) => {
-            if (err) console.log(err);
-            else return beverageDoc;
-        } //@ts-ignore
-    ).clone();
-
-    if (!(model.findById(logId._id).count().exec())) {
-        return undefined
-    }
-    else if (await checkExist(userid, logId._id)) {
-        return null
-    }
-    else {
-
-        const insertFavorite = {
-            logId: logId._id,
-            logType: modela
+        if (!(model.findById(logId._id).count().exec())) {
+            return undefined
         }
-        let userDoc = await UserModel.findOneAndUpdate({ _id: userid }, { $addToSet: { 'favorites': insertFavorite } }, { new: true })
-            .catch(err => { throw err });
+        else if (await checkExist(userid, logId._id)) {
+            return null
+        }
+        else {
+            const insertFavorite = {
+                logId: logId._id,
+                logType: modela
+            }
+            let userDoc = await UserModel.findOneAndUpdate({ _id: userid }, { $addToSet: { 'favorites': insertFavorite } }, { new: true })
+                .exec()
+                .catch(err => { throw err });
+            return logId;
+        }
 
-        return logId;
+    } catch (error) {
+        throw error
     }
+
 
 }
 

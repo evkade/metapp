@@ -22,7 +22,7 @@ router.get("/api/favorite", isSignedIn, async (req: Request, res: Response, next
                 return res.status(200).send(data);
             }
             else {
-                return next(new ErrorException(ErrorCode.badRequest))
+                next(new ErrorException(ErrorCode.badRequest))
             }
         }
         else {
@@ -38,11 +38,16 @@ router.post("/api/favorite", isSignedIn, async (req: Request, res: Response, nex
         next(new ErrorException(ErrorCode.Unauthenticated))
     }
     else {
-        const body = await addFavoriteById(req.currentUser!._id, req.body).then(data => data).catch(err => next(new ErrorException(ErrorCode.badRequest, err)));
-        if (body) return res.status(200).send(body);
-        else if (body === null) return next(new ErrorException(ErrorCode.BeverageAlreadyExists))
-        else if (body === undefined) return next(new ErrorException(ErrorCode.BeverageNotFound))
-        else return next(new ErrorException(ErrorCode.NotFound))
+        try {
+            const body = await addFavoriteById(req.currentUser!._id, req.body).then(data => data);
+            if (body) return res.status(200).send(body);
+            else if (body === null) return next(new ErrorException(ErrorCode.BeverageAlreadyExists))
+            else if (body === undefined) return next(new ErrorException(ErrorCode.BeverageNotFound))
+            else return next(new ErrorException(ErrorCode.NotFound))
+        } catch (error) {
+            next(new ErrorException(ErrorCode.badRequest))
+        }
+
     }
 
 });
@@ -52,10 +57,16 @@ router.delete("/api/favorite", isSignedIn, async (req: Request, res: Response, n
         next(new ErrorException(ErrorCode.Unauthenticated))
     }
     else {
-        const body = await deleteFavoriteById(req.currentUser!._id, req.body).then(data => data).catch(err => next(new ErrorException(ErrorCode.badRequest, err)));
-        if (body) return res.status(200).send(body);
-        else if (body === null) return next(new ErrorException(ErrorCode.BeverageNotFound))
-        else return next(new ErrorException(ErrorCode.NotFound))
+        try {
+            const body = await deleteFavoriteById(req.currentUser!._id, req.body).then(data => data);
+            if (body) return res.status(200).send(body);
+            else if (body === null) return next(new ErrorException(ErrorCode.BeverageNotFound))
+            else return next(new ErrorException(ErrorCode.NotFound))
+        }
+        catch (error) {
+            throw error
+        }
+
     }
 });
 

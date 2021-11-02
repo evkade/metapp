@@ -85,7 +85,6 @@ app.use(menuRouter);
 app.use(favoriteRouter);
 
 app.get("/", (req, res) => {
-  console.log("received request");
   res.send("Express + TypeScript Server");
 });
 

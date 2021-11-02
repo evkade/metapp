@@ -1,74 +1,67 @@
 import { BeerModelDKM, BeerModelMKM } from '../models/beerSchema';
 import { Beer } from '../models/interfaces'
 
-
 export async function getActiveBeers(currentBar: String) {
 
     const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
 
-    // @ts-ignore
-    const data = await model.find({ active: true }, '', (err, beers) => {
-        if (err) return err
-        else return beers
-        //@ts-ignore
-    }).clone().catch(function (err) { console.log(err) })
-
-    return data;
+    try {
+        const data = await model.find({ active: true }).exec().catch(err => { throw err })
+        return data;
+    } catch (error) {
+        throw error
+    }
 }
 
 export async function getBeers(currentBar: String) {
 
     const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
 
-    // @ts-ignore
-    const data = await model.find({}, '', (err, beers) => {
-        if (err) return err
-        else return beers
-        //@ts-ignore
-    }).clone().catch(function (err) { console.log(err) })
-
-    return data;
+    try {
+        const data = await model.find({}).exec().catch(err => { throw err });
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 export async function getBeerById(currentBar: String, id: String) {
 
     const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
-    //@ts-ignore
-    const data = await model.find({ _id: id }, '', (err, beers) => {
-        if (err) return err
-        else return beers
-        //@ts-ignore
-    }).clone().catch(function (err: Error) { console.log(err) })
-
-    return data;
+    try {
+        const data = await model.find({ _id: id }).exec()
+            .catch(err => { throw err })
+        return data;
+    } catch (error) {
+        throw error
+    }
 }
 
 export async function deleteBeerById(currentBar: String, id: String) {
 
     const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
-    //@ts-ignore
-    const data = await model.deleteOne({ _id: id }, function (err) {
-        if (err) return err
-        //@ts-ignore
-    }).clone().catch(function (err: Error) { console.log(err) })
 
-    return data;
+    try {
+        const data = await model.deleteOne({ _id: id }).exec()
+            .catch(err => { throw err })
+
+        return data;
+    } catch (error) {
+        throw error
+    }
 }
 
 export async function upsertBeer(currentBar: String, beer: Beer): Promise<Beer> {
 
     const model = (currentBar === "dkm") ? BeerModelDKM : BeerModelMKM;
 
-    //@ts-ignore
-    let upsertedBeer = await model.findOneAndUpdate({ name: beer.name }, beer, { upsert: true, new: true }, function (err, doc) {
-        if (err) return err
-        else {
-            return doc
-        }
-        //@ts-ignore
-    }).clone().catch(function (err) { console.log(err) })
-
-    return upsertedBeer;
+    try {
+        const upsertedBeer = await model.findOneAndUpdate({ name: beer.name }, beer, { upsert: true, new: true }).exec()
+            .catch(err => { throw err })
+        return upsertedBeer;
+    } catch (error) {
+        throw error
+    }
 
 
 }

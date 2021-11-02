@@ -14,6 +14,7 @@ export async function getOrders(bar: string | any): Promise<Order> {
     (yesterday.getMonth() + 1) +
     "-" +
     yesterday.getDate();
+
   // @ts-ignore
   const data = await OrderModel.find(
     { bar: bar, date: { $gte: yesterdayString, $lte: todayString } },
@@ -25,6 +26,7 @@ export async function getOrders(bar: string | any): Promise<Order> {
     .clone()
     .populate("user")
     .catch((err: Error) => console.log(err));
+
 
   return data.map((order: Order) => {
     return {
@@ -41,50 +43,68 @@ export async function getOrders(bar: string | any): Promise<Order> {
       cancelled: order.cancelled,
     };
   });
+
 }
 
 export async function addOrder(order: Order): Promise<Order> {
-  const insertedOrder = await new OrderModel(order);
-  insertedOrder.save();
-  return insertedOrder;
+  try {
+    const insertedOrder = await new OrderModel(order);
+    insertedOrder.save();
+    return insertedOrder;
+  } catch (error) {
+    throw error
+  }
+
 }
 
 export async function makeBeverage(
   drinkId: String,
   timeMade: String
 ): Promise<void> {
-  await OrderModel.findByIdAndUpdate(
-    drinkId,
-    { made: true, timeMade: timeMade },
-    (err) => {
-      if (err) throw new Error("");
-    }
-  ) // @ts-ignore
-    .clone()
-    .catch((err: Error) => console.log(err));
+  try {
+    await OrderModel.findByIdAndUpdate(
+      drinkId,
+      { made: true, timeMade: timeMade },
+      (err) => {
+        if (err) throw new Error("");
+      }
+    ) // @ts-ignore
+      .clone()
+      .catch((err: Error) => { throw err });
+  } catch (error) {
+    throw error
+  }
 }
 
 export async function payForBeverage(
   drinkId: String,
   timePaid: String
 ): Promise<void> {
-  await OrderModel.findByIdAndUpdate(
-    drinkId,
-    { paid: true, timePaid: timePaid },
-    (err) => {
-      if (err) throw new Error("");
-    }
-  ) // @ts-ignore
-    .clone()
-    .catch((err: Error) => console.log(err));
+  try {
+    await OrderModel.findByIdAndUpdate(
+      drinkId,
+      { paid: true, timePaid: timePaid },
+      (err) => {
+        if (err) throw new Error("");
+      }
+    ) // @ts-ignore
+      .clone()
+      .catch((err: Error) => { throw err });
+  }
+  catch (error) {
+    throw error
+  }
 }
 
 export async function cancelOrder(orderId: String): Promise<void> {
-  await OrderModel.findByIdAndUpdate(orderId, { cancelled: true }, (err) => {
-    if (err) throw new Error("");
-  }) //@ts-ignore
-    .clone()
-    .catch((err: Error) => console.log(err));
+  try {
+    await OrderModel.findByIdAndUpdate(orderId, { cancelled: true }, (err) => {
+      if (err) return err
+    }).exec()
+      .catch((err: Error) => { throw err });
+  } catch (error) {
+    throw error
+  }
 }
 
 export async function getUserOrders(userId: String | any) {
@@ -93,7 +113,7 @@ export async function getUserOrders(userId: String | any) {
     else return orders;
   }) // @ts-ignore
     .clone()
-    .catch((err: Error) => console.log(err));
+    .catch((err: Error) => { throw err });
 
   return data.map((order: any) => {
     return {

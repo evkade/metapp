@@ -4,14 +4,15 @@ import bcrypt from "bcrypt";
 
 export async function getUsers() {
 
-    // @ts-ignore
-    const data = await UserModel.find({}, 'username credentials', (err, users) => {
-        if (err) return err
-        else return users
-        //@ts-ignore
-    }).clone().catch(function (err) { console.log(err) })
+    try {
+        const data = await UserModel.find({}, 'username credentials').exec()
+            .catch(err => { throw err })
+        return data;
+    }
+    catch (error) {
+        throw error
+    }
 
-    return data;
 }
 
 export async function findUser(username: string): Promise<User | null> {

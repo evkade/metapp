@@ -5,7 +5,7 @@ export async function getAPIBeers(name: string) {
         .then((data: any) => data.data)
         // @ts-ignore
         .catch(error => {
-            if (error) console.log(error);
+            throw error
         })
 }
 
