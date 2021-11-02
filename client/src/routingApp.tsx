@@ -20,8 +20,6 @@ import userProfilePresenter from "./components/presenters/userProfilePresenter";
 import orderPresenter from "./components/presenters/orderPresenter";
 import UserModel from "./model/userModel";
 
-import { useLocalStorage } from "./hooks/localStorageHook";
-
 const userModel = new UserModel();
 
 const PrivateRoute = ({ component: Component, path, user, ...rest }) => (
