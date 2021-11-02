@@ -12,7 +12,6 @@ import RoutingApp from "./routingApp";
 const App = () => {
   const [socket, setSocket] = useState(null);
   const [path, setPath] = useLocalStorage("pathname", "/");
-  // console.log(path);
 
   // @ts-ignore
   useEffect(() => {
