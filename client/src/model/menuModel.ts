@@ -59,7 +59,7 @@ export default class MenuModel {
     );
     // TODO what should be done here? Anything?
     response.json().then((data) => {
-      console.log(data);
+      //console.log(data);
     });
   }
 
@@ -90,7 +90,7 @@ export default class MenuModel {
     );
     // TODO what should be done here? Anything?
     response.json().then((data) => {
-      console.log(data);
+      //console.log(data);
     });
   }
 

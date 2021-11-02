@@ -41,7 +41,6 @@ const userReducer = (state = initialState, action) => {
         loading: false,
       };
     case "ADD_FAVORITE":
-      console.log(action.payload)
       return {
         ...state,
         favorites: [...state.favorites, action.payload]
