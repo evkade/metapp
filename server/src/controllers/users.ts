@@ -21,7 +21,7 @@ export async function findUser(username: string): Promise<User | null> {
         const userPromise: User = await UserModel.findOne(
             { username: username },
             (err: Error, userDoc: any) => {
-                if (err) console.log(err);
+                if (err) return err
                 else return userDoc;
             } //@ts-ignore
         ).clone();
@@ -32,7 +32,6 @@ export async function findUser(username: string): Promise<User | null> {
             return null;
         }
     } catch (err) {
-        console.log(err)
         return null;
     }
 }
@@ -72,7 +71,6 @@ export async function addUser(user: User): Promise<User | null> {
             return null;
         }
     } catch (err) {
-        console.log(err)
         return null;
     }
 }

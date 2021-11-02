@@ -25,7 +25,7 @@ export async function getOrders(bar: string | any): Promise<Order> {
   ) // @ts-ignore
     .clone()
     .populate("user")
-    .catch((err: Error) => console.log(err));
+    .catch((err: Error) => { throw err });
 
 
   return data.map((order: Order) => {
