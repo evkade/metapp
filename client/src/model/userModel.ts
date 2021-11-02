@@ -1,10 +1,4 @@
-import {
-  fetchRequest,
-  logIn,
-  signOut,
-  addFavorite,
-  removeFavorite,
-} from "../redux/actions/user";
+import { fetchRequest, logIn, signOut } from "../redux/actions/user";
 import { switchCurrentBar } from "../redux/actions/menu";
 
 export default class UserModel {
@@ -26,7 +20,6 @@ export default class UserModel {
             )
           );
         })
-        // TODO do we want to do anything?
         .catch((err) => err);
     };
   }
@@ -88,7 +81,7 @@ export default class UserModel {
       .then((data) => {
         if (data.ok) {
           return data.json();
-        } else throw new Error("You couldn't sign up");
+        } else throw new Error("A user with that username already exists");
       })
       .then(() => {
         setSignUpButton("Successfully created account: " + username);
@@ -99,7 +92,7 @@ export default class UserModel {
       })
       .catch((err) => {
         setSignUpError(true);
-        setSignUpErrMessage(err);
+        setSignUpErrMessage(err.message);
         setTimeout(() => {
           setSignUpError(false);
         }, 3000);

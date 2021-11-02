@@ -63,6 +63,4 @@ export async function upsertBeer(currentBar: String, beer: Beer): Promise<Beer> 
         throw error
     }
 
-
 }
-

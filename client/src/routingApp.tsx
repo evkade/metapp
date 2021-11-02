@@ -63,21 +63,15 @@ const PublicRoute = ({
   />
 );
 
-const RoutingApp = ({ socket, user, checkValidUser }) => {
-  const [pathName, setPathName] = useState("/");
-
-  window.onbeforeunload = () => {
-    localStorage.setItem("pathname", window.location.pathname);
-  };
-
+const RoutingApp = ({
+  socket,
+  user,
+  checkValidUser,
+  pathName,
+  setPathName,
+}) => {
   useEffect(() => {
     checkValidUser();
-    window.onload = () => {
-      const pathname = localStorage.getItem("pathname");
-      if (pathname !== null) {
-        setPathName(pathname);
-      }
-    };
   }, []);
 
   return (

@@ -81,14 +81,14 @@ export const SearchBeverage = ({
             {messageEmptyResults}
           </h2>
         )}
-        <button
-          className="admin-menu-container__button--info general-button--bw general-button--black"
-          onMouseEnter={() => setShowInfoPopup(true)}
-          onMouseLeave={() => setShowInfoPopup(false)}
-        >
-          ?
-        </button>
       </div>
+      <button
+        className="admin-menu-container__button--info general-button--bw general-button--black"
+        onMouseEnter={() => setShowInfoPopup(true)}
+        onMouseLeave={() => setShowInfoPopup(false)}
+      >
+        ?
+      </button>
     </>
   );
 };

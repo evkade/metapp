@@ -57,7 +57,12 @@ const EntryView = ({ history, modalOpen, setModalOpen }) => {
               </p>
             </div>
             <div className="modal__headfoot">
-              <button onClick={() => setModalOpen(false)}>Close</button>
+              <button
+                className="general-button--bw general-button--black"
+                onClick={() => setModalOpen(false)}
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>

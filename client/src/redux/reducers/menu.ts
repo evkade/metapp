@@ -85,7 +85,6 @@ const menuReducer = (state = initialState, action) => {
       };
 
     case "ADD_TO_MENU":
-      // TODO Kanske flytta från reducer till menuModel eller något?
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
         menuModel.postBeerToDatabase(action.payload, state.currentBar, true);
         return {
@@ -107,7 +106,6 @@ const menuReducer = (state = initialState, action) => {
       };
 
     case "REMOVE_FROM_MENU":
-      // TODO Kanske flytta från reducer till menuModel eller något?
       if (getTypeOfBeverage(action.payload) === beverageTypes.BEER) {
         menuModel.postBeerToDatabase(action.payload, state.currentBar, false);
         return {
