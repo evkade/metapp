@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { orderPlaced } from "../../redux/actions/user";
+import moment from "moment";
 import UserProfile from "../views/userProfile";
 import { removeFavorite } from "../../redux/actions/user";
 import OrderModel from "../../model/orderModel";
@@ -78,6 +78,7 @@ const UserProfilePresenter = ({
       removeFromFavorites={removeFromFavorites}
       loading={loading}
       spinner={<Spinner bar={currentBar} />}
+      moment={moment}
     />
   );
 };

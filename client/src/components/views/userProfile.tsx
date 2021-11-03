@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import GeneralFavoriteCard from "./generalFavoriteCard";
 import mkmlogo from "../images/mkm_logo.png";
@@ -11,6 +11,7 @@ const UserProfile = ({
   removeFromFavorites,
   spinner,
   loading,
+  moment,
 }) => {
   return (
     <div className="profile-view container--general">
@@ -24,6 +25,11 @@ const UserProfile = ({
             <div className="info-card-beverage__container--scroll">
               {orders
                 .filter((o) => !o.paid && !o.cancelled)
+                .filter(
+                  (o) =>
+                    o.date === moment().format("YYYY-MM-DD") ||
+                    o.date === moment().subtract(1, "days").format("YYYY-MM-DD")
+                )
                 .map((order) => (
                   <div className="info-card-beverage__row" key={order.id}>
                     <div className="info-card-beverage__column info-card-beverage__column--small">
