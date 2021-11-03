@@ -1,26 +1,20 @@
 import { OrderModel } from "../models/orderSchema";
 import { Order } from "../models/interfaces";
+import moment from "moment";
 
 export async function getOrders(bar: string | any): Promise<Order> {
-  const today = new Date();
-  var yesterday = new Date();
-  yesterday.setDate(today.getDate() - 1);
 
-  const todayString =
-    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  const yesterdayString =
-    yesterday.getFullYear() +
-    "-" +
-    (yesterday.getMonth() + 1) +
-    "-" +
-    yesterday.getDate();
-
+  const today = moment().format("YYYY-MM-DD");
+  var yesterday = moment().subtract(1, "days").format("YYYY-MM-DD");
+  
   // @ts-ignore
   const data = await OrderModel.find(
-    { bar: bar, date: { $gte: yesterdayString, $lte: todayString } },
+    { bar: bar, date: { $gte: yesterday, $lte: today } },
     (err: Error, orders: Object | any) => {
       if (err) throw new Error("");
-      else return orders;
+      else {
+        return orders;
+      }
     }
   ) // @ts-ignore
     .clone()
