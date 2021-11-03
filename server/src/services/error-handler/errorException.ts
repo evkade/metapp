@@ -34,6 +34,12 @@ export class ErrorException extends Error {
             case ErrorCode.NotFound:
                 this.status = 404;
                 break;
+            case ErrorCode.WrongCredentials:
+                this.status = 401;
+                break;
+            case ErrorCode.BarNotFound:
+                this.status = 400;
+                break;
             default:
                 this.status = 500;
                 break;

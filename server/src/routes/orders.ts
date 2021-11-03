@@ -20,10 +20,14 @@ router.get(
     if (!req.currentUser) {
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
+    try {
+      const orders = await getOrders(req.query.currentbar);
 
-    const orders = await getOrders(req.query.currentbar);
+      res.status(200).send({ orders: orders });
+    } catch (error) {
+      next(new ErrorException(ErrorCode.badRequest))
+    }
 
-    res.status(200).send({ orders: orders });
   }
 );
 
@@ -35,9 +39,15 @@ router.post(
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
 
-    const order = await addOrder(req.body);
+    try {
+      const order = await addOrder(req.body);
 
-    res.status(200).send(order);
+
+      res.status(201).send(order);
+    }
+    catch (error) {
+      next(new ErrorException(ErrorCode.badRequest))
+    }
   }
 );
 
@@ -48,10 +58,14 @@ router.post(
     if (!req.currentUser) {
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
+    try {
+      await makeBeverage(req.body.id, req.body.timestamp);
+      res.sendStatus(200);
+    }
+    catch (error) {
+      next(new ErrorException(ErrorCode.badRequest))
+    }
 
-    await makeBeverage(req.body.id, req.body.timestamp);
-
-    res.sendStatus(200);
   }
 );
 
@@ -62,10 +76,14 @@ router.post(
     if (!req.currentUser) {
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
+    try {
+      await payForBeverage(req.body.id, req.body.timestamp);
+      res.sendStatus(200);
+    }
+    catch (error) {
+      next(new ErrorException(ErrorCode.badRequest))
+    }
 
-    await payForBeverage(req.body.id, req.body.timestamp);
-
-    res.sendStatus(200);
   }
 );
 
@@ -76,21 +94,32 @@ router.post(
     if (!req.currentUser || !req.currentUser.isAdmin) {
       next(new ErrorException(ErrorCode.Unauthenticated));
     }
+    try {
+      await cancelOrder(req.body.id);
+      res.sendStatus(200);
 
-    await cancelOrder(req.body.id);
+    } catch (error) {
+      next(new ErrorException(ErrorCode.badRequest));
+    }
 
-    res.sendStatus(200);
   }
 );
 
 router.get(
   "/api/orders/user",
   isSignedIn,
-  async (req: Request, res: Response) => {
-    if (!req.currentUser) return res.send(400);
-    const orders = await getUserOrders(req.query.id);
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.currentUser) {
+      next(new ErrorException(ErrorCode.Unauthenticated));
+    }
+    try {
+      const orders = await getUserOrders(req.query.id);
 
-    res.status(200).send(orders);
+      res.status(200).send(orders);
+    }
+    catch (error) {
+      next(new ErrorException(ErrorCode.badRequest));
+    }
   }
 );
 

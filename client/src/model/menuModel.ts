@@ -44,6 +44,7 @@ export default class MenuModel {
       volume: beer.volume,
     };
 
+
     await fetch("http://localhost:5000/api/beer?currentbar=" + currentBar, {
       method: "POST",
       headers: {
@@ -71,6 +72,7 @@ export default class MenuModel {
       alcoholVolume: cocktail.alcoholVolume,
       description: cocktail.description,
     };
+
 
     await fetch("http://localhost:5000/api/cocktail?currentbar=" + currentBar, {
       method: "POST",

@@ -9,4 +9,5 @@ export class ErrorCode {
     public static readonly UserAlreadyExists = 'UserAlreadyExists';
     public static readonly WrongCredentials = 'WrongCredentials';
     public static readonly BeverageAlreadyExists = 'BeverageAlreadyExists';
+    public static readonly BarNotFound = 'BarNotFound';
 }

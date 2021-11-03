@@ -4,14 +4,15 @@ import bcrypt from "bcrypt";
 
 export async function getUsers() {
 
-    // @ts-ignore
-    const data = await UserModel.find({}, 'username credentials', (err, users) => {
-        if (err) return err
-        else return users
-        //@ts-ignore
-    }).clone().catch(function (err) { console.log(err) })
+    try {
+        const data = await UserModel.find({}, 'username credentials').exec()
+            .catch(err => { throw err })
+        return data;
+    }
+    catch (error) {
+        throw error
+    }
 
-    return data;
 }
 
 export async function findUser(username: string): Promise<User | null> {
@@ -20,7 +21,7 @@ export async function findUser(username: string): Promise<User | null> {
         const userPromise: User = await UserModel.findOne(
             { username: username },
             (err: Error, userDoc: any) => {
-                if (err) console.log(err);
+                if (err) return err
                 else return userDoc;
             } //@ts-ignore
         ).clone();
@@ -31,7 +32,6 @@ export async function findUser(username: string): Promise<User | null> {
             return null;
         }
     } catch (err) {
-        console.log(err)
         return null;
     }
 }
@@ -71,7 +71,6 @@ export async function addUser(user: User): Promise<User | null> {
             return null;
         }
     } catch (err) {
-        console.log(err)
         return null;
     }
 }
