@@ -22,14 +22,16 @@ There is a .nvmrc file in the repo. To use it, one must have nvm(node version ma
 
 ❗ **Developers Note:** One must have the secret config file `server/src/secret.config.env` to ensure that authentication works properly. Also do not forget to npm install after cloning ❗
 
-## Run client
+The application has been deployed in production using heroku and can be found here: [Metapp-bar website](https://metapp-bar.herokuapp.com)
+
+## Run client locally
 
 1. Go to folder `client`
 2. Run `npm install`
 3. Run `npm run dev`
 4. Go to http://localhost:8080/ in your browser
 
-## Run server
+## Run server locally
 
 1. Go to folder `server`
 2. Run `npm install`
