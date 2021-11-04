@@ -70,7 +70,14 @@ const BeverageCard = ({
               }
             >
               {" "}
-              Add to Menu{" "}
+              {menu.beer.some(
+                (menuItem: Beverage) => menuItem.name === beverage.name
+              ) ||
+              menu.cocktail.some(
+                (menuItem: Beverage) => menuItem.name === beverage.name
+              )
+                ? "Already in Menu"
+                : "Add to Menu"}{" "}
             </button>
           </div>
         );

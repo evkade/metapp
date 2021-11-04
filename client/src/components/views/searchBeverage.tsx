@@ -24,6 +24,9 @@ export const SearchBeverage = ({
         id="searchQuery"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") searchBeverage(query);
+        }}
       ></input>
       <select
         name="searchType"

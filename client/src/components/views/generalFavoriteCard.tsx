@@ -33,7 +33,7 @@ const GeneralFavoriteCard = ({
                   <FontAwesomeIcon
                     id={`starIcon${index}`}
                     icon={faStar}
-                    className="beverage-list__star--active"
+                    className="beverage-list__star beverage-list__star--active"
                     onClick={() => removeFromFavorites(favoriteName)}
                   />
                 </div>
