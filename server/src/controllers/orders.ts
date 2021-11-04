@@ -3,10 +3,9 @@ import { Order } from "../models/interfaces";
 import moment from "moment";
 
 export async function getOrders(bar: string | any): Promise<Order> {
-
   const today = moment().format("YYYY-MM-DD");
   var yesterday = moment().subtract(1, "days").format("YYYY-MM-DD");
-  
+
   // @ts-ignore
   const data = await OrderModel.find(
     { bar: bar, date: { $gte: yesterday, $lte: today } },
@@ -19,8 +18,9 @@ export async function getOrders(bar: string | any): Promise<Order> {
   ) // @ts-ignore
     .clone()
     .populate("user")
-    .catch((err: Error) => { throw err });
-
+    .catch((err: Error) => {
+      throw err;
+    });
 
   return data.map((order: Order) => {
     return {
@@ -37,7 +37,6 @@ export async function getOrders(bar: string | any): Promise<Order> {
       cancelled: order.cancelled,
     };
   });
-
 }
 
 export async function addOrder(order: Order): Promise<Order> {
@@ -46,9 +45,8 @@ export async function addOrder(order: Order): Promise<Order> {
     insertedOrder.save();
     return insertedOrder;
   } catch (error) {
-    throw error
+    throw error;
   }
-
 }
 
 export async function makeBeverage(
@@ -64,9 +62,11 @@ export async function makeBeverage(
       }
     ) // @ts-ignore
       .clone()
-      .catch((err: Error) => { throw err });
+      .catch((err: Error) => {
+        throw err;
+      });
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -83,21 +83,26 @@ export async function payForBeverage(
       }
     ) // @ts-ignore
       .clone()
-      .catch((err: Error) => { throw err });
-  }
-  catch (error) {
-    throw error
+      .catch((err: Error) => {
+        throw err;
+      });
+  } catch (error) {
+    throw error;
   }
 }
 
 export async function cancelOrder(orderId: String): Promise<void> {
   try {
     await OrderModel.findByIdAndUpdate(orderId, { cancelled: true }, (err) => {
-      if (err) return err
-    }).exec()
-      .catch((err: Error) => { throw err });
+      if (err) throw new Error("");
+    })
+      // @ts-ignore
+      .clone()
+      .catch((err: Error) => {
+        throw err;
+      });
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -107,7 +112,9 @@ export async function getUserOrders(userId: String | any) {
     else return orders;
   }) // @ts-ignore
     .clone()
-    .catch((err: Error) => { throw err });
+    .catch((err: Error) => {
+      throw err;
+    });
 
   return data.map((order: any) => {
     return {
