@@ -24,7 +24,9 @@ export default class MenuModel {
   getCocktailHistory(currentBar) {
     return (dispatch) => {
       dispatch(fetchRequest());
-      fetch("http://localhost:5000/api/cocktail?currentbar=" + currentBar)
+      fetch("http://localhost:5000/api/cocktail?currentbar=" + currentBar, {
+        credentials: "include",
+      })
         .then((response) => {
           if (response.ok) return response.json();
           else throw new Error("Could not get cocktails");
@@ -43,7 +45,6 @@ export default class MenuModel {
       beerType: beer.type,
       volume: beer.volume,
     };
-
 
     await fetch("http://localhost:5000/api/beer?currentbar=" + currentBar, {
       method: "POST",
@@ -72,7 +73,6 @@ export default class MenuModel {
       alcoholVolume: cocktail.alcoholVolume,
       description: cocktail.description,
     };
-
 
     await fetch("http://localhost:5000/api/cocktail?currentbar=" + currentBar, {
       method: "POST",
@@ -111,6 +111,7 @@ export default class MenuModel {
   async getFetch(url: string) {
     return await fetch(url, {
       method: "GET",
+      credentials: "include",
     }).then((response) => {
       if (response.ok) return response.json();
       else throw new Error("Something went wrong.");
@@ -124,6 +125,7 @@ export default class MenuModel {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      credentials: "include",
     }).then((response) => {
       if (response.ok) return response.json();
       else throw new Error("Something went wrong");
