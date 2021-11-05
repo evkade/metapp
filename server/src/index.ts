@@ -30,6 +30,8 @@ const Port = process.env.PORT || 6000;
 
 const db = connectDB();
 
+app.set("trust proxy", 1);
+
 // Cors policy: Allows localhost:8080 which is client port
 var allowedOrigins = ["http://localhost:8080"];
 
@@ -63,7 +65,7 @@ app.use(
     name: "auth_token",
     signed: false,
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "lax",
   })
 );
